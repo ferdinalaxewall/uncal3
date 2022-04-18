@@ -608,7 +608,6 @@ a,a:hover, a:visited{
     margin-left: 25px;
 }
 
-
 @media (max-width: 992px){
     
     .navbar-expand-lg .navbar-nav {
@@ -619,4 +618,12 @@ a,a:hover, a:visited{
         padding-right: 0.5rem;
         padding-left: 0.5rem;
     }
+}
+
+.border-right {
+    border-right: 2px solid white!important;
+}
+
+.border-top {
+    border-top: 2px solid white!important;
 }

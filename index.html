@@ -12,8 +12,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
-
-    <title>Uncal BPM</title>
+     <title>Uncal BPM</title>
   </head>
   <body>
 
@@ -155,39 +154,105 @@
 
                   <ul class="elements-list">
                     <li class="element-item">
-                      <a href="#" class="element-box">
+                      <a id="sender-tcp" href="#" class="element-box">
                         <img src="./assets/icon/set-payload-icon.svg" alt="Set Payload Icon">
-                        Set Payload
+                        TCP Sender
                       </a>
                     </li>
                     <li class="element-item">
-                      <a href="#" class="element-box">
+                      <a id="receiver-tcp" href="#" class="element-box">
                         <img src="./assets/icon/api-kit-icon.svg" alt="API Kit Console Icon">
-                        API Kit Console 
+                        TCP Receiver
                       </a>
                     </li>
                     <li class="element-item">
-                      <a href="#" class="element-box">
+                      <a id="sender-rest" href="#" class="element-box">
                         <img src="./assets/icon/amazon-sqs-icon.svg" alt="Amazon SQS Icon">
-                       Amazon SQS 
+                       REST/SOAP Sender
                       </a>
                     </li>
                     <li class="element-item">
-                      <a href="#" class="element-box">
+                      <a id="receiver-rest" href="#" class="element-box">
+                        <img src="./assets/icon/amazon-sqs-icon.svg" alt="Amazon SQS Icon">
+                       REST/SOAP Receiver
+                      </a>
+                    </li>
+                    <li class="element-item">
+                      <a id="sender-nfs" href="#" class="element-box">
                         <img src="./assets/icon/amazon-s3-icon.svg" alt="Amazon S3 Icon">
-                        Amazon S3 
+                        NFS Sender
                       </a>
                     </li>
                     <li class="element-item">
-                      <a href="#" class="element-box">
+                      <a id="receiver-nfs" href="#" class="element-box">
+                        <img src="./assets/icon/amazon-s3-icon.svg" alt="Amazon S3 Icon">
+                        NFS Receiver
+                      </a>
+                    </li>
+                    <li class="element-item">
+                      <a id="sender-ftp" href="#" class="element-box">
                         <img src="./assets/icon/ajax-icon.svg" alt="Ajax Icon">
-                        Ajax
+                        FTP(e)/S Sender
                       </a>
                     </li>
                     <li class="element-item">
-                      <a href="#" class="element-box">
+                      <a id="receiver-ftp" href="#" class="element-box">
+                        <img src="./assets/icon/ajax-icon.svg" alt="Ajax Icon">
+                        FTP(e)/S REceiver
+                      </a>
+                    </li>
+                    <li class="element-item">
+                      <a id="sender-sftp" href="#" class="element-box">
                         <img src="./assets/icon/database-icon.svg" alt="Database Icon">
-                        Database 
+                        SFTP/EXEC/SHELL Sender
+                      </a>
+                    </li>
+                    <li class="element-item">
+                      <a id="receiver-sftp" href="#" class="element-box">
+                        <img src="./assets/icon/database-icon.svg" alt="Database Icon">
+                        SFTP/EXEC/SHELL Receiver
+                      </a>
+                    </li>
+                    <li class="element-item">
+                      <a id="sender-imap" href="#" class="element-box">
+                        <img src="./assets/icon/database-icon.svg" alt="Database Icon">
+                        IMAP/POP Sender
+                      </a>
+                    </li>
+                    <li class="element-item">
+                      <a id="receiver-smtp" href="#" class="element-box">
+                        <img src="./assets/icon/database-icon.svg" alt="Database Icon">
+                        SMTP Receiver
+                      </a>
+                    </li>
+                    <li class="element-item">
+                      <a id="sender-jdbc" href="#" class="element-box">
+                        <img src="./assets/icon/database-icon.svg" alt="Database Icon">
+                        JDBC Sender
+                      </a>
+                    </li>
+                    <li class="element-item">
+                      <a id="receiver-jdbc" href="#" class="element-box">
+                        <img src="./assets/icon/database-icon.svg" alt="Database Icon">
+                        JDBC Receiver
+                      </a>
+                    </li>
+                    <li class="element-item">
+                      <a id="sender-mqtt" href="#" class="element-box">
+                        <img src="./assets/icon/database-icon.svg" alt="Database Icon">
+                        Mqtt Sender
+                      </a>
+                    </li>
+                    <li class="element-item">
+                      <a id="receiver-mqtt" href="#" class="element-box">
+                        <img src="./assets/icon/database-icon.svg" alt="Database Icon">
+                        Mqtt Receiver
+                      </a>
+                    </li>
+                    <li class="element-item">
+                      <a id="x" href="#" class="element-box">
+                        <img src="./assets/icon/database-icon.svg" alt="Database Icon">
+                        Applicability Statement 2
                       </a>
                     </li>
                   </ul>
@@ -242,32 +307,34 @@
                           <img src="./assets/icon/no-error-icon.svg" alt="No Error Icon">
                           There are no errors.
                         </p>
-    
-                        <div class="row justify-content-center">
-                          <div class="col-md-5 config-box">
-                            <h5 class="config-title">Flow Configuration</h5>
-    
-                            <div class="input-group mb-2">
-                              <label for="input-name">Name:</label>
-                              <input type="text" class="input-field" id="input-name">
+                        <div id="properties">
+                          <div class="row justify-content-center">
+                            <div class="col-md-5 config-box">
+                              <h5 class="config-title">Flow Configuration</h5>
+      
+                              <div class="input-group mb-2">
+                                <label for="input-name">Name:</label>
+                                <input type="text" class="input-field" id="input-name">
+                              </div>
+                              <div class="input-group mb-2">
+                                <label for="input-state">Initial State:</label>
+                                <input type="text" class="input-field" id="input-state">
+                              </div>
                             </div>
-                            <div class="input-group mb-2">
-                              <label for="input-state">Initial State:</label>
-                              <input type="text" class="input-field" id="input-state">
+                            <div class="col-md-5 config-box">
+                              <h5 class="config-title">Optional Processing Strategy</h5>
+      
+                              <div class="input-group mb-2">
+                                <label for="input-processing-strategy">Processing Strategy:</label>
+                                <input type="text" class="input-field" id="input-processing-strategy">
+                              </div>
+                              <div class="input-group mb-2">
+                                <label for="input-processing-strategy-ref">Processing Strategy Ref:</label>
+                                <input type="text" class="input-field" id="input-processing-strategy-ref">
+                              </div>
                             </div>
                           </div>
-                          <div class="col-md-5 config-box">
-                            <h5 class="config-title">Optional Processing Strategy</h5>
-    
-                            <div class="input-group mb-2">
-                              <label for="input-processing-strategy">Processing Strategy:</label>
-                              <input type="text" class="input-field" id="input-processing-strategy">
-                            </div>
-                            <div class="input-group mb-2">
-                              <label for="input-processing-strategy-ref">Processing Strategy Ref:</label>
-                              <input type="text" class="input-field" id="input-processing-strategy-ref">
-                            </div>
-                          </div>
+
                         </div>
                       </div>
 
@@ -382,6 +449,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <script src="./assets/style/js/script.js"></script>
+    <script src="./assets/style/js/components.js"></script>
 
   </body>
 </html>
