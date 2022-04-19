@@ -89,11 +89,16 @@ a,a:hover, a:visited{
 
 .content .container-fluid .row #flow-section .content-box .content-body{
     max-height: 65vh;
-    overflow-y: scroll;
+    overflow: scroll;
+}
+
+.content .container-fluid .row #flow-section .content-box .content-body{
+    max-height: 65vh;
 }
 
 .content .container-fluid .row #flow-section .content-box .content-body::-webkit-scrollbar{
     width: 6px;
+    height: 6px;
 }
 
 .content .container-fluid .row #flow-section .content-box .content-body::-webkit-scrollbar-track{
@@ -125,8 +130,13 @@ a,a:hover, a:visited{
     -o-border-radius: 5px;
 }   
 
-.content .container-fluid .row #flow-section .content-box .content-body .canvas{
-    height: 1000px;
+.content .container-fluid .row #flow-section .content-box #flow-container .canvas{
+    height: 380px;
+    width: 100%;
+    /* background-color: red; */
+    /* background: url("C:/Users/ASUS/Downloads/fraksi-pdip-dprd-diy.jpg");
+    background-size: cover;
+    background-position: center ; */
 }
 
 .content .container-fluid .row .content-section .content-box .menu-tab, .content .container-fluid .row .content-section .content-box .content-body{
@@ -212,7 +222,6 @@ a,a:hover, a:visited{
 }
 
 .content .container-fluid .row .content-section .content-box .menu-tab .tab-name.active .close-tab{
-    /* display: block; */
     opacity: 1;
 }
 
@@ -222,6 +231,140 @@ a,a:hover, a:visited{
     -moz-transform: scale(1.2);
     -ms-transform: scale(1.2);
     -o-transform: scale(1.2);
+}
+
+.content .container-fluid .row .content-section #flow-container .flow-diagram{
+    padding-left: 0;
+    min-width: 100px;
+    min-height: 92px;
+    padding: 5px 15px;
+    display: inline-flex;
+    align-items: flex-start ;
+    white-space: nowrap;
+    border: 1px solid var(--clr-border);
+    border-left: 3px solid var(--clr-primary);
+    overflow: hidden;
+}
+
+/* .content .container-fluid .row .content-section #flow-container .flow-diagram .element-item:first-child{
+    padding: 10px 20px;
+} */
+
+.content .container-fluid .row .content-section #flow-container .flow-diagram .element-item:not(:first-child)::before{
+    content: url('../../icon/arrow-icon.svg');
+    display: flex;
+    align-items: flex-start;
+    height: inherit;
+    position: absolute;
+    top: 20px;
+    left: -29px;
+    animation: arrow .15s linear;
+    -webkit-animation: arrow .15s linear;
+}
+
+@keyframes arrow {
+    from{
+        opacity: 0;
+    }
+    to{
+        opacity: 1;
+    }
+}
+
+.content .container-fluid .row .content-section #flow-container .flow-diagram .element-item.ui-sortable-helper:not(:first-child)::before{
+    content: '';
+    display: none;
+    visibility: hidden;
+}
+
+/* .content .container-fluid .row .content-section #flow-container .flow-diagram .element-item:not(:first-child){
+    padding: 0;
+}
+
+.content .container-fluid .row .content-section #flow-container .flow-diagram .element-item:not(:first-child) .element-box{
+    margin: 0 20px;
+} */
+
+.content .container-fluid .row .content-section #flow-container .flow-diagram .element-item{
+    position: relative;
+    display:inline-flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.content .container-fluid .row .content-section #flow-container .flow-diagram .element-item:not(:last-child){
+    margin-right: 29px;
+}
+
+.content .container-fluid .row .content-section #flow-container .element-item-highlight{
+    width: 90px;
+    height: 80px;
+    border: 1px dashed var(--clr-primary);
+    border-radius: 5px;
+    margin-right: 29px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+}
+
+.content .container-fluid .row .content-section #flow-container .flow-diagram .element-item .element-box{
+    cursor: default;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    align-items: center;
+    position: relative;
+    justify-content: center;
+    color: var(--clr-black);
+    border: 2px solid transparent;
+    border-radius: 5px;
+    transition: all .15s linear;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+    -webkit-transition: all .15s linear;
+    -moz-transition: all .15s linear;
+    -ms-transition: all .15s linear;
+    -o-transition: all .15s linear;
+}
+
+.content .container-fluid .row .content-section #flow-container .flow-diagram .element-item .element-box:hover, .content .container-fluid .row .content-section #flow-container .flow-diagram .element-item .element-box.focus{
+    border: 2px solid rgba(0, 0, 0, 0.2);
+}
+
+.content .container-fluid .row .content-section #flow-container .flow-diagram .element-item .element-box .img-container{
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.content .container-fluid .row .content-section #flow-container .flow-diagram .element-item .element-box img{
+    max-height: 40px;
+    margin-bottom: 10px;
+    background-color: var(--clr-white);
+}
+
+.content .container-fluid .row .content-section #flow-container .flow-diagram .element-item .element-box .img-container::after{
+    content: "";
+    display: block;
+    top: calc(50% - 1px) ;
+    left:50%;
+    position: absolute;
+    z-index: -2;
+    width: 130%;
+    transform: translate(-50%, -50%);
+    height: 3px;
+    border-radius: 5px;
+    background-color: var(--clr-primary);
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
 }
 
 .content .container-fluid .row .content-section .content-box .content-body .search-wrapper{
@@ -346,6 +489,7 @@ a,a:hover, a:visited{
     margin: 10px 0;
     max-height: 35vh;
     overflow-y: scroll;
+    overflow-x: visible;
 }
 
 .content .container-fluid .row .content-section .content-box .content-body .elements-list::-webkit-scrollbar{
@@ -372,19 +516,39 @@ a,a:hover, a:visited{
 }
 
 .content .container-fluid .row .content-section .content-box .content-body .elements-list .element-item{
+    position: relative;
+    z-index: 9999;
     display: flex;
+    flex-direction: row;
     align-items: center;
     border-radius: 5px;
     padding: 10px;
+    /* cursor: move; */
+    margin-bottom: 5px;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     -ms-border-radius: 5px;
     -o-border-radius: 5px;
 }
 
+.content .container-fluid .row .content-section .content-box .content-body .elements-list .element-item.ui-draggable-dragging{
+    border: 2px solid var(--clr-primary);
+    opacity: 0.6;
+}
+
+.content .container-fluid .row .content-section .content-box .content-body .elements-list .element-item.ui-draggable-dragging .element-box span{
+    display: none;
+}
+
+.content .container-fluid .row .content-section .content-box .content-body .elements-list .element-item.ui-draggable-dragging .element-box img{
+    margin-right: 0;
+    background-color: white;
+}
+
 .content .container-fluid .row .content-section .content-box .content-body .elements-list .element-item .element-box{
     display: inline-flex;
     cursor: move;
+    pointer-events: none;
     align-items: center;
     color: var(--clr-black);
 }
@@ -538,8 +702,7 @@ a,a:hover, a:visited{
 }
 
 .content .container-fluid .row #flow-map-section .content-box .content-body .list-group .list-item.active{
-    height: calc(var(--fs-heading) * 4
-    );
+    height: calc(var(--fs-heading) * 4);
 }
 
 .content .container-fluid .row .content-section .content-box .content-body .list-group .list-item.active.has-child{
@@ -566,6 +729,14 @@ a,a:hover, a:visited{
     -moz-transform: rotate(-90deg);
     -ms-transform: rotate(-90deg);
     -o-transform: rotate(-90deg);
+}
+
+.content .container-fluid .row .content-section .content-box .content-body .list-group .list-item.active::before{
+    transform: rotate(0);
+    -webkit-transform: rotate(0);
+    -moz-transform: rotate(0);
+    -ms-transform: rotate(0);
+    -o-transform: rotate(0);
 }
 
 .content .container-fluid .row .content-section .content-box .content-body .list-group .list-item.has-child::before{
@@ -608,6 +779,7 @@ a,a:hover, a:visited{
     margin-left: 25px;
 }
 
+
 @media (max-width: 992px){
     
     .navbar-expand-lg .navbar-nav {
@@ -626,7 +798,7 @@ a,a:hover, a:visited{
 
 .border-top {
     border-top: 2px solid white!important;
-}
+} 
 
 .text-small {
     font-size: var(--fs-body) !important;

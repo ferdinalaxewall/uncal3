@@ -86,11 +86,12 @@ $(document).ready(function(){
     $("#properties-group .list-item").click(function(e){
         $(this).toggleClass("active");
     });
-
+    
     $("#flow-map-group .list-item").click(function(e){
         $(this).toggleClass("active");
     });
 
     $(".list-sub-item").parent().addClass("has-child");
 
+ 
 });

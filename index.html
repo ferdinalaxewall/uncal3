@@ -12,7 +12,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
-     <title>Uncal BPM</title>
+
+    <title>Uncal BPM</title>
   </head>
   <body>
 
@@ -56,7 +57,7 @@
                     <img src="./assets/icon/close-icon.svg"alt="">
                   </button></a>
                 </div>
-                <div class="content-body">
+                <div class="content-body" id="flow-container">  
                     <div class="canvas">
                     </div>
                 </div>
@@ -100,16 +101,12 @@
                         <li><a class="dropdown-item" href="#">Something else here</a></li>
                       </ul>
                     </div>
-                    <!-- <button class="setting-button">
-                      <img src="./assets/icon/setting-icon.svg" alt="Settings Icon">
-                      <img src="./assets/icon/dropdown-icon.svg" alt="Dropdown Icon">
-                    </button> -->
                   </div>
 
                   <div class="search-by-category">
 
                     <button class="category-button active" id="all-category">All</button>
-                    <button class="category-button">
+                    <button class="category-button" id="sender-category">
 
                       <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M4.27701 10.3701C4.93384 9.56663 6.11766 9.44775 6.92114 10.1046L10.524 13.0498C11.3274 13.7067 11.4463 14.8905 10.7895 15.694L9.88352 16.8022C8.41338 18.6006 5.76373 18.8667 3.96535 17.3965C2.16698 15.9264 1.90089 13.2767 3.37103 11.4784L4.27701 10.3701Z" fill="#4663AC"/>
@@ -120,32 +117,22 @@
                         <path d="M8.7329 10.124C8.49479 10.4029 8.07422 10.4377 7.79355 10.2016C7.51287 9.96558 7.47836 9.54811 7.71648 9.26918L9.36676 7.33602C9.60488 7.0571 10.0254 7.02234 10.3061 7.25838C10.5868 7.49443 10.6213 7.9119 10.3832 8.19083L8.7329 10.124Z" fill="#4663AC"/>
                       </svg>
                         
-                      Connectors
+                      Sender
                     </button>
-                    <button class="category-button">
+                    <button class="category-button" id="receiver-category">
 
                       <svg width="17" height="20" viewBox="0 0 17 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M5.1158 3.81002L9.55452 5.57851C9.55452 5.57851 8.98319 2.07514 10.1671 1.30271C11.8482 0.205867 13.5217 1.49602 13.9879 3.44843C14.3163 4.82336 11.8411 6.48955 11.8411 6.48955L16.2798 8.25804L14.5382 12.6295C14.5382 12.6295 13.0875 11.2875 12.1843 11.6917C11.3069 12.0843 10.9062 13.0899 11.2733 13.9783C11.6511 14.8928 13.6271 14.9161 13.6271 14.9161L11.8318 19.4221L8.20016 17.9751C8.20016 17.9751 9.98973 16.1185 9.35235 15.0832C8.87803 14.3129 8.07439 13.9927 7.20025 14.2258C6.02561 14.5391 6.04805 17.1177 6.04805 17.1177L0.667788 14.9741L2.46307 10.4681C2.46307 10.4681 4.75742 12.7067 5.96024 11.8615C6.7467 11.3088 8.06885 9.35947 7.87795 8.41737C7.58598 6.97652 3.91 6.83645 3.91 6.83645L5.1158 3.81002Z" fill="#4663AC"/>
                       </svg>
                         
-                      Elements
+                      Receiver
                     </button>
-                    <button class="category-button">
+                    <button class="category-button" id="statement-category">
                       <svg width="9" height="13" viewBox="0 0 9 13" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M7 0H2C0.895431 0 0 0.895429 0 2V2.11255C0 2.62978 0.200385 3.1269 0.559088 3.49955L3.20282 6.24604C3.56152 6.61868 3.7619 7.1158 3.7619 7.63304V11.6526C3.7619 12.5588 4.83461 13.0376 5.50914 12.4324C5.73061 12.2337 5.85714 11.9502 5.85714 11.6526V7.53128C5.85714 7.07539 6.01289 6.63318 6.29859 6.27792L8.55855 3.46767C8.84425 3.1124 9 2.6702 9 2.21431V2C9 0.895431 8.10457 0 7 0Z" fill="#4663AC"/>
                       </svg>
                         
-                      Filter
-                    </button>
-                    <button class="category-button">
-                      <svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M16.8906 3.59626L15.5225 9.20531L11.349 5.21592L16.8906 3.59626ZM14.1427 7.19467L13.8148 7.53767L13.0919 6.84669L13.4198 6.50369L14.1427 7.19467ZM13.8148 7.53767C11.1889 10.2847 11.2871 14.6404 14.0342 17.2662L13.3432 17.9891C10.1969 14.9816 10.0844 9.99298 13.0919 6.84669L13.8148 7.53767Z" fill="#4663AC"/>
-                        <line x1="8.34036" y1="5.00893" x2="11.2813" y2="7.82017" stroke="#4663AC"/>
-                        <path d="M6.10254 19.5679L11.804 18.6589L8.16606 14.1757L6.10254 19.5679ZM9.91186 17.1206L11.4333 15.886L10.8032 15.1095L9.28174 16.3441L9.91186 17.1206Z" fill="#4663AC"/>
-                        <path d="M13.2015 9.6304L14.8686 11.1524C15.2831 11.5308 15.305 12.1762 14.9172 12.5819L12.9854 14.6029" stroke="#4663AC"/>
-                      </svg>
-                        
-                      Transformer
+                      Statement
                     </button>
 
                   </div>
@@ -153,106 +140,106 @@
                   <h5 class="content-title">All Elements</h5>
 
                   <ul class="elements-list">
-                    <li class="element-item">
-                      <a id="sender-tcp" href="#" class="element-box">
+                    <li class="element-item" id="sender">
+                      <a id="sender-tcp" href="#" class="element-box" onclick="focusElement(this)">
                         <img src="./assets/icon/set-payload-icon.svg" alt="Set Payload Icon">
-                        TCP Sender
+                        <span>TCP Sender</span>
                       </a>
                     </li>
-                    <li class="element-item">
-                      <a id="receiver-tcp" href="#" class="element-box">
+                    <li class="element-item" id="receiver">
+                      <a id="receiver-tcp" href="#" class="element-box" onclick="focusElement(this)">
                         <img src="./assets/icon/api-kit-icon.svg" alt="API Kit Console Icon">
-                        TCP Receiver
+                        <span>TCP Receiver</span>
                       </a>
                     </li>
-                    <li class="element-item">
-                      <a id="sender-rest" href="#" class="element-box">
+                    <li class="element-item" id="sender">
+                      <a id="sender-rest" href="#" class="element-box" onclick="focusElement(this)">
                         <img src="./assets/icon/amazon-sqs-icon.svg" alt="Amazon SQS Icon">
-                       REST/SOAP Sender
+                       <span>REST/SOAP Sender</span>
                       </a>
                     </li>
-                    <li class="element-item">
-                      <a id="receiver-rest" href="#" class="element-box">
+                    <li class="element-item" id="receiver">
+                      <a id="receiver-rest" href="#" class="element-box" onclick="focusElement(this)">
                         <img src="./assets/icon/amazon-sqs-icon.svg" alt="Amazon SQS Icon">
-                       REST/SOAP Receiver
+                       <span>REST/SOAP Receiver</span>
                       </a>
                     </li>
-                    <li class="element-item">
-                      <a id="sender-nfs" href="#" class="element-box">
+                    <li class="element-item" id="sender">
+                      <a id="sender-nfs" href="#" class="element-box" onclick="focusElement(this)">
                         <img src="./assets/icon/amazon-s3-icon.svg" alt="Amazon S3 Icon">
-                        NFS Sender
+                        <span>NFS Sender</span>
                       </a>
                     </li>
-                    <li class="element-item">
-                      <a id="receiver-nfs" href="#" class="element-box">
+                    <li class="element-item" id="receiver">
+                      <a id="receiver-nfs" href="#" class="element-box" onclick="focusElement(this)">
                         <img src="./assets/icon/amazon-s3-icon.svg" alt="Amazon S3 Icon">
-                        NFS Receiver
+                        <span>NFS Receiver</span>
                       </a>
                     </li>
-                    <li class="element-item">
-                      <a id="sender-ftp" href="#" class="element-box">
+                    <li class="element-item" id="sender">
+                      <a id="sender-ftp" href="#" class="element-box" onclick="focusElement(this)">
                         <img src="./assets/icon/ajax-icon.svg" alt="Ajax Icon">
-                        FTP(e)/S Sender
+                        <span>FTP(e)/S Sender</span>
                       </a>
                     </li>
-                    <li class="element-item">
-                      <a id="receiver-ftp" href="#" class="element-box">
+                    <li class="element-item" id="receiver">
+                      <a id="receiver-ftp" href="#" class="element-box" onclick="focusElement(this)">
                         <img src="./assets/icon/ajax-icon.svg" alt="Ajax Icon">
-                        FTP(e)/S REceiver
+                        <span>FTP(e)/S Receiver</span>
                       </a>
                     </li>
-                    <li class="element-item">
-                      <a id="sender-sftp" href="#" class="element-box">
+                    <li class="element-item" id="sender">
+                      <a id="sender-sftp" href="#" class="element-box" onclick="focusElement(this)">
                         <img src="./assets/icon/database-icon.svg" alt="Database Icon">
-                        SFTP/EXEC/SHELL Sender
+                        <span>SFTP/EXEC/SHELL Sender</span>
                       </a>
                     </li>
-                    <li class="element-item">
-                      <a id="receiver-sftp" href="#" class="element-box">
+                    <li class="element-item" id="receiver">
+                      <a id="receiver-sftp" href="#" class="element-box" onclick="focusElement(this)">
                         <img src="./assets/icon/database-icon.svg" alt="Database Icon">
-                        SFTP/EXEC/SHELL Receiver
+                        <span>SFTP/EXEC/SHELL Receiver</span>
                       </a>
                     </li>
-                    <li class="element-item">
-                      <a id="sender-imap" href="#" class="element-box">
+                    <li class="element-item" id="sender">
+                      <a id="sender-imap" href="#" class="element-box" onclick="focusElement(this)">
                         <img src="./assets/icon/database-icon.svg" alt="Database Icon">
-                        IMAP/POP Sender
+                        <span>IMAP/POP Sender</span>
                       </a>
                     </li>
-                    <li class="element-item">
-                      <a id="receiver-smtp" href="#" class="element-box">
+                    <li class="element-item" id="receiver">
+                      <a id="receiver-smtp" href="#" class="element-box" onclick="focusElement(this)">
                         <img src="./assets/icon/database-icon.svg" alt="Database Icon">
-                        SMTP Receiver
+                        <span>SMTP Receiver</span>
                       </a>
                     </li>
-                    <li class="element-item">
-                      <a id="sender-jdbc" href="#" class="element-box">
+                    <li class="element-item" id="sender">
+                      <a id="sender-jdbc" href="#" class="element-box" onclick="focusElement(this)">
                         <img src="./assets/icon/database-icon.svg" alt="Database Icon">
-                        JDBC Sender
+                        <span>JDBC Sender</span>
                       </a>
                     </li>
-                    <li class="element-item">
-                      <a id="receiver-jdbc" href="#" class="element-box">
+                    <li class="element-item" id="receiver">
+                      <a id="receiver-jdbc" href="#" class="element-box" onclick="focusElement(this)">
                         <img src="./assets/icon/database-icon.svg" alt="Database Icon">
-                        JDBC Receiver
+                        <span>JDBC Receiver</span>
                       </a>
                     </li>
-                    <li class="element-item">
-                      <a id="sender-mqtt" href="#" class="element-box">
+                    <li class="element-item" id="sender">
+                      <a id="sender-mqtt" href="#" class="element-box" onclick="focusElement(this)">
                         <img src="./assets/icon/database-icon.svg" alt="Database Icon">
-                        Mqtt Sender
+                        <span>Mqtt Sender</span>
                       </a>
                     </li>
-                    <li class="element-item">
-                      <a id="receiver-mqtt" href="#" class="element-box">
+                    <li class="element-item" id="receiver">
+                      <a id="receiver-mqtt" href="#" class="element-box" onclick="focusElement(this)">
                         <img src="./assets/icon/database-icon.svg" alt="Database Icon">
-                        Mqtt Receiver
+                        <span>Mqtt Receiver</span>
                       </a>
                     </li>
-                    <li class="element-item">
-                      <a id="x" href="#" class="element-box">
+                    <li class="element-item" id="statement">
+                      <a id="x" href="#" class="element-box" onclick="focusElement(this)">
                         <img src="./assets/icon/database-icon.svg" alt="Database Icon">
-                        Applicability Statement 2
+                        <span>Applicability Statement 2</span>
                       </a>
                     </li>
                   </ul>
@@ -264,115 +251,119 @@
             <div class="col-md-8 content-section" id="properties-section">
               <div class="content-box">
                 <div class="menu-tab" id="properties-tab">
-                    <a href="#" class="tab-name active">
+                    <a href="#" class="tab-name displayed active">
                       <img src="./assets/icon/properties-icon.svg" alt="Properties Icon">
                       <span>
                         Properties
 
-                        <button class="close-tab">
+                        <button class="close-tab" id="close-properties">
                           <img src="./assets/icon/close-icon.svg" alt="Close Icon">
                         </button>
                       </span>
                     </a>
-                    <a href="#" class="tab-name">
+                    <a href="#" class="tab-name displayed">
                       <img src="./assets/icon/problems-icon.svg" alt="Problems Icon">
                       <span>
                         Problems
 
-                        <button class="close-tab">
+                        <button class="close-tab" id="close-problems">
                           <img src="./assets/icon/close-icon.svg" alt="Close Icon">
                         </button>
                       </span>
                     </a>
-                    <a href="#" class="tab-name">
+                    <a href="#" class="tab-name displayed">
                       <img src="./assets/icon/console-icon.svg" alt="Console Icon">
                       <span>
                         Console
 
-                        <button class="close-tab">
+                        <button class="close-tab" id="close-console">
                           <img src="./assets/icon/close-icon.svg" alt="Close Icon">
                         </button>
                       </span>
                     </a>
                 </div>
                 <div class="content-body">
-                    <div class="menu-group" id="main-menu">
-                      <a href="#" class="menu-name active">General</a>
-                      <a href="#" class="menu-name">Notes</a>
-                    </div>
-
-                    <div class="row">
-                      <div class="col-md-8">
-                        <p class="error-info">
-                          <img src="./assets/icon/no-error-icon.svg" alt="No Error Icon">
-                          There are no errors.
-                        </p>
-                        <div id="properties">
-                          <div class="row justify-content-center">
-                            <div class="col-md-5 config-box">
-                              <h5 class="config-title">Flow Configuration</h5>
-      
-                              <div class="input-group mb-2">
-                                <label for="input-name">Name:</label>
-                                <input type="text" class="input-field" id="input-name">
+                    <div class="properties-content">
+                      <div class="menu-group" id="main-menu">
+                        <a href="#" class="menu-name active">General</a>
+                        <a href="#" class="menu-name">Notes</a>
+                      </div>
+  
+                      <div class="row">
+                        <div class="col-md-8">
+                          <p class="error-info">
+                            <img src="./assets/icon/no-error-icon.svg" alt="No Error Icon">
+                            There are no errors.
+                          </p>
+                          
+                          <div id="properties">
+  
+                            <div class="row justify-content-center">
+                              <div class="col-md-5 config-box">
+                                <h5 class="config-title">Flow Configuration</h5>
+        
+                                <div class="input-group mb-2">
+                                  <label for="input-name">Name:</label>
+                                  <input type="text" class="input-field" id="input-name">
+                                </div>
+                                <div class="input-group mb-2">
+                                  <label for="input-state">Initial State:</label>
+                                  <input type="text" class="input-field" id="input-state">
+                                </div>
                               </div>
-                              <div class="input-group mb-2">
-                                <label for="input-state">Initial State:</label>
-                                <input type="text" class="input-field" id="input-state">
+                              <div class="col-md-5 config-box">
+                                <h5 class="config-title">Optional Processing Strategy</h5>
+        
+                                <div class="input-group mb-2">
+                                  <label for="input-processing-strategy">Processing Strategy:</label>
+                                  <input type="text" class="input-field" id="input-processing-strategy">
+                                </div>
+                                <div class="input-group mb-2">
+                                  <label for="input-processing-strategy-ref">Processing Strategy Ref:</label>
+                                  <input type="text" class="input-field" id="input-processing-strategy-ref">
+                                </div>
                               </div>
                             </div>
-                            <div class="col-md-5 config-box">
-                              <h5 class="config-title">Optional Processing Strategy</h5>
-      
-                              <div class="input-group mb-2">
-                                <label for="input-processing-strategy">Processing Strategy:</label>
-                                <input type="text" class="input-field" id="input-processing-strategy">
-                              </div>
-                              <div class="input-group mb-2">
-                                <label for="input-processing-strategy-ref">Processing Strategy Ref:</label>
-                                <input type="text" class="input-field" id="input-processing-strategy-ref">
-                              </div>
-                            </div>
+  
                           </div>
-
                         </div>
-                      </div>
-
-                      <div class="col-md-4 input-output-box">
-                        <div class="menu-group" id="sub-main-menu">
-                          <a href="#" class="menu-name active">Input</a>
-                          <a href="#" class="menu-name">Output</a>
+  
+                        <div class="col-md-4 input-output-box">
+                          <div class="menu-group" id="sub-main-menu">
+                            <a href="#" class="menu-name active">Input</a>
+                            <a href="#" class="menu-name">Output</a>
+                          </div>
+                          
+                          <div class="search-group">
+                            <input type="text" class="input-search" id="search" placeholder="Type filter text">
+                            <label for="search">
+                              <img src="./assets/icon/search-icon.svg" alt="Search Icon">
+                            </label>
+                          </div>
+                          <ul class="list-group" id="properties-group">
+                            <li class="list-item">
+                              <span> Payload </span>
+                              <p class="list-sub-item">Unknown : <span class="unhighlighted-text">Unknown</span></p>
+                            </li>
+                            <li class="list-item">
+                              <span>Flow Variables</span>
+                            </li>
+                            <li class="list-item">
+                              <span>Session Variable</span>
+                            </li>
+                            <li class="list-item">
+                              <span>Inbound Properties</span>
+                            </li>
+                            <li class="list-item">
+                              <span>Outbound Properties</span>
+                            </li>
+                            <li class="list-item">
+                              <span>Record Variables</span>
+                            </li>
+                          </ul>
                         </div>
-                        
-                        <div class="search-group">
-                          <input type="text" class="input-search" id="search" placeholder="Type filter text">
-                          <label for="search">
-                            <img src="./assets/icon/search-icon.svg" alt="Search Icon">
-                          </label>
-                        </div>
-                        <ul class="list-group" id="properties-group">
-                          <li class="list-item">
-                            <span> Payload </span>
-                            <p class="list-sub-item">Unknown : <span class="unhighlighted-text">Unknown</span></p>
-                          </li>
-                          <li class="list-item">
-                            <span>Flow Variables</span>
-                          </li>
-                          <li class="list-item">
-                            <span>Session Variable</span>
-                          </li>
-                          <li class="list-item">
-                            <span>Inbound Properties</span>
-                          </li>
-                          <li class="list-item">
-                            <span>Outbound Properties</span>
-                          </li>
-                          <li class="list-item">
-                            <span>Record Variables</span>
-                          </li>
-                        </ul>
-                      </div>
-
+  
+                      </div>  
                     </div>
                 </div>
               </div>
@@ -381,7 +372,7 @@
             <div class="col-md-4 content-section" id="flow-map-section">
               <div class="content-box">
                 <div class="menu-tab" id="flow-map-tab">
-                  <a href="#" class="tab-name">
+                  <a href="#" class="tab-name displayed">
                     <img src="./assets/icon/connection-explorer-icon.svg" alt="Connection Explorer Icon">
                     <span>
                       Connecion Explorer
@@ -391,12 +382,12 @@
                       </button>
                     </span>
                   </a>
-                  <a href="#" class="tab-name active">
+                  <a href="#" class="tab-name displayed active">
                     <img src="./assets/icon/outline-icon.svg" alt="Connection Explorer Icon">
                     <span>
                       Outline
 
-                      <button class="close-tab">
+                      <button class="close-tab" id="close-outline">
                         <img src="./assets/icon/close-icon.svg" alt="Close Icon">
                       </button>
                     </span>
@@ -404,38 +395,40 @@
                 </div>
 
                 <div class="content-body">
-                  <div class="search-group">
-                    <input type="text" class="input-search" id="search" placeholder="Type filter text">
-                    <label for="search">
-                      <img src="./assets/icon/search-icon.svg" alt="Search Icon">
-                    </label>
+                  <div class="outline-content">
+                    <div class="search-group">
+                      <input type="text" class="input-search" id="search" placeholder="Type filter text">
+                      <label for="search">
+                        <img src="./assets/icon/search-icon.svg" alt="Search Icon">
+                      </label>
+                    </div>
+                    <ul class="list-group" id="flow-map-group">
+                      <li class="list-item">
+                        <span class="main-item">
+                          <img src="./assets/icon/uncal-icon.svg" alt="Uncal Icon">
+                          Project A
+                        </span>
+                        <div class="list-sub-item">
+                          flow-a : <span class="unhighlighted-text"><i>Flow</i></span>
+                        </div>
+                        <div class="list-sub-item">
+                          flow-b : <span class="unhighlighted-text"><i>Flow</i></span>
+                        </div>
+                      </li>
+                      <li class="list-item">
+                        <span class="main-item">
+                          <img src="./assets/icon/uncal-icon.svg" alt="Uncal Icon">
+                          Project A
+                        </span>
+                        <div class="list-sub-item">
+                          flow-a : <span class="unhighlighted-text"><i>Flow</i></span>
+                        </div>
+                        <div class="list-sub-item">
+                          flow-b : <span class="unhighlighted-text"><i>Flow</i></span>
+                        </div>
+                      </li>
+                    </ul>
                   </div>
-                  <ul class="list-group" id="flow-map-group">
-                    <li class="list-item">
-                      <span class="main-item">
-                        <img src="./assets/icon/uncal-icon.svg" alt="Uncal Icon">
-                        Project A
-                      </span>
-                      <div class="list-sub-item">
-                        flow-a : <span class="unhighlighted-text"><i>Flow</i></span>
-                      </div>
-                      <div class="list-sub-item">
-                        flow-b : <span class="unhighlighted-text"><i>Flow</i></span>
-                      </div>
-                    </li>
-                    <li class="list-item">
-                      <span class="main-item">
-                        <img src="./assets/icon/uncal-icon.svg" alt="Uncal Icon">
-                        Project A
-                      </span>
-                      <div class="list-sub-item">
-                        flow-a : <span class="unhighlighted-text"><i>Flow</i></span>
-                      </div>
-                      <div class="list-sub-item">
-                        flow-b : <span class="unhighlighted-text"><i>Flow</i></span>
-                      </div>
-                    </li>
-                  </ul>
                 </div>
               </div>
             </div>
@@ -447,9 +440,36 @@
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <script src="./assets/style/js/script.js"></script>
+    <script src="./assets/style/js/flow-diagram.js"></script>
     <script src="./assets/style/js/components.js"></script>
+    <script>
+      function focusElement(e) {
+        $(".flow-diagram .element-box").removeClass("focus");
+        $(e).toggleClass("focus");
+        $(e).parent().toggleClass("focus");
+        
+        $(document).keydown(function(e){
+          var key = (e.keyCode ? e.keyCode : e.which);
+          if (key === 8) {
+            $(".element-item.focus").remove();
+            
+            if ($(".flow-diagram").children().length == 0) {
+              $(".flow-diagram, br").remove();
+            }
+          }
+        });
+       
+        $(document).click(function(a){
+          if (!e.contains(a.target)) {
+            $(".flow-diagram .element-box").removeClass("focus");
+          }
+        });
+      }
+      
+    </script>
 
   </body>
 </html>
