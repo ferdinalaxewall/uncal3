@@ -30,7 +30,11 @@
         </div>
         <div class="input-group mb-2">
             <label for="sen-sftp-mode">Mode</label>
-            <input type="text" class="input-field" id="sen-sftp-mode">
+            <select class="form-select form-select-sm w-100 text-small" id="sen-sftp-mode">
+                <option value="1" selected>sftp</option>
+                <option value="2">exec</option>
+                <option value="3">shell</option>
+            </select>
         </div>
         <div class="input-group mb-2">
             <label for="sen-sftp-filename">Filename</label>
@@ -38,11 +42,26 @@
         </div>
         <div class="input-group mb-2">
             <label for="sen-sftp-fileEvent">FileEvent</label>
-            <input type="number" class="input-field" id="sen-sftp-fileEvent">
+            <select class="form-select form-select-sm w-100 text-small" id="sen-sftp-fileEvent">
+                <option value="1" selected>Remove</option>
+                <option value="2">Move</option>
+                <option value="3">Rename</option>
+            </select>
         </div>
-        <div class="input-group mb-2">
+        <div class="input-group mb-2 d-none">
             <label for="sen-sftp-folderName">FolderName</label>
             <input type="text" class="input-field" id="sen-sftp-folderName">
         </div>
     </div>
 </div>
+
+<script>
+    // fileEvent
+    $('.form-select-sm').on('change', function() {
+        if(this.value==2){
+            $('#sen-sftp-fileEvent').parent().removeClass('d-none');
+        } else {
+            $('#sen-sftp-fileEvent').parent().addClass('d-none');
+        }
+    });
+</script>

@@ -18,11 +18,26 @@
         </div>
         <div class="input-group mb-2">
             <label for="sen-nfs-fileEvent">FileEvent</label>
-            <input type="number" class="input-field" id="sen-nfs-fileEvent">
+            <select class="form-select form-select-sm w-100 text-small" id="sen-nfs-fileEvent">
+                <option value="1" selected>Remove</option>
+                <option value="2">Move</option>
+                <option value="3">Rename</option>
+            </select>
         </div>
-        <div class="input-group mb-2">
+        <div class="input-group mb-2 d-none">
             <label for="sen-nfs-folderName">FolderName</label>
             <input type="text" class="input-field" id="sen-nfs-folderName">
         </div>
     </div>
 </div>
+
+<script>
+    // fileEvent
+    $('.form-select-sm').on('change', function() {
+        if(this.value==2){
+            $('#sen-nfs-folderName').parent().removeClass('d-none');
+        } else {
+            $('#sen-nfs-folderName').parent().addClass('d-none');
+        }
+    });
+</script>

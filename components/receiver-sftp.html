@@ -30,7 +30,11 @@
         </div>
         <div class="input-group mb-2">
             <label for="rec-sftp-mode">Mode</label>
-            <input type="text" class="input-field" id="rec-sftp-mode">
+            <select class="form-select form-select-sm w-100 text-small" id="rec-sftp-mode">
+                <option value="sftp" selected>sftp</option>
+                <option value="exec">exec</option>
+                <option value="shell">shell</option>
+            </select>
         </div>
         <div class="input-group mb-2">
             <label for="rec-sftp-filename">Filename</label>

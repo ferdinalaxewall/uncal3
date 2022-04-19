@@ -22,7 +22,12 @@
         </div>
         <div class="input-group mb-2">
             <label for="sen-jdbc-dbtype">DBType</label>
-            <input type="text" class="input-field" id="sen-jdbc-dbtype">
+            <select class="form-select form-select-sm w-100 text-small" id="sen-jdbc-dbtype">
+                <option value="MYSQL" selected>MYSQL</option>
+                <option value="MSSQL">MSSQL</option>
+                <option value="ORACLE">ORACLE</option>
+                <option value="POSTGRE">POSTGRE</option>
+            </select>
         </div>
         <div class="input-group mb-2">
             <label for="sen-jdbc-query">Query</label>

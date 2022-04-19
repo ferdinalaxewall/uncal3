@@ -30,11 +30,15 @@
         </div>
         <div class="input-group mb-2">
             <label for="sen-ftp-ssl">SSL (FTPS)</label>
-            <input type="text" class="input-field" id="sen-ftp-ssl">
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="sen-ftp-ssl" checked>
+            </div>
         </div>
         <div class="input-group mb-2">
             <label for="sen-ftp-explicit">Explicit (FTPe)</label>
-            <input type="text" class="input-field" id="sen-ftp-explicit">
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="sen-ftp-explicit" checked>
+            </div>
         </div>
         <div class="input-group mb-2">
             <label for="sen-ftp-filename">Filename</label>
@@ -42,11 +46,26 @@
         </div>
         <div class="input-group mb-2">
             <label for="sen-ftp-fileEvent">FileEvent</label>
-            <input type="text" class="input-field" id="sen-ftp-fileEvent">
+            <select class="form-select form-select-sm w-100 text-small" id="sen-ftp-fileEvent">
+                <option value="1" selected>Remove</option>
+                <option value="2">Move</option>
+                <option value="3">Rename</option>
+            </select>
         </div>
-        <div class="input-group mb-2">
+        <div class="input-group mb-2 d-none">
             <label for="sen-ftp-folderName">FolderName</label>
             <input type="text" class="input-field" id="sen-ftp-folderName">
         </div>
     </div>
 </div>
+
+<script>
+    // fileEvent
+    $('.form-select-sm').on('change', function() {
+        if(this.value==2){
+            $('#sen-ftp-folderName').parent().removeClass('d-none');
+        } else {
+            $('#sen-ftp-folderName').parent().addClass('d-none');
+        }
+    });
+</script>

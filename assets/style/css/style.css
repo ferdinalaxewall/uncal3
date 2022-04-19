@@ -627,3 +627,7 @@ a,a:hover, a:visited{
 .border-top {
     border-top: 2px solid white!important;
 }
+
+.text-small {
+    font-size: var(--fs-body) !important;
+}
