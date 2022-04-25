@@ -44,92 +44,95 @@ $(document).ready(function(){
         }
     });
 
-    $(".elements-list .element-item").click(function(e){
-        if($(this).children().prop("id") === "sender-tcp"){
-                console.log("sender-tcp");
-                $("#properties").empty();
-                $("#properties").load("components/sender-tcp.html");
-        }
-        else if($(this).children().prop("id") === "receiver-tcp"){
-                console.log("receiver-tcp");
-                $("#properties").empty();
-                $("#properties").load("components/receiver-tcp.html");
-        }
-        else if($(this).children().prop("id") === "sender-rest"){
-                console.log("sender-rest");
-                $("#properties").empty();
-                $("#properties").load("components/sender-rest.html");
-        }
-        else if($(this).children().prop("id") === "receiver-rest"){
-                console.log("receiver-rest");
-                $("#properties").empty();
-                $("#properties").load("components/receiver-rest.html");
-        }
-        else if($(this).children().prop("id") === "sender-nfs"){
-                console.log("sender-nfs");
-                $("#properties").empty();
-                $("#properties").load("components/sender-nfs.html");
-        }
-        else if($(this).children().prop("id") === "receiver-nfs"){
-                console.log("receiver-nfs");
-                $("#properties").empty();
-                $("#properties").load("components/receiver-nfs.html");
-        }
-        else if($(this).children().prop("id") === "sender-ftp"){
-                console.log("sender-ftp");
-                $("#properties").empty();
-                $("#properties").load("components/sender-ftp.html");
-        }
-        else if($(this).children().prop("id") === "receiver-ftp"){
-                console.log("receiver-ftp");
-                $("#properties").empty();
-                $("#properties").load("components/receiver-ftp.html");
-        }
-        else if($(this).children().prop("id") === "sender-sftp"){
-                console.log("sender-sftp");
-                $("#properties").empty();
-                $("#properties").load("components/sender-sftp.html");
-        }
-        else if($(this).children().prop("id") === "receiver-sftp"){
-                console.log("receiver-sftp");
-                $("#properties").empty();
-                $("#properties").load("components/receiver-sftp.html");
-        }
-        else if($(this).children().prop("id") === "sender-imap"){
-                console.log("sender-imap");
-                $("#properties").empty();
-                $("#properties").load("components/sender-imap.html");
-        }
-        else if($(this).children().prop("id") === "receiver-smtp"){
-                console.log("receiver-smtp");
-                $("#properties").empty();
-                $("#properties").load("components/receiver-smtp.html");
-        }
-        else if($(this).children().prop("id") === "sender-jdbc"){
-                console.log("sender-jdbc");
-                $("#properties").empty();
-                $("#properties").load("components/sender-jdbc.html");
-        }
-        else if($(this).children().prop("id") === "receiver-jdbc"){
-                console.log("receiver-jdbc");
-                $("#properties").empty();
-                $("#properties").load("components/receiver-jdbc.html");
-        }
-        else if($(this).children().prop("id") === "sender-mqtt"){
-                console.log("sender-mqtt");
-                $("#properties").empty();
-                $("#properties").load("components/sender-mqtt.html");
-        }
-        else if($(this).children().prop("id") === "receiver-mqtt"){
-                console.log("receiver-mqtt");
-                $("#properties").empty();
-                $("#properties").load("components/receiver-mqtt.html");
-        }
+    // $(".elements-list .element-item").click(function(e){
+    //     if($(this).children().prop("id") === "sender-tcp"){
+    //             console.log("sender-tcp");
+    //             $("#properties").empty();
+    //             $("#properties").load("components/sender-tcp.html");
+    //     }
+    //     else if($(this).children().prop("id") === "receiver-tcp"){
+    //             console.log("receiver-tcp");
+    //             $("#properties").empty();
+    //             $("#properties").load("components/receiver-tcp.html");
+    //     }
+    //     else if($(this).children().prop("id") === "sender-rest"){
+    //             console.log("sender-rest");
+    //             $("#properties").empty();
+    //             $("#properties").load("components/sender-rest.html");
+    //     }
+    //     else if($(this).children().prop("id") === "receiver-rest"){
+    //             console.log("receiver-rest");
+    //             $("#properties").empty();
+    //             $("#properties").load("components/receiver-rest.html");
+    //     }
+    //     else if($(this).children().prop("id") === "sender-nfs"){
+    //             console.log("sender-nfs");
+    //             $("#properties").empty();
+    //             $("#properties").load("components/sender-nfs.html");
+    //     }
+    //     else if($(this).children().prop("id") === "receiver-nfs"){
+    //             console.log("receiver-nfs");
+    //             $("#properties").empty();
+    //             $("#properties").load("components/receiver-nfs.html");
+    //     }
+    //     else if($(this).children().prop("id") === "sender-ftp"){
+    //             console.log("sender-ftp");
+    //             $("#properties").empty();
+    //             $("#properties").load("components/sender-ftp.html");
+    //     }
+    //     else if($(this).children().prop("id") === "receiver-ftp"){
+    //             console.log("receiver-ftp");
+    //             $("#properties").empty();
+    //             $("#properties").load("components/receiver-ftp.html");
+    //     }
+    //     else if($(this).children().prop("id") === "sender-sftp"){
+    //             console.log("sender-sftp");
+    //             $("#properties").empty();
+    //             $("#properties").load("components/sender-sftp.html");
+    //     }
+    //     else if($(this).children().prop("id") === "receiver-sftp"){
+    //             console.log("receiver-sftp");
+    //             $("#properties").empty();
+    //             $("#properties").load("components/receiver-sftp.html");
+    //     }
+    //     else if($(this).children().prop("id") === "sender-imap"){
+    //             console.log("sender-imap");
+    //             $("#properties").empty();
+    //             $("#properties").load("components/sender-imap.html");
+    //     }
+    //     else if($(this).children().prop("id") === "receiver-smtp"){
+    //             console.log("receiver-smtp");
+    //             $("#properties").empty();
+    //             $("#properties").load("components/receiver-smtp.html");
+    //     }
+    //     else if($(this).children().prop("id") === "sender-jdbc"){
+    //             console.log("sender-jdbc");
+    //             $("#properties").empty();
+    //             $("#properties").load("components/sender-jdbc.html");
+    //     }
+    //     else if($(this).children().prop("id") === "receiver-jdbc"){
+    //             console.log("receiver-jdbc");
+    //             $("#properties").empty();
+    //             $("#properties").load("components/receiver-jdbc.html");
+    //     }
+    //     else if($(this).children().prop("id") === "sender-mqtt"){
+    //             console.log("sender-mqtt");
+    //             $("#properties").empty();
+    //             $("#properties").load("components/sender-mqtt.html");
+    //     }
+    //     else if($(this).children().prop("id") === "receiver-mqtt"){
+    //             console.log("receiver-mqtt");
+    //             $("#properties").empty();
+    //             $("#properties").load("components/receiver-mqtt.html");
+    //     }
         
-        else{
-            console.log("item click not matched")
-        }
-    });
+    //     else{
+    //         console.log("item click not matched")
+    //     }
+    // });
 
+    var getTypeComp = $(this).children().prop("id");
+    $("#properties").empty();
+    $("#properties").load("components/"+getTypeComp+".html");
    
 });
