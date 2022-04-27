@@ -121,8 +121,7 @@ $(document).ready(function(){
     }
 
     // === JSON TO UI ====
-    function addFlow(component){
-        console.log("component:", component);
+    function addFlow(component, data_id){
         var flowDiagram = "<ul class='flow-diagram'></ul><br>";
         $(flowDiagram).insertBefore($('.canvas'));
         
@@ -132,14 +131,18 @@ $(document).ready(function(){
             }else{
                 var clone = $(component).parent().clone();
                 $(clone).addClass('element-item-disabled');
+                $(clone).attr('data_id', data_id);
                 $(clone).find('a').attr('onclick', 'focusElement(this)');
                 $(".flow-diagram").eq(i).append(clone);
             }
         });
     }
 
-    function addComponent(component, i){
+    function addComponent(component, i, data_id){
         var clone = $(component).parent().clone();
+        $(clone).attr('style', 'width: auto; height: auto;');
+        $(clone).attr('data_id', data_id);
+        $(clone).find('a').attr('onclick', 'focusElement(this)');
         $($(".flow-diagram").get(i)).append(clone);
     }
 
@@ -153,12 +156,13 @@ $(document).ready(function(){
         $($(".flow-diagram").get(i)).append(cloneFinal);
     }
 
-    function addSwitchItem(component, data_id){
+    function addSwitchItem(component, switch_id, idSwitch){
         var clone = $(component).parent().clone();
-        $('[data_id="'+ data_id +'"]').find('ul').append(clone);
+        $(clone).attr('data_id', idSwitch);
+        $('[data_id="'+ switch_id +'"]').find('ul').append(clone);
     }
 
-    var jsonFlow = [
+    var jsonData = [
         {
             "name": "flow1",
             "index": 0,
@@ -224,11 +228,12 @@ $(document).ready(function(){
                     "pid": "1-0",
                     "index": 0,
                     "properties": {
-                        "port": 8080,
-                        "name": "xxx",
-                        "thread": 1,
-                        "keepopen": true,
-                        "wait": 60
+                        "path": "/opt/hamster/video",
+                        "polling": 10,
+                        "retry": 60,
+                        "filename": "video.mp4",
+                        "fileEvent": 2,
+                        "folderName": "assets",
                     }
                 },
                 {
@@ -293,6 +298,8 @@ $(document).ready(function(){
                                 "retry": 60,
                                 "ip": "192.168.1.56",
                                 "port": 21,
+                                "username" : "testuser",
+                                "password" : "testing111",
                                 "ssl": true,
                                 "explicit": false,
                                 "filename": "lolz"
@@ -308,11 +315,16 @@ $(document).ready(function(){
                     "pid": "1-2",
                     "index": 0,
                     "properties": {
-                        "port": 8080,
-                        "name": "xxx",
-                        "thread": 1,
-                        "keepopen": true,
-                        "wait": 60
+                        "path": "/home/nudetube/img",
+                        "polling": 20,
+                        "retry": 60,
+                        "ip": "192.168.1.666",
+                        "port": 21,
+                        "username" : "admin",
+                        "password" : "1234",
+                        "ssl": false,
+                        "explicit": true,
+                        "filename": "finalCrime.img"
                     }
                 },
             ],
@@ -350,17 +362,22 @@ $(document).ready(function(){
     //     }
     // }
 
+    // localStorage
+    localStorage.setItem("jsonFlow", JSON.stringify(jsonData));
+    var jsonFlow = JSON.parse(localStorage.getItem("jsonFlow"));
+
     // ===== (JSON TO UI) BACA CARA RECURSIVE ===
     for (let i = 0; i < jsonFlow.length; i++) {
         const flow = jsonFlow[i];
         var flow_name = flow.name;
         var type_com0 = flow.components[0].type;
-        addFlow('#'+type_com0);
+        var id_com0 = flow.components[0].id;
+        addFlow('#'+type_com0, id_com0);
 
         var components = flow.components;
         var firstCompId = components[0].id;
-        console.log("components", components);
-        console.log("firstCompId:", firstCompId);
+        // console.log("components", components);
+        // console.log("firstCompId:", firstCompId);
         recurComp(components, firstCompId, i);
     }
 
@@ -374,11 +391,11 @@ $(document).ready(function(){
             var type = component.type;
 
             if(pid == parent_id){
-                console.log("type: ", type, "data_id", id, "indexFlow", indexFlow);
+                // console.log("type: ", type, "data_id", id, "indexFlow", indexFlow);
                 
                 // selain component switch
                 if(type != 'object-switching'){
-                    addComponent("#" + type, indexFlow);
+                    addComponent("#" + type, indexFlow, id);
                 } else { // component switch
                     addSwitch("#object-switching", indexFlow, id);
 
@@ -391,10 +408,10 @@ $(document).ready(function(){
                         var idSwitch = componSwitch.id;
                         var pidSwitch = componSwitch.pid;
                         var typeSwitch = componSwitch.type;
-                        console.log("nameSwitch: ", nameSwitch, "typeSwitch", typeSwitch, "idSwitch", idSwitch);
+                        // console.log("nameSwitch: ", nameSwitch, "typeSwitch", typeSwitch, "idSwitch", idSwitch);
 
                         if(id == pidSwitch){
-                            addSwitchItem("#"+typeSwitch, id);
+                            addSwitchItem("#"+typeSwitch, id, idSwitch);
                         }
                     }
                 }

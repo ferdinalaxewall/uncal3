@@ -101,93 +101,59 @@ function focusElement(e) {
       $(e).toggleClass("focus")
       $(e).parent().toggleClass("focus");
     }, 1);
+
+    // auto open by file name
+    var getTypeComp = $(e).prop("id");
+    $("#properties").empty();
+    $("#properties").load("components/"+getTypeComp+".html");
     
-        if($(e).prop("id") === "sender-tcp"){
-                console.log("sender-tcp");
-                $("#properties").empty();
-                $("#properties").load("components/sender-tcp.html");
-        }
-        else if($(e).prop("id") === "receiver-tcp"){
-                console.log("receiver-tcp");
-                $("#properties").empty();
-                $("#properties").load("components/receiver-tcp.html");
-        }
-        else if($(e).prop("id") === "sender-rest"){
-                console.log("sender-rest");
-                $("#properties").empty();
-                $("#properties").load("components/sender-rest.html");
-        }
-        else if($(e).prop("id") === "receiver-rest"){
-                console.log("receiver-rest");
-                $("#properties").empty();
-                $("#properties").load("components/receiver-rest.html");
-        }
-        else if($(e).prop("id") === "sender-nfs"){
-                console.log("sender-nfs");
-                $("#properties").empty();
-                $("#properties").load("components/sender-nfs.html");
-        }
-        else if($(e).prop("id") === "receiver-nfs"){
-                console.log("receiver-nfs");
-                $("#properties").empty();
-                $("#properties").load("components/receiver-nfs.html");
-        }
-        else if($(e).prop("id") === "sender-ftp"){
-                console.log("sender-ftp");
-                $("#properties").empty();
-                $("#properties").load("components/sender-ftp.html");
-        }
-        else if($(e).prop("id") === "receiver-ftp"){
-                console.log("receiver-ftp");
-                $("#properties").empty();
-                $("#properties").load("components/receiver-ftp.html");
-        }
-        else if($(e).prop("id") === "sender-sftp"){
-                console.log("sender-sftp");
-                $("#properties").empty();
-                $("#properties").load("components/sender-sftp.html");
-        }
-        else if($(e).prop("id") === "receiver-sftp"){
-                console.log("receiver-sftp");
-                $("#properties").empty();
-                $("#properties").load("components/receiver-sftp.html");
-        }
-        else if($(e).prop("id") === "sender-imap"){
-                console.log("sender-imap");
-                $("#properties").empty();
-                $("#properties").load("components/sender-imap.html");
-        }
-        else if($(e).prop("id") === "receiver-smtp"){
-                console.log("receiver-smtp");
-                $("#properties").empty();
-                $("#properties").load("components/receiver-smtp.html");
-        }
-        else if($(e).prop("id") === "sender-jdbc"){
-                console.log("sender-jdbc");
-                $("#properties").empty();
-                $("#properties").load("components/sender-jdbc.html");
-        }
-        else if($(e).prop("id") === "receiver-jdbc"){
-                console.log("receiver-jdbc");
-                $("#properties").empty();
-                $("#properties").load("components/receiver-jdbc.html");
-        }
-        else if($(e).prop("id") === "sender-mqtt"){
-                console.log("sender-mqtt");
-                $("#properties").empty();
-                $("#properties").load("components/sender-mqtt.html");
-        }
-        else if($(e).prop("id") === "receiver-mqtt"){
-                console.log("receiver-mqtt");
-                $("#properties").empty();
-                $("#properties").load("components/receiver-mqtt.html");
-        }
-        
-        else{
-            console.log("item click not matched")
-        }
-    // });
+    // fill data ke properties (auto nama id)
+    var data_id = $(e).parent().attr("data_id");
+    var indexFlow = data_id.split("-")[0];
+    // console.log('focusElement. data_id', data_id, "indexFlow", indexFlow);
+    var jsonFlow = JSON.parse(localStorage.getItem("jsonFlow"));
+    console.log("focusElement. jsonFlow", jsonFlow[indexFlow]);
     
+    setTimeout(function(){
+        recurJsonFlow(jsonFlow[indexFlow]);
+    }, 1000);
+    
+    function recurJsonFlow(jsonFlowIndex){
+        var components = jsonFlowIndex.components;
+        for (let x = 0; x < components.length; x++) {
+            const comp = components[x];
+            var name = comp.name;
+            var type = comp.type;
+            var id = comp.id;
+            var properties = comp.properties;
+            
+            if(data_id == id){
+                console.log("name:", name, "| type:", type, "| id:", id, "| properties:", properties);
+                for (const key in properties) {
+                    var value = properties[key];
+                    // console.log('key', key, 'properties', properties[key]);
+                    var finalData = ""
+                    if(type.startsWith("receiver-")){
+                        finalData = type.replace('receiver-', 'rec-');
+                    } else if(type.startsWith("sender-")){
+                        finalData = type.replace('sender-', 'sen-');
+                    } else if(type.startsWith("object-")){
+                        finalData = type.replace('object-', 'obj-');
+                    }
+
+                    finalData += '-' + key;
+                    console.log('finalData. id:', finalData, '| value:', value);
+                    $("#"+finalData).val(value);
+                }
+            }
+
+            if(type == 'object-switching'){
+                recurJsonFlow(comp);
+            }
+        }
+    }
+    
+    // klik keyboard di component
     $(document).keydown(function(e){
       var key = (e.keyCode ? e.keyCode : e.which);
       if (key === 8) {
@@ -205,4 +171,5 @@ function focusElement(e) {
         $(".flow-diagram .element-item, .flow-diagram .element-box").removeClass("focus");
       }
     });
+    
 }
