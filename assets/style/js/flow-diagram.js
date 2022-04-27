@@ -50,6 +50,7 @@ $(document).ready(function(){
     }).disableSelection();
 
     $("#flow-tab").sortable().disableSelection();
+    var switchUl = "<ul class='switch-flow-diagram ui-sortable'></ul>";
 
     function sortableFunc(){
         var adding = 0
@@ -90,7 +91,7 @@ $(document).ready(function(){
                                         if($(this).eq(ind).children().hasClass("switch-flow-diagram")){
                                             console.log("ada swf")
                                         }else{
-                                            $(this).eq(ind).append("<ul class='switch-flow-diagram'></ul>")
+                                            $(this).eq(ind).append(switchUl);
                                             console.log($(this).eq(ind));
                                         }
                                     });
@@ -130,6 +131,8 @@ $(document).ready(function(){
             if ($(".flow-diagram").eq(i).children().hasClass("element-item")) {
             }else{
                 var clone = $(component).parent().clone();
+                $(clone).addClass('element-item-disabled');
+                $(clone).find('a').attr('onclick', 'focusElement(this)');
                 $(".flow-diagram").eq(i).append(clone);
             }
         });
@@ -140,17 +143,32 @@ $(document).ready(function(){
         $($(".flow-diagram").get(i)).append(clone);
     }
 
+    function addSwitch(component, i, data_id){
+        var clone = $(component).parent().clone();
+        $(clone).attr('id', 'switch-element');
+        $(clone).attr('style', 'width: auto; height: auto;');
+        $(clone).attr('data_id', data_id);
+        $(clone).find('a').attr('onclick', 'focusElement(this)');
+        var cloneFinal = $(clone).append(switchUl);
+        $($(".flow-diagram").get(i)).append(cloneFinal);
+    }
+
+    function addSwitchItem(component, data_id){
+        var clone = $(component).parent().clone();
+        $('[data_id="'+ data_id +'"]').find('ul').append(clone);
+    }
+
     var jsonFlow = [
         {
             "name": "flow1",
             "index": 0,
             "components": [
                 {
-                    "id": 1,
+                    "id": "0-1",
                     "type": "sender-tcp",
                     "name": "tcp-test",
                     "level": 0,
-                    "pid": 0,
+                    "pid": "0-0",
                     "index": 0,
                     "properties": {
                         "port": 8080,
@@ -161,11 +179,11 @@ $(document).ready(function(){
                     }
                 },
                 {
-                    "id": 2,
+                    "id": "0-2",
                     "type": "receiver-nfs",
                     "name": "nfs-test",
                     "level": 1,
-                    "pid": 1,
+                    "pid": "0-1",
                     "index": 0,
                     "properties": {
                         "path": "/opt/xxnx", 
@@ -175,11 +193,11 @@ $(document).ready(function(){
                     }
                 },
                 {
-                    "id": 3,
+                    "id": "0-3",
                     "type": "receiver-jdbc",
                     "name": "nfs-jdbc",
                     "level": 2,
-                    "pid": 1,
+                    "pid": "0-2",
                     "index": 0,
                     "properties": {
                         "host": "192.168.1.56",
@@ -199,11 +217,11 @@ $(document).ready(function(){
             "index": 1,
             "components": [
                 {
-                    "id": 1,
+                    "id": "1-1",
                     "type": "sender-nfs",
                     "name": "nfs-test",
                     "level": 0,
-                    "pid": 0,
+                    "pid": "1-0",
                     "index": 0,
                     "properties": {
                         "port": 8080,
@@ -214,82 +232,190 @@ $(document).ready(function(){
                     }
                 },
                 {
-                    "id": 2,
+                    "id": "1-2",
                     "type": "object-switching",
                     "name": "my-switching",
                     "level": 1,
-                    "pid": 1,
+                    "pid": "1-1",
                     "index": 0,
                     "properties": {
                         "switch-case": "object",
                         "if-else": "object",
                         "customization": "java-code"
-                    }
+                    },
+                    "components": [
+                        {
+                            "id": "1-2-1",
+                            "type": "receiver-jdbc",
+                            "name": "jdbc-mysql",
+                            "level": 0,
+                            "pid": "1-2",
+                            "index": 0,
+                            "properties": {
+                                "host": "192.168.1.56",
+                                "port": "3306",
+                                "username": "sa",
+                                "password": "test",
+                                "dbname": "databaseku",
+                                "dbtype": "mysql",
+                                "polling": 20,
+                                "retry": 60
+                            }
+                        },
+                        {
+                            "id": "1-2-2",
+                            "type": "receiver-jdbc",
+                            "name": "jdbc-mssql",
+                            "level": 0,
+                            "pid": "1-2",
+                            "index": 1,
+                            "properties": {
+                                "host": "192.168.1.39",
+                                "port": "1433",
+                                "username": "sa",
+                                "password": "password",
+                                "dbname": "db-server",
+                                "dbtype": "mssql",
+                                "polling": 20,
+                                "retry": 60
+                            }
+                        },
+                        {
+                            "id": "1-2-3",
+                            "type": "receiver-ftp",
+                            "name": "ftp-rec",
+                            "level": 1,
+                            "pid": "1-2-1",
+                            "index": 0,
+                            "properties": {
+                                "path": "/opt/xfantasy/assets",
+                                "polling": 20,
+                                "retry": 60,
+                                "ip": "192.168.1.56",
+                                "port": 21,
+                                "ssl": true,
+                                "explicit": false,
+                                "filename": "lolz"
+                            }
+                        },
+                    ],
                 },
                 {
-                    "id": 3,
-                    "type": "receiver-jdbc",
-                    "name": "jdbc-mysql",
+                    "id": "1-3",
+                    "type": "receiver-ftp",
+                    "name": "ftp-test",
                     "level": 2,
-                    "pid": 2,
+                    "pid": "1-2",
                     "index": 0,
                     "properties": {
-                        "host": "192.168.1.56",
-                        "port": "3306",
-                        "username": "sa",
-                        "password": "test",
-                        "dbname": "databaseku",
-                        "dbtype": "mysql",
-                        "polling": 20,
-                        "retry": 60
+                        "port": 8080,
+                        "name": "xxx",
+                        "thread": 1,
+                        "keepopen": true,
+                        "wait": 60
                     }
                 },
-                {
-                    "id": 4,
-                    "type": "receiver-jdbc",
-                    "name": "jdbc-mssql",
-                    "level": 2,
-                    "pid": 2,
-                    "index": 1,
-                    "properties": {
-                        "host": "192.168.1.39",
-                        "port": "1433",
-                        "username": "sa",
-                        "password": "password",
-                        "dbname": "db-server",
-                        "dbtype": "mssql",
-                        "polling": 20,
-                        "retry": 60
-                    }
-                }
-            ]
+            ],
         }
     ];
 
+    // ===== (JSON TO UI) BACA CARA FLAT ===
+    // for (let i = 0; i < jsonFlow.length; i++) {
+    //     const flow = jsonFlow[i];
+    //     console.log("flow: ", flow);
+    //     var flow_name = flow.name;
+    //     var type_com0 = flow.components[0].type;
+    //     console.log("Name Flow", flow_name, ", type_com0: ", type_com0);
+    //     addFlow('#'+type_com0);
+
+    //     var components = flow.components;
+    //     var firstCompId = components[0].id;
+    //     console.log("components", components);
+    //     console.log("firstCompId:", firstCompId);
+    //     recurComp(components, firstCompId);
+
+    //     for (let j = 1; j < components.length; j++) {
+    //         var component = components[j];
+    //         var type = component.type;
+    //         var name = component.name;
+    //         var data_id = component.id;
+    //         console.log("Type_com", type, ", name_ui: ", name, " prop: ", component.properties);
+
+    //         if(type != 'object-switching'){
+    //             addComponent("#" + type, i);
+    //         } else {
+    //             addSwitch("#object-switching", i, data_id);
+                
+    //         }
+    //     }
+    // }
+
+    // ===== (JSON TO UI) BACA CARA RECURSIVE ===
     for (let i = 0; i < jsonFlow.length; i++) {
         const flow = jsonFlow[i];
-        console.log("flow: ", flow);
         var flow_name = flow.name;
         var type_com0 = flow.components[0].type;
-        // console.log("Name Flow", flow_name, ", type_com0: ", type_com0);
-        // addFlow('#'+type_com0);
+        addFlow('#'+type_com0);
 
         var components = flow.components;
+        var firstCompId = components[0].id;
+        console.log("components", components);
+        console.log("firstCompId:", firstCompId);
+        recurComp(components, firstCompId, i);
+    }
+
+    function recurComp(components, parent_id, indexFlow){
         for (let j = 1; j < components.length; j++) {
             var component = components[j];
-            var type = component.type;
+            var level = component.level;
             var name = component.name;
+            var id = component.id;
+            var pid = component.pid;
+            var type = component.type;
 
-            // console.log("Type_com", type, ", name_ui: ", name, " prop: ", component.properties);
-            // addComponent("#" + type, i);
+            if(pid == parent_id){
+                console.log("type: ", type, "data_id", id, "indexFlow", indexFlow);
+                
+                // selain component switch
+                if(type != 'object-switching'){
+                    addComponent("#" + type, indexFlow);
+                } else { // component switch
+                    addSwitch("#object-switching", indexFlow, id);
+
+                    // switch components child
+                    var componSwitchList = component.components;
+                    for (let k = 0; k < componSwitchList.length; k++) {
+                        var componSwitch = componSwitchList[k];
+                        var levelSwitch = componSwitch.level;
+                        var nameSwitch = componSwitch.name;
+                        var idSwitch = componSwitch.id;
+                        var pidSwitch = componSwitch.pid;
+                        var typeSwitch = componSwitch.type;
+                        console.log("nameSwitch: ", nameSwitch, "typeSwitch", typeSwitch, "idSwitch", idSwitch);
+
+                        if(id == pidSwitch){
+                            addSwitchItem("#"+typeSwitch, id);
+                        }
+                    }
+                }
+
+                recurComp(components, id, indexFlow);
+            }
         }
     }
 
-    // == contoh hardcode == 
+    // == contoh hardcode 2 flow polos == 
     // addFlow('#sender-tcp');
     // addComponent("#receiver-tcp", 0);
 
     // addFlow('#sender-nfs');
     // addComponent("#receiver-nfs", 1);
+
+    // == contoh hardcode 1 flow switch == 
+    // addFlow('#sender-tcp');
+    // var data_id = 0 + "_" + 1;
+    // addSwitch("#object-switching", 0, data_id);
+    // addSwitchItem("#receiver-rest", data_id);
+    // addSwitchItem("#receiver-nfs", data_id);
     
 });
