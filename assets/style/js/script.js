@@ -114,10 +114,6 @@ function focusElement(e) {
     var jsonFlow = JSON.parse(localStorage.getItem("jsonFlow"));
     console.log("focusElement. jsonFlow", jsonFlow[indexFlow]);
     
-    setTimeout(function(){
-        recurJsonFlow(jsonFlow[indexFlow]);
-    }, 1000);
-    
     function recurJsonFlow(jsonFlowIndex){
         var components = jsonFlowIndex.components;
         for (let x = 0; x < components.length; x++) {
@@ -142,8 +138,19 @@ function focusElement(e) {
                     }
 
                     finalData += '-' + key;
-                    console.log('finalData. id:', finalData, '| value:', value);
-                    $("#"+finalData).val(value);
+
+                    var typeValue = typeof value;
+                    console.log('finalData. id:', finalData, '| value:', value, '| type:', typeValue);
+
+                   if(typeValue == 'boolean'){
+                        if(value == true){
+                            $("#"+finalData).attr('checked', true);
+                        } else {
+                            $("#"+finalData).attr('checked', false);
+                        }
+                    } else {
+                        $("#"+finalData).val(value);
+                    }
                 }
             }
 
@@ -152,6 +159,48 @@ function focusElement(e) {
             }
         }
     }
+
+    setTimeout(function(){
+        // isi data ke properties
+        recurJsonFlow(jsonFlow[indexFlow]);
+
+        // edit properties
+        console.log('edit', '#'+getTypeComp+"-page");
+        $('#'+getTypeComp+"-page").attr("prop_id", data_id);
+
+        $('#'+getTypeComp+"-page").find("input").unbind("click");
+        $('#'+getTypeComp+"-page").find("input").each(function(){
+            // console.log("edit:", $(this));
+            $(this).keyup(function() {
+                var idThis = $(this).attr('id');
+                var valueThis = $(this).val();
+                var prop_id = $(this).parent().parent().parent().attr('prop_id');
+                // console.log("edit. idThis:", idThis, "| valueThis:", valueThis, "| prop_id:", prop_id);
+
+                var jsonFlowThis = JSON.parse(localStorage.getItem("jsonFlow"));
+                var indexFlowThis = prop_id.split('-')[0];
+                findComp(jsonFlowThis[indexFlowThis]);
+                function findComp(jsonFlowIndex){
+                    var components = jsonFlowIndex.components;
+                    for (let x = 0; x < components.length; x++) {
+                        const comp = components[x];
+                        var name = comp.name;
+                        var type = comp.type;
+                        var id = comp.id;
+                        var properties = comp.properties;
+
+                        if(prop_id == id){
+                            var propName = idThis.split('-')[2];
+                            properties[propName] = valueThis;
+                            // console.log("findComp. name:", name, "| type:", type, "| id:", id, "| properties:", properties, "| jsonFlowThis:", jsonFlowThis);
+                            localStorage.setItem("jsonFlow", JSON.stringify(jsonFlowThis));
+                        }
+                    }
+                }
+            });
+        });
+        
+    }, 300);
     
     // klik keyboard di component
     $(document).keydown(function(e){

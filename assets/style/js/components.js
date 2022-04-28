@@ -36,8 +36,8 @@ $(document).ready(function(){
         else if ($(this).prop("id") == 'receiver-category') {
             $(".elements-list .element-item#receiver").show();
         }
-        else if ($(this).prop("id") == 'statement-category') {
-            $(".elements-list .element-item#statement").show();
+        else if ($(this).prop("id") == 'object-category') {
+            $(".elements-list .element-item#object").show();
         }
         else{
             $(".elements-list .element-item").hide();
