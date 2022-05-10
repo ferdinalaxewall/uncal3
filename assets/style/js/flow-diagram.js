@@ -331,37 +331,6 @@ $(document).ready(function(){
         }
     ];
 
-    // ===== (JSON TO UI) BACA CARA FLAT ===
-    // for (let i = 0; i < jsonFlow.length; i++) {
-    //     const flow = jsonFlow[i];
-    //     console.log("flow: ", flow);
-    //     var flow_name = flow.name;
-    //     var type_com0 = flow.components[0].type;
-    //     console.log("Name Flow", flow_name, ", type_com0: ", type_com0);
-    //     addFlow('#'+type_com0);
-
-    //     var components = flow.components;
-    //     var firstCompId = components[0].id;
-    //     console.log("components", components);
-    //     console.log("firstCompId:", firstCompId);
-    //     recurComp(components, firstCompId);
-
-    //     for (let j = 1; j < components.length; j++) {
-    //         var component = components[j];
-    //         var type = component.type;
-    //         var name = component.name;
-    //         var data_id = component.id;
-    //         console.log("Type_com", type, ", name_ui: ", name, " prop: ", component.properties);
-
-    //         if(type != 'object-switching'){
-    //             addComponent("#" + type, i);
-    //         } else {
-    //             addSwitch("#object-switching", i, data_id);
-                
-    //         }
-    //     }
-    // }
-
     // localStorage
     var getLocal = localStorage.getItem("jsonFlow");
     console.log("getLocal: ", getLocal);
@@ -372,7 +341,7 @@ $(document).ready(function(){
 
     var jsonFlow = JSON.parse(localStorage.getItem("jsonFlow"));
 
-    // ===== (JSON TO UI) BACA CARA RECURSIVE ===
+    // ===== (JSON TO UI) BACA CARA FLAT ===
     for (let i = 0; i < jsonFlow.length; i++) {
         const flow = jsonFlow[i];
         var flow_name = flow.name;
@@ -382,10 +351,25 @@ $(document).ready(function(){
 
         var components = flow.components;
         var firstCompId = components[0].id;
-        // console.log("components", components);
-        // console.log("firstCompId:", firstCompId);
+        console.log("components", components);
+        console.log("firstCompId:", firstCompId);
         recurComp(components, firstCompId, i);
     }
+
+    // ===== (JSON TO UI) BACA CARA RECURSIVE ===
+    // for (let i = 0; i < jsonFlow.length; i++) {
+    //     const flow = jsonFlow[i];
+    //     var flow_name = flow.name;
+    //     var type_com0 = flow.components[0].type;
+    //     var id_com0 = flow.components[0].id;
+    //     addFlow('#'+type_com0, id_com0);
+
+    //     var components = flow.components;
+    //     var firstCompId = components[0].id;
+    //     // console.log("components", components);
+    //     // console.log("firstCompId:", firstCompId);
+    //     recurComp(components, firstCompId, i);
+    // }
 
     function recurComp(components, parent_id, indexFlow){
         for (let j = 1; j < components.length; j++) {
