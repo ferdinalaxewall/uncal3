@@ -363,7 +363,13 @@ $(document).ready(function(){
     // }
 
     // localStorage
-    localStorage.setItem("jsonFlow", JSON.stringify(jsonData));
+    var getLocal = localStorage.getItem("jsonFlow");
+    console.log("getLocal: ", getLocal);
+    if(getLocal == "" || getLocal == null /* || getLocal == "[]" */){
+        console.log("empty");
+        localStorage.setItem("jsonFlow", JSON.stringify(jsonData));
+    } 
+
     var jsonFlow = JSON.parse(localStorage.getItem("jsonFlow"));
 
     // ===== (JSON TO UI) BACA CARA RECURSIVE ===

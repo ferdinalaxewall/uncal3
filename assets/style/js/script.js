@@ -171,6 +171,8 @@ function focusElement(e) {
         $('#'+getTypeComp+"-page").find("input").unbind("click");
         $('#'+getTypeComp+"-page").find("input").each(function(){
             // console.log("edit:", $(this));
+
+            // edit component di local storage
             $(this).keyup(function() {
                 var idThis = $(this).attr('id');
                 var valueThis = $(this).val();
@@ -204,15 +206,44 @@ function focusElement(e) {
     
     // klik keyboard di component
     $(document).keydown(function(e){
-      var key = (e.keyCode ? e.keyCode : e.which);
-      if (key === 8) {
-        $(".element-item.focus").remove();
-        $("#properties").empty();
-        
-        if ($(".flow-diagram").children().length == 0) {
-          $(".flow-diagram, br").remove();
+        var key = (e.keyCode ? e.keyCode : e.which);
+        if (key === 8) {
+            $(".element-item.focus").remove();
+            
+            if ($(".flow-diagram").children().length == 0) {
+                $(".flow-diagram, br").remove();
+            }
+            
+            // validasi hapus properties
+            var getEl = $(".element-item.focus");
+            var data_id = getEl.attr("data_id");
+            var prop_id = $("#properties").children(":first").attr("prop_id");
+            if(data_id != undefined){
+                $("#properties").empty();
+            }
+
+            // hapus component di localStorage
+            var jsonFlowThis = JSON.parse(localStorage.getItem("jsonFlow"));
+            var indexFlowThis = prop_id.split('-')[0];
+            console.log("indexFlowThis: ", indexFlowThis);
+            findComp(jsonFlowThis[indexFlowThis]);
+            function findComp(jsonFlowIndex){
+                var components = jsonFlowIndex.components;
+                for (let x = 0; x < components.length; x++) {
+                    const comp = components[x];
+                    var name = comp.name;
+                    var type = comp.type;
+                    var id = comp.id;
+                    var properties = comp.properties;
+
+                    if(prop_id == id){
+                        console.log("findComp del. name:", name, "| type:", type, "| id:", id, "| properties:", properties, "| jsonFlowThis:", jsonFlowThis);
+                        components.splice(x, 1);
+                        localStorage.setItem("jsonFlow", JSON.stringify(jsonFlowThis));
+                    }
+                }
+            }
         }
-      }
     });
    
     $(document).click(function(a){
