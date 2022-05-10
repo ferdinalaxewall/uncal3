@@ -285,6 +285,7 @@ a,a:hover, a:visited{
 @keyframes arrow {
     from{
         opacity: 0;
+        
         left: -39px;
     }
     to{
