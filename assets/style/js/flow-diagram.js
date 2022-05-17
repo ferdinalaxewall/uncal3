@@ -72,27 +72,27 @@ $(document).ready(function(){
             },
             update  : function(ev, ui){
                 setTimeout(function(){
+                    // create switch component
                     $(".flow-diagram .element-item").each(function(i){
-                        console.log("col1: ", $(".flow-diagram .element-box").eq(i).prop("id"));
+                        // console.log("col1: ", $(".flow-diagram .element-box").eq(i).prop("id"));
                         if($(".flow-diagram .element-box").eq(i).prop("id") == 'object-switching'){
-                            console.log("col2: ", ui.item.prop("id"));
+                            // console.log("col2: ", ui.item.prop("id"));
                             if (ui.item.prop("id") == 'switch-element') {
                             }else{
-                                console.log("tos")
                                 $(".flow-diagram #object-switching").parent().attr("id", "switch-element")
                                 setTimeout(function(){
-                                    console.log(ui.item.children().hasClass("switch-flow-diagram"))
+                                    // console.log("switch-flow-diagram:", ui.item.children().hasClass("switch-flow-diagram"))
                                     $(".flow-diagram #switch-element").each(function(ind){
-                                        console.log("ind", ind);
+                                        // console.log("ind", ind);
                                         $(this).eq(ind).css({
                                             "width" : "auto",
                                             "height" : "auto"
                                         })
                                         if($(this).eq(ind).children().hasClass("switch-flow-diagram")){
-                                            console.log("ada swf")
+                                            console.log("ada swf")  
                                         }else{
                                             $(this).eq(ind).append(switchUl);
-                                            console.log($(this).eq(ind));
+                                            // console.log($(this).eq(ind));
                                         }
                                     });
                                     // if (ui.item.prop("id") == 'switch-element'.children().hasClass("switch-flow-diagram")) {
@@ -105,10 +105,94 @@ $(document).ready(function(){
                             }
                         }
                     });
+
+                    // tambah component di localStorage
+                    var liComp = $(ui.item[0]);
+                    var indexFlow = liComp.parent().parent().children("ul").index(liComp.parent());
+                    var indexNewComp = liComp.index();
+                    // console.log("indexNewComp: ", indexNewComp, "| indexFlow:", indexFlow);
+                    
+                    // membuat json object untuk component
+                    var data_id = indexFlow + "-" + generateUUID();
+                    var data_id_prev = liComp.prev().attr("data_id");
+                    var type_comp = liComp.children(0).attr("id");
+                    $(ui.item[0]).attr("data_id", data_id);  // ngisi uuid ke element html ui
+                   
+                    $.get("components/"+type_comp+".html", function (result) {
+                        html = result;
+                        console.log("html:", html);
+                        var listInput = $(html).find("input");
+                        var listSelect = $(html).find("select");
+                        var listTextarea = $(html).find("textarea");
+                        var listFinal = [];
+
+                        if(listInput.length > 0){
+                            // console.log("html.input:", $(html).find("input"));
+                            for (let i = 0; i < listInput.length; i++) {
+                                var item_id = listInput[i].id;
+                                listFinal.push(item_id);
+                            }
+                        }
+
+                        if(listSelect.length > 0){
+                            // console.log("html. select:", $(html).find("select"));
+                            for (let i = 0; i < listSelect.length; i++) {
+                                var item_id = listSelect[i].id;
+                                listFinal.push(item_id);
+                            }
+                        }
+
+                        if(listTextarea.length > 0){
+                            // console.log("html. textarea:", $(html).find("textarea"));
+                            for (let i = 0; i < listTextarea.length; i++) {
+                                var item_id = listTextarea[i].id;
+                                listFinal.push(item_id);
+                            }
+                        }
+
+                        for (let i = 0; i < listFinal.length; i++) {
+                            var item_id = listFinal[i];
+                            var jsonItem = {}
+                            console.log("item_id: ", item_id);
+                        }
+                        
+                    });
+                    
+                    var newCompJson = {
+                        "id": data_id,
+                        "type": type_comp,
+                        "name": type_comp,
+                        "properties": {
+                            "port": 8080,
+                            "name": "xxx",
+                            "thread": 1,
+                            "keepopen": true,
+                            "wait": 60
+                        }
+                    };
+
+                    var jsonFlowThis = JSON.parse(localStorage.getItem("jsonFlow"));
+                    findComp(jsonFlowThis[indexFlow]);
+                    function findComp(jsonFlowIndex){
+                        var components = jsonFlowIndex.components;
+                        for (let x = 0; x < components.length; x++) {
+                            const comp = components[x];
+                            var name = comp.name;
+                            var type = comp.type;
+                            var id = comp.id;
+                            var properties = comp.properties;
+    
+                            if(data_id_prev == id){
+                                components.push(newCompJson);
+                                console.log("findCompx. name:", name, "| type:", type, "| id:", id, "| properties:", properties, "| jsonFlowThis:", jsonFlowThis);
+                                localStorage.setItem("jsonFlow", JSON.stringify(jsonFlowThis));
+                            }
+                        }
+                    }
+
                 },50);
             }
         }).disableSelection();
-
     }
     
     function switchFlowFunc(){
@@ -162,18 +246,36 @@ $(document).ready(function(){
         $('[data_id="'+ switch_id +'"]').find('ul').append(clone);
     }
 
+    // Unic ID untuk flow dan component
+    function generateUUID() { 
+        var d = new Date().getTime();//Timestamp
+        var d2 = ((typeof performance !== 'undefined') && performance.now && (performance.now()*1000)) || 0;//Time in microseconds since page-load or 0 if unsupported
+        return 'xxxxxxxxxxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+            var r = Math.random() * 16;//random number between 0 and 16
+            if(d > 0){//Use timestamp until depleted
+                r = (d + r)%16 | 0;
+                d = Math.floor(d/16);
+            } else {//Use microseconds since page-load if supported
+                r = (d2 + r)%16 | 0;
+                d2 = Math.floor(d2/16);
+            }
+            return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+        });
+    }
+
     var jsonData = [
         {
             "name": "flow1",
             "index": 0,
             "components": [
                 {
-                    "id": "0-1",
+                    // "id": "0-1",
+                    "id": "0-"+generateUUID(),
                     "type": "sender-tcp",
                     "name": "tcp-test",
-                    "level": 0,
-                    "pid": "0-0",
-                    "index": 0,
+                    // "level": 0,
+                    // "pid": "0-0",
+                    // "index": 0,
                     "properties": {
                         "port": 8080,
                         "name": "xxx",
@@ -183,12 +285,13 @@ $(document).ready(function(){
                     }
                 },
                 {
-                    "id": "0-2",
+                    // "id": "0-2",
+                    "id": "0-"+generateUUID(),
                     "type": "receiver-nfs",
                     "name": "nfs-test",
-                    "level": 1,
-                    "pid": "0-1",
-                    "index": 0,
+                    // "level": 1,
+                    // "pid": "0-1",
+                    // "index": 0,
                     "properties": {
                         "path": "/opt/xxnx", 
                         "polling": 10,
@@ -197,12 +300,13 @@ $(document).ready(function(){
                     }
                 },
                 {
-                    "id": "0-3",
+                    // "id": "0-3",
+                    "id": "0-"+generateUUID(),
                     "type": "receiver-jdbc",
                     "name": "nfs-jdbc",
-                    "level": 2,
-                    "pid": "0-2",
-                    "index": 0,
+                    // "level": 2,
+                    // "pid": "0-2",
+                    // "index": 0,
                     "properties": {
                         "host": "192.168.1.56",
                         "port": "3306",
@@ -221,12 +325,13 @@ $(document).ready(function(){
             "index": 1,
             "components": [
                 {
-                    "id": "1-1",
+                    // "id": "1-1",
+                    "id": "1-"+generateUUID(),
                     "type": "sender-nfs",
                     "name": "nfs-test",
-                    "level": 0,
-                    "pid": "1-0",
-                    "index": 0,
+                    // "level": 0,
+                    // "pid": "1-0",
+                    // "index": 0,
                     "properties": {
                         "path": "/opt/hamster/video",
                         "polling": 10,
@@ -240,9 +345,9 @@ $(document).ready(function(){
                     "id": "1-2",
                     "type": "object-switching",
                     "name": "my-switching",
-                    "level": 1,
-                    "pid": "1-1",
-                    "index": 0,
+                    // "level": 1,
+                    // "pid": "1-1",
+                    // "index": 0,
                     "properties": {
                         "switch-case": "object",
                         "if-else": "object",
@@ -308,12 +413,13 @@ $(document).ready(function(){
                     ],
                 },
                 {
-                    "id": "1-3",
+                    // "id": "1-3",
+                    "id": "1-"+generateUUID(),
                     "type": "receiver-ftp",
                     "name": "ftp-test",
-                    "level": 2,
-                    "pid": "1-2",
-                    "index": 0,
+                    // "level": 2,
+                    // "pid": "1-2",
+                    // "index": 0,
                     "properties": {
                         "path": "/home/nudetube/img",
                         "polling": 20,
@@ -341,7 +447,7 @@ $(document).ready(function(){
 
     var jsonFlow = JSON.parse(localStorage.getItem("jsonFlow"));
 
-    // ===== (JSON TO UI) BACA CARA FLAT ===
+    // ===== (JSON TO UI) ALL ===
     for (let i = 0; i < jsonFlow.length; i++) {
         const flow = jsonFlow[i];
         var flow_name = flow.name;
@@ -353,24 +459,12 @@ $(document).ready(function(){
         var firstCompId = components[0].id;
         console.log("components", components);
         console.log("firstCompId:", firstCompId);
-        recurComp(components, firstCompId, i);
+
+        // recurComp(components, firstCompId, i);
+        flatComp(components, i);
     }
-
+   
     // ===== (JSON TO UI) BACA CARA RECURSIVE ===
-    // for (let i = 0; i < jsonFlow.length; i++) {
-    //     const flow = jsonFlow[i];
-    //     var flow_name = flow.name;
-    //     var type_com0 = flow.components[0].type;
-    //     var id_com0 = flow.components[0].id;
-    //     addFlow('#'+type_com0, id_com0);
-
-    //     var components = flow.components;
-    //     var firstCompId = components[0].id;
-    //     // console.log("components", components);
-    //     // console.log("firstCompId:", firstCompId);
-    //     recurComp(components, firstCompId, i);
-    // }
-
     function recurComp(components, parent_id, indexFlow){
         for (let j = 1; j < components.length; j++) {
             var component = components[j];
@@ -407,6 +501,43 @@ $(document).ready(function(){
                 }
 
                 recurComp(components, id, indexFlow);
+            }
+        }
+    }
+
+    // ===== (JSON TO UI) BACA CARA FLAT ===
+    function flatComp(components, indexFlow){
+        for (let j = 1; j < components.length; j++) {
+            var component = components[j];
+            var level = component.level;
+            var name = component.name;
+            var id = component.id;
+            var pid = component.pid;
+            var type = component.type;
+
+            console.log("type: ", type, "data_id", id, "indexFlow", indexFlow);
+            
+            // selain component switch
+            if(type != 'object-switching'){
+                addComponent("#" + type, indexFlow, id);
+            } else { // component switch
+                addSwitch("#object-switching", indexFlow, id);
+
+                // switch components child
+                var componSwitchList = component.components;
+                for (let k = 0; k < componSwitchList.length; k++) {
+                    var componSwitch = componSwitchList[k];
+                    var levelSwitch = componSwitch.level;
+                    var nameSwitch = componSwitch.name;
+                    var idSwitch = componSwitch.id; 
+                    var pidSwitch = componSwitch.pid;
+                    var typeSwitch = componSwitch.type;
+                    // console.log("nameSwitch: ", nameSwitch, "typeSwitch", typeSwitch, "idSwitch", idSwitch);
+
+                    if(id == pidSwitch){
+                        addSwitchItem("#"+typeSwitch, id, idSwitch);
+                    }
+                }
             }
         }
     }
