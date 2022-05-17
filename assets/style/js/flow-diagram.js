@@ -117,7 +117,7 @@ $(document).ready(function(){
                     var data_id_prev = liComp.prev().attr("data_id");
                     var type_comp = liComp.children(0).attr("id");
                     $(ui.item[0]).attr("data_id", data_id);  // ngisi uuid ke element html ui
-                   
+
                     $.get("components/"+type_comp+".html", function (result) {
                         html = result;
                         console.log("html:", html);
@@ -172,6 +172,9 @@ $(document).ready(function(){
                     };
 
                     var jsonFlowThis = JSON.parse(localStorage.getItem("jsonFlow"));
+                    var getIndex;
+                    
+                    // tambah component ke json local storage
                     findComp(jsonFlowThis[indexFlow]);
                     function findComp(jsonFlowIndex){
                         var components = jsonFlowIndex.components;
@@ -183,13 +186,14 @@ $(document).ready(function(){
                             var properties = comp.properties;
     
                             if(data_id_prev == id){
-                                components.push(newCompJson);
-                                console.log("findCompx. name:", name, "| type:", type, "| id:", id, "| properties:", properties, "| jsonFlowThis:", jsonFlowThis);
-                                localStorage.setItem("jsonFlow", JSON.stringify(jsonFlowThis));
+                                getIndex = x;
+                                console.log("findCompx. name:", name, "| type:", type, "| id:", id, "| properties:", properties, "| jsonFlowThis:", jsonFlowThis, "| x: ", x);
                             }
                         }
-                    }
 
+                        components.splice(getIndex+1, 0, newCompJson);
+                        localStorage.setItem("jsonFlow", JSON.stringify(jsonFlowThis));
+                    }
                 },50);
             }
         }).disableSelection();
