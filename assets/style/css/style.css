@@ -591,7 +591,7 @@ a,a:hover, a:visited{
 .content .container-fluid .row .content-section .content-box .content-body .elements-list{
     padding: 0 10px 0 5px;
     margin: 10px 0;
-    max-height: 35vh;
+    max-height: 47.5vh !important;
     overflow-y: scroll;
     overflow-x: visible;
 }
