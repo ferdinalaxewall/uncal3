@@ -128,19 +128,9 @@ function focusElement(e) {
                 for (const key in properties) {
                     var value = properties[key];
                     // console.log('key', key, 'properties', properties[key]);
-                    var finalData = ""
-                    if(type.startsWith("receiver-")){
-                        finalData = type.replace('receiver-', 'rec-');
-                    } else if(type.startsWith("sender-")){
-                        finalData = type.replace('sender-', 'sen-');
-                    } else if(type.startsWith("object-")){
-                        finalData = type.replace('object-', 'obj-');
-                    }
-
-                    finalData += '-' + key;
-
+                    var finalData = type + '-' + key;
                     var typeValue = typeof value;
-                    console.log('finalData. id:', finalData, '| value:', value, '| type:', typeValue);
+                    console.log('finalData. value:', value, '| type:', typeValue);
 
                    if(typeValue == 'boolean'){
                         if(value == true){
@@ -192,7 +182,7 @@ function focusElement(e) {
                         var properties = comp.properties;
 
                         if(prop_id == id){
-                            var propName = idThis.split('-')[2];
+                            var propName = idThis.replace(type + "-", "");
                             properties[propName] = valueThis;
                             // console.log("findComp. name:", name, "| type:", type, "| id:", id, "| properties:", properties, "| jsonFlowThis:", jsonFlowThis);
                             localStorage.setItem("jsonFlow", JSON.stringify(jsonFlowThis));

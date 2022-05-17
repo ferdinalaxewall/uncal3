@@ -119,15 +119,14 @@ $(document).ready(function(){
                     $(ui.item[0]).attr("data_id", data_id);  // ngisi uuid ke element html ui
 
                     $.get("components/"+type_comp+".html", function (result) {
+                        // convert html ke json component
                         html = result;
-                        console.log("html:", html);
                         var listInput = $(html).find("input");
                         var listSelect = $(html).find("select");
                         var listTextarea = $(html).find("textarea");
                         var listFinal = [];
 
                         if(listInput.length > 0){
-                            // console.log("html.input:", $(html).find("input"));
                             for (let i = 0; i < listInput.length; i++) {
                                 var item_id = listInput[i].id;
                                 listFinal.push(item_id);
@@ -135,7 +134,6 @@ $(document).ready(function(){
                         }
 
                         if(listSelect.length > 0){
-                            // console.log("html. select:", $(html).find("select"));
                             for (let i = 0; i < listSelect.length; i++) {
                                 var item_id = listSelect[i].id;
                                 listFinal.push(item_id);
@@ -143,57 +141,52 @@ $(document).ready(function(){
                         }
 
                         if(listTextarea.length > 0){
-                            // console.log("html. textarea:", $(html).find("textarea"));
                             for (let i = 0; i < listTextarea.length; i++) {
                                 var item_id = listTextarea[i].id;
                                 listFinal.push(item_id);
                             }
                         }
 
+                        var jsonItem = {}
                         for (let i = 0; i < listFinal.length; i++) {
                             var item_id = listFinal[i];
-                            var jsonItem = {}
-                            console.log("item_id: ", item_id);
+                            var item_new = item_id.replaceAll(type_comp + "-", "");
+                            jsonItem[item_new] = "";
+                            // console.log("item_new: ", item_new));
                         }
-                        
-                    });
-                    
-                    var newCompJson = {
-                        "id": data_id,
-                        "type": type_comp,
-                        "name": type_comp,
-                        "properties": {
-                            "port": 8080,
-                            "name": "xxx",
-                            "thread": 1,
-                            "keepopen": true,
-                            "wait": 60
-                        }
-                    };
 
-                    var jsonFlowThis = JSON.parse(localStorage.getItem("jsonFlow"));
-                    var getIndex;
-                    
-                    // tambah component ke json local storage
-                    findComp(jsonFlowThis[indexFlow]);
-                    function findComp(jsonFlowIndex){
-                        var components = jsonFlowIndex.components;
-                        for (let x = 0; x < components.length; x++) {
-                            const comp = components[x];
-                            var name = comp.name;
-                            var type = comp.type;
-                            var id = comp.id;
-                            var properties = comp.properties;
+                        // mempersiapkan json component
+                        var newCompJson = {
+                            "id": data_id,
+                            "type": type_comp,
+                            "name": type_comp,
+                            "properties": jsonItem,
+                        };
     
-                            if(data_id_prev == id){
-                                getIndex = x;
-                                console.log("findCompx. name:", name, "| type:", type, "| id:", id, "| properties:", properties, "| jsonFlowThis:", jsonFlowThis, "| x: ", x);
+                        var jsonFlowThis = JSON.parse(localStorage.getItem("jsonFlow"));
+                        var getIndex;
+                        
+                        // tambah component ke json local storage
+                        findComp(jsonFlowThis[indexFlow]);
+                        function findComp(jsonFlowIndex){
+                            var components = jsonFlowIndex.components;
+                            for (let x = 0; x < components.length; x++) {
+                                const comp = components[x];
+                                var name = comp.name;
+                                var type = comp.type;
+                                var id = comp.id;
+                                var properties = comp.properties;
+        
+                                if(data_id_prev == id){
+                                    getIndex = x;
+                                    console.log("findCompx. name:", name, "| type:", type, "| id:", id, "| properties:", properties, "| jsonFlowThis:", jsonFlowThis, "| x: ", x);
+                                }
                             }
+    
+                            components.splice(getIndex+1, 0, newCompJson);
+                            localStorage.setItem("jsonFlow", JSON.stringify(jsonFlowThis));
                         }
-
-                        components.splice(getIndex+1, 0, newCompJson);
-                        localStorage.setItem("jsonFlow", JSON.stringify(jsonFlowThis));
-                    }
+                    });
                 },50);
             }
         }).disableSelection();

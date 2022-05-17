@@ -1,56 +1,56 @@
 <div class="row justify-content-center" id="sender-ftp-page">
     <div class="col-md-10 config-box">
         <div class="input-group mb-2">
-            <label for="sen-ftp-path">Path</label>
-            <input type="text" class="input-field" id="sen-ftp-path">
+            <label for="sender-ftp-path">Path</label>
+            <input type="text" class="input-field" id="sender-ftp-path">
         </div>
         <div class="input-group mb-2">
-            <label for="sen-ftp-polling">Polling (second)</label>
-            <input type="number" class="input-field" id="sen-ftp-polling">
+            <label for="sender-ftp-polling">Polling (second)</label>
+            <input type="number" class="input-field" id="sender-ftp-polling">
         </div>
         <div class="input-group mb-2">
-            <label for="sen-ftp-retry">Retry (second)</label>
-            <input type="number" class="input-field" id="sen-ftp-retry">
+            <label for="sender-ftp-retry">Retry (second)</label>
+            <input type="number" class="input-field" id="sender-ftp-retry">
         </div>
         <div class="input-group mb-2">
-            <label for="sen-ftp-ip">IP</label>
-            <input type="text" class="input-field" id="sen-ftp-ip">
+            <label for="sender-ftp-ip">IP</label>
+            <input type="text" class="input-field" id="sender-ftp-ip">
         </div>
         <div class="input-group mb-2">
-            <label for="sen-ftp-port">Port</label>
-            <input type="number" class="input-field" id="sen-ftp-port">
+            <label for="sender-ftp-port">Port</label>
+            <input type="number" class="input-field" id="sender-ftp-port">
         </div>
         <div class="input-group mb-2">
-            <label for="sen-ftp-username">Username</label>
-            <input type="text" class="input-field" id="sen-ftp-username">
+            <label for="sender-ftp-username">Username</label>
+            <input type="text" class="input-field" id="sender-ftp-username">
         </div>
         <div class="input-group mb-2">
-            <label for="sen-ftp-password">Password</label>
-            <input type="text" class="input-field" id="sen-ftp-password">
+            <label for="sender-ftp-password">Password</label>
+            <input type="text" class="input-field" id="sender-ftp-password">
         </div>
         <div class="input-group form-check mb-2">
-            <label for="sen-ftp-ssl">SSL (FTPS)</label>
-            <input class="form-check-input" type="checkbox" id="sen-ftp-ssl" checked>
+            <label for="sender-ftp-ssl">SSL (FTPS)</label>
+            <input class="form-check-input" type="checkbox" id="sender-ftp-ssl" checked>
         </div>
         <div class="input-group form-check mb-2">
-            <label for="sen-ftp-explicit">Explicit (FTPe)</label>
-            <input class="form-check-input" type="checkbox" id="sen-ftp-explicit" checked>
+            <label for="sender-ftp-explicit">Explicit (FTPe)</label>
+            <input class="form-check-input" type="checkbox" id="sender-ftp-explicit" checked>
         </div>
         <div class="input-group mb-2">
-            <label for="sen-ftp-filename">Filename</label>
-            <input type="text" class="input-field" id="sen-ftp-filename">
+            <label for="sender-ftp-filename">Filename</label>
+            <input type="text" class="input-field" id="sender-ftp-filename">
         </div>
         <div class="input-group mb-2">
-            <label for="sen-ftp-fileEvent">FileEvent</label>
-            <select class="form-select form-select-sm w-100 text-small" id="sen-ftp-fileEvent">
+            <label for="sender-ftp-fileEvent">FileEvent</label>
+            <select class="form-select form-select-sm w-100 text-small" id="sender-ftp-fileEvent">
                 <option value="1" selected>Remove</option>
                 <option value="2">Move</option>
                 <option value="3">Rename</option>
             </select>
         </div>
         <div class="input-group mb-2 d-none">
-            <label for="sen-ftp-folderName">FolderName</label>
-            <input type="text" class="input-field" id="sen-ftp-folderName">
+            <label for="sender-ftp-folderName">FolderName</label>
+            <input type="text" class="input-field" id="sender-ftp-folderName">
         </div>
     </div>
 </div>
@@ -59,9 +59,9 @@
     // fileEvent
     $('.form-select-sm').on('change', function() {
         if(this.value==2){
-            $('#sen-ftp-folderName').parent().removeClass('d-none');
+            $('#sender-ftp-folderName').parent().removeClass('d-none');
         } else {
-            $('#sen-ftp-folderName').parent().addClass('d-none');
+            $('#sender-ftp-folderName').parent().addClass('d-none');
         }
     });
 </script>

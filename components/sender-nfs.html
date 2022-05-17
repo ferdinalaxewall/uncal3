@@ -1,32 +1,32 @@
 <div class="row justify-content-center" id="sender-nfs-page">
     <div class="col-md-10 config-box">
         <div class="input-group mb-2">
-            <label for="sen-nfs-path">Path</label>
-            <input type="text" class="input-field" id="sen-nfs-path">
+            <label for="sender-nfs-path">Path</label>
+            <input type="text" class="input-field" id="sender-nfs-path">
         </div>
         <div class="input-group mb-2">
-            <label for="sen-nfs-polling">Polling (second)</label>
-            <input type="number" class="input-field" id="sen-nfs-polling">
+            <label for="sender-nfs-polling">Polling (second)</label>
+            <input type="number" class="input-field" id="sender-nfs-polling">
         </div>
         <div class="input-group mb-2">
-            <label for="sen-nfs-retry">Retry (second)</label>
-            <input type="number" class="input-field" id="sen-nfs-retry">
+            <label for="sender-nfs-retry">Retry (second)</label>
+            <input type="number" class="input-field" id="sender-nfs-retry">
         </div>
         <div class="input-group mb-2">
-            <label for="sen-nfs-filename">Filename</label>
-            <input type="text" class="input-field" id="sen-nfs-filename">
+            <label for="sender-nfs-filename">Filename</label>
+            <input type="text" class="input-field" id="sender-nfs-filename">
         </div>
         <div class="input-group mb-2">
-            <label for="sen-nfs-fileEvent">FileEvent</label>
-            <select class="form-select form-select-sm w-100 text-small" id="sen-nfs-fileEvent">
+            <label for="sender-nfs-fileEvent">FileEvent</label>
+            <select class="form-select form-select-sm w-100 text-small" id="sender-nfs-fileEvent">
                 <option value="1" selected>Remove</option>
                 <option value="2">Move</option>
                 <option value="3">Rename</option>
             </select>
         </div>
         <div class="input-group mb-2 d-none">
-            <label for="sen-nfs-folderName">FolderName</label>
-            <input type="text" class="input-field" id="sen-nfs-folderName">
+            <label for="sender-nfs-folderName">FolderName</label>
+            <input type="text" class="input-field" id="sender-nfs-folderName">
         </div>
     </div>
 </div>
@@ -35,9 +35,9 @@
     // fileEvent
     $('.form-select-sm').on('change', function() {
         if(this.value==2){
-            $('#sen-nfs-folderName').parent().removeClass('d-none');
+            $('#sender-nfs-folderName').parent().removeClass('d-none');
         } else {
-            $('#sen-nfs-folderName').parent().addClass('d-none');
+            $('#sender-nfs-folderName').parent().addClass('d-none');
         }
     });
 </script>
