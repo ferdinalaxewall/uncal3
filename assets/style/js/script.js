@@ -245,3 +245,11 @@ function focusElement(e) {
     });
     
 }
+
+
+function minimizeFlow(minimize){
+    $(minimize).toggleClass("minimize");
+    $(minimize).parent().siblings(".element-item").fadeToggle();
+    $(minimize).parent().parent().toggleClass("minimize-flow-diagram");
+
+}

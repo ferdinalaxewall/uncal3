@@ -291,14 +291,104 @@ a,a:hover, a:visited{
     white-space: nowrap;
     border: 1px solid var(--clr-border);
     border-left: 3px solid var(--clr-primary);
-    overflow: hidden;
+    position:relative;
+}
+
+.content .container-fluid .row .content-section #flow-container .flow-diagram.minimize-flow-diagram{
+    /*background: url(../../icon/loading-flow-icon.svg) no-repeat;
+    background-position: center;
+    */min-height: 50px;
+    position: relative;
+}
+
+.content .container-fluid .row .content-section #flow-container .flow-diagram.minimize-flow-diagram::after{
+    content: '';
+    position: absolute;
+    background: url("../../icon/loading-flow-icon.svg") no-repeat;
+    background-position: center;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    animation: fadeIn 1s linear;
+    -webkit-animation: fadeIn 1s linear;
+}
+
+@keyframes fadeIn{
+    from{
+        opacity: 0;
+    }
+    to{
+        opacity: 1;
+    }
 }
 
 /* .content .container-fluid .row .content-section #flow-container .flow-diagram .element-item:first-child{
     padding: 10px 20px;
 } */
 
-.content .container-fluid .row .content-section #flow-container .flow-diagram .element-item:not(:first-child) .element-box::before{
+.content .container-fluid .row .content-section #flow-container .flow-diagram .flow-name{
+    display: flex;
+    position: absolute;
+    align-items: center;
+    justify-content: space-evenly;
+    background-color:var(--clr-white);
+    height: 30px;
+    padding: 0 10px;
+    top:-30px;
+    left: -3px;
+    border:1px solid var(--clr-border);
+    border-left:3px solid var(--clr-primary);
+    border-top:3px solid var(--clr-primary);
+    border-right-color: var(--clr-border);
+}
+
+.content .container-fluid .row .content-section #flow-container .flow-diagram .flow-name .minimize-flow{
+    cursor: pointer;
+}
+
+.content .container-fluid .row .content-section #flow-container .flow-diagram .flow-name .minimize-flow.minimize #chevron-flow-name{
+    transition: all .3s linear;
+    -webkit-transition: all .3s linear;
+    -moz-transition: all .3s linear;
+    -ms-transition: all .3s linear;
+    -o-transition: all .3s linear;
+}
+
+.content .container-fluid .row .content-section #flow-container .flow-diagram .flow-name .minimize-flow.minimize #chevron-flow-name{
+    transform: rotate3d(1, 0, 0, 180deg);
+    -webkit-transform: rotate3d(1, 0, 0, 180deg);
+    -moz-transform: rotate3d(1, 0, 0, 180deg);
+    -ms-transform: rotate3d(1, 0, 0, 180deg);
+    -o-transform: rotate3d(1, 0, 0, 180deg);
+}
+
+.content .container-fluid .row .content-section #flow-container .flow-diagram .flow-name .close-flow, .content .container-fluid .row .content-section #flow-container .flow-diagram .flow-name .minimize-flow{
+    padding: 0 5px;
+    border: none;
+    background-color: var(--clr-white);
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+}
+.content .container-fluid .row .content-section #flow-container .flow-diagram .flow-name .close-flow:hover{
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.175);
+}
+
+.content .container-fluid .row .content-section #flow-container .flow-diagram .flow-name .close-flow:focus, .content .container-fluid .row .content-section #flow-container .flow-diagram .flow-name .minimize-flow:focus{
+    outline: none;
+}
+
+.content .container-fluid .row .content-section #flow-container .flow-diagram .flow-name .flow-name-text{
+    font-size: var(--fs-body);
+    margin: 0 10px;
+}
+
+
+
+.content .container-fluid .row .content-section #flow-container .flow-diagram .element-item:not(:nth-child(2)) .element-box::before{
     content: url('../../icon/arrow-icon.svg');
     display: flex;
     align-items: flex-start;

@@ -1,5 +1,6 @@
 $(document).ready(function(){
       
+    var flowDiagram = "<ul class='flow-diagram mt-4'><div class='flow-name'><button class='minimize-flow' onclick='minimizeFlow(this)'><img src='./assets/icon/chevron-icon.svg' alt='Chevron Icon' id='chevron-flow-name'></button><p class='flow-name-text mb-0 mt-0'>Flow Nameeeeeeeeeeeee</p> <button class='close-flow'><img src='./assets/icon/close-icon.svg' alt='Close Icon'></button></div></ul><br>";
     
     $(".element-item").draggable({
         connectToSortable : ".flow-diagram, .switch-flow-diagram",
@@ -26,7 +27,7 @@ $(document).ready(function(){
         scroll : true,
         drop : function(ev, ui){
                 var droppedItem = $(ui.draggable).clone();
-                var flowDiagram = "<ul class='flow-diagram'></ul><br>";
+                
                 $(flowDiagram).insertBefore($(this));
                 setTimeout(function(){
                     $("#properties").empty();
@@ -203,7 +204,6 @@ $(document).ready(function(){
 
     // === JSON TO UI ====
     function addFlow(component, data_id){
-        var flowDiagram = "<ul class='flow-diagram'></ul><br>";
         $(flowDiagram).insertBefore($('.canvas'));
         
         sortableFunc();
