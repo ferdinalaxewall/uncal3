@@ -1,6 +1,6 @@
 $(document).ready(function(){
       
-    var flowDiagram = "<ul class='flow-diagram mt-4'><div class='flow-name'><button class='minimize-flow' onclick='minimizeFlow(this)'><img src='./assets/icon/chevron-icon.svg' alt='Chevron Icon' id='chevron-flow-name'></button><p class='flow-name-text mb-0 mt-0'>Flow Nameeeeeeeeeeeee</p> <button class='close-flow' onclick='closeFlow(this)'><img src='./assets/icon/close-icon.svg' alt='Close Icon'></button></div></ul><br>";
+    var flowDiagram = "<ul class='flow-diagram mt-4'><div class='flow-name'><button class='minimize-flow' onclick='minimizeFlow(this)'><img src='./assets/icon/chevron-icon.svg' alt='Chevron Icon' id='chevron-flow-name'></button><p class='flow-name-text mb-0 mt-0' ondblclick='renameFlow(this)'>Flow Name</p> <button class='close-flow' onclick='closeFlow(this)'><img src='./assets/icon/close-icon.svg' alt='Close Icon'></button></div></ul><br>";
     
     $(".element-item").draggable({
         connectToSortable : ".flow-diagram, .switch-flow-diagram",
@@ -26,28 +26,53 @@ $(document).ready(function(){
         accept : ".elements-list #sender",
         scroll : true,
         drop : function(ev, ui){
-                var droppedItem = $(ui.draggable).clone();
-                console.log("droppedItem: ", $(droppedItem));
+            var droppedItem = $(ui.draggable).clone();
 
-                $(flowDiagram).insertBefore($(this));
-                setTimeout(function(){
-                    $("#properties").empty();
-                    $("#properties").load("components/" + ui.draggable.children().attr("id") + ".html");
-                    sortableFunc();
-                    $(".flow-diagram").each(function(i){
-                        if (!$(".flow-diagram").eq(i).children().hasClass("element-item")) {
-                            $(".flow-diagram").eq(i).append(ui.draggable.clone());
-                            setTimeout(function(){
-                                $(".flow-diagram").eq(i).children().first().addClass("element-item-disabled");
-                                $(".flow-diagram .element-box").each(function(i){
-                                    if (!$(this).attr("onclick")) {
-                                        $(this).attr("onclick", "focusElement(this)");
-                                    }
-                                });
-                            },200);
-                        }
-                    });
-                }, 100);
+            var flowDiagramNew = $(flowDiagram);
+            flowDiagramNew.attr("flow_id", generateUUID());
+            $(flowDiagramNew).insertBefore($(this));
+            setTimeout(function(){
+                $("#properties").empty();
+                $("#properties").load("components/" + ui.draggable.children().attr("id") + ".html");
+                sortableFunc();
+                $(".flow-diagram").each(function(i){
+                    if (!$(".flow-diagram").eq(i).children().hasClass("element-item")) {
+                        $(".flow-diagram").eq(i).append(ui.draggable.clone());
+                        setTimeout(function(){
+                            var data_id = generateUUID();
+                            $(".flow-diagram").eq(i).children().first().addClass("element-item-disabled");
+                            $(".flow-diagram .element-box").each(function(i){
+                                if (!$(this).attr("onclick")) {
+                                    $(this).attr("onclick", "focusElement(this)");
+                                    $(this).parent().attr("data_id", data_id);
+                                }
+                            });
+
+                            // tambah json flow ke local storage
+                            var type_comp = $(ui.draggable).children(0).attr("id");
+                            $.get("components/"+type_comp+".html", function (result) {
+                                // mempersiapkan json component
+                                var propItem = htmlToProp(result, type_comp);
+                                var jsonFlowThis = JSON.parse(localStorage.getItem("jsonFlow"));
+                                var newFlow = {
+                                    "name": "Flow Name",
+                                    "id": data_id,
+                                    "components": [
+                                        {
+                                            "id": data_id,
+                                            "type": type_comp,
+                                            "name": type_comp,
+                                            "properties": propItem
+                                        }
+                                    ]
+                                };
+                                jsonFlowThis.push(newFlow);
+                                localStorage.setItem("jsonFlow", JSON.stringify(jsonFlowThis));
+                            });
+                        },200);
+                    }
+                });
+            }, 100);
         }
     }).disableSelection();
 
@@ -115,54 +140,19 @@ $(document).ready(function(){
                     // console.log("indexNewComp: ", indexNewComp, "| indexFlow:", indexFlow);
                     
                     // membuat json object untuk component
-                    var data_id = indexFlow + "-" + generateUUID();
+                    var data_id = generateUUID();
                     var data_id_prev = liComp.prev().attr("data_id");
                     var type_comp = liComp.children(0).attr("id");
                     $(ui.item[0]).attr("data_id", data_id);  // ngisi uuid ke element html ui
 
                     $.get("components/"+type_comp+".html", function (result) {
-                        // convert html ke json component
-                        html = result;
-                        var listInput = $(html).find("input");
-                        var listSelect = $(html).find("select");
-                        var listTextarea = $(html).find("textarea");
-                        var listFinal = [];
-
-                        if(listInput.length > 0){
-                            for (let i = 0; i < listInput.length; i++) {
-                                var item_id = listInput[i].id;
-                                listFinal.push(item_id);
-                            }
-                        }
-
-                        if(listSelect.length > 0){
-                            for (let i = 0; i < listSelect.length; i++) {
-                                var item_id = listSelect[i].id;
-                                listFinal.push(item_id);
-                            }
-                        }
-
-                        if(listTextarea.length > 0){
-                            for (let i = 0; i < listTextarea.length; i++) {
-                                var item_id = listTextarea[i].id;
-                                listFinal.push(item_id);
-                            }
-                        }
-
-                        var jsonItem = {}
-                        for (let i = 0; i < listFinal.length; i++) {
-                            var item_id = listFinal[i];
-                            var item_new = item_id.replaceAll(type_comp + "-", "");
-                            jsonItem[item_new] = "";
-                            // console.log("item_new: ", item_new));
-                        }
-
                         // mempersiapkan json component
+                        var propItem = htmlToProp(result, type_comp);
                         var newCompJson = {
                             "id": data_id,
                             "type": type_comp,
                             "name": type_comp,
-                            "properties": jsonItem,
+                            "properties": propItem,
                         };
     
                         var jsonFlowThis = JSON.parse(localStorage.getItem("jsonFlow"));
@@ -201,6 +191,43 @@ $(document).ready(function(){
             cursorAt: { top: 40, left: 50 },
             revert : true,
         });
+    }
+
+    function htmlToProp(html, type_comp){
+        var listInput = $(html).find("input");
+        var listSelect = $(html).find("select");
+        var listTextarea = $(html).find("textarea");
+        var listFinal = [];
+
+        if(listInput.length > 0){
+            for (let i = 0; i < listInput.length; i++) {
+                var item_id = listInput[i].id;
+                listFinal.push(item_id);
+            }
+        }
+
+        if(listSelect.length > 0){
+            for (let i = 0; i < listSelect.length; i++) {
+                var item_id = listSelect[i].id;
+                listFinal.push(item_id);
+            }
+        }
+
+        if(listTextarea.length > 0){
+            for (let i = 0; i < listTextarea.length; i++) {
+                var item_id = listTextarea[i].id;
+                listFinal.push(item_id);
+            }
+        }
+
+        var jsonItem = {}
+        for (let i = 0; i < listFinal.length; i++) {
+            var item_id = listFinal[i];
+            var item_new = item_id.replaceAll(type_comp + "-", "");
+            jsonItem[item_new] = "";
+            // console.log("item_new: ", item_new));
+        }
+        return jsonItem;
     }
 
     // === JSON TO UI ====
@@ -269,7 +296,7 @@ $(document).ready(function(){
             "components": [
                 {
                     // "id": "0-1",
-                    "id": "0-"+generateUUID(),
+                    "id": generateUUID(),
                     "type": "sender-tcp",
                     "name": "tcp-test",
                     // "level": 0,
@@ -285,7 +312,7 @@ $(document).ready(function(){
                 },
                 {
                     // "id": "0-2",
-                    "id": "0-"+generateUUID(),
+                    "id": generateUUID(),
                     "type": "receiver-nfs",
                     "name": "nfs-test",
                     // "level": 1,
@@ -300,7 +327,7 @@ $(document).ready(function(){
                 },
                 {
                     // "id": "0-3",
-                    "id": "0-"+generateUUID(),
+                    "id": generateUUID(),
                     "type": "receiver-jdbc",
                     "name": "nfs-jdbc",
                     // "level": 2,
@@ -326,7 +353,7 @@ $(document).ready(function(){
             "components": [
                 {
                     // "id": "1-1",
-                    "id": "1-"+generateUUID(),
+                    "id": generateUUID(),
                     "type": "sender-nfs",
                     "name": "nfs-test",
                     // "level": 0,
@@ -414,7 +441,7 @@ $(document).ready(function(){
                 },
                 {
                     // "id": "1-3",
-                    "id": "1-"+generateUUID(),
+                    "id": generateUUID(),
                     "type": "receiver-ftp",
                     "name": "ftp-test",
                     // "level": 2,
