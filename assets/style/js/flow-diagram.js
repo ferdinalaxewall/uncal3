@@ -43,7 +43,7 @@ $(document).ready(function(){
                             $(".flow-diagram").eq(i).children().first().addClass("element-item-disabled");
                             $(".flow-diagram .element-box").each(function(i){
                                 if (!$(this).attr("onclick")) {
-                                    $(this).attr("onclick", "focusElement(this)");
+                                    $(this).attr("onclick", "focusElement(this)").attr("ondblclick", "elementProperties(this)");
                                     $(this).parent().attr("data_id", data_id);
                                 }
                             });
@@ -93,7 +93,7 @@ $(document).ready(function(){
             receive : function(ev, ui){
                 $(".flow-diagram .element-box").each(function(i){
                     if (!$(this).attr("onclick")) {
-                        $(this).attr("onclick", "focusElement(this)");
+                        $(this).attr("onclick", "focusElement(this)").attr("ondblclick", "elementProperties(this)");
                     }
                 });
             },
@@ -241,7 +241,7 @@ $(document).ready(function(){
                 var clone = $(component).parent().clone();
                 $(clone).addClass('element-item-disabled');
                 $(clone).attr('data_id', data_id);
-                $(clone).find('a').attr('onclick', 'focusElement(this)');
+                $(clone).find('a').attr('onclick', 'focusElement(this)').attr("ondblclick", "elementProperties(this)");
                 $(".flow-diagram").eq(i).append(clone);
             }
         });
@@ -251,7 +251,7 @@ $(document).ready(function(){
         var clone = $(component).parent().clone();
         $(clone).attr('style', 'width: auto; height: auto;');
         $(clone).attr('data_id', data_id);
-        $(clone).find('a').attr('onclick', 'focusElement(this)');
+        $(clone).find('a').attr('onclick', 'focusElement(this)').attr("ondblclick", "elementProperties(this)");
         $($(".flow-diagram").get(i)).append(clone);
     }
 
@@ -260,7 +260,7 @@ $(document).ready(function(){
         $(clone).attr('id', 'switch-element');
         $(clone).attr('style', 'width: auto; height: auto;');
         $(clone).attr('data_id', data_id);
-        $(clone).find('a').attr('onclick', 'focusElement(this)');
+        $(clone).find('a').attr('onclick', 'focusElement(this)').attr("ondblclick", "elementProperties(this)");
         var cloneFinal = $(clone).append(switchUl);
         $($(".flow-diagram").get(i)).append(cloneFinal);
     }

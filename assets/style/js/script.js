@@ -83,8 +83,8 @@ $(document).ready(function(){
 
     });
     
-    $("#properties-group .list-item").click(function(e){
-        $(this).toggleClass("active");
+    $("#input-output-properties-group .list-item span").click(function(e){
+        $(this).parent().toggleClass("active");
     });
     
     $("#flow-map-group .list-item").click(function(e){
@@ -92,22 +92,45 @@ $(document).ready(function(){
     });
 
     $(".list-sub-item").parent().addClass("has-child");
+
+    $(".modal .menu-name").click(function(){
+        $(".modal .menu-name").removeClass("active");
+        $(this).addClass("active")
+        if($(this).prop("id") == 'notes-properties'){
+            $("#properties").removeClass("d-block").addClass("d-none");
+            $("#notes").removeClass("d-none").addClass("d-block");
+            $("#input-output").removeClass("d-flex").addClass("d-none");
+            $(".modal .error-info").removeClass("d-block").addClass("d-none");
+        }else if($(this).prop("id") == 'general-properties'){
+            $("#properties").removeClass("d-none").addClass("d-block");
+            $("#notes").removeClass("d-block").addClass("d-none");
+            $("#input-output").removeClass("d-flex").addClass("d-none");
+            $(".modal .error-info").removeClass("d-none").addClass("d-block");
+        }else if($(this).prop("id") == 'input-output-properties'){
+            $("#properties").removeClass("d-block").addClass("d-none");
+            $("#notes").removeClass("d-block").addClass("d-none");
+            $("#input-output").removeClass("d-none").addClass("d-flex");
+            $(".modal .error-info").removeClass("d-block").addClass("d-none");
+
+        }
+    });
+
+    $(".modal .input-output-menu-name").click(function(){
+        $(".modal .input-output-menu-name").removeClass("active");
+        $(this).addClass("active")
+    })
 });
 
-function focusElement(e) {
-    $(".flow-diagram .element-item, .flow-diagram .element-box").removeClass("focus");
-    setTimeout(function(){
-      $(e).toggleClass("focus")
-      $(e).parent().toggleClass("focus");
-    }, 1);
+function elementProperties(el){
+    $("#propertiesModal").modal('show'); 
 
     // auto open by file name
-    var getTypeComp = $(e).prop("id");
+    var getTypeComp = $(el).prop("id");
     $("#properties").empty();
     $("#properties").load("components/"+getTypeComp+".html");
     
     // fill data ke properties (auto nama id)
-    var liComp = $(e).parent();
+    var liComp = $(el).parent();
     var data_id = liComp.attr("data_id");
     var indexFlow = liComp.parent().parent().children("ul").index(liComp.parent());
     console.log('focusElement. data_id', data_id, "indexFlow", indexFlow);
@@ -197,6 +220,14 @@ function focusElement(e) {
         });
         
     }, 300);
+}
+
+function focusElement(e) {
+    $(".flow-diagram .element-item, .flow-diagram .element-box").removeClass("focus");
+    setTimeout(function(){
+      $(e).toggleClass("focus")
+      $(e).parent().toggleClass("focus");
+    }, 1);
     
     // klik keyboard di component
     $(document).keydown(function(e){
