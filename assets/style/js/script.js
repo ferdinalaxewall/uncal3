@@ -92,7 +92,6 @@ $(document).ready(function(){
     });
 
     $(".list-sub-item").parent().addClass("has-child");
-
 });
 
 function focusElement(e) {
@@ -199,16 +198,17 @@ function focusElement(e) {
     $(document).keydown(function(e){
         var key = (e.keyCode ? e.keyCode : e.which);
         if (key === 8) {
-            $(".element-item.focus").remove();
-            
-            if ($(".flow-diagram").children().length == 0) {
-                $(".flow-diagram, br").remove();
-            }
-            
             // validasi hapus properties
             var getEl = $(".element-item.focus");
             var data_id = getEl.attr("data_id");
             var prop_id = $("#properties").children(":first").attr("prop_id");
+
+            // hapus element
+            $(".element-item.focus").remove();
+            if ($(".flow-diagram").children().length == 0) {
+                $(".flow-diagram, br").remove();
+            }
+            
             if(data_id != undefined){
                 $("#properties").empty();
                 
@@ -245,11 +245,34 @@ function focusElement(e) {
     });
     
 }
+$("#flow-map-tab .tab-name").click(function(e){
+    $("#flow-map-tab .tab-name").removeClass("active");
 
+    var $this = $(this);
+    if (!$this.hasClass("active")) {
+        $this.addClass("active");
+    }
+
+    e.preventDefault();
+
+});
 
 function minimizeFlow(minimize){
     $(minimize).toggleClass("minimize");
     $(minimize).parent().siblings(".element-item").fadeToggle();
     $(minimize).parent().parent().toggleClass("minimize-flow-diagram");
+}
 
+function closeFlow(thisClose){
+    var flow_id = $(thisClose).parent().parent().attr("flow_id");
+    var jsonFlowThis = JSON.parse(localStorage.getItem("jsonFlow"));
+    for (let x = 0; x < jsonFlowThis.length; x++) {
+        var flow = jsonFlowThis[x];
+        if(flow_id == flow.id){
+            jsonFlowThis.splice(x, 1);
+            localStorage.setItem("jsonFlow", JSON.stringify(jsonFlowThis));
+        }
+    }
+
+    $(thisClose).parent().parent().remove();
 }

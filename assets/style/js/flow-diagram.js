@@ -1,6 +1,6 @@
 $(document).ready(function(){
       
-    var flowDiagram = "<ul class='flow-diagram mt-4'><div class='flow-name'><button class='minimize-flow' onclick='minimizeFlow(this)'><img src='./assets/icon/chevron-icon.svg' alt='Chevron Icon' id='chevron-flow-name'></button><p class='flow-name-text mb-0 mt-0'>Flow Nameeeeeeeeeeeee</p> <button class='close-flow'><img src='./assets/icon/close-icon.svg' alt='Close Icon'></button></div></ul><br>";
+    var flowDiagram = "<ul class='flow-diagram mt-4'><div class='flow-name'><button class='minimize-flow' onclick='minimizeFlow(this)'><img src='./assets/icon/chevron-icon.svg' alt='Chevron Icon' id='chevron-flow-name'></button><p class='flow-name-text mb-0 mt-0'>Flow Nameeeeeeeeeeeee</p> <button class='close-flow' onclick='closeFlow(this)'><img src='./assets/icon/close-icon.svg' alt='Close Icon'></button></div></ul><br>";
     
     $(".element-item").draggable({
         connectToSortable : ".flow-diagram, .switch-flow-diagram",
@@ -27,7 +27,8 @@ $(document).ready(function(){
         scroll : true,
         drop : function(ev, ui){
                 var droppedItem = $(ui.draggable).clone();
-                
+                console.log("droppedItem: ", $(droppedItem));
+
                 $(flowDiagram).insertBefore($(this));
                 setTimeout(function(){
                     $("#properties").empty();
@@ -203,7 +204,7 @@ $(document).ready(function(){
     }
 
     // === JSON TO UI ====
-    function addFlow(component, data_id){
+    function addFlow(component, data_id, flow_id){
         $(flowDiagram).insertBefore($('.canvas'));
         
         sortableFunc();
@@ -263,7 +264,8 @@ $(document).ready(function(){
     var jsonData = [
         {
             "name": "flow1",
-            "index": 0,
+            // "index": 0,
+            "id": generateUUID(),
             "components": [
                 {
                     // "id": "0-1",
@@ -319,7 +321,8 @@ $(document).ready(function(){
         },
         {
             "name": "flow2",
-            "index": 1,
+            // "index": 1,
+            "id": generateUUID(),
             "components": [
                 {
                     // "id": "1-1",
@@ -448,9 +451,12 @@ $(document).ready(function(){
     for (let i = 0; i < jsonFlow.length; i++) {
         const flow = jsonFlow[i];
         var flow_name = flow.name;
+        var flow_id = flow.id;
         var type_com0 = flow.components[0].type;
         var id_com0 = flow.components[0].id;
         addFlow('#'+type_com0, id_com0);
+        $(".flow-diagram").eq(i).attr("flow_id",flow_id);
+        $(".flow-name").eq(i).find("p").text(flow_name);
 
         var components = flow.components;
         var firstCompId = components[0].id;
