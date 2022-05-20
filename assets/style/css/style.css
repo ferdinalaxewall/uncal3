@@ -391,7 +391,7 @@ button:focus{
 .content .container-fluid .row .sidebar{
     height: calc(100% + 22px);
     position: absolute;
-    z-index: 9999;
+    z-index: 100;
     top: -10px;
     left: 0;
     background-color: var(--clr-navbar-bg);
@@ -484,7 +484,6 @@ button:focus{
 }
 
 .content .container-fluid .row .sidebar .sidebar-content .list-group-project .list-project{
-    /* background-color: red; */
     padding: 10px 0;
 }
 
@@ -497,6 +496,7 @@ button:focus{
     display: inline-flex;
     align-items: center;
     color: var(--clr-black);
+    font-size: var(--fs-body);
 }
 
 .content .container-fluid .row .sidebar .sidebar-content .list-group-project .list-project .project-name:hover{
@@ -546,12 +546,7 @@ button:focus{
     overflow: hidden;
 }
 
-.content .container-fluid .row #properties-section{
-    height: 20.5vh;
-    overflow: hidden;
-}
-
-.content .container-fluid .row #flow-map-section{
+.content .container-fluid .row #properties-section, .content .container-fluid .row #flow-map-section{
     height: 20.5vh;
     overflow: hidden;
 }
@@ -690,10 +685,6 @@ button:focus{
     -o-transition: all .15s linear;
 }
 
-.content .container-fluid .row .content-section .content-box .menu-tab .tab-name.active{
-    /* background-color: var(--clr-secondary); */
-}
-
 .content .container-fluid .row #properties-section .content-box .menu-tab{
     position: relative;
 }
@@ -800,17 +791,10 @@ button:focus{
     border: 1px solid var(--clr-border);
     border-left: 3px solid var(--clr-primary);
     position:relative;
-    /* border-radius: 0 10px 10px 0;
-    -webkit-border-radius: 0 10px 10px 0;
-    -moz-border-radius: 0 10px 10px 0;
-    -ms-border-radius: 0 10px 10px 0;
-    -o-border-radius: 0 10px 10px 0; */
 }
 
 .content .container-fluid .row .content-section #flow-container .flow-diagram.minimize-flow-diagram{
-    /*background: url(../../icon/loading-flow-icon.svg) no-repeat;
-    background-position: center;
-    */min-height: 50px;
+    min-height: 50px;
     position: relative;
 }
 
@@ -836,9 +820,6 @@ button:focus{
     }
 }
 
-/* .content .container-fluid .row .content-section #flow-container .flow-diagram .element-item:first-child{
-    padding: 10px 20px;
-} */
 
 .content .container-fluid .row .content-section #flow-container .flow-diagram .flow-name{
     display: flex;
@@ -1199,12 +1180,6 @@ button:focus{
     overflow-x: visible;
 }
 
-@media (max-height:768px){
-    .content .container-fluid .row .content-section .content-box .content-body .elements-list{
-        max-height: 43.5vh;
-    }
-}
-
 .content .container-fluid .row .content-section .content-box .content-body .elements-list::-webkit-scrollbar{
     width: 6px;
 }
@@ -1505,6 +1480,28 @@ button:focus{
     margin-left: 25px;
 }
 
+@media (max-height:800px){
+    .content .container-fluid .row .sidebar .to-workspace-link{
+        color: var(--clr-black);
+        display: inline-flex;
+        align-items: center;
+        font-size: var(--fs-body);
+    }
+
+    .content .container-fluid .row .content-section .content-box .content-body .elements-list{
+        max-height: 40.5vh;
+    }
+    
+    .content .container-fluid .row #flow-section .content-box .content-body{
+        max-height: 63.5vh;
+    }
+
+    .content .container-fluid .row #properties-section, .content .container-fluid .row #flow-map-section{
+        height: 17.5vh;
+        overflow: hidden;
+    }
+    
+}
 
 @media (max-width: 992px){
     
