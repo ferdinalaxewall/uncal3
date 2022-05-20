@@ -346,4 +346,21 @@ function closeFlow(thisClose){
 function renameFlow(flowName){
     $("#renameFlowModal").modal('show');
     $("#input-flow-name").val($(flowName).text());
+
+    // edit json flow name    
+    let flow_id = $(flowName).parent().parent().attr("flow_id")
+    $('#saveFlowName').unbind("click");
+    $('#saveFlowName').click(function(){
+        var jsonFlowThis = JSON.parse(localStorage.getItem("jsonFlow"));
+        for (let x = 0; x < jsonFlowThis.length; x++) {
+            var flow = jsonFlowThis[x];
+            if(flow_id == flow.id){
+                let newName = $("#input-flow-name").val();
+                flow.name = newName;
+                localStorage.setItem("jsonFlow", JSON.stringify(jsonFlowThis));
+                $(flowName).text(newName);
+                $("#renameFlowModal").modal('hide');
+            }
+        }
+    });
 }
