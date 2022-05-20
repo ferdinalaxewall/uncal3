@@ -248,30 +248,8 @@ function focusElement(e) {
                 $("#properties").empty();
                 
                 // hapus component di localStorage
-                var jsonFlowThis = JSON.parse(localStorage.getItem("jsonFlow"));
-                findComp(jsonFlowThis);
-                function findComp(jsonFlowIndex){
-                    for (let i = 0; i < jsonFlowIndex.length; i++) {
-                        const flow = jsonFlowIndex[i];
-                        var components = flow.components;
-
-                        for (let x = 0; x < components.length; x++) {
-                            const comp = components[x];
-                            var name = comp.name;
-                            var type = comp.type;
-                            var id = comp.id;
-                            var properties = comp.properties;
-        
-                            if(prop_id == id){
-                                console.log("findComp del. name:", name, "| type:", type, "| id:", id, "| properties:", properties, "| jsonFlowThis:", jsonFlowThis);
-                                components.splice(x, 1);
-                                localStorage.setItem("jsonFlow", JSON.stringify(jsonFlowThis));
-                            }
-                        }
-                    }
-                }
+                deleteJsonFlow(prop_id);
             }
-
         }
     });
    
@@ -280,8 +258,33 @@ function focusElement(e) {
         $(".flow-diagram .element-item, .flow-diagram .element-box").removeClass("focus");
       }
     });
-    
 }
+
+function deleteJsonFlow(data_id) {
+    var jsonFlowThis = JSON.parse(localStorage.getItem("jsonFlow"));
+    findComp(jsonFlowThis);
+    function findComp(jsonFlowIndex){
+        for (let i = 0; i < jsonFlowIndex.length; i++) {
+            const flow = jsonFlowIndex[i];
+            var components = flow.components;
+
+            for (let x = 0; x < components.length; x++) {
+                const comp = components[x];
+                var name = comp.name;
+                var type = comp.type;
+                var id = comp.id;
+                var properties = comp.properties;
+
+                if(data_id == id){
+                    console.log("findComp del. name:", name, "| type:", type, "| id:", id, "| properties:", properties, "| jsonFlowThis:", jsonFlowThis);
+                    components.splice(x, 1);
+                    localStorage.setItem("jsonFlow", JSON.stringify(jsonFlowThis));
+                }
+            }
+        }
+    }
+}
+
 $("#flow-map-tab .tab-name").click(function(e){
     $("#flow-map-tab .tab-name").removeClass("active");
 
