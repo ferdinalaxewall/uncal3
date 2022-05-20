@@ -8,7 +8,6 @@
     <link rel="icon" type="image/x-icon" href="./assets/icon/uncal-icon.svg">
 
     <!-- Bootstrap CSS -->
-    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"> -->
     <link rel="stylesheet" href="./assets/style/css/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="./assets/style/css/style.css">
 
@@ -22,7 +21,12 @@
 
     <nav class="navbar navbar-expand-lg navbar-light px-3">
         <div class="container-fluid">
-          <a href="#" class="navbar-brand">UNCAL BPM</a>
+          <div class="navbar-left-group d-flex align-items-center">
+            <button class="sidebar-toggle mr-4">
+              <img src="./assets/icon/sidebar-icon.svg" alt="Sidebar Hamburger Menu Icon">
+            </button>
+            <a href="#" class="navbar-brand">UNCAL BPM</a>
+          </div>
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 <li class="nav-item" id="profile-link">
 
@@ -58,8 +62,46 @@
 
       <section class="content">
         <div class="container-fluid">  
-          <div class="row">
-            
+          <div class="row justify-content-end">
+            <div class="col-md-2 sidebar collapsed">
+              <a href="#" class="to-workspace-link">
+                <img src="./assets/icon/chevron-icon.svg" class="mr-3" alt="Chevron Left Icon">
+                <span>Back to Workspace</span>
+              </a>
+
+              <div class="sidebar-content d-flex flex-column align-items-center">
+                <div class="sidebar-content-header">
+                  <img src="./assets/icon/uncal-folder-icon.svg" alt="Uncal Folder Icon">
+                  <span class="folder-name">Folder_1</span>
+                  <button class="close-folder">
+                    <img src="./assets/icon/close-xl-icon.svg" alt="Close Icon">
+                  </button>
+                </div>
+                <button class="create-new-project">Add New Project</button>
+
+                <ul class="list-group-project">
+                  <li class="list-project">
+                    <a href="#" class="project-name">
+                      <img src="./assets/icon/uncal-icon.svg" alt="Uncal Icon">
+                      <span class="project-name">Project_1</span>
+                    </a>
+                  </li>
+                  <li class="list-project">
+                    <a href="#" class="project-name">
+                      <img src="./assets/icon/uncal-icon.svg" alt="Uncal Icon">
+                      <span class="project-name">Project_2</span>
+                    </a>
+                  </li>
+                  <li class="list-project">
+                    <a href="#" class="project-name">
+                      <img src="./assets/icon/uncal-icon.svg" alt="Uncal Icon">
+                      <span class="project-name">Project_3</span>
+                    </a>
+                  </li>
+                </ul>
+
+              </div>
+            </div>
             <div class="col-md-8 content-section" id="flow-section">
               <div class="content-box">
                 <div class="menu-tab" id="flow-tab">
@@ -109,12 +151,13 @@
                 <div class="menu-tab" id="palette-tab">
                   <a href="#" class="tab-name active">
 
-                    <svg width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg" id="tab-icon">
-                      <path d="M5.6 1.2562C7.6025 0.723949 9.21899 0.989228 10.7901 2.35186C12.359 3.7126 11.3305 5.75154 12.6492 7.36059C14.7846 9.96606 19.7231 6.89099 20.783 10.0997C21.8375 13.2921 18.8573 15.5254 15.9802 17.2215C11.8674 19.6461 7.2144 19.0281 3.89578 15.578C1.56232 13.1521 0.553227 10.6826 1.18454 7.36059C1.73558 4.46094 2.77364 2.00744 5.6 1.2562Z" stroke="#c68d53"/>
-                      <path d="M10.7597 12.1578C10.1221 12.1595 9.34879 12.7457 9.04823 12.9955C8.96139 13.0676 8.87307 13.1361 8.78127 13.2018C8.37706 13.4912 7.23483 14.3892 7.32049 15.2396C7.43555 16.3819 8.56567 16.8458 9.71994 16.978C11.2781 17.1564 12.9578 16.2356 12.9992 14.6864C13.0342 13.3748 12.0878 12.1544 10.7597 12.1578Z" fill="#c68d53"/>
-                      <path d="M8.76506 3.30734C7.74619 2.54192 6.63734 3.08873 5.52746 3.71493C4.0736 4.5352 3.39623 5.71741 3.33723 7.38567C3.2526 9.77868 5.11401 12.6281 7.41481 11.9648C9.51719 11.3588 9.09468 8.83548 9.1858 6.64938C9.24058 5.33507 9.8168 4.09744 8.76506 3.30734Z" fill="#c68d53"/>
-                      <ellipse cx="16.1582" cy="11.4208" rx="1.26316" ry="0.947368" fill="#c68d53"/>
+                    <svg width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M5.6 1.2562C7.6025 0.723949 9.21899 0.989228 10.7901 2.35186C12.359 3.7126 11.3305 5.75154 12.6492 7.36059C14.7846 9.96606 19.7231 6.89099 20.783 10.0997C21.8375 13.2921 18.8573 15.5254 15.9802 17.2215C11.8674 19.6461 7.2144 19.0281 3.89578 15.578C1.56232 13.1521 0.553227 10.6826 1.18454 7.36059C1.73558 4.46094 2.77364 2.00744 5.6 1.2562Z" fill="#c68d53" stroke="#c68d53"/>
+                      <path d="M14.4438 11C13.8061 11.0017 13.0329 11.5879 12.7323 11.8377C12.6455 11.9098 12.5572 11.9783 12.4654 12.044C12.0611 12.3334 10.9189 13.2313 11.0046 14.0817C11.1196 15.2241 12.2497 15.6879 13.404 15.8201C14.9622 15.9986 16.6419 15.0778 16.6833 13.5286C16.7183 12.2169 15.7719 10.9965 14.4438 11Z" fill="white"/>
+                      <path d="M5.24229 10.6114C6.05358 11.2499 6.77575 10.517 7.68608 10.03C8.87856 9.39207 9.41309 9.08244 9.49125 7.73232C9.60335 5.79566 8.14759 3.45388 6.272 3.94923C4.55816 4.40186 4.85444 6.45325 4.74084 8.22221C4.67254 9.28573 4.40483 9.95233 5.24229 10.6114Z" fill="white"/>
+                      <ellipse cx="8.26316" cy="13.9474" rx="1.26316" ry="0.947368" fill="white"/>
                     </svg>
+                      
                       
                     <span>Palette</span>
                     <button class="close-tab">
@@ -123,19 +166,21 @@
                   </a>
                   <a href="#" class="tab-name">
 
-                    <svg width="22" height="16" viewBox="0 0 22 16" fill="none" xmlns="http://www.w3.org/2000/svg" id="tab-icon">
+                    <svg width="22" height="16" viewBox="0 0 22 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M18 1H4C2.34315 1 1 2.34314 1 4V9.83946C1 11.4963 2.34315 12.8395 4 12.8395H11H18C19.6569 12.8395 21 11.4963 21 9.83947V4C21 2.34315 19.6569 1 18 1Z" fill="#c68d53"/>
                       <path d="M11 12.8395H18C19.6569 12.8395 21 11.4963 21 9.83947V4C21 2.34315 19.6569 1 18 1H4C2.34315 1 1 2.34314 1 4V9.83946C1 11.4963 2.34315 12.8395 4 12.8395H11ZM11 12.8395V12.8395C11 14.2802 9.83205 15.4482 8.3913 15.4482H5.94983H15.8495" stroke="#c68d53"/>
-                      <path d="M8.79044 3.54388C8.79044 3.54388 6.63983 2.93704 5.51284 3.54388C3.41987 4.67086 3.41987 8.50385 5.51284 9.63083C6.63983 10.2377 8.79044 9.63083 8.79044 9.63083" stroke="#c68d53"/>
-                      <path d="M7.35449 4.87977H8.76414C9.88258 4.87977 10.9201 4.29668 11.5016 3.34131V3.34131" stroke="#c68d53"/>
-                      <path d="M7.55518 8.49181H8.96482C10.0833 8.49181 11.1208 9.0749 11.7023 10.0303V10.0303" stroke="#c68d53"/>
-                      <path d="M12.7725 3.94299H16.9196" stroke="#c68d53"/>
-                      <circle cx="17.2541" cy="3.87616" r="0.869565" fill="#c68d53"/>
-                      <path d="M12.7725 6.61853H16.9196" stroke="#c68d53"/>
-                      <circle cx="17.2541" cy="6.55194" r="0.869565" fill="#c68d53"/>
-                      <path d="M12.7725 9.56189H16.9196" stroke="#c68d53"/>
-                      <circle cx="17.2541" cy="9.49493" r="0.869565" fill="#c68d53"/>
-                      <path d="M7.42041 6.68567H11.6366" stroke="#c68d53"/>
-                    </svg>
+                      <path d="M8.79068 3.54412C8.79068 3.54412 6.64007 2.93728 5.51309 3.54412C3.42012 4.6711 3.42012 8.50409 5.51309 9.63108C6.64007 10.2379 8.79068 9.63108 8.79068 9.63108" stroke="white" stroke-width="0.7"/>
+                      <path d="M7.35547 4.87977H8.76511C9.88356 4.87977 10.9211 4.29668 11.5026 3.34131V3.34131" stroke="white" stroke-width="0.7"/>
+                      <path d="M7.55469 8.49181H8.96433C10.0828 8.49181 11.1203 9.0749 11.7018 10.0303V10.0303" stroke="white" stroke-width="0.7"/>
+                      <path d="M12.7734 3.94287H16.9206" stroke="white" stroke-width="0.7"/>
+                      <circle cx="17.2543" cy="3.87591" r="0.869565" fill="white"/>
+                      <path d="M12.7734 6.61865H16.9206" stroke="white" stroke-width="0.7"/>
+                      <circle cx="17.2543" cy="6.55169" r="0.869565" fill="white"/>
+                      <path d="M12.7734 9.56201H16.9206" stroke="white" stroke-width="0.7"/>
+                      <circle cx="17.2543" cy="9.49505" r="0.869565" fill="white"/>
+                      <path d="M7.41992 6.68555H11.6361" stroke="white" stroke-width="0.7"/>
+                      </svg>
+                      
 
                     <span>API Sync</span>
                     <button class="close-tab">
@@ -318,141 +363,40 @@
             <div class="col-md-8 content-section" id="properties-section">
               <div class="content-box">
                 <div class="menu-tab" id="properties-tab">
-                    <a href="#" class="tab-name displayed active">
-                      <svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg" id="properties-icon">
-                        <path d="M6.32735 20.4593L1.1547 11.5L6.32735 2.54071H16.6726L21.8453 11.5L16.6726 20.4593H6.32735Z" stroke="#c68d53" stroke-width="2"/>
-                        <circle cx="11.5" cy="11.5" r="2.3" fill="#c68d53"/>
-                      </svg>
-                        
-                      <span>
-                        Properties
+                  <a href="#" class="tab-name displayed active">
+                    <svg width="24" height="29" viewBox="0 0 24 29" fill="none" xmlns="http://www.w3.org/2000/svg" id="problems-icon">
+                      <path d="M20.7578 14.7509C20.6868 15.2986 21.0733 15.8001 21.621 15.8711C22.1687 15.9421 22.6703 15.5556 22.7412 15.0079L20.7578 14.7509ZM1.62686 10.1903L13.1316 11.1779L8.23451 0.720711L1.62686 10.1903ZM22.7412 15.0079C23.2016 11.454 22.1713 8.37536 19.7306 6.52514C17.3132 4.69252 13.7508 4.24781 9.51334 5.40885L10.0419 7.33776C13.9187 6.27551 16.7691 6.78974 18.5224 8.11893C20.2525 9.43052 21.1509 11.7166 20.7578 14.7509L22.7412 15.0079Z" fill="#c68d53"/>
+                      <path d="M2.41002 14.8889C2.46112 14.339 2.05676 13.8518 1.50684 13.8007C0.956925 13.7496 0.469702 14.1539 0.418597 14.7039L2.41002 14.8889ZM21.6934 18.7548L10.1605 18.1839L15.4325 28.4571L21.6934 18.7548ZM0.418597 14.7039C0.0869913 18.2721 1.22803 21.3114 3.73397 23.0722C6.21607 24.8162 9.79222 25.1318 13.9849 23.8183L13.387 21.9097C9.55108 23.1115 6.68403 22.7007 4.88378 21.4357C3.10737 20.1876 2.12689 17.9355 2.41002 14.8889L0.418597 14.7039Z" fill="#c68d53"/>
+                      <path d="M14.7657 10.1294L14.3247 14.8184H13.2357V9.97641L14.7657 10.1294ZM13.6947 15.7094C13.8447 15.7094 13.9767 15.7394 14.0907 15.7994C14.2107 15.8594 14.3097 15.9374 14.3877 16.0334C14.4717 16.1234 14.5347 16.2254 14.5767 16.3394C14.6187 16.4474 14.6397 16.5524 14.6397 16.6544C14.6397 16.7864 14.6127 16.9124 14.5587 17.0324C14.5107 17.1524 14.4417 17.2574 14.3517 17.3474C14.2677 17.4374 14.1657 17.5094 14.0457 17.5634C13.9317 17.6174 13.8117 17.6444 13.6857 17.6444C13.5237 17.6444 13.3827 17.6174 13.2627 17.5634C13.1427 17.5154 13.0437 17.4494 12.9657 17.3654C12.8877 17.2754 12.8277 17.1764 12.7857 17.0684C12.7497 16.9604 12.7317 16.8494 12.7317 16.7354C12.7317 16.6154 12.7527 16.4954 12.7947 16.3754C12.8367 16.2494 12.8967 16.1384 12.9747 16.0424C13.0587 15.9404 13.1607 15.8594 13.2807 15.7994C13.4007 15.7394 13.5387 15.7094 13.6947 15.7094Z" fill="#c68d53"/>
+                    </svg>
+                      
+                    <span>
+                      Problems
 
-                        <button class="close-tab" id="close-properties">
-                          <img src="./assets/icon/close-icon.svg" alt="Close Icon">
-                        </button>
-                      </span>
-                    </a>
-                    <a href="#" class="tab-name displayed">
-                      <svg width="24" height="29" viewBox="0 0 24 29" fill="none" xmlns="http://www.w3.org/2000/svg" id="problems-icon">
-                        <path d="M20.7578 14.7509C20.6868 15.2986 21.0733 15.8001 21.621 15.8711C22.1687 15.9421 22.6703 15.5556 22.7412 15.0079L20.7578 14.7509ZM1.62686 10.1903L13.1316 11.1779L8.23451 0.720711L1.62686 10.1903ZM22.7412 15.0079C23.2016 11.454 22.1713 8.37536 19.7306 6.52514C17.3132 4.69252 13.7508 4.24781 9.51334 5.40885L10.0419 7.33776C13.9187 6.27551 16.7691 6.78974 18.5224 8.11893C20.2525 9.43052 21.1509 11.7166 20.7578 14.7509L22.7412 15.0079Z" fill="#c68d53"/>
-                        <path d="M2.41002 14.8889C2.46112 14.339 2.05676 13.8518 1.50684 13.8007C0.956925 13.7496 0.469702 14.1539 0.418597 14.7039L2.41002 14.8889ZM21.6934 18.7548L10.1605 18.1839L15.4325 28.4571L21.6934 18.7548ZM0.418597 14.7039C0.0869913 18.2721 1.22803 21.3114 3.73397 23.0722C6.21607 24.8162 9.79222 25.1318 13.9849 23.8183L13.387 21.9097C9.55108 23.1115 6.68403 22.7007 4.88378 21.4357C3.10737 20.1876 2.12689 17.9355 2.41002 14.8889L0.418597 14.7039Z" fill="#c68d53"/>
-                        <path d="M14.7657 10.1294L14.3247 14.8184H13.2357V9.97641L14.7657 10.1294ZM13.6947 15.7094C13.8447 15.7094 13.9767 15.7394 14.0907 15.7994C14.2107 15.8594 14.3097 15.9374 14.3877 16.0334C14.4717 16.1234 14.5347 16.2254 14.5767 16.3394C14.6187 16.4474 14.6397 16.5524 14.6397 16.6544C14.6397 16.7864 14.6127 16.9124 14.5587 17.0324C14.5107 17.1524 14.4417 17.2574 14.3517 17.3474C14.2677 17.4374 14.1657 17.5094 14.0457 17.5634C13.9317 17.6174 13.8117 17.6444 13.6857 17.6444C13.5237 17.6444 13.3827 17.6174 13.2627 17.5634C13.1427 17.5154 13.0437 17.4494 12.9657 17.3654C12.8877 17.2754 12.8277 17.1764 12.7857 17.0684C12.7497 16.9604 12.7317 16.8494 12.7317 16.7354C12.7317 16.6154 12.7527 16.4954 12.7947 16.3754C12.8367 16.2494 12.8967 16.1384 12.9747 16.0424C13.0587 15.9404 13.1607 15.8594 13.2807 15.7994C13.4007 15.7394 13.5387 15.7094 13.6947 15.7094Z" fill="#c68d53"/>
-                      </svg>
-                        
-                      <span>
-                        Problems
+                      <button class="close-tab" id="close-problems">
+                        <img src="./assets/icon/close-icon.svg" alt="Close Icon">
+                      </button>
+                    </span>
+                  </a>
+                  <a href="#" class="tab-name displayed">
+                    <svg width="24" height="22" viewBox="0 0 24 22" fill="none" xmlns="http://www.w3.org/2000/svg" id="console-icon">
+                      <path d="M11.8636 16.3636H21.7273C22.2796 16.3636 22.7273 15.9159 22.7273 15.3636V2C22.7273 1.44772 22.2796 1 21.7273 1H2C1.44772 1 1 1.44771 1 2V15.3636C1 15.9159 1.44771 16.3636 2 16.3636H11.8636ZM11.8636 16.3636V20C11.8636 20.5523 11.4159 21 10.8636 21H1H22.7273" stroke="#c68d53" stroke-width="2"/>
+                    </svg>
+                      
+                    <span>
+                      Console
 
-                        <button class="close-tab" id="close-problems">
-                          <img src="./assets/icon/close-icon.svg" alt="Close Icon">
-                        </button>
-                      </span>
-                    </a>
-                    <a href="#" class="tab-name displayed">
-                      <svg width="24" height="22" viewBox="0 0 24 22" fill="none" xmlns="http://www.w3.org/2000/svg" id="console-icon">
-                        <path d="M11.8636 16.3636H21.7273C22.2796 16.3636 22.7273 15.9159 22.7273 15.3636V2C22.7273 1.44772 22.2796 1 21.7273 1H2C1.44772 1 1 1.44771 1 2V15.3636C1 15.9159 1.44771 16.3636 2 16.3636H11.8636ZM11.8636 16.3636V20C11.8636 20.5523 11.4159 21 10.8636 21H1H22.7273" stroke="#c68d53" stroke-width="2"/>
-                      </svg>
-                        
-                      <span>
-                        Console
-
-                        <button class="close-tab" id="close-console">
-                          <img src="./assets/icon/close-icon.svg" alt="Close Icon">
-                        </button>
-                      </span>
-                    </a>
+                      <button class="close-tab" id="close-console">
+                        <img src="./assets/icon/close-icon.svg" alt="Close Icon">
+                      </button>
+                    </span>
+                  </a>
+                  <button class="minimize-properties">
+                    <img src="./assets/icon/chevron-icon.svg" alt="Chevron Icon" id="chevron-header-properties">
+                  </button>
                 </div>
                 <div class="content-body">
-                    <div class="properties-content">
-                      <div class="menu-group" id="main-menu">
-                        <a href="#" class="menu-name active">General</a>
-                        <a href="#" class="menu-name">Notes</a>
-                      </div>
-  
-                      <div class="row">
-                        <div class="col-md-8">
-                          <p class="error-info">
-                            <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg" class="mr-2" id="no-errors-icon">
-                              <path d="M15.3612 4.0869C16.1574 2.94888 17.8426 2.94888 18.6388 4.0869L19.0454 4.66819C20.0101 6.04704 21.7346 6.6747 23.3598 6.2385L24.045 6.05461C25.3864 5.6946 26.6774 6.77784 26.5558 8.16137L26.4936 8.86807C26.3463 10.5444 27.2639 12.1337 28.7893 12.8442L29.4324 13.1438C30.6913 13.7302 30.984 15.3899 30.0015 16.3715L29.4996 16.873C28.3093 18.0624 27.9906 19.8697 28.7024 21.3945L29.0025 22.0373C29.5899 23.2958 28.7473 24.7553 27.3637 24.8758L26.6569 24.9373C24.9805 25.0833 23.5747 26.2629 23.1398 27.8885L22.9565 28.5739C22.5976 29.9155 21.014 30.4919 19.8766 29.6948L19.2956 29.2877C17.9176 28.3219 16.0824 28.3219 14.7044 29.2877L14.1234 29.6948C12.986 30.4919 11.4024 29.9155 11.0435 28.5739L10.8602 27.8885C10.4253 26.2629 9.0195 25.0833 7.34306 24.9373L6.63631 24.8758C5.25268 24.7553 4.41007 23.2958 4.99754 22.0373L5.29762 21.3945C6.00941 19.8697 5.69074 18.0624 4.50035 16.873L3.99851 16.3715C3.01603 15.3899 3.30866 13.7302 4.56765 13.1438L4.1454 12.2373L4.56765 13.1438L5.21072 12.8442C6.73614 12.1337 7.65371 10.5444 7.50636 8.86807L7.44425 8.16137C7.32264 6.77784 8.61359 5.6946 9.95499 6.05461L10.6402 6.2385C12.2654 6.6747 13.9899 6.04704 14.9546 4.66819L15.3612 4.0869Z" fill="#c68d53" stroke="#c68d53" stroke-width="2"/>
-                              <path d="M10.752 15.9823L13.1428 18.7556C13.8384 19.5626 15.0445 19.6826 15.8855 19.0285L23.5383 13.0763" stroke="white" stroke-width="2"/>
-                            </svg>
-                              
-                            There are no errors.
-                          </p>
-                          
-                          <div id="propertiess">
-  
-                            <div class="row justify-content-center">
-                              <div class="col-md-5 config-box">
-                                <h5 class="config-title">Flow Configuration</h5>
-        
-                                <div class="input-group mb-2">
-                                  <label for="input-name">Name:</label>
-                                  <input type="text" class="input-field" id="input-name">
-                                </div>
-                                <div class="input-group mb-2">
-                                  <label for="input-state">Initial State:</label>
-                                  <input type="text" class="input-field" id="input-state">
-                                </div>
-                              </div>
-                              <div class="col-md-6 config-box">
-                                <h5 class="config-title">Optional Processing Strategy</h5>
-        
-                                <div class="input-group mb-2">
-                                  <label for="input-processing-strategy">Processing Strategy:</label>
-                                  <input type="text" class="input-field" id="input-processing-strategy">
-                                </div>
-                                <div class="input-group mb-2">
-                                  <label for="input-processing-strategy-ref">Processing Strategy Ref:</label>
-                                  <input type="text" class="input-field" id="input-processing-strategy-ref">
-                                </div>
-                              </div>
-                            </div>
-  
-                          </div>
-                        </div>
-  
-                        <div class="col-md-4 input-output-box">
-                          <div class="menu-group" id="sub-main-menu">
-                            <a href="#" class="menu-name active">Input</a>
-                            <a href="#" class="menu-name">Output</a>
-                          </div>
-                          
-                          <div class="search-group">
-                            <input type="text" class="input-search" id="search" placeholder="Type filter text">
-                            <label for="search">
-                              <svg width="14" height="15" viewBox="0 0 14 15" fill="none" xmlns="http://www.w3.org/2000/svg" id="search-icon">
-                                <circle cx="5.92731" cy="5.92731" r="4.92731" stroke="#c68d53" stroke-width="2"/>
-                                <path d="M10.5195 9.16077L13.3462 12.0992C13.7072 12.4745 13.6957 13.0715 13.3203 13.4325C12.945 13.7936 12.3481 13.782 11.987 13.4067L9.16035 10.4682L10.5195 9.16077Z" fill="#c68d53"/>
-                                <path d="M7.96831 3.99992C8.71383 5.36473 9.25247 5.96891 7.9681 7.50038" stroke="#c68d53"/>
-                                <circle cx="7.40414" cy="8.40413" r="0.404135" fill="#c68d53"/>
-                              </svg>  
-                            </label>
-                          </div>
-                          <ul class="list-group" id="properties-group">
-                            <li class="list-item">
-                              <span> Payload </span>
-                              <p class="list-sub-item">Unknown : <span class="unhighlighted-text">Unknown</span></p>
-                            </li>
-                            <li class="list-item">
-                              <span>Flow Variables</span>
-                            </li>
-                            <li class="list-item">
-                              <span>Session Variable</span>
-                            </li>
-                            <li class="list-item">
-                              <span>Inbound Properties</span>
-                            </li>
-                            <li class="list-item">
-                              <span>Outbound Properties</span>
-                            </li>
-                            <li class="list-item">
-                              <span>Record Variables</span>
-                            </li>
-                          </ul>
-                        </div>
-  
-                      </div>  
-                    </div>
+                    
                 </div>
               </div>
             </div>
@@ -475,15 +419,16 @@
                     </span>
                   </a>
                   <a href="#" class="tab-name displayed active">
-                    <svg width="25" height="21" viewBox="0 0 25 21" fill="none" xmlns="http://www.w3.org/2000/svg" id="outline-icon">
-                      <rect x="3.81641" y="5.69312" width="4.02332" height="3.57629" rx="1.78814" fill="#c68d53"/>
-                      <rect x="9.77686" y="10.7598" width="1.93716" height="1.78814" rx="0.894072" fill="#c68d53"/>
-                      <path d="M8.43579 8.22681L9.76772 7.16127C10.088 6.90501 10.5324 6.87038 10.8886 7.0739L12.35 7.90902C12.689 8.10272 13.1097 8.08143 13.4274 7.85451L14.4111 7.15186C14.7588 6.90351 15.2259 6.90351 15.5736 7.15186L16.4866 7.804C16.8394 8.05606 17.3146 8.05195 17.663 7.79383L18.4586 7.20454C18.8292 6.92997 19.3396 6.94457 19.694 7.23988L20.8783 8.22681" stroke="#c68d53"/>
-                      <path d="M12.6082 11.5791H20.5058" stroke="#c68d53"/>
-                      <rect x="9.77686" y="13.2924" width="1.93716" height="1.78814" rx="0.894072" fill="#c68d53"/>
-                      <path d="M12.6082 14.1124H20.5058" stroke="#c68d53"/>
-                      <path d="M20 1H5C2.79086 1 1 2.79086 1 5V15.3061C1 17.5153 2.79086 19.3061 5 19.3061H20C22.2091 19.3061 24 17.5153 24 15.3061V5C24 2.79086 22.2091 1 20 1Z" stroke="#c68d53" stroke-width="2"/>
-                    </svg>                      
+                    <svg width="20" height="16" viewBox="0 0 20 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M16.5897 1H3C1.89543 1 1 1.89543 1 3V13C1 14.1046 1.89543 15 3 15H16.5897C17.6943 15 18.5897 14.1046 18.5897 13V3C18.5897 1.89543 17.6943 1 16.5897 1Z" fill="#c68d53" stroke="#c68d53" stroke-width="1.5"/>
+                      <rect x="3.91602" y="4.58936" width="1.72074" height="1.52954" rx="0.764771" fill="white"/>
+                      <rect x="5.71094" y="8.46436" width="1.48148" height="1.36752" rx="0.683761" fill="white"/>
+                      <path d="M6.68359 5.76216L7.57737 5.04714C7.8977 4.79088 8.34204 4.75624 8.6982 4.95976L9.54625 5.44436C9.88523 5.63806 10.3059 5.61678 10.6236 5.38985L11.1166 5.03773C11.4643 4.78937 11.9314 4.78937 12.2791 5.03773L12.7013 5.33935C13.0542 5.59141 13.5293 5.5873 13.8778 5.32917L14.2001 5.09041C14.5708 4.81584 15.0812 4.83044 15.4356 5.12574L16.1993 5.76216" stroke="white"/>
+                      <path d="M8.875 9.09131H14.9149" stroke="white"/>
+                      <rect x="5.71094" y="10.4009" width="1.48148" height="1.36752" rx="0.683761" fill="white"/>
+                      <path d="M8.875 11.0283H14.9149" stroke="white"/>
+                    </svg>
+                                           
                     <span>
                       Outline
 
@@ -546,7 +491,7 @@
         </div>
       </section>
 
-      <!--Rename Flows Modal -->
+      <!--Rename Flow Modal -->
       <div class="modal fade" id="renameFlowModal" tabindex="-1" role="dialog" aria-labelledby="renameFlowModalTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content">
@@ -572,6 +517,7 @@
         </div>
       </div>
       
+      <!-- Flow Element Properties Modal -->
       <div class="modal fade" id="propertiesModal" tabindex="-1" role="dialog" aria-labelledby="propertiesModalTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
           <div class="modal-content">

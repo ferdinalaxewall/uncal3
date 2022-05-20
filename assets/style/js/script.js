@@ -118,7 +118,33 @@ $(document).ready(function(){
     $(".modal .input-output-menu-name").click(function(){
         $(".modal .input-output-menu-name").removeClass("active");
         $(this).addClass("active")
-    })
+    });
+
+    $(".minimize-properties").click(function(){
+        $(this).toggleClass("minimize");
+        $(this).parent().parent().toggleClass("minimized")
+    });
+    
+    var sidebarCollapse = false;
+    
+    $(".sidebar-toggle").click(function(){
+        $(".sidebar").toggleClass("collapsed")
+        if(sidebarCollapse == false){
+            sidebarCollapse = true;
+            $("#flow-section").removeClass("col-md-8").addClass("col-md-7");
+            $("#properties-section").removeClass("col-md-8").addClass("col-md-7");
+            $("#palette-section").removeClass("col-md-4").addClass("col-md-3");
+            $("#flow-map-section").removeClass("col-md-4").addClass("col-md-3");
+            $(".sidebar-content").fadeIn();
+        }else{
+            sidebarCollapse = false;
+            $("#flow-section").removeClass("col-md-7").addClass("col-md-8");
+            $("#properties-section").removeClass("col-md-7").addClass("col-md-8");
+            $("#palette-section").removeClass("col-md-3").addClass("col-md-4");
+            $("#flow-map-section").removeClass("col-md-3").addClass("col-md-4");
+            $(".sidebar-content").fadeOut();
+        }
+    });
 });
 
 function elementProperties(el){
