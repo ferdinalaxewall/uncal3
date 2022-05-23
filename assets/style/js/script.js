@@ -368,3 +368,65 @@ function renameFlow(flowName){
         }
     });
 }
+
+// project
+$(document).ready(function () {
+    // contoh json project auto fill
+    let getJsonProject = localStorage.getItem("jsonProject");
+    console.log("getJsonProject: ", getJsonProject);
+    if(getJsonProject == "" || getJsonProject == null /* || getJsonProject == "[]" */){
+        console.log("jsonProject empty");
+        let dataProject = [{
+            "projectName": "projectA",
+            "isOpen": true,
+            "files": [
+                "file a", "file b", "file c"
+            ]
+        }];
+        localStorage.setItem("jsonProject", JSON.stringify(dataProject));
+    }
+
+    // buat html file
+    function addFileHtml(item) {
+        let result = "";
+        result += '<li class="list-project">';
+        result += '<a href="#" class="project-name">';
+        result +=  '<img src="./assets/icon/uncal-icon.svg" alt="Uncal Icon">';
+        result +=  '<span class="project-name">'+item+'</span>';
+        result += '</a></li>';
+        return result;
+    }
+
+    // show jsonProject ke sidebar
+    let jsonProject = JSON.parse(localStorage.getItem("jsonProject"));
+    let listHtml = "";
+    for (let i = 0; i < jsonProject.length; i++) {
+        const project = jsonProject[i];
+        if(project.isOpen){
+            let files = project.files;
+            $(".folder-name").text(project.projectName);
+            for (let j = 0; j < files.length; j++) {
+                listHtml += addFileHtml(files[j]);
+            }
+        }
+    }
+    $(".list-group-project").empty();
+    $(".list-group-project").append(listHtml);
+
+    // new project
+    $("#createProjectName").click(function (e) { 
+        let newName = $("#input-project-name").val();
+        console.log("createProjectName. newName:", newName);
+
+        let jsonProjectLocal = JSON.parse(localStorage.getItem("jsonProject"));
+        for (let i = 0; i < jsonProjectLocal.length; i++) {
+            const project = jsonProjectLocal[i];
+            if(project.isOpen){
+                project.files.push(newName);
+            }
+        }
+        localStorage.setItem("jsonProject", JSON.stringify(jsonProjectLocal));
+        $(".list-group-project").append(addFileHtml(newName));
+        $("#createProjectModal").modal("hide");
+    });
+});
