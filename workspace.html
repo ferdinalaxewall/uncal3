@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="icon" type="image/x-icon" href="./assets/icon/uncal-icon.svg">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="./assets/style/css/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="./assets/style/css/style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+
+    <title>Uncal BPM</title>
+  </head>
+  <body style="height: 100vh;">
+
+    <nav class="navbar navbar-expand-lg navbar-light px-3">
+        <div class="container-fluid">
+          <div class="navbar-left-group d-flex align-items-center">
+            <button class="sidebar-toggle mr-4">
+              <img src="./assets/icon/sidebar-icon.svg" alt="Sidebar Hamburger Menu Icon">
+            </button>
+            <a href="#" class="navbar-brand">UNCAL BPM</a>
+          </div>
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item" id="profile-link">
+
+                  <svg width="37" height="33" viewBox="0 0 37 33" fill="none" xmlns="http://www.w3.org/2000/svg" id="user-icon">
+                    <path d="M32.6334 6.33631C24.9059 -0.77877 12.0941 -0.778769 4.36664 6.33631C-0.304796 10.6375 0.78548 19.1451 2.30763 25.0351C3.31513 28.9337 6.98609 31.3457 11.0127 31.3457H25.9873C30.0139 31.3457 33.6849 28.9337 34.6924 25.0351C36.2145 19.1451 37.3048 10.6375 32.6334 6.33631Z" stroke="black" stroke-width="2"/>
+                    <circle cx="18.407" cy="12.8218" r="5.05053" stroke="black" stroke-width="2"/>
+                    <path d="M9.34512 31.3452C9.34512 31.3452 7.32385 26.3194 9.34512 23.7746C12.7629 19.4716 23.12 19.4716 26.5378 23.7746C28.5591 26.3194 26.5378 31.3452 26.5378 31.3452" stroke="black" stroke-width="2"/>
+                  </svg>
+                    
+                  <div class="profile-group">
+                    <h5 class="profile-name">Username</h5>
+                    <p class="profile-description">Client Number: 001</p>
+                  </div>
+                  <a href="#" class="edit-profile">
+                    <svg width="29" height="23" viewBox="0 0 29 23" fill="none" xmlns="http://www.w3.org/2000/svg" id="edit-icon">
+                      <circle cx="10.5946" cy="12.3514" r="9.5946" stroke="black" stroke-width="2"/>
+                      <path d="M10.099 15.2739L6.34413 16.2438C5.47162 16.4692 4.76957 15.5162 5.24349 14.7497L7.18074 11.6167C7.26233 11.4847 7.37351 11.3735 7.50547 11.292L19.9793 3.58128C20.4238 3.30653 21.0049 3.42031 21.3129 3.84242L23.0735 6.25509C23.4198 6.72967 23.2844 7.39912 22.7808 7.70172L10.3639 15.1629C10.2814 15.2125 10.1922 15.2499 10.099 15.2739Z" stroke="black" stroke-width="2"/>
+                      <path d="M24.9344 4.96053L23.6659 3.31147C23.2922 2.82562 23.4395 2.12094 23.9766 1.82554L24.7404 1.40546C25.1665 1.17111 25.6994 1.27725 26.0032 1.65698L27.2853 3.25967C27.6636 3.73248 27.5382 4.43033 27.019 4.74186L26.2415 5.20831C25.8061 5.46956 25.244 5.36301 24.9344 4.96053Z" stroke="black" stroke-width="2"/>
+                    </svg>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="#" class="nav-link">
+                    <svg width="35" height="27" viewBox="0 0 35 27" fill="none" xmlns="http://www.w3.org/2000/svg" id="logout-icon">
+                      <path d="M15.2567 1.33929C-3.24648 1.33929 -1.90557 25.9996 15.2567 25.9996" stroke="black" stroke-width="2"/>
+                      <path d="M17.7606 9.33349H12.153C10.1806 9.33349 8.58154 10.9325 8.58154 12.905C8.58154 14.8775 10.1806 16.4765 12.153 16.4765H17.6608C19.0889 16.4765 20.2466 17.6342 20.2466 19.0622C20.2466 21.1406 22.5744 22.3697 24.2907 21.1975L28.7034 18.1836C31.5345 16.25 31.8744 12.2035 29.4055 9.82472L24.4575 5.05726C22.8786 3.53594 20.2466 4.6549 20.2466 6.84749C20.2466 8.22047 19.1336 9.33349 17.7606 9.33349Z" fill="none" stroke="black" stroke-width="2"/>
+                    </svg>  
+                  </a>
+                </li>
+            </ul>
+        </div>
+      </nav>
+
+      <section class="content">
+        <div class="container-fluid">  
+          <div class="row justify-content-end">
+            <div class="col-md-2 sidebar collapsed">
+              <a href="#" class="to-workspace-link">
+                <img src="./assets/icon/chevron-icon.svg" class="mr-3" alt="Chevron Left Icon">
+                <span>Back to Workspace</span>
+              </a>
+
+              <div class="sidebar-content d-flex flex-column align-items-center">
+                <div class="sidebar-content-header">
+                  <img src="./assets/icon/uncal-folder-icon.svg" alt="Uncal Folder Icon">
+                  <span class="folder-name">Folder_1</span>
+                  <button class="close-folder">
+                    <img src="./assets/icon/close-xl-icon.svg" alt="Close Icon">
+                  </button>
+                </div>
+                <button class="create-new-project">Add New Project</button>
+
+                <ul class="list-group-project">
+                  <li class="list-project">
+                    <a href="#" class="project-name">
+                      <img src="./assets/icon/uncal-icon.svg" alt="Uncal Icon">
+                      <span class="project-name">Project_1</span>
+                    </a>
+                  </li>
+                  <li class="list-project">
+                    <a href="#" class="project-name">
+                      <img src="./assets/icon/uncal-icon.svg" alt="Uncal Icon">
+                      <span class="project-name">Project_2</span>
+                    </a>
+                  </li>
+                  <li class="list-project">
+                    <a href="#" class="project-name">
+                      <img src="./assets/icon/uncal-icon.svg" alt="Uncal Icon">
+                      <span class="project-name">Project_3</span>
+                    </a>
+                  </li>
+                </ul>
+
+              </div>
+            </div>
+
+            <div class="col-md-12 content-section text-center" id="workspace-section">
+                <div class="container-fluid">
+                    <h3 class="section-title d-inline-block">Workspace</h3>
+                    <div class="workspace-content">
+                        <div class="row justify-content-end">
+                            <div class="col-md-3 search-workspace-box">
+                                <div class="input-group">
+                                    <input type="text" name="search-workspace" id="search-workspace" class="input-field" placeholder="Search Workspace">
+                                    <label for="#search-worskpace" >
+                                        <svg width="14" height="15" viewBox="0 0 14 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <circle cx="5.92731" cy="5.92731" r="4.92731" stroke="#c68d53" stroke-width="2"/>
+                                            <path d="M10.5195 9.16077L13.3462 12.0992C13.7072 12.4745 13.6957 13.0715 13.3203 13.4325C12.945 13.7936 12.3481 13.782 11.987 13.4067L9.16035 10.4682L10.5195 9.16077Z" fill="#c68d53"/>
+                                            <path d="M7.96831 3.99992C8.71383 5.36473 9.25247 5.96891 7.9681 7.50038" stroke="#c68d53"/>
+                                            <circle cx="7.40414" cy="8.40413" r="0.404135" fill="#c68d53"/>
+                                        </svg>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center workspace-box-container">
+                            <div class="col-md-3 workspace-box">
+                                <a href="./index.html" class="workspace-link d-block">
+                                    <div class="workspace-img p-3">
+                                        <img src="./assets/icon/uncal-folder-workspace-icon.svg" alt="Uncal Folder Icon">
+                                    </div>
+                                    <div class="workspace-body p-2">
+                                        <h5 class="workspace-title">Folder 1</h5>
+                                        <p class="workspace-description">8 Projects</p>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-md-3 workspace-box">
+                                <a href="./index.html" class="workspace-link d-block">
+                                    <div class="workspace-img p-3">
+                                        <img src="./assets/icon/uncal-folder-workspace-icon.svg" alt="Uncal Folder Icon">
+                                    </div>
+                                    <div class="workspace-body p-2">
+                                        <h5 class="workspace-title">Folder 1</h5>
+                                        <p class="workspace-description">8 Projects</p>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-md-3 workspace-box">
+                                <a href="./index.html" class="workspace-link d-block">
+                                    <div class="workspace-img p-3">
+                                        <img src="./assets/icon/uncal-folder-workspace-icon.svg" alt="Uncal Folder Icon">
+                                    </div>
+                                    <div class="workspace-body p-2">
+                                        <h5 class="workspace-title">Folder 1</h5>
+                                        <p class="workspace-description">8 Projects</p>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-md-3 workspace-box">
+                                <a href="./index.html" class="workspace-link d-block">
+                                    <div class="workspace-img p-3">
+                                        <img src="./assets/icon/uncal-folder-workspace-icon.svg" alt="Uncal Folder Icon">
+                                    </div>
+                                    <div class="workspace-body p-2">
+                                        <h5 class="workspace-title">Folder 1</h5>
+                                        <p class="workspace-description">8 Projects</p>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-md-3 workspace-box">
+                                <a href="./index.html" class="workspace-link d-block">
+                                    <div class="workspace-img p-3">
+                                        <img src="./assets/icon/uncal-folder-workspace-icon.svg" alt="Uncal Folder Icon">
+                                    </div>
+                                    <div class="workspace-body p-2">
+                                        <h5 class="workspace-title">Folder 1</h5>
+                                        <p class="workspace-description">8 Projects</p>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-md-3 workspace-box">
+                                <a href="./index.html" class="workspace-link d-block">
+                                    <div class="workspace-img p-3">
+                                        <img src="./assets/icon/uncal-folder-workspace-icon.svg" alt="Uncal Folder Icon">
+                                    </div>
+                                    <div class="workspace-body p-2">
+                                        <h5 class="workspace-title">Folder 1</h5>
+                                        <p class="workspace-description">8 Projects</p>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-md-3 workspace-box">
+                                <a href="./index.html" class="workspace-link d-block">
+                                    <div class="workspace-img p-3">
+                                        <img src="./assets/icon/uncal-folder-workspace-icon.svg" alt="Uncal Folder Icon">
+                                    </div>
+                                    <div class="workspace-body p-2">
+                                        <h5 class="workspace-title">Folder 1</h5>
+                                        <p class="workspace-description">8 Projects</p>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-md-3 workspace-box">
+                                <a href="./index.html" class="workspace-link d-block">
+                                    <div class="workspace-img p-3">
+                                        <img src="./assets/icon/uncal-folder-workspace-icon.svg" alt="Uncal Folder Icon">
+                                    </div>
+                                    <div class="workspace-body p-2">
+                                        <h5 class="workspace-title">Folder 1</h5>
+                                        <p class="workspace-description">8 Projects</p>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-md-3 workspace-box">
+                                <a href="./index.html" class="workspace-link d-block">
+                                    <div class="workspace-img p-3">
+                                        <img src="./assets/icon/uncal-folder-workspace-icon.svg" alt="Uncal Folder Icon">
+                                    </div>
+                                    <div class="workspace-body p-2">
+                                        <h5 class="workspace-title">Folder 1</h5>
+                                        <p class="workspace-description">8 Projects</p>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-md-3 workspace-box">
+                                <a href="./index.html" class="workspace-link d-block">
+                                    <div class="workspace-img p-3">
+                                        <img src="./assets/icon/uncal-folder-workspace-icon.svg" alt="Uncal Folder Icon">
+                                    </div>
+                                    <div class="workspace-body p-2">
+                                        <h5 class="workspace-title">Folder 1</h5>
+                                        <p class="workspace-description">8 Projects</p>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!--Rename Flow Modal -->
+      <div class="modal fade" id="renameFlowModal" tabindex="-1" role="dialog" aria-labelledby="renameFlowModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="renameFlowModalTitle">Rename Flow</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="input-group">
+                  <label for="input-flow-name">Flow Name:</label>
+                  <input type="text" class="input-field" id="input-flow-name" placeholder="Flow Name">
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" id="saveFlowName">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Flow Element Properties Modal -->
+      <div class="modal fade" id="propertiesModal" tabindex="-1" role="dialog" aria-labelledby="propertiesModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="propertiesModalTitle">Flow Properties</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="row justify-content-center">
+                <div class="col-md-11" id="properties-modal-content">
+                  <div class="menu-group">
+                    <a href="#" class="menu-name active" id="general-properties">General</a>
+                    <a href="#" class="menu-name" id="notes-properties">Notes</a>
+                    <a href="#" class="menu-name" id="input-output-properties">Input/Output</a>
+                  </div>
+                  <p class="error-info">
+                    <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg" class="mr-2" id="no-errors-icon">
+                      <path d="M15.3612 4.0869C16.1574 2.94888 17.8426 2.94888 18.6388 4.0869L19.0454 4.66819C20.0101 6.04704 21.7346 6.6747 23.3598 6.2385L24.045 6.05461C25.3864 5.6946 26.6774 6.77784 26.5558 8.16137L26.4936 8.86807C26.3463 10.5444 27.2639 12.1337 28.7893 12.8442L29.4324 13.1438C30.6913 13.7302 30.984 15.3899 30.0015 16.3715L29.4996 16.873C28.3093 18.0624 27.9906 19.8697 28.7024 21.3945L29.0025 22.0373C29.5899 23.2958 28.7473 24.7553 27.3637 24.8758L26.6569 24.9373C24.9805 25.0833 23.5747 26.2629 23.1398 27.8885L22.9565 28.5739C22.5976 29.9155 21.014 30.4919 19.8766 29.6948L19.2956 29.2877C17.9176 28.3219 16.0824 28.3219 14.7044 29.2877L14.1234 29.6948C12.986 30.4919 11.4024 29.9155 11.0435 28.5739L10.8602 27.8885C10.4253 26.2629 9.0195 25.0833 7.34306 24.9373L6.63631 24.8758C5.25268 24.7553 4.41007 23.2958 4.99754 22.0373L5.29762 21.3945C6.00941 19.8697 5.69074 18.0624 4.50035 16.873L3.99851 16.3715C3.01603 15.3899 3.30866 13.7302 4.56765 13.1438L4.1454 12.2373L4.56765 13.1438L5.21072 12.8442C6.73614 12.1337 7.65371 10.5444 7.50636 8.86807L7.44425 8.16137C7.32264 6.77784 8.61359 5.6946 9.95499 6.05461L10.6402 6.2385C12.2654 6.6747 13.9899 6.04704 14.9546 4.66819L15.3612 4.0869Z" fill="#c68d53" stroke="#c68d53" stroke-width="2"/>
+                      <path d="M10.752 15.9823L13.1428 18.7556C13.8384 19.5626 15.0445 19.6826 15.8855 19.0285L23.5383 13.0763" stroke="white" stroke-width="2"/>
+                    </svg>
+                      
+                    There are no errors.
+                  </p>
+                </div>
+              </div>
+              <div id="properties">
+
+              </div>
+              <div id="notes" class="d-none">
+                notes
+              </div>
+              <div id="input-output" class="row justify-content-center d-none">
+                <div class="col-md-9 input-output-menu">
+                  <div class="menu-group d-flex justify-content-center align-items-center">
+                    <a href="#" class="input-output-menu-name active">Input</a>
+                    <a href="#" class="input-output-menu-name">Output</a>
+                  </div>
+                </div>
+                <div class="col-md-11 mt-3 input-output-content">
+                  <ul class="list-group" id="input-output-properties-group">
+                    <li class="list-item">
+                      <span> Payload </span>
+                      <p class="list-sub-item">Unknown : <span class="unhighlighted-text">Unknown</span></p>
+                    </li>
+                    <li class="list-item">
+                      <span>Flow Variables</span>
+                    </li>
+                    <li class="list-item">
+                      <span>Session Variable</span>
+                    </li>
+                    <li class="list-item">
+                      <span>Inbound Properties</span>
+                    </li>
+                    <li class="list-item">
+                      <span>Outbound Properties</span>
+                    </li>
+                    <li class="list-item">
+                      <span>Record Variables</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" id="saveFlowName">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Create Project Modal -->
+      <div class="modal fade" id="createProjectModal" tabindex="-1" role="dialog" aria-labelledby="createProjectModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="createProjectModalTitle">Create New Project</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="input-group">
+                  <label for="input-project-name">Project Name:</label>
+                  <input type="text" class="input-field" id="input-project-name" placeholder="Project Name">
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" id="createProjectName">Create Project</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    <script src="./assets/style/js/jquery.min.js"></script>
+    <script src="./assets/style/js/jquery-ui.min.js"></script>
+    <script src="./assets/style/js/popper.min.js"></script>
+    <script src="./assets/style/js/bootstrap/bootstrap.min.js"></script>
+    <script src="./assets/style/js/script.js"></script>
+    <script src="./assets/style/js/flow-diagram.js"></script>
+    <script src="./assets/style/js/components.js"></script>
+    <script>
+      
+    </script>
+
+  </body>
+</html>
