@@ -1,4 +1,51 @@
 $(document).ready(function(){
+
+    $(".edit-profile").click(function(){
+        $("#editProfileModal").modal('show');
+        if($("#editProfileModal").children().children().children().children().children().find("#main-profile").hasClass("active")){
+            console.log("main-ppr")
+        }
+    });
+    
+    $(".edit-profile-tab").click(function(){
+        $(".edit-profile-tab").removeClass("active");
+        $(this).addClass("active");
+        if ($(this).prop("id") == 'change-password') {
+            $("#main-profile-form").removeClass("d-block").addClass("d-none");
+            $("#change-password-form").removeClass("d-none").addClass("d-block");
+        }else if($(this).prop("id") == 'main-profile'){
+            $("#main-profile-form").removeClass("d-none").addClass("d-block");
+            $("#change-password-form").removeClass("d-block").addClass("d-none");
+        }
+    });
+    
+    $("#logout-link .nav-link").click(function(){
+        $("#logoutModal").modal('show');
+    });
+    
+    
+    $(function() {
+        $.contextMenu({
+            selector: '.project-name', 
+            callback: function(key, options) {
+                if (key == 'edit'){
+                    $("#renameProjectModal").modal('show');
+                }else if(key == 'delete'){
+                    $("#deleteProjectModal").modal('show');
+                }
+            },
+            items: {
+                "edit": {name: "Rename", icon: "edit"},
+                "delete": {name: "Delete", icon: "delete"}
+            }
+        });
+    
+        $('.context-menu-one').on('click', function(e){
+            console.log('clicked', this);
+            console.log($(this));
+        })    
+    });
+
     $("#flow-tab .tab-name").click(function(e){
         $("#flow-tab .tab-name").removeClass("active");
 

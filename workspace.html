@@ -22,38 +22,35 @@
     <nav class="navbar navbar-expand-lg navbar-light px-3">
         <div class="container-fluid">
           <div class="navbar-left-group d-flex align-items-center">
-            <button class="sidebar-toggle mr-4">
-              <img src="./assets/icon/sidebar-icon.svg" alt="Sidebar Hamburger Menu Icon">
-            </button>
             <a href="#" class="navbar-brand">UNCAL BPM</a>
           </div>
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 <li class="nav-item" id="profile-link">
 
-                  <svg width="37" height="33" viewBox="0 0 37 33" fill="none" xmlns="http://www.w3.org/2000/svg" id="user-icon">
-                    <path d="M32.6334 6.33631C24.9059 -0.77877 12.0941 -0.778769 4.36664 6.33631C-0.304796 10.6375 0.78548 19.1451 2.30763 25.0351C3.31513 28.9337 6.98609 31.3457 11.0127 31.3457H25.9873C30.0139 31.3457 33.6849 28.9337 34.6924 25.0351C36.2145 19.1451 37.3048 10.6375 32.6334 6.33631Z" stroke="black" stroke-width="2"/>
-                    <circle cx="18.407" cy="12.8218" r="5.05053" stroke="black" stroke-width="2"/>
-                    <path d="M9.34512 31.3452C9.34512 31.3452 7.32385 26.3194 9.34512 23.7746C12.7629 19.4716 23.12 19.4716 26.5378 23.7746C28.5591 26.3194 26.5378 31.3452 26.5378 31.3452" stroke="black" stroke-width="2"/>
+                  <svg width="25" height="27" viewBox="0 0 25 27" fill="none" xmlns="http://www.w3.org/2000/svg" id="user-icon">
+                    <circle cx="12.5" cy="9.41504" r="3.9" fill="#c68d53" stroke="#c68d53" stroke-width="1.2"/>
+                    <path d="M5.70961 17.3061C4.11298 19.1915 5.70961 22.915 5.70961 22.915L12.5 25.415L19.2904 22.915C19.2904 22.915 20.887 19.1915 19.2904 17.3061C16.5906 14.118 8.40938 14.118 5.70961 17.3061Z" fill="#c68d53" stroke="#c68d53" stroke-width="1.2"/>
+                    <circle cx="12.5" cy="13.415" r="12" stroke="#c68d53"/>
                   </svg>
+                    
                     
                   <div class="profile-group">
                     <h5 class="profile-name">Username</h5>
                     <p class="profile-description">Client Number: 001</p>
                   </div>
-                  <a href="#" class="edit-profile">
-                    <svg width="29" height="23" viewBox="0 0 29 23" fill="none" xmlns="http://www.w3.org/2000/svg" id="edit-icon">
-                      <circle cx="10.5946" cy="12.3514" r="9.5946" stroke="black" stroke-width="2"/>
-                      <path d="M10.099 15.2739L6.34413 16.2438C5.47162 16.4692 4.76957 15.5162 5.24349 14.7497L7.18074 11.6167C7.26233 11.4847 7.37351 11.3735 7.50547 11.292L19.9793 3.58128C20.4238 3.30653 21.0049 3.42031 21.3129 3.84242L23.0735 6.25509C23.4198 6.72967 23.2844 7.39912 22.7808 7.70172L10.3639 15.1629C10.2814 15.2125 10.1922 15.2499 10.099 15.2739Z" stroke="black" stroke-width="2"/>
-                      <path d="M24.9344 4.96053L23.6659 3.31147C23.2922 2.82562 23.4395 2.12094 23.9766 1.82554L24.7404 1.40546C25.1665 1.17111 25.6994 1.27725 26.0032 1.65698L27.2853 3.25967C27.6636 3.73248 27.5382 4.43033 27.019 4.74186L26.2415 5.20831C25.8061 5.46956 25.244 5.36301 24.9344 4.96053Z" stroke="black" stroke-width="2"/>
-                    </svg>
+                  <a href="#" class="nav-link edit-profile">
+                    Edit Profile
                   </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" id="logout-link">
                   <a href="#" class="nav-link">
-                    <svg width="35" height="27" viewBox="0 0 35 27" fill="none" xmlns="http://www.w3.org/2000/svg" id="logout-icon">
-                      <path d="M15.2567 1.33929C-3.24648 1.33929 -1.90557 25.9996 15.2567 25.9996" stroke="black" stroke-width="2"/>
-                      <path d="M17.7606 9.33349H12.153C10.1806 9.33349 8.58154 10.9325 8.58154 12.905C8.58154 14.8775 10.1806 16.4765 12.153 16.4765H17.6608C19.0889 16.4765 20.2466 17.6342 20.2466 19.0622C20.2466 21.1406 22.5744 22.3697 24.2907 21.1975L28.7034 18.1836C31.5345 16.25 31.8744 12.2035 29.4055 9.82472L24.4575 5.05726C22.8786 3.53594 20.2466 4.6549 20.2466 6.84749C20.2466 8.22047 19.1336 9.33349 17.7606 9.33349Z" fill="none" stroke="black" stroke-width="2"/>
-                    </svg>  
+                    <span>Logout</span>
+                    <svg width="14" height="11" viewBox="0 0 14 11" fill="none" xmlns="http://www.w3.org/2000/svg" class="ml-2" id="logout-icon">
+                      <path d="M6 2H3C1.89543 2 1 2.89543 1 4V7C1 8.10457 1.89543 9 3 9H6" stroke="#c68d53" stroke-linecap="round"/>
+                      <path d="M13.4382 5.09456C13.7147 5.29413 13.7147 5.70587 13.4382 5.90544L8.7926 9.25812C8.46192 9.49677 8 9.26048 8 8.85267V2.14733C8 1.73952 8.46192 1.50324 8.7926 1.74188L13.4382 5.09456Z" fill="#c68d53"/>
+                      <path d="M4 5.5H11" stroke="#c68d53" stroke-linecap="round"/>
+                    </svg>
+                       
                   </a>
                 </li>
             </ul>
@@ -63,48 +60,9 @@
       <section class="content">
         <div class="container-fluid">  
           <div class="row justify-content-end">
-            <div class="col-md-2 sidebar collapsed">
-              <a href="#" class="to-workspace-link">
-                <img src="./assets/icon/chevron-icon.svg" class="mr-3" alt="Chevron Left Icon">
-                <span>Back to Workspace</span>
-              </a>
-
-              <div class="sidebar-content d-flex flex-column align-items-center">
-                <div class="sidebar-content-header">
-                  <img src="./assets/icon/uncal-folder-icon.svg" alt="Uncal Folder Icon">
-                  <span class="folder-name">Folder_1</span>
-                  <button class="close-folder">
-                    <img src="./assets/icon/close-xl-icon.svg" alt="Close Icon">
-                  </button>
-                </div>
-                <button class="create-new-project">Add New Project</button>
-
-                <ul class="list-group-project">
-                  <li class="list-project">
-                    <a href="#" class="project-name">
-                      <img src="./assets/icon/uncal-icon.svg" alt="Uncal Icon">
-                      <span class="project-name">Project_1</span>
-                    </a>
-                  </li>
-                  <li class="list-project">
-                    <a href="#" class="project-name">
-                      <img src="./assets/icon/uncal-icon.svg" alt="Uncal Icon">
-                      <span class="project-name">Project_2</span>
-                    </a>
-                  </li>
-                  <li class="list-project">
-                    <a href="#" class="project-name">
-                      <img src="./assets/icon/uncal-icon.svg" alt="Uncal Icon">
-                      <span class="project-name">Project_3</span>
-                    </a>
-                  </li>
-                </ul>
-
-              </div>
-            </div>
 
             <div class="col-md-12 content-section text-center" id="workspace-section">
-                <div class="container-fluid">
+                <div class="container">
                     <h3 class="section-title d-inline-block">Workspace</h3>
                     <div class="workspace-content">
                         <div class="row justify-content-end">
@@ -373,9 +331,7 @@
     <script src="./assets/style/js/script.js"></script>
     <script src="./assets/style/js/flow-diagram.js"></script>
     <script src="./assets/style/js/components.js"></script>
-    <script>
-      
-    </script>
+    <script src="./assets/style/js/addOn.js"></script>
 
   </body>
 </html>

@@ -1,6 +1,6 @@
 $(document).ready(function(){
       
-    var flowDiagram = "<ul class='flow-diagram mt-4'><div class='flow-name'><button class='minimize-flow' onclick='minimizeFlow(this)'><img src='./assets/icon/chevron-icon.svg' alt='Chevron Icon' id='chevron-flow-name'></button><p class='flow-name-text mb-0 mt-0' ondblclick='renameFlow(this)'>Flow Name</p> <button class='close-flow' onclick='closeFlow(this)'><img src='./assets/icon/close-icon.svg' alt='Close Icon'></button></div></ul><br>";
+    var flowDiagram = "<ul class='flow-diagram mt-4'><div class='flow-name'><button class='minimize-flow' onclick='minimizeFlow(this)'><img src='./assets/icon/minimize-flow-icon.svg' alt='Chevron Icon' id='chevron-flow-name'></button><p class='flow-name-text mb-0 mt-0' ondblclick='renameFlow(this)'>Flow Name</p> <button class='close-flow' onclick='closeFlow(this)'><img src='./assets/icon/close-icon.svg' alt='Close Icon'></button></div></ul><br>";
     
     $(".element-item").draggable({
         connectToSortable : ".flow-diagram, .switch-flow-diagram",
