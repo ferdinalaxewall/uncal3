@@ -366,7 +366,7 @@ $(document).ready(function(){
                     // "index": 0,
                     "properties": {
                         "port": 8080,
-                        "name": "xxx",
+                        "name": "aaa",
                         "thread": 1,
                         "keepopen": true,
                         "wait": 60
@@ -381,10 +381,10 @@ $(document).ready(function(){
                     // "pid": "0-1",
                     // "index": 0,
                     "properties": {
-                        "path": "/opt/xxnx", 
+                        "path": "/opt/path", 
                         "polling": 10,
                         "retry": 60, 
-                        "filename": "getfucked.3gp"
+                        "filename": "getdata.csv"
                     }
                 },
                 {
@@ -422,10 +422,10 @@ $(document).ready(function(){
                     // "pid": "1-0",
                     // "index": 0,
                     "properties": {
-                        "path": "/opt/hamster/video",
+                        "path": "/opt/dataku",
                         "polling": 10,
                         "retry": 60,
-                        "filename": "video.mp4",
+                        "filename": "file.xml",
                         "fileEvent": 2,
                         "folderName": "assets",
                     }
@@ -487,7 +487,7 @@ $(document).ready(function(){
                             "pid": "1-2-1",
                             "index": 0,
                             "properties": {
-                                "path": "/opt/xfantasy/assets",
+                                "path": "/opt/assets",
                                 "polling": 20,
                                 "retry": 60,
                                 "ip": "192.168.1.56",
@@ -510,7 +510,7 @@ $(document).ready(function(){
                     // "pid": "1-2",
                     // "index": 0,
                     "properties": {
-                        "path": "/home/nudetube/img",
+                        "path": "/home/nude/img",
                         "polling": 20,
                         "retry": 60,
                         "ip": "192.168.1.666",
