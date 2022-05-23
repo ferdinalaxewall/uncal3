@@ -543,7 +543,6 @@ button:focus{
 
 .content .container-fluid .row #palette-section{
     height: 70vh;
-    overflow: hidden;
 }
 
 .content .container-fluid .row #properties-section, .content .container-fluid .row #flow-map-section{

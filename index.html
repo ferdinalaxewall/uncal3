@@ -590,6 +590,32 @@
           </div>
         </div>
       </div>
+      
+      <!-- Create Project Modal -->
+      <div class="modal fade" id="createProjectModal" tabindex="-1" role="dialog" aria-labelledby="createProjectModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="createProjectModalTitle">Flow Properties</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="form-group">
+                  <label for="input-project-name">Project Name:</label>
+                  <input type="text" class="form-control" id="input-project-name" placeholder="Project Name">
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" id="createProjectName">Create Project</button>
+            </div>
+          </div>
+        </div>
+      </div>
     <script src="./assets/style/js/jquery.min.js"></script>
     <script src="./assets/style/js/jquery-ui.min.js"></script>
     <script src="./assets/style/js/popper.min.js"></script>

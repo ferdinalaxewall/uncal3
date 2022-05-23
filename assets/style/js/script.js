@@ -124,6 +124,10 @@ $(document).ready(function(){
         $(this).toggleClass("minimize");
         $(this).parent().parent().toggleClass("minimized")
     });
+
+    $(".create-new-project").click(function(){
+        $("#createProjectModal").modal('show');
+    })
     
     var sidebarCollapse = false;
     
