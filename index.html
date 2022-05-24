@@ -5,21 +5,52 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <!-- Uncal Favicon -->
     <link rel="icon" type="image/x-icon" href="./assets/icon/uncal-icon.svg">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="./assets/style/css/bootstrap/bootstrap.min.css">
+    <!-- Main CSS -->
     <link rel="stylesheet" href="./assets/style/css/style.css">
+    <!-- Loader CSS -->
+    <link rel="stylesheet" href="./assets/style/css/loader.css">
 
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
-    <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
+    <!-- Context Menu CSS -->
     <link rel="stylesheet" href="./assets/style/js/contextMenu/jquery.contextMenu.min.css">
 
     <title>Uncal BPM</title>
   </head>
   <body>
+
+    <!-- Pre-Loader -->
+
+    <div class="pre-loader">
+      <div class="loader">
+        <svg viewBox="0 0 80 80">
+            <circle id="test" cx="40" cy="40" r="32"></circle>
+        </svg>
+      </div>
+      
+      <div class="loader triangle">
+        <svg viewBox="0 0 86 80">
+            <polygon points="43 8 79 72 7 72"></polygon>
+        </svg>
+      </div>
+      
+      <div class="loader">
+        <svg viewBox="0 0 80 80">
+            <rect x="8" y="8" width="64" height="64"></rect>
+        </svg>
+      </div>
+    </div>
+
+    <!-- End Pre-Loader -->
+
+    <!-- Navigation Bar -->
 
     <nav class="navbar navbar-expand-lg navbar-light px-3">
         <div class="container-fluid">
@@ -62,9 +93,19 @@
         </div>
       </nav>
 
+      <!-- End Navigation Bar -->
+
+      <!-- Content -->
+
       <section class="content">
         <div class="container-fluid">  
+
+          <!-- Content Wrapper -->
+
           <div class="row justify-content-end">
+
+            <!-- Sidebar -->
+
             <div class="col-md-2 sidebar collapsed">
               <a href="workspace.html" class="to-workspace-link">
                 <img src="./assets/icon/chevron-icon.svg" class="mr-3" alt="Chevron Left Icon">
@@ -101,6 +142,11 @@
 
               </div>
             </div>
+
+            <!-- End Sidebar -->
+
+            <!-- Flow Section (Canvas Menu) -->
+
             <div class="col-md-8 content-section" id="flow-section">
               <div class="content-box">
                 <div class="menu-tab" id="flow-tab">
@@ -144,6 +190,10 @@
                 </div>
               </div>
             </div>
+
+            <!-- End Flow Section -->
+
+            <!-- Palette Section (Element Menu) -->
 
             <div class="col-md-4 content-section" id="palette-section">
               <div class="content-box">
@@ -190,7 +240,7 @@
                 <div class="content-body">
                   <div class="search-wrapper">
                     <div class="search-group">
-                      <input type="text" name="search" id="search-input" placeholder="Search the elements">
+                      <input type="text" name="search" id="search-input" class="search-elements" placeholder="Search the elements" onkeyup="searchElementsFunc()">
                       <label for="search-input">
                         <svg width="14" height="15" viewBox="0 0 14 15" fill="none" xmlns="http://www.w3.org/2000/svg" id="search-icon">
                           <circle cx="5.92731" cy="5.92731" r="4.92731" stroke="#c68d53" stroke-width="2"/>
@@ -335,12 +385,6 @@
                         <span>Mqtt Receiver</span>
                       </a>
                     </li>
-                    <!-- <li class="element-item" id="statement">
-                      <a id="x" class="element-box">
-                        <img src="./assets/icon/database-icon.svg" alt="Database Icon">
-                        <span>Applicability Statement 2</span>
-                      </a>
-                    </li> -->
                     <li class="element-item" id="object">
                       <a id="object-switching" href="#" class="element-box">
                       <img src="./assets/icon/database-icon.svg" alt="Database Icon">
@@ -358,6 +402,10 @@
               </div>
 
             </div>
+
+            <!-- End Palette Section -->
+
+            <!-- Properties Section / Console Section -->
 
             <div class="col-md-8 content-section" id="properties-section">
               <div class="content-box">
@@ -399,6 +447,10 @@
                 </div>
               </div>
             </div>
+
+            <!-- End Properties Section / Console Section -->
+
+            <!-- Flow Map Section -->
 
             <div class="col-md-4 content-section" id="flow-map-section">
               <div class="content-box">
@@ -500,19 +552,18 @@
               </div>
             </div>
 
+            <!-- End Flow Map Section -->
+
           </div>
+
+          <!-- End Content Wrapper -->
+
         </div>
       </section>
 
-      <!-- Context Menu for Project Name in Sidebar -->
-      <div class="context-menu" id="project-context-menu">
-        <a class="item">
-            <i class="bx bx-edit"></i> Rename
-        </a>
-        <a class="item">
-            <i class="bx bx-trash"></i> Delete
-        </a>
-    </div>
+      <!-- End Content -->
+
+    <!-- Modal -->
 
       <!--Rename Flow Modal -->
       <div class="modal fade" id="renameFlowModal" tabindex="-1" role="dialog" aria-labelledby="renameFlowModalTitle" aria-hidden="true">
@@ -660,7 +711,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary" id="createProjectName">Save Changes</button>
+              <button type="button" class="btn btn-primary" id="updateProjectName">Save Changes</button>
             </div>
           </div>
         </div>
@@ -681,7 +732,7 @@
             </div> 
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-danger" id="createProjectName">Delete</button>
+              <button type="button" class="btn btn-danger" id="deleteProject">Delete</button>
             </div> 
           </div>
         </div>
@@ -692,7 +743,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title text-center" id="editProfileModalTitle">Edit Profil</h5>
+              <h5 class="modal-title text-center" id="editProfileModalTitle">Edit Profile</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -758,7 +809,7 @@
         </div>
       </div>
 
-      <!-- Edit Profile Modal -->
+      <!-- Logout Modal -->
       <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="logoutModalTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content">
@@ -779,16 +830,20 @@
         </div>
       </div>
 
-      
+    <!-- End Modal -->
 
+      
     <script src="./assets/style/js/jquery.min.js"></script>
     <script src="./assets/style/js/jquery-ui.min.js"></script>
     <script src="./assets/style/js/popper.min.js"></script>
     <script src="./assets/style/js/bootstrap/bootstrap.min.js"></script>
+    <!-- For Some Element Action -->
     <script src="./assets/style/js/script.js"></script>
+    <!-- For Flow Diagram Action -->
     <script src="./assets/style/js/flow-diagram.js"></script>
+    <!-- For Components Action -->
     <script src="./assets/style/js/components.js"></script>
-    <script src="./assets/style/js/addOn.js"></script>
+    <!-- For Context Menu Action -->
     <script src="./assets/style/js/contextMenu/jquery.contextMenu.js"></script>
     <script src="./assets/style/js/contextMenu/jquery.ui.position.min.js"></script>
 

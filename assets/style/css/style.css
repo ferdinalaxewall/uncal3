@@ -1,25 +1,4 @@
-/* Base Variable CSS */
-
-:root{
-    --clr-black: #121212;
-    --clr-primary: #c68d53;
-    --clr-primary-hover:#e2b282;
-    --clr-secondary:#F8F0C9;
-    --clr-navbar-bg:#EAECF0;
-    --clr-search-input: #f1f1f1;
-    --clr-sidebar-bg:#f5f5f5;
-    --clr-workspace-bg:#f9fafc;
-    --clr-white:#fff;
-    --clr-border:#959595;
-    --clr-btn-primary: linear-gradient(to bottom, #F8F0C9, #ccaa88);
-    --clr-menu-tab: linear-gradient(to bottom, #fff, #EAECF0);
-    --font-family: 'Poppins', sans-serif;
-    --fw-regular: 400;
-    --fw-bold:700;
-    --fs-heading:16px;
-    --fs-sub-heading:14px;
-    --fs-body:12px;
-}
+@import url('./variable.css');
 
 /* Default CSS */
 
@@ -42,6 +21,18 @@ input::-webkit-inner-spin-button {
 
 ul{
     list-style: none;
+}
+
+.border-right {
+    border-right: 2px solid white!important;
+}
+
+.border-top {
+    border-top: 2px solid white!important;
+} 
+
+.text-small {
+    font-size: var(--fs-body) !important;
 }
 
 a,a:hover, a:visited{
@@ -507,6 +498,9 @@ button:focus{
     font-size: var(--fs-body);
 }
 
+/* Content Style */
+/* Base Content Style */
+
 .content{
     padding: 10px 0;
     height: 100%;
@@ -520,6 +514,40 @@ button:focus{
     height: inherit;
     position: relative;
 }
+
+.content .container-fluid .row #flow-section{
+    height: 70vh;
+}
+
+.content .container-fluid .row #palette-section{
+    height: 70vh;
+}
+
+.content .container-fluid .row #properties-section, .content .container-fluid .row #flow-map-section{
+    height: calc(20.5vh + 1rem);
+    overflow: hidden;
+}
+
+.content .container-fluid .row .content-section{
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.content .container-fluid .row .content-section .content-box{
+    height: 100%;
+    transition: all .15s linear;
+    -webkit-transition: all .15s linear;
+    -moz-transition: all .15s linear;
+    -ms-transition: all .15s linear;
+    -o-transition: all .15s linear;
+}
+
+.content .container-fluid .row #properties-section, .content .container-fluid .row #flow-map-section{
+    margin-top: 10px;
+}
+
+
+/* Sidebar Content Style */
 
 .content .container-fluid .row .sidebar{
     height: calc(100vh - 51px);
@@ -670,36 +698,8 @@ button:focus{
     padding-left: 5px;
 }
 
-.content .container-fluid .row #flow-section{
-    height: 70vh;
-}
 
-.content .container-fluid .row #palette-section{
-    height: 70vh;
-}
-
-.content .container-fluid .row #properties-section, .content .container-fluid .row #flow-map-section{
-    height: calc(20.5vh + 1rem);
-    overflow: hidden;
-}
-
-.content .container-fluid .row .content-section{
-    padding-left: 5px;
-    padding-right: 5px;
-}
-
-.content .container-fluid .row .content-section .content-box{
-    height: 100%;
-    transition: all .15s linear;
-    -webkit-transition: all .15s linear;
-    -moz-transition: all .15s linear;
-    -ms-transition: all .15s linear;
-    -o-transition: all .15s linear;
-}
-
-.content .container-fluid .row #properties-section, .content .container-fluid .row #flow-map-section{
-    margin-top: 10px;
-}
+/* Flow Section Style */
 
 .content .container-fluid .row #flow-section .content-box{
     height: 100%;
@@ -707,7 +707,7 @@ button:focus{
 
 .content .container-fluid .row #flow-section .content-box .content-body{
     max-height: 70vh;
-    overflow: scroll;
+    overflow: auto;
 }
 
 .content .container-fluid .row #flow-section .content-box .content-body{
@@ -776,6 +776,7 @@ button:focus{
     -o-border-radius: 5px;
 }
 
+/* Menu Tab Style */
 
 .content .container-fluid .row .content-section .content-box .menu-tab, .content .container-fluid .row .content-section .content-box .content-body{
     padding: 10px 15px;
@@ -815,82 +816,6 @@ button:focus{
     -moz-transition: all .15s linear;
     -ms-transition: all .15s linear;
     -o-transition: all .15s linear;
-}
-
-.content .container-fluid .row #properties-section .content-box .menu-tab{
-    position: relative;
-}
-
-.content .container-fluid .row #properties-section .content-box #properties-tab .tab-name svg{
-    height: 20px;
-}
-
-.content .container-fluid .row #properties-section .content-box .menu-tab .minimize-properties{
-    position: absolute;
-    right: 20px;
-    border: none;
-    background-color:transparent;
-    border-radius: 5px;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    -ms-border-radius: 5px;
-    -o-border-radius: 5px;
-    transition: all .15s linear;
-    -webkit-transition: all .15s linear;
-    -moz-transition: all .15s linear;
-    -ms-transition: all .15s linear;
-    -o-transition: all .15s linear;
-}
-
-.content .container-fluid .row #properties-section .content-box .menu-tab .minimize-properties:focus{
-    outline: none;
-}
-
-.content .container-fluid .row #properties-section .content-box.minimized{
-    height: 40px;
-}
-
-.content .container-fluid .row #properties-section .content-box .menu-tab .minimize-properties.minimize{
-    transform: rotate(-180deg);
-    -webkit-transform: rotate(-180deg);
-    -moz-transform: rotate(-180deg);
-    -ms-transform: rotate(-180deg);
-    -o-transform: rotate(-180deg);
-}
-
-.content .container-fluid .row #properties-section .content-box .menu-tab .tab-name.active, .content .container-fluid .row #flow-map-section .content-box .menu-tab .tab-name.active{
-    background-color: transparent;
-}
-
-.content .container-fluid .row #properties-section .content-box .content-body{
-    height: 80%;
-    overflow-y: auto;
-    margin-right: 5px;
-    margin-top: 3px;
-}
-
-.content .container-fluid .row #properties-section .content-box .content-body::-webkit-scrollbar{
-    width: 6px;
-}
-
-.content .container-fluid .row #properties-section .content-box .content-body::-webkit-scrollbar-track{
-    background-color: var(--clr-white);
-    border-radius: 10px;
-    border: 1px solid var(--clr-primary);
-}
-
-.content .container-fluid .row #properties-section .content-box .content-body::-webkit-scrollbar-thumb{
-    background-color: var(--clr-primary);
-    border-radius: 10px;
-    transition: all .15s linear;
-    -webkit-transition: all .15s linear;
-    -moz-transition: all .15s linear;
-    -ms-transition: all .15s linear;
-    -o-transition: all .15s linear;
-}
-
-.content .container-fluid .row #properties-section .content-box .content-body::-webkit-scrollbar-thumb:hover{
-    background-color: var(--clr-primary-hover);
 }
 
 .content .container-fluid .row .content-section .content-box .menu-tab .tab-name #uncal-icon{
@@ -957,100 +882,104 @@ button:focus{
     white-space: nowrap;
     border: 1px solid var(--clr-primary);
     position:relative;
-    border-radius: 0 5px 5px 5px;
-    -webkit-border-radius: 0 5px 5px 5px;
-    -moz-border-radius: 0 5px 5px 5px;
-    -ms-border-radius: 0 5px 5px 5px;
-    -o-border-radius: 0 5px 5px 5px;
+    border-radius: 0 0 5px 5px;
+    transition: all .15s linear;
+    -webkit-border-radius: 0 0 5px 5px;
+    -moz-border-radius: 0 0 5px 5px;
+    -ms-border-radius: 0 0 5px 5px;
+    -o-border-radius: 0 0 5px 5px;
+    -webkit-transition: all .15s linear;
+    -moz-transition: all .15s linear;
+    -ms-transition: all .15s linear;
+    -o-transition: all .15s linear;
 }
 
 .content .container-fluid .row .content-section #flow-container .flow-diagram.minimize-flow-diagram{
-    min-height: 50px;
-    position: relative;
+    min-height: 10px;
 }
-
-.content .container-fluid .row .content-section #flow-container .flow-diagram.minimize-flow-diagram::after{
-    content: '';
-    position: absolute;
-    background: url("../../icon/loading-flow-icon.svg") no-repeat;
-    background-position: center;
-    height: 100%;
-    width: 100%;
-    top: 0;
-    left: 0;
-    animation: fadeIn 1s linear;
-    -webkit-animation: fadeIn 1s linear;
-}
-
-@keyframes fadeIn{
-    from{
-        opacity: 0;
-    }
-    to{
-        opacity: 1;
-    }
-}
-
 
 .content .container-fluid .row .content-section #flow-container .flow-diagram .flow-name{
-    /*border-left:3px solid var(--clr-primary);
-    border-top:3px solid var(--clr-primary);
-    *//*border-right-color: var(--clr-border);
-    */
     display: flex;
     position: absolute;
     align-items: center;
     justify-content: space-evenly;
     background-color:var(--clr-white);
+    visibility: visible;
     height: 30px;
     padding: 0 10px;
+    padding-left: 20px;
     top:-30px;
     left: -1px;
     border:1px solid var(--clr-primary);
     border-bottom-color: var(--clr-primary);
-    border-radius: 5px 5px 5px 0;
-    -webkit-border-radius: 5px 5px 5px 0;
-    -moz-border-radius: 5px 5px 5px 0;
-    -ms-border-radius: 5px 5px 5px 0;
-    -o-border-radius: 5px 5px 5px 0;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
 }
 
 .content .container-fluid .row .content-section #flow-container .flow-diagram .flow-name::after{
+    background-color: var(--clr-primary);
     content: '';
     display: block;
     position: absolute;
     height: 3px;
-    width: 90%;
+    width: 60%;
     top: -2px;
-    background-color: var(--clr-primary);
+    left: 50%;
     border-radius: 4px;
+    transform: translateX(-50%);
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
     -ms-border-radius: 4px;
     -o-border-radius: 4px;
+    -webkit-transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    -o-transform: translateX(-50%);
 }
 
 .content .container-fluid .row .content-section #flow-container .flow-diagram .flow-name .minimize-flow{
     cursor: pointer;
+    position: absolute;
+    left: -11px;
+    top: 0;
+    padding: 0;
+    background-color: transparent;
+    border: none;
+}
+
+.content .container-fluid .row .content-section #flow-container .flow-diagram .flow-name .minimize-flow #chevron-flow-name{
+    background-color: var(--clr-primary);
+    height: 28.5px;
+    width: 28.5px;
+    border-radius: 50%;
+    transition: all .4s linear;
+    transform: rotate(90deg);
+    -webkit-transition: all .4s linear;
+    -moz-transition: all .4s linear;
+    -ms-transition: all .4s linear;
+    -o-transition: all .4s linear;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
 }
 
 .content .container-fluid .row .content-section #flow-container .flow-diagram .flow-name .minimize-flow.minimize #chevron-flow-name{
-    transition: all .3s linear;
-    -webkit-transition: all .3s linear;
-    -moz-transition: all .3s linear;
-    -ms-transition: all .3s linear;
-    -o-transition: all .3s linear;
+    transform: rotate(0);
+    -webkit-transform: rotate(0);
+    -moz-transform: rotate(0);
+    -ms-transform: rotate(0);
+    -o-transform: rotate(0);
 }
 
-.content .container-fluid .row .content-section #flow-container .flow-diagram .flow-name .minimize-flow.minimize #chevron-flow-name{
-    transform: rotate3d(1, 0, 0, 180deg);
-    -webkit-transform: rotate3d(1, 0, 0, 180deg);
-    -moz-transform: rotate3d(1, 0, 0, 180deg);
-    -ms-transform: rotate3d(1, 0, 0, 180deg);
-    -o-transform: rotate3d(1, 0, 0, 180deg);
-}
-
-.content .container-fluid .row .content-section #flow-container .flow-diagram .flow-name .close-flow, .content .container-fluid .row .content-section #flow-container .flow-diagram .flow-name .minimize-flow{
+.content .container-fluid .row .content-section #flow-container .flow-diagram .flow-name .close-flow{
     padding: 0 5px;
     border: none;
     background-color: var(--clr-white);
@@ -1088,17 +1017,6 @@ button:focus{
     -webkit-animation: arrow .15s linear;
 }
 
-@keyframes arrow {
-    from{
-        opacity: 0;
-        
-        left: -39px;
-    }
-    to{
-        opacity: 1;
-    }
-}
-
 .content .container-fluid .row .content-section #flow-container .flow-diagram .element-item.ui-sortable-helper:not(:first-child) .element-box::before{
     content: '';
     display: none;
@@ -1114,6 +1032,10 @@ button:focus{
 
 .content .container-fluid .row .content-section #flow-container .flow-diagram .element-item:not(:last-child){
     margin-right: 29px;
+}
+
+.content .container-fluid .row .content-section #flow-container .flow-diagram #switch-element.ui-sortable-helper .switch-flow-diagram{
+    display: none;
 }
 
 .content .container-fluid .row .content-section #flow-container .flow-diagram #switch-element .switch-flow-diagram{
@@ -1156,23 +1078,14 @@ button:focus{
     -webkit-animation: arrow .15s linear;
 }
 
+.content .container-fluid .row .content-section #flow-container .flow-diagram #switch-element .switch-flow-diagram .ui-sortable-placeholder{
+    margin-left: 20px;
+    width: 140px;
+}
+
 .content .container-fluid .row .content-section #flow-container .flow-diagram #switch-element .switch-flow-diagram .element-item.ui-sortable-helper::before{
     display: none;
 }
-
-
-
-/* .content .container-fluid .row .content-section #flow-container .flow-diagram #switch .switch-flow-diagram .element-item-highlight{
-    width: 90px;
-    height: 80px;
-    border: 1px dashed var(--clr-primary);
-    border-radius: 5px;
-    margin-right: 29px;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    -ms-border-radius: 5px;
-    -o-border-radius: 5px;
-} */
 
 .content .container-fluid .row .content-section #flow-container .element-item-highlight{
     width: 90px;
@@ -1244,6 +1157,9 @@ button:focus{
     -ms-transform: translate(-50%, -50%);
     -o-transform: translate(-50%, -50%);
 }
+
+/* Palette Section Style */
+/* Search Base Style */
 
 .content .container-fluid .row .content-section .content-box .content-body .search-wrapper{
     display: flex;
@@ -1442,6 +1358,85 @@ button:focus{
     margin-right: 15px;
 }
 
+
+/* Properties Section Style */
+
+.content .container-fluid .row #properties-section .content-box .menu-tab{
+    position: relative;
+}
+
+.content .container-fluid .row #properties-section .content-box #properties-tab .tab-name svg{
+    height: 20px;
+}
+
+.content .container-fluid .row #properties-section .content-box .menu-tab .minimize-properties{
+    position: absolute;
+    right: 20px;
+    border: none;
+    background-color:transparent;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+    transition: all .15s linear;
+    -webkit-transition: all .15s linear;
+    -moz-transition: all .15s linear;
+    -ms-transition: all .15s linear;
+    -o-transition: all .15s linear;
+}
+
+.content .container-fluid .row #properties-section .content-box .menu-tab .minimize-properties:focus{
+    outline: none;
+}
+
+.content .container-fluid .row #properties-section .content-box.minimized{
+    height: 40px;
+}
+
+.content .container-fluid .row #properties-section .content-box .menu-tab .minimize-properties.minimize{
+    transform: rotate(-180deg);
+    -webkit-transform: rotate(-180deg);
+    -moz-transform: rotate(-180deg);
+    -ms-transform: rotate(-180deg);
+    -o-transform: rotate(-180deg);
+}
+
+.content .container-fluid .row #properties-section .content-box .menu-tab .tab-name.active, .content .container-fluid .row #flow-map-section .content-box .menu-tab .tab-name.active{
+    background-color: transparent;
+}
+
+.content .container-fluid .row #properties-section .content-box .content-body{
+    height: 80%;
+    overflow-y: auto;
+    margin-right: 5px;
+    margin-top: 3px;
+}
+
+.content .container-fluid .row #properties-section .content-box .content-body::-webkit-scrollbar{
+    width: 6px;
+}
+
+.content .container-fluid .row #properties-section .content-box .content-body::-webkit-scrollbar-track{
+    background-color: var(--clr-white);
+    border-radius: 10px;
+    border: 1px solid var(--clr-primary);
+}
+
+.content .container-fluid .row #properties-section .content-box .content-body::-webkit-scrollbar-thumb{
+    background-color: var(--clr-primary);
+    border-radius: 10px;
+    transition: all .15s linear;
+    -webkit-transition: all .15s linear;
+    -moz-transition: all .15s linear;
+    -ms-transition: all .15s linear;
+    -o-transition: all .15s linear;
+}
+
+.content .container-fluid .row #properties-section .content-box .content-body::-webkit-scrollbar-thumb:hover{
+    background-color: var(--clr-primary-hover);
+}
+
 .content .container-fluid .row .content-section .content-box .content-body .menu-group{
     border-bottom: 1px solid #c4c4c4;
     padding:  7.5px 0;
@@ -1610,6 +1605,7 @@ button:focus{
 
 .content .container-fluid .row #flow-map-section .content-box .content-body .list-group .list-item{
     margin-bottom: 10px;
+    cursor: default;
 }
 
 .content .container-fluid .row .content-section .content-box .content-body .list-group .list-item::before{
@@ -1664,7 +1660,11 @@ button:focus{
     color: #959595;
 }
 
+
+/* Flow Map Section Style */
+
 .content .container-fluid .row #flow-map-section .content-box .content-body .list-group .list-item .main-item{
+    cursor: pointer;
     display: inline-flex;
     align-items: center;
 }
@@ -1712,6 +1712,9 @@ button:focus{
     margin-left: 25px;
 }
 
+
+/* Workspace Section Style */
+
 .content .container-fluid .row #workspace-section{
     background: var(--clr-workspace-bg);
     margin-top: -10px;
@@ -1742,6 +1745,10 @@ button:focus{
 
 .content .container-fluid .row #workspace-section .workspace-content{
     margin-top: 30px;
+}
+
+.content .container-fluid .row #workspace-section .workspace-content .row{
+    margin: 0 5px;
 }
 
 .content .container-fluid .row #workspace-section .workspace-content .row .search-workspace-box .input-group{
@@ -1785,7 +1792,7 @@ button:focus{
 }
 
 .content .container-fluid .row #workspace-section .workspace-content .workspace-box-container{
-    height: 70vh;
+    max-height: 70vh;
     overflow-y: auto;
     margin-top: 20px;
     margin-left: 5px;
@@ -1819,10 +1826,11 @@ button:focus{
 
 .content .container-fluid .row #workspace-section .workspace-content .workspace-box-container .workspace-box{
     height: 180px;
-    margin-bottom: 10px;
+    margin-bottom: 30px;
 }
 
 .content .container-fluid .row #workspace-section .workspace-content .workspace-box-container .workspace-link{
+    display: block;
     width: 100%;
     height: 100%;
     box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.25);
@@ -1875,6 +1883,23 @@ button:focus{
     margin-bottom: 0px;
 }
 
+/* Animation Keyframes */
+
+
+@keyframes arrow {
+    from{
+        opacity: 0;
+        
+        left: -39px;
+    }
+    to{
+        opacity: 1;
+    }
+}
+
+/* Responsive Breakpoints */
+
+/* For Desktop with Height < 900px */
 @media (max-height:900px){
     .content .container-fluid .row .sidebar .to-workspace-link{
         color: var(--clr-black);
@@ -1905,11 +1930,12 @@ button:focus{
     }
 
     .content .container-fluid .row #workspace-section .workspace-content .workspace-box-container{
-        height: 65vh;
+        max-height: 65vh;
     }
     
 }
 
+/* For Desktop with Width < 992px */
 @media (max-width: 992px){
     
     .navbar-expand-lg .navbar-nav {
@@ -1922,16 +1948,4 @@ button:focus{
     }
 
     
-}
-
-.border-right {
-    border-right: 2px solid white!important;
-}
-
-.border-top {
-    border-top: 2px solid white!important;
-} 
-
-.text-small {
-    font-size: var(--fs-body) !important;
 }

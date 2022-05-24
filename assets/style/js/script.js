@@ -1,3 +1,8 @@
+$(window).on("load", function() {
+	$(".loader").delay(2000).fadeOut("slow");
+    $(".pre-loader").delay(2000).fadeOut("slow");
+})
+
 $(document).ready(function(){
 
     $(".edit-profile").click(function(){
@@ -23,7 +28,7 @@ $(document).ready(function(){
         $("#logoutModal").modal('show');
     });
     
-    
+    // Context Menu Function
     $(function() {
         $.contextMenu({
             selector: '.project-name', 
@@ -38,12 +43,22 @@ $(document).ready(function(){
                 "edit": {name: "Rename", icon: "edit"},
                 "delete": {name: "Delete", icon: "delete"}
             }
-        });
-    
-        $('.context-menu-one').on('click', function(e){
-            console.log('clicked', this);
-            console.log($(this));
-        })    
+        }); 
+
+        $.contextMenu({
+            selector: '.workspace-link', 
+            callback: function(key, options) {
+                if (key == 'edit'){
+                    $("#renameFolderModal").modal('show');
+                }else if(key == 'delete'){
+                    $("#deleteFolderModal").modal('show');
+                }
+            },
+            items: {
+                "edit": {name: "Rename", icon: "edit"},
+                "delete": {name: "Delete", icon: "delete"}
+            }
+        });  
     });
 
     $("#flow-tab .tab-name").click(function(e){
@@ -134,8 +149,8 @@ $(document).ready(function(){
         $(this).parent().toggleClass("active");
     });
     
-    $("#flow-map-group .list-item").click(function(e){
-        $(this).toggleClass("active");
+    $("#flow-map-group .list-item span").click(function(e){
+        $(this).parent().toggleClass("active");
     });
 
     $(".list-sub-item").parent().addClass("has-child");
@@ -197,6 +212,41 @@ $(document).ready(function(){
         }
     });
 });
+
+function searchFolderFunc(){
+    var workspaceBody, workspaceTitle, textValue, inputField, filter, workspaceBox;
+    workspaceBox = document.querySelectorAll(".workspace-box");
+    workspaceBody = document.querySelectorAll(".workspace-body");
+    inputField = document.getElementById("search-workspace");
+    filter = inputField.value.toUpperCase();
+    for (var index = 0; index < workspaceBody.length; index++) {
+        workspaceTitle = workspaceBody[index].getElementsByTagName("h5")[0];
+        textValue = workspaceTitle.textContent || workspaceTitle.innerText;
+        if (textValue.toUpperCase().indexOf(filter) > -1) {
+            workspaceBox[index].style.display = "block";
+        } else {
+            workspaceBox[index].style.display = "none";
+        }
+    }
+}
+
+function searchElementsFunc(){
+    var inputField, filter, elementList, elementItem, elementBox, i, txtValue;
+    inputField = document.querySelector('.search-elements');
+    elementList = document.querySelector(".elements-list");
+    elementItem = elementList.getElementsByTagName('li');
+    filter = inputField.value.toUpperCase();
+
+    for (i = 0; i < elementItem.length; i++) {
+        elementBox = elementItem[i].getElementsByTagName("a")[0];
+        txtValue = elementBox.textContent || elementBox.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        elementItem[i].style.display = "";
+        } else {
+        elementItem[i].style.display = "none";
+        }
+    }
+}
 
 function elementProperties(el){
     $("#propertiesModal").modal('show'); 
@@ -378,6 +428,19 @@ function minimizeFlow(minimize){
     $(minimize).toggleClass("minimize");
     $(minimize).parent().siblings(".element-item").fadeToggle();
     $(minimize).parent().parent().toggleClass("minimize-flow-diagram");
+    setTimeout(() => {
+        if ($(minimize).parent().parent().hasClass("minimize-flow-diagram")) {
+            setTimeout(() => {
+                $(minimize).parent().parent().css({
+                    "visibility" : "hidden"
+                });
+            }, 100);
+        } else {
+            $(minimize).parent().parent().css({
+                "visibility" : "visible"
+            });
+        }
+    }, 100);
 }
 
 function closeFlow(thisClose){
