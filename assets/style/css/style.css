@@ -1899,6 +1899,13 @@ button:focus{
 
 /* Responsive Breakpoints */
 
+
+@media (max-height:641px){
+    .content .container-fluid .row .content-section .content-box .content-body .elements-list{
+        max-height: 37.5vh !important;
+    }
+}
+
 /* For Desktop with Height < 900px */
 @media (max-height:900px){
     .content .container-fluid .row .sidebar .to-workspace-link{
