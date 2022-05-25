@@ -159,20 +159,20 @@ $(document).ready(function(){
         $(".modal .menu-name").removeClass("active");
         $(this).addClass("active")
         if($(this).prop("id") == 'notes-properties'){
-            $("#properties").removeClass("d-block").addClass("d-none");
-            $("#notes").removeClass("d-none").addClass("d-block");
+            $("#properties").hide();
+            $("#notes").show();
             $("#input-output").removeClass("d-flex").addClass("d-none");
-            $(".modal .error-info").removeClass("d-block").addClass("d-none");
+            $(".modal .error-info").hide();
         }else if($(this).prop("id") == 'general-properties'){
-            $("#properties").removeClass("d-none").addClass("d-block");
-            $("#notes").removeClass("d-block").addClass("d-none");
+            $("#properties").show();
+            $("#notes").hide();
             $("#input-output").removeClass("d-flex").addClass("d-none");
-            $(".modal .error-info").removeClass("d-none").addClass("d-block");
+            $(".modal .error-info").show();
         }else if($(this).prop("id") == 'input-output-properties'){
-            $("#properties").removeClass("d-block").addClass("d-none");
-            $("#notes").removeClass("d-block").addClass("d-none");
+            $("#properties").hide();
+            $("#notes").hide();
             $("#input-output").removeClass("d-none").addClass("d-flex");
-            $(".modal .error-info").removeClass("d-block").addClass("d-none");
+            $(".modal .error-info").hide();
 
         }
     });
