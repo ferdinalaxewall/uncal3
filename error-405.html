@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="icon" type="image/x-icon" href="./assets/icon/uncal-icon.svg">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="./assets/style/css/loader.css">
+    <link rel="stylesheet" href="./assets/style/css/error.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Quicksand:wght@300;600;700&display=swap" rel="stylesheet">
+
+    <title>Uncal BPM - Method Not Allowed</title>
+  </head>
+  <body style="height: 100vh;">
+
+    <!-- Pre-loader -->
+
+    <div class="pre-loader">
+      <div class="loader">
+        <svg viewBox="0 0 80 80">
+            <circle id="test" cx="40" cy="40" r="32"></circle>
+        </svg>
+      </div>
+      
+      <div class="loader triangle">
+        <svg viewBox="0 0 86 80">
+            <polygon points="43 8 79 72 7 72"></polygon>
+        </svg>
+      </div>
+      
+      <div class="loader">
+        <svg viewBox="0 0 80 80">
+            <rect x="8" y="8" width="64" height="64"></rect>
+        </svg>
+      </div>
+    </div>
+
+    <!-- End Pre-Loader -->
+
+    <div class="error-container">
+        <div class="error-title-group">
+            <h1 class="error-title">4</h1>
+            <img src="./assets/icon/error-uncal-icon.svg" id="error-uncal-icon" alt="Error Uncal Icon">
+            <h1 class="error-title">5</h1>
+        </div>
+        <div class="error-text-group">
+            <h5 class="error-subtitle">Oops! Method Not Allowed</h5>
+            <p class="error-description">Sorry, HTTP verb used to access this page is not allowed.</p>
+        </div>
+        <div class="error-loader">
+            <img src="./assets/icon/error-load-icon.png" id="error-load-icon" alt="Error Loading Icon">
+            <p class="error-load-text">Back to Homepage</p>
+                
+        </div>
+    </div>
+
+    <script src="./assets/style/js/jquery.min.js"></script>
+    <script src="./assets/style/js/pre-loader.js"></script>
+    <script src="./assets/style/js/error.js"></script>
+
+  </body>
+</html>

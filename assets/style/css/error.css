@@ -1,0 +1,90 @@
+@import url('./variable.css');
+
+*, *::before, *::after{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    background: linear-gradient(to bottom left, rgba(255,255,255,1), rgba(0,0,0,0.25));
+    height: 100vh;
+    width: 100vw;
+    font-family: var(--font-family-2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.error-container .error-title-group{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.error-container .error-title-group .error-title{
+    font-size: 125px;
+    font-weight: 700;
+    margin: 0 17px;
+}
+
+.error-container .error-text-group{
+    margin-top: 20px;
+    margin-bottom: 30px;
+    width: 50vw;
+}
+
+.error-container .error-text-group .error-subtitle{
+    font-size: 36px;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.error-container .error-text-group .error-description{
+    font-size: 32px;
+    font-weight: 300;
+}
+
+.error-container .error-loader{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.error-container .error-loader #error-load-icon{
+    height: 30px;
+    animation: loading 1s infinite linear;
+    -webkit-animation: loading 1s infinite linear;
+}
+
+.error-container .error-loader .error-load-text{
+    font-size: 24px;
+    font-weight: 600;
+    margin-left: 10px;
+}
+
+@keyframes loading{
+    to{
+        transform: rotate(360deg);
+        -webkit-transform: rotate(360deg);
+        -moz-transform: rotate(360deg);
+        -ms-transform: rotate(360deg);
+        -o-transform: rotate(360deg);
+    }
+}
+
+@media (max-height:900px){
+    .error-container .error-text-group .error-subtitle{
+        font-size: 28px;
+    }
+
+    .error-container .error-text-group .error-description{
+        font-size: 24px;
+    }
+
+    .error-container .error-loader .error-load-text{
+        font-size: 20px;
+    }
+}

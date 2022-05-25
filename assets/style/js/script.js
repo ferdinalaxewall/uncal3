@@ -1,8 +1,3 @@
-$(window).on("load", function() {
-	$(".loader").delay(2000).fadeOut("slow");
-    $(".pre-loader").delay(2000).fadeOut("slow");
-})
-
 $(document).ready(function(){
 
     $(".edit-profile").click(function(){
@@ -211,7 +206,61 @@ $(document).ready(function(){
             $(".sidebar-content").fadeOut();
         }
     });
+
+    $(".dropzone").change(function(){
+        readImageFile(this);
+    });
+
+    $(".dropzone-wrapper").on('dragover', function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        $(this).addClass("dragover");
+    });
+    
+    $(".dropzone-wrapper").on('dragleave', function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        $(this).removeClass("dragover");
+    });
+
+    $(".reset-image").click(function(){
+        var previewBody = $(this).parent().siblings(".preview-body");
+        var previewZone = $(this).parent().parent();
+        var dropzone = $(this).parent().parent().siblings(".dropzone-wrapper").children(".dropzone");
+
+        previewBody.empty();
+        previewZone.addClass("hidden");
+        resetDropzone(dropzone)
+    });
+
 });
+
+function resetDropzone(e) {
+    e.wrap('<form class="wrap-form">').closest('form').get(0).reset();
+    e.unwrap();
+}
+
+function readImageFile(input){
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function(e){
+            var imagePreview = 
+                '<img height="100" src = "' + e.target.result + '" />' + 
+                '<p>' + input.files[0].name + '</p>';
+            var wrapperZone = $(input).parent();
+            var previewZone = $(input).parent().siblings(".preview-zone");
+            var previewBody = $(input).parent().siblings(".preview-zone").children(".preview-body");
+
+            wrapperZone.removeClass("dragover")
+            previewZone.removeClass("hidden");
+            previewBody.empty();
+            previewBody.append(imagePreview);
+        };
+
+        reader.readAsDataURL(input.files[0]);
+    }
+}
 
 function searchFolderFunc(){
     var workspaceBody, workspaceTitle, textValue, inputField, filter, workspaceBox;

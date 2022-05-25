@@ -111,6 +111,29 @@ button:focus{
     -o-border-radius: 10px;
 }
 
+.modal::-webkit-scrollbar{
+    width: 9px;
+}
+
+.modal::-webkit-scrollbar-track{
+    background-color: rgba(255, 255, 255, 0.75);
+    border: 1px solid var(--clr-primary);
+}
+
+.modal::-webkit-scrollbar-thumb{
+    background-color: var(--clr-primary);
+    transition: all .15s linear;
+    -webkit-transition: all .15s linear;
+    -moz-transition: all .15s linear;
+    -ms-transition: all .15s linear;
+    -o-transition: all .15s linear;
+}
+
+.modal::-webkit-scrollbar-thumb:hover{
+    background-color: var(--clr-primary-hover);
+}
+
+
 .modal .modal-content .modal-header .close:focus{
     outline: none;
 }
@@ -407,6 +430,84 @@ button:focus{
 
 #editProfileModal .modal-content .modal-body form .input-group .btn{
     font-size: var(--fs-body);
+}
+
+#editProfileModal .modal-content .modal-body form .input-group .upload-image-label{
+    font-size: var(--fs-heading);
+}
+
+#editProfileModal .modal-content .modal-body form .input-group .preview-zone{
+    margin-bottom: 10px;
+}
+
+#editProfileModal .modal-content .modal-body form .input-group .preview-zone.hidden{
+    display: none;
+}
+
+#editProfileModal .modal-content .modal-body form .input-group .preview-zone .preview-header{
+    position: relative;
+    padding: 5px 0;
+}
+
+#editProfileModal .modal-content .modal-body form .input-group .preview-zone .preview-header .preview-header-title{
+    margin-bottom: 0;
+    font-size: var(--fs-sub-heading);
+}
+
+#editProfileModal .modal-content .modal-body form .input-group .preview-zone .preview-header .reset-image{
+    display: block;
+    cursor: pointer;
+    padding: 2px 7.5px;
+    position: absolute;
+    background-color: transparent;
+    border: none;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+}
+
+#editProfileModal .modal-content .modal-body form .input-group .dropzone-wrapper{
+    background-color: rgb(235, 235, 235);
+    height: 150px;
+    border: 2px dashed var(--clr-border);
+    position: relative;
+}
+
+#editProfileModal .modal-content .modal-body form .input-group .dropzone-wrapper .dropzone-description{
+    position: absolute;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    text-align: center;
+    width: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+}
+
+#editProfileModal .modal-content .modal-body form .input-group .dropzone-wrapper .dropzone-description p{
+    margin-bottom: 0;
+}
+
+#editProfileModal .modal-content .modal-body form .input-group .dropzone-wrapper .dropzone,#editProfileModal .modal-content .modal-body form .input-group .dropzone-wrapper .dropzone:focus{
+    position: absolute;
+    outline: none !important;
+    width: 100%;
+    height: 150px;
+    cursor: pointer;
+    opacity: 0;
+}
+
+#editProfileModal .modal-content .modal-body form .input-group .dropzone-wrapper.dragover,#editProfileModal .modal-content .modal-body form .input-group .dropzone-wrapper:hover{
+    border-color: var(--clr-primary);
+    background: #ecf0f5;
 }
 
 
@@ -922,6 +1023,7 @@ button:focus{
     border: 1px solid var(--clr-primary);
     position:relative;
     border-radius: 0 0 5px 5px;
+    margin-right: 10px;
     transition: all .15s linear;
     -webkit-border-radius: 0 0 5px 5px;
     -moz-border-radius: 0 0 5px 5px;

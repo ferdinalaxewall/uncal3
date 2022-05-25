@@ -22,7 +22,7 @@
     <!-- Context Menu CSS -->
     <link rel="stylesheet" href="./assets/style/js/contextMenu/jquery.contextMenu.min.css">
 
-    <title>Uncal BPM</title>
+    <title>Uncal BPM - Dashboard Project A</title>
   </head>
   <body>
 
@@ -758,10 +758,24 @@
               <form id="main-profile-form">
 
                 <div class="input-group mb-3">
-                  <div class="change-picture-box py-5">
-                    <button class="change-picture">
-                      <img src="./assets/icon/change-picture-icon.svg" alt="Change Picture Icon">
-                    </button>
+                  <label for="image-upload" class="upload-image-label">Upload Image</label>
+                  <div class="preview-zone hidden">
+                    <div class="preview-header border-bottom">
+                      <h5 class="preview-header-title text-center">Preview</h5>
+                      <a class="reset-image">
+                        <img src="./assets/icon/close-xl-icon.svg" alt="Close Icon">
+                      </a>
+                    </div>
+                    <div class="preview-body text-center mt-2">
+
+                    </div>
+                  </div>
+                  <div class="dropzone-wrapper">
+                    <div class="dropzone-description">
+                      <img src="./assets/icon/change-picture-icon.svg" alt="Change Picture" width="50">
+                      <p>Choose an image file or drag it here</p>
+                    </div>
+                    <input type="file" name="profile-image" id="image-upload" accept="image/*" class="dropzone"> 
                   </div>
                 </div>
                 <div class="input-group mb-2">
@@ -839,6 +853,7 @@
     <script src="./assets/style/js/bootstrap/bootstrap.min.js"></script>
     <!-- For Some Element Action -->
     <script src="./assets/style/js/script.js"></script>
+    <script src="./assets/style/js/pre-loader.js"></script>
     <!-- For Flow Diagram Action -->
     <script src="./assets/style/js/flow-diagram.js"></script>
     <!-- For Components Action -->
