@@ -1180,33 +1180,40 @@ button:focus{
 }
 
 .content .container-fluid .row .content-section #flow-container .flow-diagram #switch-element .switch-flow-diagram{
-    min-height: 80px;
+    /* min-height: 80px; */
+    min-height: 250px;
     min-width: 160px;
-    border-left: 1px solid var(--clr-primary);
     padding-left: 29px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     position: relative;
     margin-left: 20px;
+    border: 1px solid var(--clr-primary);
+    border-radius: 0 5px 5px 0;
+    -webkit-border-radius: 0 5px 5px 0;
+    -moz-border-radius: 0 5px 5px 0;
+    -ms-border-radius: 0 5px 5px 0;
+    -o-border-radius: 0 5px 5px 0;
+    padding-right: 10px;
 }
 
-.content .container-fluid .row .content-section #flow-container .flow-diagram #switch-element .switch-flow-diagram .element-item .element-box::before{
+.content .container-fluid .row .content-section #flow-container .flow-diagram #switch-element .switch-flow-diagram .pada{
+    display: flex;
+    min-width: 225px; 
+    border: 1px solid var(--clr-border);
+    border-left: 3px solid var(--clr-primary);
+    margin: 5px 0;
+    cursor: pointer;
+    position: relative;
+    padding: 10px 5;
+}
+
+.content .container-fluid .row .content-section #flow-container .flow-diagram #switch-element .switch-flow-diagram .pada.ui-sortable-helper::before{
     display: none;
 }
 
-.content .container-fluid .row .content-section #flow-container .flow-diagram #switch-element .switch-flow-diagram .element-item{
-    min-width: 175px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.content .container-fluid .row .content-section #flow-container .flow-diagram #switch-element .switch-flow-diagram .element-item:not(:last-child){
-    margin-right: 15px;
-}
-
-.content .container-fluid .row .content-section #flow-container .flow-diagram #switch-element .switch-flow-diagram .element-item::before{
+.content .container-fluid .row .content-section #flow-container .flow-diagram #switch-element .switch-flow-diagram .pada::before, .content .container-fluid .row .content-section #flow-container .flow-diagram #switch-element .switch-flow-diagram .pada .element-item::before{
     content: url('../../icon/arrow-icon.svg');
     display: flex;
     align-items: flex-start;
@@ -1214,17 +1221,45 @@ button:focus{
     position: absolute;
     pointer-events: none;
     top: 20px;
-    left: -29px;
+    left: -33px;
     animation: arrow .15s linear;
     -webkit-animation: arrow .15s linear;
 }
 
-.content .container-fluid .row .content-section #flow-container .flow-diagram #switch-element .switch-flow-diagram .ui-sortable-placeholder{
+.content .container-fluid .row .content-section #flow-container .flow-diagram #switch-element .switch-flow-diagram .pada .element-item:first-child::before{
+    display: none;
+}
+
+.content .container-fluid .row .content-section #flow-container .flow-diagram #switch-element .switch-flow-diagram .pada .element-item .element-box::before{
+    display: none;
+}
+
+.content .container-fluid .row .content-section #flow-container .flow-diagram #switch-element .switch-flow-diagram .pada .element-item{
+    min-width: 175px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.content .container-fluid .row .content-section #flow-container .flow-diagram #switch-element .switch-flow-diagram .pada .element-item:not(:last-child){
+    margin-right: 15px;
+}
+
+.content .container-fluid .row .content-section #flow-container .flow-diagram #switch-element .switch-flow-diagram .pada .ui-sortable-placeholder{
     margin-left: 20px;
     width: 140px;
 }
 
-.content .container-fluid .row .content-section #flow-container .flow-diagram #switch-element .switch-flow-diagram .element-item.ui-sortable-helper::before{
+.content .container-fluid .row .content-section #flow-container .flow-diagram #switch-element .switch-flow-diagram .pada .element-item.ui-sortable-helper{
+    border: 2px solid var(--clr-primary);
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+}
+
+.content .container-fluid .row .content-section #flow-container .flow-diagram #switch-element .switch-flow-diagram .pada .element-item.ui-sortable-helper::before{
     display: none;
 }
 
@@ -1424,6 +1459,7 @@ button:focus{
 
 .content .container-fluid .row .content-section .content-box .content-body .elements-list{
     padding: 0 10px 0 5px;
+    padding-top: 2px;
     margin: 10px 0;
     /* max-height: 48.5vh; */
     max-height: calc(70vh - 36.8px - 40px - 55px - 30px - 40px);

@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Uncal Favicon -->
+    <link rel="icon" type="image/x-icon" href="./assets/icon/uncal-icon.svg">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="./assets/style/css/bootstrap/bootstrap.min.css">
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="./assets/style/css/style.css">
+    <!-- Loader CSS -->
+    <link rel="stylesheet" href="./assets/style/css/loader.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Context Menu CSS -->
+    <link rel="stylesheet" href="./assets/style/js/contextMenu/jquery.contextMenu.min.css">
+
+
+    <title>Uncal BPM - Workspace</title>
+  </head>
+  <body style="height: 100vh;">
+
+    <!-- Pre-loader -->
+
+    <div class="pre-loader">
+      <div class="loader">
+        <svg viewBox="0 0 80 80">
+            <circle id="test" cx="40" cy="40" r="32"></circle>
+        </svg>
+      </div>
+      
+      <div class="loader triangle">
+        <svg viewBox="0 0 86 80">
+            <polygon points="43 8 79 72 7 72"></polygon>
+        </svg>
+      </div>
+      
+      <div class="loader">
+        <svg viewBox="0 0 80 80">
+            <rect x="8" y="8" width="64" height="64"></rect>
+        </svg>
+      </div>
+    </div>
+
+    <!-- End Pre-Loader -->
+
+    <!-- Navigation Bar -->
+
+    <nav class="navbar navbar-expand-lg navbar-light px-3">
+        <div class="container-fluid">
+          <div class="navbar-left-group d-flex align-items-center">
+            <a href="#" class="navbar-brand">UNCAL BPM</a>
+          </div>
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item" id="profile-link">
+
+                  <svg width="25" height="27" viewBox="0 0 25 27" fill="none" xmlns="http://www.w3.org/2000/svg" id="user-icon">
+                    <circle cx="12.5" cy="9.41504" r="3.9" fill="#c68d53" stroke="#c68d53" stroke-width="1.2"/>
+                    <path d="M5.70961 17.3061C4.11298 19.1915 5.70961 22.915 5.70961 22.915L12.5 25.415L19.2904 22.915C19.2904 22.915 20.887 19.1915 19.2904 17.3061C16.5906 14.118 8.40938 14.118 5.70961 17.3061Z" fill="#c68d53" stroke="#c68d53" stroke-width="1.2"/>
+                    <circle cx="12.5" cy="13.415" r="12" stroke="#c68d53"/>
+                  </svg>
+                    
+                    
+                  <div class="profile-group">
+                    <h5 class="profile-name">Username</h5>
+                    <p class="profile-description">Client Number: 001</p>
+                  </div>
+                  <a href="#" class="nav-link edit-profile">
+                    Edit Profile
+                  </a>
+                </li>
+                <li class="nav-item" id="logout-link">
+                  <a href="#" class="nav-link">
+                    <span>Logout</span>
+                    <svg width="14" height="11" viewBox="0 0 14 11" fill="none" xmlns="http://www.w3.org/2000/svg" class="ml-2" id="logout-icon">
+                      <path d="M6 2H3C1.89543 2 1 2.89543 1 4V7C1 8.10457 1.89543 9 3 9H6" stroke="#c68d53" stroke-linecap="round"/>
+                      <path d="M13.4382 5.09456C13.7147 5.29413 13.7147 5.70587 13.4382 5.90544L8.7926 9.25812C8.46192 9.49677 8 9.26048 8 8.85267V2.14733C8 1.73952 8.46192 1.50324 8.7926 1.74188L13.4382 5.09456Z" fill="#c68d53"/>
+                      <path d="M4 5.5H11" stroke="#c68d53" stroke-linecap="round"/>
+                    </svg>
+                       
+                  </a>
+                </li>
+            </ul>
+        </div>
+      </nav>
+
+      <!-- End Navigation Bar -->
+
+      <!-- Content -->
+
+      <section class="content">
+        <div class="container-fluid">  
+
+          <!-- Content Wrapper -->
+
+          <div class="row justify-content-end">
+
+            <!-- Workspace Section -->
+
+            <div class="col-md-12 content-section text-center" id="workspace-section">
+                <div class="container">
+                    <h3 class="section-title d-inline-block">Workspace</h3>
+                    <div class="workspace-content">
+                        <div class="row justify-content-end">
+                            <div class="col-lg-3 col-sm-12 search-workspace-box">
+                                <div class="input-group">
+                                    <input type="text" name="search-workspace" id="search-workspace" class="input-field" placeholder="Search Workspace" onkeyup="searchFolderFunc()">
+                                    <label for="#search-worskpace" >
+                                        <svg width="14" height="15" viewBox="0 0 14 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <circle cx="5.92731" cy="5.92731" r="4.92731" stroke="#c68d53" stroke-width="2"/>
+                                            <path d="M10.5195 9.16077L13.3462 12.0992C13.7072 12.4745 13.6957 13.0715 13.3203 13.4325C12.945 13.7936 12.3481 13.782 11.987 13.4067L9.16035 10.4682L10.5195 9.16077Z" fill="#c68d53"/>
+                                            <path d="M7.96831 3.99992C8.71383 5.36473 9.25247 5.96891 7.9681 7.50038" stroke="#c68d53"/>
+                                            <circle cx="7.40414" cy="8.40413" r="0.404135" fill="#c68d53"/>
+                                        </svg>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center workspace-box-container">
+                            <div class="col-lg-3 col-sm-6 col-xs-12 workspace-box">
+                                <a href="./index.html" class="workspace-link" id="workspace-link">
+                                    <div class="workspace-img p-3">
+                                        <img src="./assets/icon/uncal-folder-workspace-icon.svg" alt="Uncal Folder Icon">
+                                    </div>
+                                    <div class="workspace-body p-2">
+                                        <h5 class="workspace-title">Folder 1</h5>
+                                        <p class="workspace-description">8 Projects</p>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-lg-3 col-sm-6 col-xs-12 workspace-box">
+                                <a href="./index.html" class="workspace-link" id="workspace-link">
+                                    <div class="workspace-img p-3">
+                                        <img src="./assets/icon/uncal-folder-workspace-icon.svg" alt="Uncal Folder Icon">
+                                    </div>
+                                    <div class="workspace-body p-2">
+                                        <h5 class="workspace-title">Folder 2</h5>
+                                        <p class="workspace-description">8 Projects</p>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-lg-3 col-sm-6 col-xs-12 workspace-box">
+                                <a href="./index.html" class="workspace-link" id="workspace-link">
+                                    <div class="workspace-img p-3">
+                                        <img src="./assets/icon/uncal-folder-workspace-icon.svg" alt="Uncal Folder Icon">
+                                    </div>
+                                    <div class="workspace-body p-2">
+                                        <h5 class="workspace-title">Folder 3</h5>
+                                        <p class="workspace-description">8 Projects</p>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-lg-3 col-sm-6 col-xs-12 workspace-box">
+                                <a href="./index.html" class="workspace-link" id="workspace-link">
+                                    <div class="workspace-img p-3">
+                                        <img src="./assets/icon/uncal-folder-workspace-icon.svg" alt="Uncal Folder Icon">
+                                    </div>
+                                    <div class="workspace-body p-2">
+                                        <h5 class="workspace-title">Folder 4</h5>
+                                        <p class="workspace-description">8 Projects</p>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-lg-3 col-sm-6 col-xs-12 workspace-box">
+                                <a href="./index.html" class="workspace-link" id="workspace-link">
+                                    <div class="workspace-img p-3">
+                                        <img src="./assets/icon/uncal-folder-workspace-icon.svg" alt="Uncal Folder Icon">
+                                    </div>
+                                    <div class="workspace-body p-2">
+                                        <h5 class="workspace-title">Folder 5</h5>
+                                        <p class="workspace-description">8 Projects</p>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-lg-3 col-sm-6 col-xs-12 workspace-box">
+                                <a href="./index.html" class="workspace-link" id="workspace-link">
+                                    <div class="workspace-img p-3">
+                                        <img src="./assets/icon/uncal-folder-workspace-icon.svg" alt="Uncal Folder Icon">
+                                    </div>
+                                    <div class="workspace-body p-2">
+                                        <h5 class="workspace-title">Folder 6</h5>
+                                        <p class="workspace-description">8 Projects</p>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-lg-3 col-sm-6 col-xs-12 workspace-box">
+                                <a href="./index.html" class="workspace-link" id="workspace-link">
+                                    <div class="workspace-img p-3">
+                                        <img src="./assets/icon/uncal-folder-workspace-icon.svg" alt="Uncal Folder Icon">
+                                    </div>
+                                    <div class="workspace-body p-2">
+                                        <h5 class="workspace-title">Folder 7</h5>
+                                        <p class="workspace-description">8 Projects</p>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-lg-3 col-sm-6 col-xs-12 workspace-box">
+                                <a href="./index.html" class="workspace-link" id="workspace-link">
+                                    <div class="workspace-img p-3">
+                                        <img src="./assets/icon/uncal-folder-workspace-icon.svg" alt="Uncal Folder Icon">
+                                    </div>
+                                    <div class="workspace-body p-2">
+                                        <h5 class="workspace-title">Folder 8</h5>
+                                        <p class="workspace-description">8 Projects</p>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- End Workspace Section -->
+            
+          </div>
+
+          <!-- End Content Wrapper -->
+
+        </div>
+      </section>
+
+      <!-- End Content -->
+
+
+    <script src="./assets/style/js/jquery.min.js"></script>
+
+  </body>
+</html>

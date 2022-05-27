@@ -3,7 +3,7 @@ $(document).ready(function(){
     var flowDiagram = "<ul class='flow-diagram mt-4'><div class='flow-name'><button class='minimize-flow' onclick='minimizeFlow(this)'><img src='./assets/icon/minimize-flow-icon-2.svg' alt='Chevron Icon' id='chevron-flow-name'></button><p class='flow-name-text mb-0 mt-0' ondblclick='renameFlow(this)'>Flow Name</p> <button class='close-flow' onclick='closeFlow(this)'><img src='./assets/icon/close-icon.svg' alt='Close Icon'></button></div></ul><br>";
     
     $(".element-item").draggable({
-        connectToSortable : ".flow-diagram, .switch-flow-diagram",
+        connectToSortable : ".flow-diagram, .switch-flow-diagram, .pada",
         containment : "#flow-container",
         helper : "clone",
         revert: "invalid",
@@ -40,7 +40,7 @@ $(document).ready(function(){
                         $(".flow-diagram").eq(i).append(ui.draggable.clone());
                         setTimeout(function(){
                             var data_id = generateUUID();
-                            $(".flow-diagram").eq(i).children().first().addClass("element-item-disabled");
+                            $(".flow-diagram").eq(i).children(".element-item").first().addClass("element-item-disabled");
                             $(".flow-diagram .element-box").each(function(i){
                                 if (!$(this).attr("onclick")) {
                                     $(this).attr("onclick", "focusElement(this)").attr("ondblclick", "elementProperties(this)");
@@ -77,7 +77,7 @@ $(document).ready(function(){
     }).disableSelection();
 
     $("#flow-tab").sortable().disableSelection();
-    var switchUl = "<ul class='switch-flow-diagram ui-sortable'></ul>";
+    var switchUl = "<ul class='switch-flow-diagram'></ul>";
 
     function sortableFunc(){
         var adding = 0
@@ -89,7 +89,7 @@ $(document).ready(function(){
             cursorAt: { top: 40, left: 50 },
             revert : true,
             placeholder: "element-item-highlight",
-            zIndex : -2,
+            zIndex : 10,
             receive : function(ev, ui){
                 // console.log("receive: ui: ", ui);
                 $(".flow-diagram .element-box").each(function(i){
@@ -130,6 +130,7 @@ $(document).ready(function(){
                                         if($(this).eq(ind).children().hasClass("switch-flow-diagram")){
                                             // console.log("ada swf")  
                                         }else{
+                                            // console.log("tidak ada swf")  
                                             $(this).eq(ind).append(switchUl);
                                         }
                                     });
@@ -250,9 +251,52 @@ $(document).ready(function(){
         $(".switch-flow-diagram").sortable({
             placeholder: "element-item-highlight",
             cursor: "move", 
-            cursorAt: { top: 40, left: 50 },
+            cursorAt: { top: 40.5, left: 87.5 },
             revert : true,
+            update : function(ev, ui){
+                console.log("update")
+                // $(ui.item).wrap("<ul class='switch-element-sortable'></ul>");
+                // $(".switch-flow-diagram").each(function(i){
+                //     $(this).children(".element-item").each(function(ind){
+                //         // $(this).wrap("<ul class='switch-element-sortable'></ul>")
+                //     })
+                // })
+            },
+            receive : function(ev, ui){
+                console.log("revce ")
+                setTimeout(() => {
+                    $(".switch-flow-diagram").children(".element-item").each(function(i){
+                        $(this).eq(i).wrap("<div class='pada'></div>")
+                        padaFunc();
+                        setTimeout(() => {
+                            $(".pada").each(function(ind){
+                                $(this).attr("id", "pada-"+ind);
+                            })
+                        }, 250);
+                    })
+                }, 100);
+            }
         });
+    }
+
+    function padaFunc(){
+        // $(".pada").on('mouseenter', function(){
+        //     console.log("dragover")
+        // })
+        $(".pada").sortable({
+            placeholder : "element-item-highlight",
+            cursor : "move",
+            cursorAt : {top : 40.5, left : 87.5},
+            revert : true,
+            // over : function(){
+            //   console.log($(this).children(".element-item"))
+            // },
+            // out : function(){
+            //     // $(this).children(".element-item:last").css({
+            //     //     // "background" : "blue"
+            //     // })
+            // }
+        })
     }
 
     function htmlToProp(html, type_comp){
