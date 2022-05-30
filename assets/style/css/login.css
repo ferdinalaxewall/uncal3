@@ -127,9 +127,14 @@ button:focus{
 input:-webkit-autofill,
 input:-webkit-autofill:hover, 
 input:-webkit-autofill:focus{
+    box-shadow:  0 0 0px 1000px linear-gradient(to top right, #DAB998, rgba(218,185,152,0.3)) inset;
     -webkit-text-fill-color: var(--clr-black);
     -webkit-box-shadow: 0 0 0px 1000px linear-gradient(to top right, #DAB998, rgba(218,185,152,0.3)) inset;
     transition: background-color 5000s ease-in-out 0s;
+    -webkit-transition: background-color 5000s ease-in-out 0s;
+    -moz-transition: background-color 5000s ease-in-out 0s;
+    -ms-transition: background-color 5000s ease-in-out 0s;
+    -o-transition: background-color 5000s ease-in-out 0s;
 }
 
 .content .login-content-box#login-right-section .content-body .login-form .form-group .form-control:focus{
