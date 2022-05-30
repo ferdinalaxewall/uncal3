@@ -64,9 +64,9 @@ button:focus{
     background-position: right bottom;
 }
 
-.content .login-content-box#login-right-section .content-body{ 
+.content .login-content-box#login-right-section .content-body{
     width: 30vw;
-    margin-right: 30px;
+    margin-left: 60px;
 }
 
 .content .login-content-box#login-right-section .content-body .login-title{
