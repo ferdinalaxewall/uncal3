@@ -1,5 +1,22 @@
 $(document).ready(function(){
 
+    var zoom = 1;
+		
+    $('#zoom-in').on('click', function(){
+        zoom += 0.1;
+        $('.flow-diagram').css('transform', 'scale(' + zoom + ')');
+    });
+    // $('#zoom-init').on('click', function(){
+    //     zoom = 1;
+    //     $('.flow-diagram').css('transform', 'scale(' + zoom + ')');
+    // });
+    $('#zoom-out').on('click', function(){
+        zoom -= 0.1;
+        $('.flow-diagram').css('transform', 'scale(' + zoom + ')');
+    });
+
+    $("#properties-section").resizable();
+
     $(".edit-profile").click(function(){
         $("#editProfileModal").modal('show');
         if($("#editProfileModal").children().children().children().children().children().find("#main-profile").hasClass("active")){
@@ -54,6 +71,22 @@ $(document).ready(function(){
                 "delete": {name: "Delete", icon: "delete"}
             }
         });  
+        
+        $.contextMenu({
+            selector: '.flow-diagram .element-item', 
+            callback: function(key, options) {
+                if (key == 'edit'){
+                }else if(key == 'delete'){
+                    thisComp = $(this);
+                    deleteComponent(thisComp);
+                }
+            },
+            items: {
+                "edit": {name: "Rename", icon: "edit"},
+                "delete": {name: "Delete", icon: "delete"}
+            }
+        });  
+
     });
 
     $("#flow-tab .tab-name").click(function(e){
@@ -396,6 +429,25 @@ function elementProperties(el){
         });
         
     }, 300);
+}
+
+function deleteComponent(comp) {    
+    // validasi hapus properties
+    var data_id = comp.attr("data_id");
+    var prop_id = $("#properties").children(":first").attr("prop_id");
+
+    // hapus element
+    comp.remove();
+    if ($(".flow-diagram").children().length == 0) {
+        $(".flow-diagram, br").remove();
+    }
+    
+    if(data_id != undefined){
+        $("#properties").empty();
+        
+        // hapus component di localStorage
+        deleteJsonFlow(prop_id);
+    }
 }
 
 function focusElement(e) {

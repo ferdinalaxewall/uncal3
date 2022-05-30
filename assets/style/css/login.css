@@ -1,2 +1,183 @@
 @import url("./variable.css");
 
+*,*::before,*::after{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    font-family: var(--font-family);
+    height: 100vh;
+    width: 100vw;
+}
+
+button:focus{
+    outline: none;
+}
+
+.navbar{
+    background: transparent;
+    width: 100vw;
+    height: 75px;
+    position: fixed;
+    top: 0;
+}
+
+.navbar .navbar-brand{
+    display: flex;
+    align-items: center;
+    font-weight: var(--fw-bold);
+    font-size: 26px;
+}
+
+.navbar .navbar-brand span{
+    text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.content{
+    /* background-color: red; */
+    height: 100vh;
+} 
+
+.content .login-content-box{
+    position: relative;
+    height:100vh;
+    padding: 20px;
+}
+
+.content .login-content-box#login-left-section img{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+}
+
+.content .login-content-box#login-right-section{
+    background-image: url(../../icon/login-wave-2.svg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: right bottom;
+}
+
+.content .login-content-box#login-right-section .content-body{ 
+    width: 30vw;
+    margin-right: 30px;
+}
+
+.content .login-content-box#login-right-section .content-body .login-title{
+    text-align: center;
+    font-weight: var(--fw-bold);
+    text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.content .login-content-box#login-right-section .content-body .login-form{
+    margin-top: 50px;
+}
+
+.content .login-content-box#login-right-section .content-body .login-form .form-group{
+    position: relative;
+}
+
+.content .login-content-box#login-right-section .content-body .login-form .form-group#username-form-group{
+    margin-bottom: 30px;
+}
+
+.content .login-content-box#login-right-section .content-body .login-form .form-group .form-label{
+    position: absolute;
+    margin-bottom: 0;
+    top: 50%;
+    left: 60px;
+    transform: translateY(-50%);
+    transition: all .2s linear;
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    -webkit-transition: all .2s linear;
+    -moz-transition: all .2s linear;
+    -ms-transition: all .2s linear;
+    -o-transition: all .2s linear;
+    z-index: 2;
+}
+
+.content .login-content-box#login-right-section .content-body .login-form{
+    position: relative;
+}
+
+.content .login-content-box#login-right-section .content-body .login-form .form-group .form-control{
+    position: relative;
+    padding-left: 60px;
+    background-color: transparent;
+    border: none;
+    border-bottom: 2px solid var(--clr-black);
+    height: 50px;
+    border-radius: 0;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    -ms-border-radius: 0;
+    -o-border-radius: 0;
+    z-index: 4;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus{
+    -webkit-text-fill-color: var(--clr-black);
+    -webkit-box-shadow: 0 0 0px 1000px linear-gradient(to top right, #DAB998, rgba(218,185,152,0.3)) inset;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+.content .login-content-box#login-right-section .content-body .login-form .form-group .form-control:focus{
+    box-shadow: none;
+}
+
+.content .login-content-box#login-right-section .content-body .login-form .form-group .form-control:focus ~ .form-label, .content .login-content-box#login-right-section .content-body .login-form .form-group .form-control:not(:placeholder-shown) ~ .form-label{
+    top: -20px;
+    left: 0;
+    transform: translateY(0);
+    -webkit-transform: translateY(0);
+    -moz-transform: translateY(0);
+    -ms-transform: translateY(0);
+    -o-transform: translateY(0);
+}
+
+.content .login-content-box#login-right-section .content-body .login-form .form-group img{
+    position: absolute;
+    left: 7.5px;
+    top: 50%;
+    transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    z-index: 10;
+}
+
+.content .login-content-box#login-right-section .content-body .login-form .form-group .forgot-link{
+    color: var(--clr-black);
+}
+
+.content .login-content-box#login-right-section .content-body .login-form .form-group .login-button{
+    height: 50px;
+    width: 100%;
+    font-size: 20px;
+    border: 1px solid #8C6E63;
+    padding: 10px 0;
+    color: var(--clr-white);
+    background-image: linear-gradient(to bottom, #DAB998, #C68D53);
+    box-shadow: 2px -2px 5px rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+}
+
+.content .login-content-box#login-right-section .content-body .login-form .form-group .login-button:hover{
+    opacity: 0.7;
+}

@@ -14,6 +14,8 @@
     <link rel="stylesheet" href="./assets/style/css/style.css">
     <!-- Loader CSS -->
     <link rel="stylesheet" href="./assets/style/css/loader.css">
+    <!-- JQuery UI CSS -->
+    <link rel="stylesheet" href="./assets/style/css/jquery-ui.css">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -56,7 +58,7 @@
         <div class="container-fluid">
           <div class="navbar-left-group d-flex align-items-center">
             <button class="sidebar-toggle mr-4">
-              <img src="./assets/icon/sidebar-icon.svg" alt="Sidebar Hamburger Menu Icon">
+              <img src="./assets/icon/sidebar-icon.svg" alt="Sidebar Hamburger Menu Icon" loading="lazy">
             </button>
             <a href="#" class="navbar-brand">UNCAL BPM</a>
           </div>
@@ -108,13 +110,13 @@
 
             <div class="col-md-2 sidebar collapsed">
               <a href="workspace.html" class="to-workspace-link">
-                <img src="./assets/icon/chevron-icon.svg" class="mr-3" alt="Chevron Left Icon">
+                <img src="./assets/icon/chevron-icon.svg" class="mr-3" alt="Chevron Left Icon" loading="lazy">
                 <span>Back to Workspace</span>
               </a>
 
               <div class="sidebar-content d-flex flex-column align-items-center">
                 <div class="sidebar-content-header">
-                  <img src="./assets/icon/uncal-folder-icon.svg" alt="Uncal Folder Icon">
+                  <img src="./assets/icon/uncal-folder-icon.svg" alt="Uncal Folder Icon" loading="lazy">
                   <span class="folder-name">Folder_1</span>
                 </div>
                 <button class="create-new-project">Add New Project</button>
@@ -122,19 +124,19 @@
                 <ul class="list-group-project">
                   <li class="list-project">
                     <a href="#" class="project-name">
-                      <img src="./assets/icon/uncal-icon.svg" alt="Uncal Icon">
+                      <img src="./assets/icon/uncal-icon.svg" alt="Uncal Icon" loading="lazy">
                       <span class="project-name">Project_1</span>
                     </a>
                   </li>
                   <li class="list-project">
                     <a href="#" class="project-name">
-                      <img src="./assets/icon/uncal-icon.svg" alt="Uncal Icon">
+                      <img src="./assets/icon/uncal-icon.svg" alt="Uncal Icon" loading="lazy">
                       <span class="project-name">Project_2</span>
                     </a>
                   </li>
                   <li class="list-project">
                     <a href="#" class="project-name">
-                      <img src="./assets/icon/uncal-icon.svg" alt="Uncal Icon">
+                      <img src="./assets/icon/uncal-icon.svg" alt="Uncal Icon" loading="lazy">
                       <span class="project-name">Project_3</span>
                     </a>
                   </li>
@@ -183,6 +185,23 @@
                       <img src="./assets/icon/close-icon.svg"alt="">
                     </button>
                   </a>
+
+                  <div class="utility-group">
+                    <button class="zoom-button" id="zoom-in">
+                      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="14" height="14" rx="5" fill="#c68d53"/>
+                        <path d="M3.5 7H10.5" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                        <path d="M7 10.5V3.5" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                      </svg>
+                    </button>
+                    <button class="zoom-button" id="zoom-out">
+                      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="14" height="14" rx="5" fill="#c68d53"/>
+                        <path d="M3.5 7H10.5" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                      </svg>
+                    </button>
+                    <button class="save-project">Save Project</button>
+                  </div>
                 </div>
                 <div class="content-body" id="flow-container">  
                     <div class="canvas">
@@ -210,7 +229,7 @@
                       
                     <span>Palette</span>
                     <button class="close-tab">
-                      <img src="./assets/icon/close-icon.svg" alt="Close Icon">
+                      <img src="./assets/icon/close-icon.svg" alt="Close Icon" loading="lazy">
                     </button>
                   </a>
                   <a href="#" class="tab-name">
@@ -233,7 +252,7 @@
 
                     <span>API Sync</span>
                     <button class="close-tab">
-                      <img src="./assets/icon/close-icon.svg" alt="Close Icon">
+                      <img src="./assets/icon/close-icon.svg" alt="Close Icon" loading="lazy">
                     </button>
                   </a>
                 </div>
@@ -291,109 +310,109 @@
                   <ul class="elements-list">
                     <li class="element-item" id="sender">
                       <a id="sender-tcp" class="element-box">
-                        <img src="./assets/icon/set-payload-icon.svg" alt="Set Payload Icon">
+                        <img src="./assets/icon/tcp-icon.svg" alt="TCP Sender Icon" loading="lazy">
                         <span>TCP Sender</span>
                       </a>
                     </li>
                     <li class="element-item" id="receiver">
                       <a id="receiver-tcp" class="element-box">
-                        <img src="./assets/icon/api-kit-icon.svg" alt="API Kit Console Icon">
+                        <img src="./assets/icon/tcp-icon.svg" alt="TCP Receiver Icon" loading="lazy">
                         <span>TCP Receiver</span>
                       </a>
                     </li>
                     <li class="element-item" id="sender">
                       <a id="sender-rest" class="element-box">
-                        <img src="./assets/icon/amazon-sqs-icon.svg" alt="Amazon SQS Icon">
+                        <img src="./assets/icon/rest-icon.svg" alt="REST/SOAP Sender Icon" loading="lazy">
                        <span>REST/SOAP Sender</span>
                       </a>
                     </li>
                     <li class="element-item" id="receiver">
                       <a id="receiver-rest" class="element-box">
-                        <img src="./assets/icon/amazon-sqs-icon.svg" alt="Amazon SQS Icon">
+                        <img src="./assets/icon/rest-icon.svg" alt="REST/SOAP Receiver Icon" loading="lazy">
                        <span>REST/SOAP Receiver</span>
                       </a>
                     </li>
                     <li class="element-item" id="sender">
                       <a id="sender-nfs" class="element-box">
-                        <img src="./assets/icon/amazon-s3-icon.svg" alt="Amazon S3 Icon">
+                        <img src="./assets/icon/nfs-icon.svg" alt="NFS Sender Icon" loading="lazy">
                         <span>NFS Sender</span>
                       </a>
                     </li>
                     <li class="element-item" id="receiver">
                       <a id="receiver-nfs" class="element-box">
-                        <img src="./assets/icon/amazon-s3-icon.svg" alt="Amazon S3 Icon">
+                        <img src="./assets/icon/nfs-icon.svg" alt="NFS Receiver Icon" loading="lazy">
                         <span>NFS Receiver</span>
                       </a>
                     </li>
                     <li class="element-item" id="sender">
                       <a id="sender-ftp" class="element-box">
-                        <img src="./assets/icon/ajax-icon.svg" alt="Ajax Icon">
+                        <img src="./assets/icon/ftp-icon.svg" alt="FTP Sender Icon" loading="lazy">
                         <span>FTP(e)/S Sender</span>
                       </a>
                     </li>
                     <li class="element-item" id="receiver">
                       <a id="receiver-ftp" class="element-box">
-                        <img src="./assets/icon/ajax-icon.svg" alt="Ajax Icon">
+                        <img src="./assets/icon/ftp-icon.svg" alt="FTP Receiver Icon" loading="lazy">
                         <span>FTP(e)/S Receiver</span>
                       </a>
                     </li>
                     <li class="element-item" id="sender">
                       <a id="sender-sftp" class="element-box">
-                        <img src="./assets/icon/database-icon.svg" alt="Database Icon">
+                        <img src="./assets/icon/sftp-icon.svg" alt="SFTP Sender Icon" loading="lazy">
                         <span>SFTP/EXEC/SHELL Sender</span>
                       </a>
                     </li>
                     <li class="element-item" id="receiver">
                       <a id="receiver-sftp" class="element-box">
-                        <img src="./assets/icon/database-icon.svg" alt="Database Icon">
+                        <img src="./assets/icon/sftp-icon.svg" alt="SFTP Receiver Icon" loading="lazy">
                         <span>SFTP/EXEC/SHELL Receiver</span>
                       </a>
                     </li>
                     <li class="element-item" id="sender">
                       <a id="sender-imap" class="element-box">
-                        <img src="./assets/icon/database-icon.svg" alt="Database Icon">
+                        <img src="./assets/icon/imap-icon.svg" alt="IMAP/POP Sender Icon" loading="lazy">
                         <span>IMAP/POP Sender</span>
                       </a>
                     </li>
                     <li class="element-item" id="receiver">
                       <a id="receiver-smtp" class="element-box">
-                        <img src="./assets/icon/database-icon.svg" alt="Database Icon">
+                        <img src="./assets/icon/imap-icon.svg" alt="SMTP Receiver Icon" loading="lazy">
                         <span>SMTP Receiver</span>
                       </a>
                     </li>
                     <li class="element-item" id="sender">
                       <a id="sender-jdbc" class="element-box">
-                        <img src="./assets/icon/database-icon.svg" alt="Database Icon">
+                        <img src="./assets/icon/jdbc-icon.svg" alt="JDBC Sender Icon" loading="lazy">
                         <span>JDBC Sender</span>
                       </a>
                     </li>
                     <li class="element-item" id="receiver">
                       <a id="receiver-jdbc" class="element-box">
-                        <img src="./assets/icon/database-icon.svg" alt="Database Icon">
+                        <img src="./assets/icon/jdbc-icon.svg" alt="JDBC Sender Icon" loading="lazy">
                         <span>JDBC Receiver</span>
                       </a>
                     </li>
                     <li class="element-item" id="sender">
                       <a id="sender-mqtt" class="element-box">
-                        <img src="./assets/icon/database-icon.svg" alt="Database Icon">
+                        <img src="./assets/icon/mqtt-icon.svg" alt="MQTT Sender Icon" loading="lazy">
                         <span>Mqtt Sender</span>
                       </a>
                     </li>
                     <li class="element-item" id="receiver">
                       <a id="receiver-mqtt" class="element-box">
-                        <img src="./assets/icon/database-icon.svg" alt="Database Icon">
+                        <img src="./assets/icon/mqtt-icon.svg" alt="MQTT Receiver Icon" loading="lazy">
                         <span>Mqtt Receiver</span>
                       </a>
                     </li>
                     <li class="element-item" id="object">
                       <a id="object-switching" href="#" class="element-box">
-                      <img src="./assets/icon/database-icon.svg" alt="Database Icon">
+                      <img src="./assets/icon/switch-icon.svg" alt="Switching Icon" loading="lazy">
                       <span>Switching</span>
                       </a>
                     </li>
                     <li class="element-item" id="object">
                       <a id="object-EnDe" href="#" class="element-box">
-                      <img src="./assets/icon/database-icon.svg" alt="Database Icon">
+                      <img src="./assets/icon/ende-icon.svg" alt="EnDe Icon" loading="lazy">
                       <span>EnDe</span>
                       </a>
                     </li>
@@ -421,7 +440,7 @@
                       Problems
 
                       <button class="close-tab" id="close-problems">
-                        <img src="./assets/icon/close-icon.svg" alt="Close Icon">
+                        <img src="./assets/icon/close-icon.svg" alt="Close Icon" loading="lazy">
                       </button>
                     </span>
                   </a>
@@ -434,12 +453,12 @@
                       Console
 
                       <button class="close-tab" id="close-console">
-                        <img src="./assets/icon/close-icon.svg" alt="Close Icon">
+                        <img src="./assets/icon/close-icon.svg" alt="Close Icon" loading="lazy">
                       </button>
                     </span>
                   </a>
                   <button class="minimize-properties">
-                    <img src="./assets/icon/chevron-icon.svg" alt="Chevron Icon" id="chevron-header-properties">
+                    <img src="./assets/icon/chevron-icon.svg" alt="Chevron Icon" loading="lazy" id="chevron-header-properties">
                   </button>
                 </div>
                 <div class="content-body">
@@ -465,7 +484,7 @@
                       Connecion Explorer
 
                       <button class="close-tab">
-                        <img src="./assets/icon/close-icon.svg" alt="Close Icon">
+                        <img src="./assets/icon/close-icon.svg" alt="Close Icon" loading="lazy">
                       </button>
                     </span>
                   </a>
@@ -484,7 +503,7 @@
                       Outline
 
                       <button class="close-tab" id="close-outline">
-                        <img src="./assets/icon/close-icon.svg" alt="Close Icon">
+                        <img src="./assets/icon/close-icon.svg" alt="Close Icon" loading="lazy">
                       </button>
                     </span>
                   </a>
@@ -763,7 +782,7 @@
                     <div class="preview-header border-bottom">
                       <h5 class="preview-header-title text-center">Preview</h5>
                       <a class="reset-image">
-                        <img src="./assets/icon/close-xl-icon.svg" alt="Close Icon">
+                        <img src="./assets/icon/close-xl-icon.svg" alt="Close Icon" loading="lazy">
                       </a>
                     </div>
                     <div class="preview-body text-center mt-2">
