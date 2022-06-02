@@ -4,15 +4,15 @@ $(document).ready(function(){
 		
     $('#zoom-in').on('click', function(){
         zoom += 0.1;
-        $('.flow-diagram').css('transform', 'scale(' + zoom + ')');
+        $('#flow-container').css('transform', 'scale(' + zoom + ')');
     });
     // $('#zoom-init').on('click', function(){
     //     zoom = 1;
-    //     $('.flow-diagram').css('transform', 'scale(' + zoom + ')');
+    //     $('#flow-container').css('transform', 'scale(' + zoom + ')');
     // });
     $('#zoom-out').on('click', function(){
         zoom -= 0.1;
-        $('.flow-diagram').css('transform', 'scale(' + zoom + ')');
+        $('#flow-container').css('transform', 'scale(' + zoom + ')');
     });
 
     $("#properties-section").resizable();
@@ -205,8 +205,35 @@ $(document).ready(function(){
         }
     });
 
+    // $(".floating-properties .menu-name").click(function(){
+    //     $(".floating-properties .menu-name").removeClass("active");
+    //     $(this).addClass("active")
+    //     if($(this).prop("id") == 'notes-properties'){
+    //         $("#properties").hide();
+    //         $("#notes").show();
+    //         $("#input-output").removeClass("d-flex").addClass("d-none");
+    //         $(".floating-properties .error-info").hide();
+    //     }else if($(this).prop("id") == 'general-properties'){
+    //         $("#properties").show();
+    //         $("#notes").hide();
+    //         $("#input-output").removeClass("d-flex").addClass("d-none");
+    //         $(".floating-properties .error-info").show();
+    //     }else if($(this).prop("id") == 'input-output-properties'){
+    //         $("#properties").hide();
+    //         $("#notes").hide();
+    //         $("#input-output").removeClass("d-none").addClass("d-flex");
+    //         $(".floating-properties .error-info").hide();
+
+    //     }
+    // });
+
     $(".modal .input-output-menu-name").click(function(){
         $(".modal .input-output-menu-name").removeClass("active");
+        $(this).addClass("active")
+    });
+
+    $(".floating-properties .input-output-menu-name").click(function(){
+        $(".floating-properties .input-output-menu-name").removeClass("active");
         $(this).addClass("active")
     });
 
@@ -331,12 +358,153 @@ function searchElementsFunc(){
 }
 
 function elementProperties(el){
-    $("#propertiesModal").modal('show'); 
+    // $("#propertiesModal").modal('show'); 
+    var floatProp = '' + 
+    '<div class="floating-properties ui-draggable ui-draggable-handle" style="top:0;">' + 
+    '      <div class="floating-properties-header">' + 
+    '        <h5 class="properties-title" id="propertiesModalTitle">Flow Properties</h5>' + 
+    '          <button type="button" class="close close-element-properties">' + 
+    '            <span aria-hidden="true">&times;</span>' + 
+    '          </button>' + 
+    '      </div>' + 
+    '      <div class="properties-body">' + 
+    '        <div class="row justify-content-center">' + 
+    '                <div class="col-md-11" id="properties-modal-content">' + 
+    '                  <div class="menu-group">' + 
+    '                    <a href="#" class="menu-name active" id="general-properties">General</a>' + 
+    '                    <a href="#" class="menu-name" id="notes-properties">Notes</a>' + 
+    '                    <a href="#" class="menu-name" id="input-output-properties">Input/Output</a>' + 
+    '                  </div>' + 
+    '                </div>' + 
+    '              </div>' + 
+    '              <div id="properties">' + 
+    '              </div>' + 
+    '              <div id="notes" style="display: none;">' + 
+    '                notes' + 
+    '              </div>' + 
+    '              <div id="input-output" class="row justify-content-center" style="display: none;">' + 
+    '                <div class="col-md-9 input-output-menu">' + 
+    '                  <div class="menu-group d-flex justify-content-center align-items-center">' + 
+    '                    <a href="#" class="input-output-menu-name active">Input</a>' + 
+    '                    <a href="#" class="input-output-menu-name">Output</a>' + 
+    '                  </div>' + 
+    '                </div>' + 
+    '                <div class="col-md-11 mt-3 input-output-content">' + 
+    '                  <ul class="list-group" id="input-output-properties-group">' + 
+    '                    <li class="list-item">' + 
+    '                      <span> Payload </span>' + 
+    '                      <p class="list-sub-item">Unknown : <span class="unhighlighted-text">Unknown</span></p>' + 
+    '                    </li>' + 
+    '                    <li class="list-item">' + 
+    '                      <span>Flow Variables</span>' + 
+    '                    </li>' + 
+    '                    <li class="list-item">' + 
+    '                      <span>Session Variable</span>' + 
+    '                    </li>' + 
+    '                    <li class="list-item">' + 
+    '                      <span>Inbound Properties</span>' + 
+    '                    </li>' + 
+    '                    <li class="list-item">' + 
+    '                      <span>Outbound Properties</span>' + 
+    '                    </li>' + 
+    '                    <li class="list-item">' + 
+    '                      <span>Record Variables</span>' + 
+    '                    </li>' + 
+    '                  </ul>' + 
+    '                </div>' + 
+    '              </div>  ' + 
+    '      </div>' + 
+    '      <div class="properties-footer">' + 
+    '        <button type="button" class="btn btn-primary" id="saveFlowName">Save changes</button>' + 
+    '      </div>' + 
+    '    </div>' + 
+    '';
+
+    $("body").append(floatProp);
+
+    var elPropName = $(el).children("span").text();
+    console.log("Elements Name", elPropName)
+
+    setTimeout(() => {
+        
+        $(".floating-properties").each(function(ind){
+            $(".floating-properties").eq(ind).css({
+                "left" : 310 * ind + "px"
+            });
+            $(".floating-properties").eq(ind).attr("id", "floating-properties-"+ind)
+            $(".floating-properties").eq(ind).find("#properties").attr("class", "properties-"+ind)
+            setTimeout(() => {
+                if($(this).find(".properties-"+ind).children().length == 0){
+                    $(this).find(".properties-"+ind).load("components/"+getTypeComp+".html");
+                    $(this).find(".properties-title").text(elPropName)
+                }
+
+                $(this).find(".menu-name").click(function(){
+                    $("#floating-properties-"+ind).find(".menu-name").removeClass("active");
+                    $(this).addClass("active");
+                    if($(this).prop("id") == 'notes-properties'){
+                        $(this).parents("#floating-properties-"+ind).find(".properties-"+ind).hide();
+                        $(this).parents("#floating-properties-"+ind).find("#notes").show();
+                        $(this).parents("#floating-properties-"+ind).find("#input-output").removeClass("d-flex").addClass("d-none");
+                        $(this).parents("#floating-properties-"+ind).find(".floating-properties .error-info").hide();
+                    }else if($(this).prop("id") == 'general-properties'){
+                        $(this).parents("#floating-properties-"+ind).find(".properties-"+ind).show();
+                        $(this).parents("#floating-properties-"+ind).find("#notes").hide();
+                        $(this).parents("#floating-properties-"+ind).find("#input-output").removeClass("d-flex").addClass("d-none");
+                        $(this).parents("#floating-properties-"+ind).find(".floating-properties .error-info").show();
+                    }else if($(this).prop("id") == 'input-output-properties'){
+                        $(this).parents("#floating-properties-"+ind).find(".properties-"+ind).hide();
+                        $(this).parents("#floating-properties-"+ind).find("#notes").hide();
+                        $(this).parents("#floating-properties-"+ind).find("#input-output").removeClass("d-none").addClass("d-flex");
+                        $(this).parents("#floating-properties-"+ind).find(".floating-properties .error-info").hide();
+
+                    }
+                });
+            }, 100);
+        }) 
+        $(".floating-properties").draggable({
+            cursor : "move", 
+            cursorAt: { top: 0, left: 150 },
+            containment : "body",
+            scroll : false
+        });
+
+        $(".close-element-properties").click(function(){
+            $(this).parent().parent().fadeOut();
+            setTimeout(() => {
+                $(this).parent().parent().remove();
+            }, 500);
+        })
+        
+        if ($(".floating-properties").length > 3) {
+            $(".floating-properties")[0].remove()
+        }
+
+        $("#properties").each(function(i){
+            
+        })
+        
+        // if ($(".floating-properties").length < 2) {
+        //     $("#properties").load("components/"+getTypeComp+".html");
+        // }
+
+
+        // setTimeout(() => {
+        //     console.log("childLeng", $(".floating-properties").find("#properties").children().length);
+        // }, 100);
+        // if ($(".floating-properties").find("#properties").children().length == 1) {
+        // }
+    }, 100);
 
     // auto open by file name
     var getTypeComp = $(el).prop("id");
-    $("#properties").empty();
-    $("#properties").load("components/"+getTypeComp+".html");
+    // $(".floating-properties").each(function(index){
+    //     $()
+    // });
+
+    // $("#properties").empty();
+    // if ($("#properties").children().length == 0) {
+    // }
     
     // fill data ke properties (auto nama id)
     var liComp = $(el).parent();

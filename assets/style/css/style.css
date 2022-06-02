@@ -100,16 +100,298 @@ button:focus{
     -o-border-radius: 5px !important;
 }
 
+/* Floating Properties CSS */
+
+.floating-properties{
+    position: absolute;
+    z-index: 1001;
+    background-color: var(--clr-white);
+    border: 1px solid var(--clr-border);
+    width: 300px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+}
+
+.floating-properties.ui-draggable-dragging{
+    z-index: 1002;
+}
+
+.floating-properties .floating-properties-header{
+    border-bottom: 1px solid var(--clr-border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 15px;
+}
+
+.floating-properties .floating-properties-header .properties-title{
+    font-size: var(--fs-heading);
+    margin-bottom: 0;
+}
+
+.floating-properties .properties-footer{
+    padding: 10px 30px;
+    margin-bottom: 10px;
+    display: flex;
+    align-self: center;
+    justify-content: start;
+}
+
+.floating-properties .properties-footer .btn{
+    font-size: var(--fs-body);
+    width: 100%;
+}
+
+.floating-properties .properties-body{
+    padding: 10px;
+    padding-bottom: 0;
+}
+
+
+.floating-properties .properties-body .input-group{
+    flex-direction: column;
+}
+
+.floating-properties .properties-body .input-group label{
+    margin-bottom: 5px;
+    margin-left: 5px;
+}
+
+.floating-properties .properties-body .input-group .input-field{
+    height: 30px;
+    padding: 0 10px;
+    border: 1px solid var(--clr-border);
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
+    width: 100%;
+    border-radius: 5px;
+    transition: all .15s linear;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+    -webkit-transition: all .15s linear;
+    -moz-transition: all .15s linear;
+    -ms-transition: all .15s linear;
+    -o-transition: all .15s linear;
+}
+
+.floating-properties .properties-body .input-group .input-field:focus, .floating-properties .properties-body .input-group .form-select:focus{
+    outline: none;
+    border: 1px solid var(--clr-primary);
+    box-shadow: 0 0 0.25rem var(--clr-primary);
+}
+
+.floating-properties .properties-body .input-group .form-select{
+    height: 30px;
+    padding: 0 10px;
+    border: 1px solid var(--clr-border);
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
+    width: 100%;
+    border-radius: 5px;
+    transition: all .15s linear;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+    -webkit-transition: all .15s linear;
+    -moz-transition: all .15s linear;
+    -ms-transition: all .15s linear;
+    -o-transition: all .15s linear;
+}
+
+.floating-properties .properties-body .form-check{
+    margin-top: 5px;
+}
+
+.floating-properties .properties-body .form-check .form-check-input{
+    margin-left: 0;
+}
+.floating-properties .properties-body .form-check label{
+    padding-left: 25px;
+}
+
+.floating-properties .properties-body #properties-modal-content .menu-group{
+    border-bottom: 1px solid #c4c4c4;
+    padding:  7.5px 0;  
+}
+
+.floating-properties .properties-body #properties-modal-content .menu-group .menu-name{
+    color: var(--clr-black);
+    background-color: var(--clr-white);
+    padding: 5px 7.5px;
+    border-radius: 5px;
+    transition: all .15s linear;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+    -webkit-transition: all .15s linear;
+    -moz-transition: all .15s linear;
+    -ms-transition: all .15s linear;
+    -o-transition: all .15s linear;
+}
+
+.floating-properties .properties-body #properties-modal-content .menu-group .menu-name:not(:first-child){
+    margin-left: 10px;
+}
+
+.floating-properties .properties-body #properties-modal-content .menu-group .menu-name.active{
+    background-color: var(--clr-primary);
+    color: var(--clr-white);
+}
+
+.floating-properties .properties-body #input-output .input-output-menu{
+    border-bottom: 1px solid var(--clr-border);
+    padding-top: 10px;
+    padding-bottom: 5px;
+}
+
+.floating-properties .properties-body #input-output .input-output-menu .menu-group .input-output-menu-name{
+    color: var(--clr-black);
+    padding: 2.5px;
+    margin: 0 5px;
+    position: relative;
+}
+
+.floating-properties .properties-body #input-output .input-output-menu .menu-group .input-output-menu-name::after{
+    content: '';
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    height: 2px;
+    width: 0;
+    background-color: var(--clr-primary);
+    transform: translateX(-50%);
+    transition: all .15s linear;
+    -webkit-transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    -o-transform: translateX(-50%);
+    -webkit-transition: all .15s linear;
+    -moz-transition: all .15s linear;
+    -ms-transition: all .15s linear;
+    -o-transition: all .15s linear;
+}
+
+.floating-properties .properties-body #input-output .input-output-menu .menu-group .input-output-menu-name.active::after{
+    width: 100%;
+}
+
+.floating-properties .properties-body #input-output .input-output-content .list-group{
+    padding-left: 20px;
+}
+
+.floating-properties .properties-body #input-output .input-output-content .list-group .list-item{
+    position: relative;
+    margin-bottom: 5px;
+    height: var(--fs-heading);
+    cursor: default;
+    margin-bottom: 5px;
+    transition: all .15s linear;
+    -webkit-transition: all .15s linear;
+    -moz-transition: all .15s linear;
+    -ms-transition: all .15s linear;
+    -o-transition: all .15s linear;
+}
+
+.floating-properties .properties-body #input-output .input-output-content .list-group .list-item span{
+    pointer-events: none;
+}
+
+.floating-properties .properties-body #input-output .input-output-content .list-group .list-item.has-child span{
+    cursor: pointer;
+    pointer-events: fill;
+}
+
+.floating-properties .properties-body #input-output .input-output-content .list-group .list-item.active{
+    height: calc(var(--fs-heading) * 2.2);
+}
+
+.floating-properties .properties-body #input-output .input-output-content .list-group .list-item.active.has-child{
+    margin-bottom: 10px;
+}
+
+.floating-properties .properties-body #input-output .input-output-content .list-group .list-item{
+    margin-bottom: 10px;
+}
+
+.floating-properties .properties-body #input-output .input-output-content .list-group .list-item::before{
+    content: url('../../icon/chevron-icon.svg');
+    position: absolute;
+    opacity: 0;
+    left: 0;
+    transform: rotate(-90deg);
+    transition: all .15s linear ;
+    -webkit-transition: all .15s linear ;
+    -moz-transition: all .15s linear ;
+    -ms-transition: all .15s linear ;
+    -o-transition: all .15s linear ;
+    -webkit-transform: rotate(-90deg);
+    -moz-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
+    -o-transform: rotate(-90deg);
+}
+
+.floating-properties .properties-body #input-output .input-output-content .list-group .list-item.active::before{
+    transform: rotate(0);
+    -webkit-transform: rotate(0);
+    -moz-transform: rotate(0);
+    -ms-transform: rotate(0);
+    -o-transform: rotate(0);
+}
+
+.floating-properties .properties-body #input-output .input-output-content .list-group .list-item.has-child::before{
+    opacity: 1;
+    left: -20px;
+}
+
+.floating-properties .properties-body #input-output .input-output-content .list-group .list-item .list-sub-item{
+    margin-left: 15px;
+    margin-top: 3.5px;
+    visibility: hidden;
+    font-style: italic;
+    opacity: 0;
+    transition: all .15s linear;
+    -webkit-transition: all .15s linear;
+    -moz-transition: all .15s linear;
+    -ms-transition: all .15s linear;
+    -o-transition: all .15s linear;
+}
+
+.floating-properties .properties-body #input-output .input-output-content .list-group .list-item.active .list-sub-item{
+    opacity: 1;
+    visibility: visible;
+}
+
+.floating-properties .properties-body #input-output .input-output-content .list-group .list-item .list-sub-item .unhighlighted-text{
+    color: #959595;
+}
+
+.floating-properties .properties-body #properties-modal-content .error-info{
+    margin: 15px 0;
+    display: inline-flex;
+    align-items: center;
+}
+
 /* Modal CSS */
 
 .modal{
-    z-index: 9999;
+    z-index: 1015;
     border-radius: 10px;
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
     -ms-border-radius: 10px;
     -o-border-radius: 10px;
 }
+
+.modal-backdrop {
+    z-index: 1005;
+ }
 
 .modal::-webkit-scrollbar{
     width: 9px;
@@ -889,6 +1171,10 @@ button:focus{
     -o-border-radius: 5px;
 }   
 
+.content .container-fluid .row #flow-section .content-box #flow-container{
+    transform-origin: left top;  
+}
+
 .content .container-fluid .row #flow-section .content-box #flow-container .canvas{
     height: 380px;
     width: 100%;
@@ -1532,7 +1818,7 @@ button:focus{
 
 .content .container-fluid .row .content-section .content-box .content-body .elements-list .element-item{
     position: relative;
-    z-index: 9999;
+    z-index: 1000;
     display: flex;
     flex-direction: row;
     align-items: center;
