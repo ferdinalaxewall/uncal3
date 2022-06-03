@@ -1,6 +1,6 @@
 $(document).ready(function(){
       
-    var flowDiagram = "<ul class='flow-diagram mt-4'><div class='flow-name'><button class='minimize-flow' onclick='minimizeFlow(this)'><img src='./assets/icon/minimize-flow-icon-2.svg' alt='Chevron Icon' id='chevron-flow-name'></button><p class='flow-name-text mb-0 mt-0' ondblclick='renameFlow(this)'>Flow Name</p> <button class='close-flow' onclick='closeFlow(this)'><img src='./assets/icon/close-icon.svg' alt='Close Icon'></button></div></ul><br>";
+    var flowDiagram = "<ul class='flow-diagram mt-4'><div class='flow-name'><button class='minimize-flow' onclick='minimizeFlow(this)'><img src='./assets/icon/minimize-flow-icon-2.svg' alt='Chevron Icon' id='chevron-flow-name'></button><input type='text' class='flow-name-text' ondblclick='renameFlow(this)' onblur='toReadonly(this)' oninput='flowTyping(this)' value='Scenario_1' readonly/> <button class='close-flow' onclick='closeFlow(this)'><img src='./assets/icon/close-icon.svg' alt='Close Icon'></button></div></ul><br>";
     
     $(".element-item").draggable({
         connectToSortable : ".flow-diagram, .switch-flow-diagram, .pada",
@@ -9,18 +9,7 @@ $(document).ready(function(){
         revert: "invalid",
         cursorAt: { top: 25, left: 25 },
         scroll : false,
-        // stop : function(ev, ui){
-        //     $(".flow-diagram").each(function(inde){
-
-        //         console.log($(".flow-diagram").width());
-        //         console.log($("#flow-container").width());
-                     
-        // }
     }).disableSelection();
-
-    $("#flow-container").css({
-        "background-color" : "reds"
-    })
 
     $(".canvas").droppable({
         accept : ".elements-list #sender",
@@ -615,8 +604,7 @@ $(document).ready(function(){
         var id_com0 = flow.components[0].uuid;
         addFlow('#'+type_com0, id_com0);
         $(".flow-diagram").eq(i).attr("flow_id",flow_id);
-        $(".flow-name").eq(i).find("p").text(flow_name);
-
+        $(".flow-name").eq(i).find("input").val(flow_name);
         var components = flow.components;
         var firstCompId = components[0].uuid;
         console.log("components", components);
