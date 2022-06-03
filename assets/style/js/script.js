@@ -1,18 +1,31 @@
 $(document).ready(function(){
 
     var zoom = 1;
-		
+
     $('#zoom-in').on('click', function(){
         zoom += 0.1;
         $('#flow-container').css('transform', 'scale(' + zoom + ')');
     });
-    // $('#zoom-init').on('click', function(){
-    //     zoom = 1;
-    //     $('#flow-container').css('transform', 'scale(' + zoom + ')');
-    // });
+        // $('#zoom-init').on('click', function(){
+        //     zoom = 1;
+        //     $('#flow-container').css('transform', 'scale(' + zoom + ')');
+        // });
     $('#zoom-out').on('click', function(){
         zoom -= 0.1;
         $('#flow-container').css('transform', 'scale(' + zoom + ')');
+    });
+
+    $(".list-workspace").each(function(i){
+        if($(this).children(). length > 1){
+            $(this).addClass("has-child")
+        }
+    })
+
+    $(".workspace-group").click(function(){
+        if ($(this).parent().hasClass("has-child")) {
+            $(this).parent().toggleClass("active");
+            $(this).siblings(".list-of-project").fadeToggle();
+        }
     });
 
     $("#properties-section").resizable();
@@ -75,13 +88,29 @@ $(document).ready(function(){
         $.contextMenu({
             selector: '.flow-diagram .element-item', 
             callback: function(key, options) {
-                if (key == 'edit'){
-                }else if(key == 'delete'){
+                if(key == 'delete'){
                     thisComp = $(this);
                     deleteComponent(thisComp);
                 }
             },
             items: {
+                "delete": {name: "Delete", icon: "delete"}
+            }
+        });
+
+        $.contextMenu({
+            selector: '.workspace-name', 
+            callback: function(key, options) {
+                if(key == 'delete'){
+                    deleteWorkspace($(this));
+                }else if(key == 'add'){
+                    createNewProject($(this));
+                }else if(key == 'edit'){
+                    renameWorkspaceName($(this));
+                }
+            },
+            items: {
+                "add": {name: "Create Project", icon: "add"},
                 "edit": {name: "Rename", icon: "edit"},
                 "delete": {name: "Delete", icon: "delete"}
             }
@@ -173,12 +202,9 @@ $(document).ready(function(){
 
     });
     
-    $("#input-output-properties-group .list-item span").click(function(e){
-        $(this).parent().toggleClass("active");
-    });
-    
     $("#flow-map-group .list-item span").click(function(e){
         $(this).parent().toggleClass("active");
+        $(this).siblings(".list-sub-item").fadeToggle();
     });
 
     $(".list-sub-item").parent().addClass("has-child");
@@ -205,45 +231,13 @@ $(document).ready(function(){
         }
     });
 
-    // $(".floating-properties .menu-name").click(function(){
-    //     $(".floating-properties .menu-name").removeClass("active");
-    //     $(this).addClass("active")
-    //     if($(this).prop("id") == 'notes-properties'){
-    //         $("#properties").hide();
-    //         $("#notes").show();
-    //         $("#input-output").removeClass("d-flex").addClass("d-none");
-    //         $(".floating-properties .error-info").hide();
-    //     }else if($(this).prop("id") == 'general-properties'){
-    //         $("#properties").show();
-    //         $("#notes").hide();
-    //         $("#input-output").removeClass("d-flex").addClass("d-none");
-    //         $(".floating-properties .error-info").show();
-    //     }else if($(this).prop("id") == 'input-output-properties'){
-    //         $("#properties").hide();
-    //         $("#notes").hide();
-    //         $("#input-output").removeClass("d-none").addClass("d-flex");
-    //         $(".floating-properties .error-info").hide();
-
-    //     }
-    // });
-
-    $(".modal .input-output-menu-name").click(function(){
-        $(".modal .input-output-menu-name").removeClass("active");
-        $(this).addClass("active")
-    });
-
-    $(".floating-properties .input-output-menu-name").click(function(){
-        $(".floating-properties .input-output-menu-name").removeClass("active");
-        $(this).addClass("active")
-    });
-
     $(".minimize-properties").click(function(){
         $(this).toggleClass("minimize");
         $(this).parent().parent().toggleClass("minimized")
     });
 
-    $(".create-new-project").click(function(){
-        $("#createProjectModal").modal('show');
+    $(".create-new-workspace").click(function(){
+        $("#createWorkspaceModal").modal('show');
     })
     
     var sidebarCollapse = false;
@@ -322,6 +316,23 @@ function readImageFile(input){
     }
 }
 
+function createNewProject(wsp){
+    $("#createProjectModal").modal('show');
+}
+
+function renameWorkspaceName(wsp){
+    $("#renameWorkspaceModal").modal('show');
+    $("#renameWorkspaceModal").find("#input-workspace-name").val(wsp.text());
+}
+
+function deleteWorkspace(wsp){
+    $("#deleteWorkspaceModal").modal('show')
+    $("#deleteWorkspace").click(function(){
+        $(wsp).parent().parent().remove();
+        $("#deleteWorkspaceModal").modal('hide')
+    });
+}
+
 function searchFolderFunc(){
     var workspaceBody, workspaceTitle, textValue, inputField, filter, workspaceBox;
     workspaceBox = document.querySelectorAll(".workspace-box");
@@ -356,6 +367,24 @@ function searchElementsFunc(){
         }
     }
 }
+
+function searchWorkspaceFunc(){
+    var workspaceBody, workspaceTitle, textValue, inputField, filter, workspaceBox;
+    workspaceBox = document.querySelectorAll(".list-workspace");
+    workspaceBody = document.querySelectorAll(".workspace-group");
+    inputField = document.querySelector(".input-search-workspace");
+    filter = inputField.value.toUpperCase();
+    for (var index = 0; index < workspaceBody.length; index++) {
+        workspaceTitle = workspaceBody[index].getElementsByTagName("p")[0];
+        textValue = workspaceTitle.textContent || workspaceTitle.innerText;
+        if (textValue.toUpperCase().indexOf(filter) > -1) {
+            workspaceBox[index].style.display = "block";
+        } else {
+            workspaceBox[index].style.display = "none";
+        }
+    }
+}
+
 
 function elementProperties(el){
     // $("#propertiesModal").modal('show'); 
@@ -393,6 +422,8 @@ function elementProperties(el){
     '                  <ul class="list-group" id="input-output-properties-group">' + 
     '                    <li class="list-item">' + 
     '                      <span> Payload </span>' + 
+    '                      <p class="list-sub-item">Unknown : <span class="unhighlighted-text">Unknown</span></p>' + 
+    '                      <p class="list-sub-item">Unknown : <span class="unhighlighted-text">Unknown</span></p>' + 
     '                      <p class="list-sub-item">Unknown : <span class="unhighlighted-text">Unknown</span></p>' + 
     '                    </li>' + 
     '                    <li class="list-item">' + 
@@ -458,6 +489,24 @@ function elementProperties(el){
                         $(this).parents("#floating-properties-"+ind).find("#input-output").removeClass("d-none").addClass("d-flex");
                         $(this).parents("#floating-properties-"+ind).find(".floating-properties .error-info").hide();
 
+                        var menuName = $(this).parents("#floating-properties-"+ind).find(".input-output-menu-name");
+                        $(menuName).click(function(){
+                            $("#floating-properties-"+ind).find(".input-output-menu-name").removeClass("active");
+                            $(this).addClass("active")
+                        });
+                        
+                        var spanListItem = $(this).parents("#floating-properties-"+ind).find(".list-item span");
+                        $(spanListItem).click(function(){
+                            $(this).parent().toggleClass("active");
+                            $(this).siblings(".list-sub-item").fadeToggle();
+                        });
+
+                        var listItem = $(this).parents("#floating-properties-"+ind).find(".list-item");
+                        $(listItem).each(function(index){
+                            if ($(this).children(".list-sub-item").length > 0) {
+                                $(this).addClass("has-child")
+                            }
+                        })
                     }
                 });
             }, 100);
@@ -480,32 +529,11 @@ function elementProperties(el){
             $(".floating-properties")[0].remove()
         }
 
-        $("#properties").each(function(i){
-            
-        })
-        
-        // if ($(".floating-properties").length < 2) {
-        //     $("#properties").load("components/"+getTypeComp+".html");
-        // }
-
-
-        // setTimeout(() => {
-        //     console.log("childLeng", $(".floating-properties").find("#properties").children().length);
-        // }, 100);
-        // if ($(".floating-properties").find("#properties").children().length == 1) {
-        // }
     }, 100);
 
     // auto open by file name
     var getTypeComp = $(el).prop("id");
-    // $(".floating-properties").each(function(index){
-    //     $()
-    // });
 
-    // $("#properties").empty();
-    // if ($("#properties").children().length == 0) {
-    // }
-    
     // fill data ke properties (auto nama id)
     var liComp = $(el).parent();
     var data_id = liComp.attr("data_id");
@@ -727,25 +755,33 @@ function closeFlow(thisClose){
 }
 
 function renameFlow(flowName){
-    $("#renameFlowModal").modal('show');
-    $("#input-flow-name").val($(flowName).text());
+    $(flowName).removeAttr("readonly");
+}
+
+function toReadonly(flowName){
+    $(flowName).attr("readonly", "true");
 
     // edit json flow name    
     let flow_id = $(flowName).parent().parent().attr("flow_id")
-    $('#saveFlowName').unbind("click");
-    $('#saveFlowName').click(function(){
-        var jsonFlowThis = JSON.parse(localStorage.getItem("jsonFlow"));
-        for (let x = 0; x < jsonFlowThis.length; x++) {
-            var flow = jsonFlowThis[x];
-            if(flow_id == flow.id){
-                let newName = $("#input-flow-name").val();
-                flow.name = newName;
-                localStorage.setItem("jsonFlow", JSON.stringify(jsonFlowThis));
-                $(flowName).text(newName);
-                $("#renameFlowModal").modal('hide');
-            }
+    var jsonFlowThis = JSON.parse(localStorage.getItem("jsonFlow"));
+    for (let x = 0; x < jsonFlowThis.length; x++) {
+        var flow = jsonFlowThis[x];
+        if(flow_id == flow.id){
+            let newName = $(flowName).val();
+            flow.name = newName;
+            localStorage.setItem("jsonFlow", JSON.stringify(jsonFlowThis));
+            // $(flowName).val(newName);
+            console.log(flow.name)
+            setTimeout(() => {
+                $(flowName).val(newName)
+            }, 100);
         }
-    });
+    }
+}
+
+function flowTyping(e) {
+    $(e).attr('size', $(e).val().length + 1);
+    $(e).css("width", "auto");
 }
 
 // project
@@ -755,14 +791,14 @@ $(document).ready(function () {
     console.log("getJsonProject: ", getJsonProject);
     if(getJsonProject == "" || getJsonProject == null /* || getJsonProject == "[]" */){
         console.log("jsonProject empty");
-        let dataProject = [{
-            "projectName": "projectA",
-            "isOpen": true,
-            "files": [
-                "file a", "file b", "file c"
-            ]
-        }];
-        localStorage.setItem("jsonProject", JSON.stringify(dataProject));
+        // let dataProject = [{
+        //     "projectName": "projectA",
+        //     "isOpen": true,
+        //     "files": [
+        //         "file a", "file b", "file c"
+        //     ]
+        // }];
+        // localStorage.setItem("jsonProject", JSON.stringify(dataProject));
     }
 
     // buat html file

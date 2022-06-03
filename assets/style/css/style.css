@@ -289,7 +289,6 @@ button:focus{
 .floating-properties .properties-body #input-output .input-output-content .list-group .list-item{
     position: relative;
     margin-bottom: 5px;
-    height: var(--fs-heading);
     cursor: default;
     margin-bottom: 5px;
     transition: all .15s linear;
@@ -306,18 +305,6 @@ button:focus{
 .floating-properties .properties-body #input-output .input-output-content .list-group .list-item.has-child span{
     cursor: pointer;
     pointer-events: fill;
-}
-
-.floating-properties .properties-body #input-output .input-output-content .list-group .list-item.active{
-    height: calc(var(--fs-heading) * 2.2);
-}
-
-.floating-properties .properties-body #input-output .input-output-content .list-group .list-item.active.has-child{
-    margin-bottom: 10px;
-}
-
-.floating-properties .properties-body #input-output .input-output-content .list-group .list-item{
-    margin-bottom: 10px;
 }
 
 .floating-properties .properties-body #input-output .input-output-content .list-group .list-item::before{
@@ -352,20 +339,14 @@ button:focus{
 
 .floating-properties .properties-body #input-output .input-output-content .list-group .list-item .list-sub-item{
     margin-left: 15px;
-    margin-top: 3.5px;
-    visibility: hidden;
+    margin-bottom: 0;
     font-style: italic;
-    opacity: 0;
+    display: none;
     transition: all .15s linear;
     -webkit-transition: all .15s linear;
     -moz-transition: all .15s linear;
     -ms-transition: all .15s linear;
     -o-transition: all .15s linear;
-}
-
-.floating-properties .properties-body #input-output .input-output-content .list-group .list-item.active .list-sub-item{
-    opacity: 1;
-    visibility: visible;
 }
 
 .floating-properties .properties-body #input-output .input-output-content .list-group .list-item .list-sub-item .unhighlighted-text{
@@ -584,9 +565,9 @@ button:focus{
     pointer-events: fill;
 }
 
-.modal .modal-content .modal-body #input-output .input-output-content .list-group .list-item.active{
-    height: calc(var(--fs-heading) * 2.2);
-}
+    .modal .modal-content .modal-body #input-output .input-output-content .list-group .list-item.active{
+        /* height: calc(var(--fs-heading) * 2.2);    */
+    }
 
 .modal .modal-content .modal-body #input-output .input-output-content .list-group .list-item.active.has-child{
     margin-bottom: 10px;
@@ -992,7 +973,105 @@ button:focus{
     margin-right: 0;
 }
 
-.content .container-fluid .row .sidebar .sidebar-content .create-new-project{
+.content .container-fluid .row .sidebar .sidebar-content .search-workspace-group{
+    position: relative;
+    width: 100%;
+    margin-top: 20px;
+    margin-bottom: 15px;
+}
+
+.content .container-fluid .row .sidebar .sidebar-content .search-workspace-group label, .content .container-fluid .row .sidebar .sidebar-content .search-workspace-group img{
+    position: absolute;
+}
+
+.content .container-fluid .row .sidebar .sidebar-content .search-workspace-group label{
+    font-size: var(--fs-body);
+    background-color:var(--clr-navbar-bg);
+    top: 50%;
+    left: 7.5px;
+    cursor: text;
+    pointer-events: none;
+    margin-bottom: 0;
+    transition: all .15s linear;
+    transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    -webkit-transition: all .15s linear;
+    -moz-transition: all .15s linear;
+    -ms-transition: all .15s linear;
+    -o-transition: all .15s linear;
+}
+
+.content .container-fluid .row .sidebar .sidebar-content .search-workspace-group img{
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    transition: all .15s linear;
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    -webkit-transition: all .15s linear;
+    -moz-transition: all .15s linear;
+    -ms-transition: all .15s linear;
+    -o-transition: all .15s linear;
+}
+
+.content .container-fluid .row .sidebar .sidebar-content .search-workspace-group .input-search-workspace{
+    position: relative;
+    font-size: var(--fs-body);
+    height: 35px;
+    padding-left: 7.5px;
+    padding-right: 32px;
+    width: 100%;
+    border:1px solid var(--clr-border);
+    background-color: transparent;
+    border-radius:5px;
+    transition: all .15s linear;
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
+    -ms-border-radius:5px;
+    -o-border-radius:5px;
+    -webkit-transition: all .15s linear;
+    -moz-transition: all .15s linear;
+    -ms-transition: all .15s linear;
+    -o-transition: all .15s linear;
+}
+
+.content .container-fluid .row .sidebar .sidebar-content .search-workspace-group .input-search-workspace:focus ~ label, .content .container-fluid .row .sidebar .sidebar-content .search-workspace-group .input-search-workspace:not(:placeholder-shown) ~ label{
+    top: 0;
+}
+
+.content .container-fluid .row .sidebar .sidebar-content .search-workspace-group .input-search-workspace:focus, .content .container-fluid .row .sidebar .sidebar-content .search-workspace-group .input-search-workspace:not(:placeholder-shown){
+    background-color: var(--clr-white);
+    transform: translateY(12.5px);
+    -webkit-transform: translateY(12.5px);
+    -moz-transform: translateY(12.5px);
+    -ms-transform: translateY(12.5px);
+    -o-transform: translateY(12.5px);
+}
+
+.content .container-fluid .row .sidebar .sidebar-content .search-workspace-group .input-search-workspace:focus ~ img, .content .container-fluid .row .sidebar .sidebar-content .search-workspace-group .input-search-workspace:not(:placeholder-shown) ~ img{
+    transform: translateY(2.5px);
+    -webkit-transform: translateY(2.5px);
+    -moz-transform: translateY(2.5px);
+    -ms-transform: translateY(2.5px);
+    -o-transform: translateY(2.5px);
+}
+
+/* .content .container-fluid .row .sidebar .sidebar-content .search-workspace-group .input-search-workspace:focus ~ label, .content .container-fluid .row .sidebar .sidebar-content .search-workspace-group .input-search-workspace:not(:placeholder-shown) ~ label{
+    top: 0;
+    z-index: 5;
+    padding: 0 5px;
+} */
+
+.content .container-fluid .row .sidebar .sidebar-content .search-workspace-group .input-search-workspace:focus{
+    outline: none;
+}
+
+.content .container-fluid .row .sidebar .sidebar-content .create-new-workspace{
     margin-top: 10px;
     padding: 5px 10px;
     font-size: var(--fs-body);
@@ -1005,43 +1084,30 @@ button:focus{
     -o-border-radius: 10px;
 }
 
-.content .container-fluid .row .sidebar .sidebar-content .create-new-project{
-    margin-top: 10px;
-    padding: 5px 10px;
-    font-size: var(--fs-body);
-    background: var(--clr-btn-primary);
-    border: 1px solid var(--clr-border);
-    border-radius: 10px;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    -ms-border-radius: 10px;
-    -o-border-radius: 10px;
-}
-
-.content .container-fluid .row .sidebar .sidebar-content .create-new-project:hover{
+.content .container-fluid .row .sidebar .sidebar-content .create-new-workspace:hover{
     opacity: 0.7;
 }
 
-.content .container-fluid .row .sidebar .sidebar-content .list-group-project{
+.content .container-fluid .row .sidebar .sidebar-content .list-group-workspace{
     max-height: calc(100vh - 40px - 43px - 42.8px - 90px - 21px);
     overflow-y: auto;
     width: 100%;
-    margin-top: 20px;
+    margin-top: 10px;
     padding-left: 0;
-    padding: 10px 15px;
+    padding: 10px 20px;
 }
 
-.content .container-fluid .row .sidebar .sidebar-content .list-group-project::-webkit-scrollbar{
+.content .container-fluid .row .sidebar .sidebar-content .list-group-workspace::-webkit-scrollbar{
     width: 6px;
 }
 
-.content .container-fluid .row .sidebar .sidebar-content .list-group-project::-webkit-scrollbar-track{
+.content .container-fluid .row .sidebar .sidebar-content .list-group-workspace::-webkit-scrollbar-track{
     background-color: var(--clr-white);
     border-radius: 10px;
     border: 1px solid var(--clr-primary);
 }
 
-.content .container-fluid .row .sidebar .sidebar-content .list-group-project::-webkit-scrollbar-thumb{
+.content .container-fluid .row .sidebar .sidebar-content .list-group-workspace::-webkit-scrollbar-thumb{
     background-color: var(--clr-primary);
     border-radius: 10px;
     transition: all .15s linear;
@@ -1051,7 +1117,7 @@ button:focus{
     -o-transition: all .15s linear;
 }
 
-.content .container-fluid .row .sidebar .sidebar-content .list-group-project::-webkit-scrollbar-thumb:hover{
+.content .container-fluid .row .sidebar .sidebar-content .list-group-workspace::-webkit-scrollbar-thumb:hover{
     background-color: var(--clr-primary-hover);
 }
 
@@ -1065,27 +1131,84 @@ button:focus{
     -o-border-radius: 5px;
 }
 
-.content .container-fluid .row .sidebar .sidebar-content .list-group-project .list-project{
-    padding: 10px 0;
+.content .container-fluid .row .sidebar .sidebar-content .list-group-workspace .list-workspace{
+    /* padding: 10px 0; */
+    display: flex;
+    flex-direction: column;
 }
 
-.content .container-fluid .row .sidebar .sidebar-content .list-group-project .list-project:not(:last-child){
+.content .container-fluid .row .sidebar .sidebar-content .list-group-workspace .list-workspace:not(:last-child){
     margin-bottom: 5px;
     border-bottom: 2px solid var(--clr-primary);
 }
 
-.content .container-fluid .row .sidebar .sidebar-content .list-group-project .list-project .project-name{
+.content .container-fluid .row .sidebar .sidebar-content .list-group-workspace .list-workspace .workspace-group{
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+}
+
+.content .container-fluid .row .sidebar .sidebar-content .list-group-workspace .list-workspace.has-child .workspace-group{
+    position: relative;
+    cursor: pointer;
+}
+
+.content .container-fluid .row .sidebar .sidebar-content .list-group-workspace .list-workspace .workspace-group #chevron-icon{
+    display: none;
+    pointer-events: none;
+}
+
+.content .container-fluid .row .sidebar .sidebar-content .list-group-workspace .list-workspace.has-child .workspace-group #chevron-icon{
+    display: block;
+    position: absolute;
+    left: -20px;
+    pointer-events: fill;
+    transition: all .15s linear;
+    transform: rotate(-90deg);
+    -webkit-transition: all .15s linear;
+    -moz-transition: all .15s linear;
+    -ms-transition: all .15s linear;
+    -o-transition: all .15s linear;
+    -webkit-transform: rotate(-90deg);
+    -moz-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
+    -o-transform: rotate(-90deg);
+}
+
+.content .container-fluid .row .sidebar .sidebar-content .list-group-workspace .list-workspace.has-child.active .workspace-group #chevron-icon{
+    transform: rotate(0);
+    -webkit-transform: rotate(0);
+    -moz-transform: rotate(0);
+    -ms-transform: rotate(0);
+    -o-transform: rotate(0);
+}
+
+.content .container-fluid .row .sidebar .sidebar-content .list-group-workspace .list-workspace .workspace-group p{
+    margin-bottom: 0;
+    margin-left: 10px;
+}
+
+.content .container-fluid .row .sidebar .sidebar-content .list-group-workspace .list-workspace .list-of-project{
+    padding-left: 30px;
+    display: none;
+}
+
+.content .container-fluid .row .sidebar .sidebar-content .list-group-workspace .list-workspace .list-of-project .list-project{
+    margin-bottom: 5px;
+}
+
+.content .container-fluid .row .sidebar .sidebar-content .list-group-workspace .list-workspace .list-of-project .list-project .project-name{
     display: inline-flex;
     align-items: center;
     color: var(--clr-black);
     font-size: var(--fs-body);
 }
 
-.content .container-fluid .row .sidebar .sidebar-content .list-group-project .list-project .project-name:hover{
+.content .container-fluid .row .sidebar .sidebar-content .list-group-workspace .list-workspace .list-of-project .list-project .project-name:hover{
     opacity: 0.7;
 }
 
-.content .container-fluid .row .sidebar .sidebar-content .list-group-project .list-project .project-name img{
+.content .container-fluid .row .sidebar .sidebar-content .list-group-workspace .list-workspace .list-of-project .list-project .project-name img{
     margin-right: 10px;
 }
 
@@ -1466,9 +1589,13 @@ button:focus{
 .content .container-fluid .row .content-section #flow-container .flow-diagram .flow-name .flow-name-text{
     font-size: var(--fs-body);
     margin: 0 10px;
+    border: none;
+    width: 75px;
 }
 
-
+.content .container-fluid .row .content-section #flow-container .flow-diagram .flow-name .flow-name-text:focus{
+    outline: none;
+}
 
 .content .container-fluid .row .content-section #flow-container .flow-diagram .element-item:not(:nth-child(2)) .element-box::before{
     content: url('../../icon/arrow-icon.svg');
@@ -2076,7 +2203,7 @@ button:focus{
 .content .container-fluid .row .content-section .content-box .content-body .list-group .list-item{
     position: relative;
     margin-bottom: 5px;
-    height: var(--fs-heading);
+    /* height: var(--fs-heading); */
     cursor: default;
     margin-bottom: 5px;
     pointer-events: none;
@@ -2092,14 +2219,6 @@ button:focus{
     pointer-events: fill;
 }
 
-.content .container-fluid .row .content-section .content-box .content-body .list-group .list-item.active{
-    height: calc(var(--fs-heading) * 2);
-}
-
-.content .container-fluid .row #flow-map-section .content-box .content-body .list-group .list-item.active{
-    height: calc(var(--fs-heading) * 4);
-}
-
 .content .container-fluid .row #flow-map-section .content-box .content-body{
     /* height: 80%; */
     height: calc(100vh - 70vh - 25px - 42.8px - 45px);
@@ -2107,12 +2226,7 @@ button:focus{
     overflow-y: auto;
 }
 
-.content .container-fluid .row .content-section .content-box .content-body .list-group .list-item.active.has-child{
-    margin-bottom: 10px;
-}
-
 .content .container-fluid .row #flow-map-section .content-box .content-body .list-group .list-item{
-    margin-bottom: 10px;
     cursor: default;
 }
 
@@ -2150,8 +2264,7 @@ button:focus{
     margin-left: 15px;
     margin-top: 3.5px;
     margin-bottom: 0;
-    visibility: hidden;
-    opacity: 0;
+    display: none;
     transition: all .15s linear;
     -webkit-transition: all .15s linear;
     -moz-transition: all .15s linear;
@@ -2159,9 +2272,8 @@ button:focus{
     -o-transition: all .15s linear;
 }
 
-.content .container-fluid .row .content-section .content-box .content-body .list-group .list-item.active .list-sub-item{
-    opacity: 1;
-    visibility: visible;
+.content .container-fluid .row .content-section .content-box .content-body .list-group .list-item .list-sub-item:last-child{
+    margin-bottom: 5px;
 }
 
 .content .container-fluid .row .content-section .content-box .content-body .list-group .list-item .list-sub-item .unhighlighted-text{
@@ -2170,6 +2282,47 @@ button:focus{
 
 
 /* Flow Map Section Style */
+
+.content .container-fluid .row #flow-map-section .content-box #flow-map-tab{
+    overflow-x: auto;
+}
+
+.content .container-fluid .row #flow-map-section .content-box #flow-map-tab::-webkit-scrollbar{
+    height: 5px;
+}
+
+.content .container-fluid .row #flow-map-section .content-box #flow-map-tab::-webkit-scrollbar-track{
+    background-color: var(--clr-white);
+    border: 1px solid var(--clr-primary);
+    padding-bottom: 10px;
+}
+
+.content .container-fluid .row #flow-map-section .content-box #flow-map-tab::-webkit-scrollbar-thumb{
+    background-color: var(--clr-primary);
+    transition: all .15s linear;
+    -webkit-transition: all .15s linear;
+    -moz-transition: all .15s linear;
+    -ms-transition: all .15s linear;
+    -o-transition: all .15s linear;
+}
+
+.content .container-fluid .row #flow-map-section .content-box #flow-map-tab::-webkit-scrollbar-thumb:hover{
+    background-color: var(--clr-primary-hover);
+}
+
+.content .container-fluid .row .content-section .content-box{
+    border-radius: 5px;
+    box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.15);
+    border: 1px solid var(--clr-border);
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+}   
+
+.content .container-fluid .row #flow-map-section .content-box #flow-map-tab .tab-name{
+    white-space: nowrap;
+}
 
 .content .container-fluid .row #flow-map-section .content-box .content-body .list-group .list-item .main-item{
     cursor: pointer;
@@ -2302,7 +2455,6 @@ button:focus{
 .content .container-fluid .row #workspace-section .workspace-content .workspace-box-container{
     /* height: 70vh; */
     max-height: calc(100vh - 30px - 42.8px - 110px - 39.19px);
-    /* padding: 10px 0; */
     padding-top: 10px;
     overflow-y: auto;
     margin-top: 20px;
