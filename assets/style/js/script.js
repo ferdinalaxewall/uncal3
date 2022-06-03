@@ -548,14 +548,14 @@ function elementProperties(el){
             const comp = components[x];
             var name = comp.name;
             var type = comp.type;
-            var id = comp.id;
-            var properties = comp.properties;
+            var uuid = comp.uuid;
+            var attribut = comp.attribut;
             
-            if(data_id == id){
-                console.log("name:", name, "| type:", type, "| id:", id, "| properties:", properties);
-                for (const key in properties) {
-                    var value = properties[key];
-                    // console.log('key', key, 'properties', properties[key]);
+            if(data_id == uuid){
+                console.log("name:", name, "| type:", type, "| uuid:", uuid, "| attribut:", attribut);
+                for (const key in attribut) {
+                    var value = attribut[key];
+                    // console.log('key', key, 'attribut', attribut[key]);
                     var finalData = type + '-' + key;
                     var typeValue = typeof value;
                     console.log('finalData. value:', value, '| type:', typeValue);
@@ -608,14 +608,14 @@ function elementProperties(el){
                             const comp = components[x];
                             var name = comp.name;
                             var type = comp.type;
-                            var id = comp.id;
-                            var properties = comp.properties;
+                            var uuid = comp.uuid;
+                            var attribut = comp.attribut;
     
-                            if(prop_id == id){
+                            if(prop_id == uuid){
                                 var propName = idThis.replace(type + "-", "");
                                 console.log("propName: ", propName);
-                                properties[propName] = valueThis;
-                                // console.log("findComp. name:", name, "| type:", type, "| id:", id, "| properties:", properties, "| jsonFlowThis:", jsonFlowThis);
+                                attribut[propName] = valueThis;
+                                // console.log("findComp. name:", name, "| type:", type, "| uuid:", uuid, "| attribut:", attribut, "| jsonFlowThis:", jsonFlowThis);
                                 localStorage.setItem("jsonFlow", JSON.stringify(jsonFlowThis));
                             }
                         }
@@ -696,11 +696,11 @@ function deleteJsonFlow(data_id) {
                 const comp = components[x];
                 var name = comp.name;
                 var type = comp.type;
-                var id = comp.id;
-                var properties = comp.properties;
+                var uuid = comp.uuid;
+                var attribut = comp.attribut;
 
-                if(data_id == id){
-                    console.log("findComp del. name:", name, "| type:", type, "| id:", id, "| properties:", properties, "| jsonFlowThis:", jsonFlowThis);
+                if(data_id == uuid){
+                    console.log("findComp del. name:", name, "| type:", type, "| uuid:", uuid, "| attribut:", attribut, "| jsonFlowThis:", jsonFlowThis);
                     components.splice(x, 1);
                     localStorage.setItem("jsonFlow", JSON.stringify(jsonFlowThis));
                 }
@@ -745,7 +745,7 @@ function closeFlow(thisClose){
     var jsonFlowThis = JSON.parse(localStorage.getItem("jsonFlow"));
     for (let x = 0; x < jsonFlowThis.length; x++) {
         var flow = jsonFlowThis[x];
-        if(flow_id == flow.id){
+        if(flow_id == flow.uuid){
             jsonFlowThis.splice(x, 1);
             localStorage.setItem("jsonFlow", JSON.stringify(jsonFlowThis));
         }
@@ -766,7 +766,7 @@ function toReadonly(flowName){
     var jsonFlowThis = JSON.parse(localStorage.getItem("jsonFlow"));
     for (let x = 0; x < jsonFlowThis.length; x++) {
         var flow = jsonFlowThis[x];
-        if(flow_id == flow.id){
+        if(flow_id == flow.uuid){
             let newName = $(flowName).val();
             flow.name = newName;
             localStorage.setItem("jsonFlow", JSON.stringify(jsonFlowThis));
