@@ -56,13 +56,13 @@ $(document).ready(function(){
                                 var jsonFlowThis = JSON.parse(localStorage.getItem("jsonFlow"));
                                 var newFlow = {
                                     "name": "Flow Name",
-                                    "id": data_id,
+                                    "uuid": data_id,
                                     "components": [
                                         {
-                                            "id": data_id,
+                                            "uuid": data_id,
                                             "type": type_comp,
                                             "name": type_comp,
-                                            "properties": propItem
+                                            "attribut": propItem
                                         }
                                     ]
                                 };
@@ -172,6 +172,33 @@ $(document).ready(function(){
         }).disableSelection();
     }
     
+    var codeAdapter = {
+        "sender-tcp" : ["001", "T011S"],
+        "receiver-tcp" : ["001", "T011R"],
+        "sender-rest" : ["002", "R021S"],
+        "receiver-rest" : ["002", "R021R"],
+        // "sender-soap" : ["002", "S022S"],
+        // "receiver-soap" : ["002", "S022R"],
+        "sender-nfs" : ["003", "N031S"],
+        "receiver-nfs" : ["003", "N031R"],
+        "sender-ftp" : ["003", "F032S"],
+        "receiver-ftp" : ["003", "F032R"],
+        // "sender-ftpe" : ["003", "F033S"],
+        // "receiver-ftpe" : ["003", "F033R"],
+        // "sender-ftps" : ["003", "F034S"],
+        // "receiver-ftps" : ["003", "F034R"],
+        "sender-sftp" : ["003", "S035S"],
+        "receiver-sftp" : ["003", "S035R"],
+        "sender-imap" : ["004", "I041S"],
+        "receiver-smtp" : ["004", "S041R"],
+        "sender-jdbc" : ["005", "J051S"],
+        "receiver-jdbc" : ["005", "J051R"],
+        "sender-mqtt" : ["006", "M061S"],
+        "receiver-mqtt" : ["006", "M061R"],
+        "object-EnDe" : ["", ""],
+        "object-switching" : ["", ""],
+    };
+
     function getComp(data_id) {
         var jsonFlowThis = JSON.parse(localStorage.getItem("jsonFlow"));
         var result;
@@ -185,11 +212,11 @@ $(document).ready(function(){
                     const comp = components[x];
                     var name = comp.name;
                     var type = comp.type;
-                    var id = comp.id;
-                    var properties = comp.properties;
+                    var uuid = comp.uuid;
+                    var attribut = comp.attribut;
     
-                    if(data_id == id){
-                        // console.log("findComp del. name:", name, "| type:", type, "| id:", id, "| properties:", properties, "| jsonFlowThis:", jsonFlowThis);
+                    if(data_id == uuid){
+                        // console.log("findComp del. name:", name, "| type:", type, "| id:", id, "| attribut:", attribut, "| jsonFlowThis:", jsonFlowThis);
                         result = comp;
                     }
                 }
@@ -215,10 +242,11 @@ $(document).ready(function(){
             // mempersiapkan json component
             var propItem = htmlToProp(result, type_comp);
             var newCompJson = {
-                "id": data_id,
+                "uuid": data_id,
                 "type": type_comp,
                 "name": type_comp,
-                "properties": propItem,
+                "adapter": codeAdapter[type_comp][0],
+                "attribut": propItem,
             };
 
             var jsonFlowThis = JSON.parse(localStorage.getItem("jsonFlow"));
@@ -232,12 +260,12 @@ $(document).ready(function(){
                     const comp = components[x];
                     var name = comp.name;
                     var type = comp.type;
-                    var id = comp.id;
-                    var properties = comp.properties;
+                    var uuid = comp.uuid;
+                    var attribut = comp.attribut;
 
-                    if(data_id_prev == id){
+                    if(data_id_prev == uuid){
                         getIndex = x;
-                        // console.log("findCompx. name:", name, "| type:", type, "| id:", id, "| properties:", properties, "| jsonFlowThis:", jsonFlowThis, "| x: ", x);
+                        // console.log("findCompx. name:", name, "| type:", type, "| uuid:", uuid, "| attribut:", attribut, "| jsonFlowThis:", jsonFlowThis, "| x: ", x);
                     }
                 }
 
@@ -333,6 +361,7 @@ $(document).ready(function(){
             jsonItem[item_new] = "";
             // console.log("item_new: ", item_new));
         }
+        jsonItem["code"] = codeAdapter[type_comp][1];
         return jsonItem;
     }
 
@@ -398,17 +427,16 @@ $(document).ready(function(){
         {
             "name": "flow1",
             // "index": 0,
-            "id": generateUUID(),
+            "uuid": generateUUID(),
             "components": [
                 {
-                    // "id": "0-1",
-                    "id": generateUUID(),
+                    "uuid": generateUUID(),
                     "type": "sender-tcp",
                     "name": "tcp-test",
-                    // "level": 0,
-                    // "pid": "0-0",
+                    "adapter": "001",
                     // "index": 0,
-                    "properties": {
+                    "attribut": {
+                        "code": "T001S",
                         "port": 8080,
                         "name": "aaa",
                         "thread": 1,
@@ -417,14 +445,14 @@ $(document).ready(function(){
                     }
                 },
                 {
-                    // "id": "0-2",
-                    "id": generateUUID(),
+                    // "uuid": "0-2",
+                    "uuid": generateUUID(),
                     "type": "receiver-nfs",
                     "name": "nfs-test",
-                    // "level": 1,
-                    // "pid": "0-1",
+                    "adapter": "003",
                     // "index": 0,
-                    "properties": {
+                    "attribut": {
+                        "code": "N031R",
                         "path": "/opt/path", 
                         "polling": 10,
                         "retry": 60, 
@@ -432,14 +460,14 @@ $(document).ready(function(){
                     }
                 },
                 {
-                    // "id": "0-3",
-                    "id": generateUUID(),
+                    // "uuid": "0-3",
+                    "uuid": generateUUID(),
                     "type": "receiver-jdbc",
                     "name": "nfs-jdbc",
-                    // "level": 2,
-                    // "pid": "0-2",
+                    "adapter": "005",
                     // "index": 0,
-                    "properties": {
+                    "attribut": {
+                        "code": "J051R",
                         "host": "192.168.1.56",
                         "port": "3306",
                         "username": "sa",
@@ -455,17 +483,17 @@ $(document).ready(function(){
         {
             "name": "flow2",
             // "index": 1,
-            "id": generateUUID(),
+            "uuid": generateUUID(),
             "components": [
                 {
-                    // "id": "1-1",
-                    "id": generateUUID(),
+                    // "uuid": "1-1",
+                    "uuid": generateUUID(),
                     "type": "sender-nfs",
                     "name": "nfs-test",
-                    // "level": 0,
-                    // "pid": "1-0",
+                    "adapter": "003",
                     // "index": 0,
-                    "properties": {
+                    "attribut": {
+                        "code": "N031S",
                         "path": "/opt/dataku",
                         "polling": 10,
                         "retry": 60,
@@ -475,26 +503,24 @@ $(document).ready(function(){
                     }
                 },
                 {
-                    "id": "1-2",
+                    "uuid": "1-2",
                     "type": "object-switching",
                     "name": "my-switching",
-                    // "level": 1,
-                    // "pid": "1-1",
                     // "index": 0,
-                    "properties": {
+                    "attribut": {
                         "switch-case": "object",
                         "if-else": "object",
                         "customization": "java-code"
                     },
                     "components": [
                         {
-                            "id": "1-2-1",
+                            "uuid": "1-2-1",
                             "type": "receiver-jdbc",
                             "name": "jdbc-mysql",
                             "level": 0,
                             "pid": "1-2",
                             "index": 0,
-                            "properties": {
+                            "attribut": {
                                 "host": "192.168.1.56",
                                 "port": "3306",
                                 "username": "sa",
@@ -506,13 +532,13 @@ $(document).ready(function(){
                             }
                         },
                         {
-                            "id": "1-2-2",
+                            "uuid": "1-2-2",
                             "type": "receiver-jdbc",
                             "name": "jdbc-mssql",
                             "level": 0,
                             "pid": "1-2",
                             "index": 1,
-                            "properties": {
+                            "attribut": {
                                 "host": "192.168.1.39",
                                 "port": "1433",
                                 "username": "sa",
@@ -524,13 +550,13 @@ $(document).ready(function(){
                             }
                         },
                         {
-                            "id": "1-2-3",
+                            "uuid": "1-2-3",
                             "type": "receiver-ftp",
                             "name": "ftp-rec",
                             "level": 1,
                             "pid": "1-2-1",
                             "index": 0,
-                            "properties": {
+                            "attribut": {
                                 "path": "/opt/assets",
                                 "polling": 20,
                                 "retry": 60,
@@ -546,14 +572,14 @@ $(document).ready(function(){
                     ],
                 },
                 {
-                    // "id": "1-3",
-                    "id": generateUUID(),
+                    // "uuid": "1-3",
+                    "uuid": generateUUID(),
                     "type": "receiver-ftp",
                     "name": "ftp-test",
-                    // "level": 2,
-                    // "pid": "1-2",
+                    "adapter": "003",
                     // "index": 0,
-                    "properties": {
+                    "attribut": {
+                        "code": "F032R",
                         "path": "/home/nude/img",
                         "polling": 20,
                         "retry": 60,
@@ -584,15 +610,15 @@ $(document).ready(function(){
     for (let i = 0; i < jsonFlow.length; i++) {
         const flow = jsonFlow[i];
         var flow_name = flow.name;
-        var flow_id = flow.id;
+        var flow_id = flow.uuid;
         var type_com0 = flow.components[0].type;
-        var id_com0 = flow.components[0].id;
+        var id_com0 = flow.components[0].uuid;
         addFlow('#'+type_com0, id_com0);
         $(".flow-diagram").eq(i).attr("flow_id",flow_id);
         $(".flow-name").eq(i).find("p").text(flow_name);
 
         var components = flow.components;
-        var firstCompId = components[0].id;
+        var firstCompId = components[0].uuid;
         console.log("components", components);
         console.log("firstCompId:", firstCompId);
 
@@ -606,18 +632,18 @@ $(document).ready(function(){
             var component = components[j];
             var level = component.level;
             var name = component.name;
-            var id = component.id;
+            var uuid = component.uuid;
             var pid = component.pid;
             var type = component.type;
 
             if(pid == parent_id){
-                // console.log("type: ", type, "data_id", id, "indexFlow", indexFlow);
+                // console.log("type: ", type, "data_id", uuid, "indexFlow", indexFlow);
                 
                 // selain component switch
                 if(type != 'object-switching'){
-                    addComponent("#" + type, indexFlow, id);
+                    addComponent("#" + type, indexFlow, uuid);
                 } else { // component switch
-                    addSwitch("#object-switching", indexFlow, id);
+                    addSwitch("#object-switching", indexFlow, uuid);
 
                     // switch components child
                     var componSwitchList = component.components;
@@ -625,18 +651,18 @@ $(document).ready(function(){
                         var componSwitch = componSwitchList[k];
                         var levelSwitch = componSwitch.level;
                         var nameSwitch = componSwitch.name;
-                        var idSwitch = componSwitch.id;
+                        var idSwitch = componSwitch.uuid;
                         var pidSwitch = componSwitch.pid;
                         var typeSwitch = componSwitch.type;
                         // console.log("nameSwitch: ", nameSwitch, "typeSwitch", typeSwitch, "idSwitch", idSwitch);
 
-                        if(id == pidSwitch){
-                            addSwitchItem("#"+typeSwitch, id, idSwitch);
+                        if(uuid == pidSwitch){
+                            addSwitchItem("#"+typeSwitch, uuid, idSwitch);
                         }
                     }
                 }
 
-                recurComp(components, id, indexFlow);
+                recurComp(components, uuid, indexFlow);
             }
         }
     }
@@ -647,17 +673,17 @@ $(document).ready(function(){
             var component = components[j];
             var level = component.level;
             var name = component.name;
-            var id = component.id;
+            var uuid = component.uuid;
             var pid = component.pid;
             var type = component.type;
 
-            console.log("type: ", type, "data_id", id, "indexFlow", indexFlow);
+            console.log("type: ", type, "data_id", uuid, "indexFlow", indexFlow);
             
             // selain component switch
             if(type != 'object-switching'){
-                addComponent("#" + type, indexFlow, id);
+                addComponent("#" + type, indexFlow, uuid);
             } else { // component switch
-                addSwitch("#object-switching", indexFlow, id);
+                addSwitch("#object-switching", indexFlow, uuid);
 
                 // switch components child
                 var componSwitchList = component.components;
@@ -665,13 +691,13 @@ $(document).ready(function(){
                     var componSwitch = componSwitchList[k];
                     var levelSwitch = componSwitch.level;
                     var nameSwitch = componSwitch.name;
-                    var idSwitch = componSwitch.id; 
+                    var idSwitch = componSwitch.uuid; 
                     var pidSwitch = componSwitch.pid;
                     var typeSwitch = componSwitch.type;
                     // console.log("nameSwitch: ", nameSwitch, "typeSwitch", typeSwitch, "idSwitch", idSwitch);
 
-                    if(id == pidSwitch){
-                        addSwitchItem("#"+typeSwitch, id, idSwitch);
+                    if(uuid == pidSwitch){
+                        addSwitchItem("#"+typeSwitch, uuid, idSwitch);
                     }
                 }
             }
