@@ -81,6 +81,41 @@ button:focus{
     box-shadow: 0 0 0 0.2rem rgba(198, 141, 83, 0.25);
 }
 
+.input-group.is-invalid{
+    position: relative;
+}
+
+.input-group.is-invalid::after{
+    content: '';
+    display: block;
+    height: 15px;
+    width: 15px;
+    position: absolute;
+    background: url("../../icon/invalid-icon.svg") no-repeat center;
+    bottom: 7.5px;
+    right: 5px;
+}
+
+.floating-properties .input-group.is-invalid::after{
+    content: '';
+    display: block;
+    height: 15px;
+    width: 15px;
+    position: absolute;
+    background: url("../../icon/invalid-icon.svg") no-repeat center;
+    bottom: 7.5px;
+    right: 22.5px;
+}
+
+.input-group.is-invalid .input-field{
+    border: 1px solid var(--clr-invalid) !important;
+}
+
+.input-group.is-invalid .input-field:focus, .input-group.is-invalid .form-select:focus{
+    box-shadow: 0 0 0.25rem var(--clr-invalid-secondary) !important;
+}
+
+
 /* Context Menu */
 
 .context-menu-list{
@@ -114,10 +149,6 @@ button:focus{
     -moz-border-radius: 5px;
     -ms-border-radius: 5px;
     -o-border-radius: 5px;
-}
-
-.floating-properties.ui-draggable-dragging{
-    z-index: 1002;
 }
 
 .floating-properties .floating-properties-header{
@@ -362,7 +393,7 @@ button:focus{
 /* Modal CSS */
 
 .modal{
-    z-index: 1015;
+    z-index: 1215;
     border-radius: 10px;
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
@@ -371,7 +402,7 @@ button:focus{
 }
 
 .modal-backdrop {
-    z-index: 1005;
+    z-index: 1205;
  }
 
 .modal::-webkit-scrollbar{
@@ -1590,11 +1621,15 @@ button:focus{
     font-size: var(--fs-body);
     margin: 0 10px;
     border: none;
-    width: 75px;
+    /* width: 75px; */
 }
 
 .content .container-fluid .row .content-section #flow-container .flow-diagram .flow-name .flow-name-text:focus{
     outline: none;
+}
+
+.content .container-fluid .row .content-section #flow-container .flow-diagram .flow-name .flow-name-text:not(:read-only){
+    border-bottom: 1px solid var(--clr-black);
 }
 
 .content .container-fluid .row .content-section #flow-container .flow-diagram .element-item:not(:nth-child(2)) .element-box::before{
@@ -1650,7 +1685,7 @@ button:focus{
     padding-right: 10px;
 }
 
-.content .container-fluid .row .content-section #flow-container .flow-diagram #switch-element .switch-flow-diagram .pada{
+.content .container-fluid .row .content-section #flow-container .flow-diagram #switch-element .switch-flow-diagram .switch-flow-element{
     display: flex;
     min-width: 225px; 
     border: 1px solid var(--clr-border);
@@ -1661,11 +1696,11 @@ button:focus{
     padding: 10px 5;
 }
 
-.content .container-fluid .row .content-section #flow-container .flow-diagram #switch-element .switch-flow-diagram .pada.ui-sortable-helper::before{
+.content .container-fluid .row .content-section #flow-container .flow-diagram #switch-element .switch-flow-diagram .switch-flow-element.ui-sortable-helper::before{
     display: none;
 }
 
-.content .container-fluid .row .content-section #flow-container .flow-diagram #switch-element .switch-flow-diagram .pada::before, .content .container-fluid .row .content-section #flow-container .flow-diagram #switch-element .switch-flow-diagram .pada .element-item::before{
+.content .container-fluid .row .content-section #flow-container .flow-diagram #switch-element .switch-flow-diagram .switch-flow-element::before, .content .container-fluid .row .content-section #flow-container .flow-diagram #switch-element .switch-flow-diagram .switch-flow-element .element-item::before{
     content: url('../../icon/arrow-icon.svg');
     display: flex;
     align-items: flex-start;
@@ -1678,31 +1713,31 @@ button:focus{
     -webkit-animation: arrow .15s linear;
 }
 
-.content .container-fluid .row .content-section #flow-container .flow-diagram #switch-element .switch-flow-diagram .pada .element-item:first-child::before{
+.content .container-fluid .row .content-section #flow-container .flow-diagram #switch-element .switch-flow-diagram .switch-flow-element .element-item:first-child::before{
     display: none;
 }
 
-.content .container-fluid .row .content-section #flow-container .flow-diagram #switch-element .switch-flow-diagram .pada .element-item .element-box::before{
+.content .container-fluid .row .content-section #flow-container .flow-diagram #switch-element .switch-flow-diagram .switch-flow-element .element-item .element-box::before{
     display: none;
 }
 
-.content .container-fluid .row .content-section #flow-container .flow-diagram #switch-element .switch-flow-diagram .pada .element-item{
+.content .container-fluid .row .content-section #flow-container .flow-diagram #switch-element .switch-flow-diagram .switch-flow-element .element-item{
     min-width: 175px;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.content .container-fluid .row .content-section #flow-container .flow-diagram #switch-element .switch-flow-diagram .pada .element-item:not(:last-child){
+.content .container-fluid .row .content-section #flow-container .flow-diagram #switch-element .switch-flow-diagram .switch-flow-element .element-item:not(:last-child){
     margin-right: 15px;
 }
 
-.content .container-fluid .row .content-section #flow-container .flow-diagram #switch-element .switch-flow-diagram .pada .ui-sortable-placeholder{
+.content .container-fluid .row .content-section #flow-container .flow-diagram #switch-element .switch-flow-diagram .switch-flow-element .ui-sortable-placeholder{
     margin-left: 20px;
     width: 140px;
 }
 
-.content .container-fluid .row .content-section #flow-container .flow-diagram #switch-element .switch-flow-diagram .pada .element-item.ui-sortable-helper{
+.content .container-fluid .row .content-section #flow-container .flow-diagram #switch-element .switch-flow-diagram .switch-flow-element .element-item.ui-sortable-helper{
     border: 2px solid var(--clr-primary);
     border-radius: 5px;
     -webkit-border-radius: 5px;
@@ -1711,7 +1746,7 @@ button:focus{
     -o-border-radius: 5px;
 }
 
-.content .container-fluid .row .content-section #flow-container .flow-diagram #switch-element .switch-flow-diagram .pada .element-item.ui-sortable-helper::before{
+.content .container-fluid .row .content-section #flow-container .flow-diagram #switch-element .switch-flow-diagram .switch-flow-element .element-item.ui-sortable-helper::before{
     display: none;
 }
 

@@ -3,12 +3,35 @@ $(document).ready(function(){
     var flowDiagram = "<ul class='flow-diagram mt-4'><div class='flow-name'><button class='minimize-flow' onclick='minimizeFlow(this)'><img src='./assets/icon/minimize-flow-icon-2.svg' alt='Chevron Icon' id='chevron-flow-name'></button><input type='text' class='flow-name-text' ondblclick='renameFlow(this)' onblur='toReadonly(this)' oninput='flowTyping(this)' value='Scenario_1' readonly/> <button class='close-flow' onclick='closeFlow(this)'><img src='./assets/icon/close-icon.svg' alt='Close Icon'></button></div></ul><br>";
     
     $(".element-item").draggable({
-        connectToSortable : ".flow-diagram, .switch-flow-diagram, .pada",
+        connectToSortable : ".flow-diagram, .switch-flow-diagram, .switch-flow-element",
         containment : "#flow-container",
         helper : "clone",
         revert: "invalid",
         cursorAt: { top: 25, left: 25 },
         scroll : false,
+        start : function(ev, ui){
+            var elementId = $(ui.helper).children().attr("id");
+            var splitText = elementId.split("-").shift();
+
+            if (splitText == "sender") {
+                $(".flow-diagram").each(function(i) {
+                    if ($(this).children().length > 0) {
+                        $(this).sortable({
+                            disabled : true
+                        })
+                    }
+                });
+            }else{
+                $(".flow-diagram").each(function(i) {
+                    if ($(this).children().length > 0) {
+                        $(this).sortable({
+                            disabled : false    
+                        })
+                    }
+                });
+            }
+
+        }
     }).disableSelection();
 
     $(".canvas").droppable({
@@ -21,6 +44,10 @@ $(document).ready(function(){
             flowDiagramNew.attr("flow_id", generateUUID());
             $(flowDiagramNew).insertBefore($(this));
             setTimeout(function(){
+                $(".flow-name-text").each(function(ind){
+                    var flowNameLength = $(this).val().length;
+                    $(this).attr("size", flowNameLength);
+                });
                 $("#properties").empty();
                 $("#properties").load("components/" + ui.draggable.children().attr("id") + ".html");
                 sortableFunc();
@@ -62,7 +89,10 @@ $(document).ready(function(){
                     }
                 });
             }, 100);
-        }
+        },
+            // over : function(ev, ui) {
+            //     console.log(ui.helper)
+            // }
     }).disableSelection();
 
     $("#flow-tab").sortable().disableSelection();
@@ -157,6 +187,18 @@ $(document).ready(function(){
                         localStorage.removeItem("compMove");
                     }
                 },50);
+            },
+            over : function(ev, ui){
+                var elementId = $(ui.item).children().attr("id");
+                var splitText = elementId.split("-").shift();
+
+                if (splitText == "sender") {
+                        $(this).sortable({
+                            disabled : true
+                    })
+                }else{
+                    console.log("not-sender")
+                }
             }
         }).disableSelection();
     }
@@ -283,11 +325,11 @@ $(document).ready(function(){
                 console.log("revce ")
                 setTimeout(() => {
                     $(".switch-flow-diagram").children(".element-item").each(function(i){
-                        $(this).eq(i).wrap("<div class='pada'></div>")
-                        padaFunc();
+                        $(this).eq(i).wrap("<div class='switch-flow-element'></div>")
+                        switchFlowElementFuncs();
                         setTimeout(() => {
-                            $(".pada").each(function(ind){
-                                $(this).attr("id", "pada-"+ind);
+                            $(".switch-flow-element").each(function(ind){
+                                $(this).attr("id", "switch-flow-element-"+ind);
                             })
                         }, 250);
                     })
@@ -296,11 +338,11 @@ $(document).ready(function(){
         });
     }
 
-    function padaFunc(){
-        // $(".pada").on('mouseenter', function(){
+    function switchFlowElementFuncs(){
+        // $(".switch-flow-element").on('mouseenter', function(){
         //     console.log("dragover")
         // })
-        $(".pada").sortable({
+        $(".switch-flow-element").sortable({
             placeholder : "element-item-highlight",
             cursor : "move",
             cursorAt : {top : 40.5, left : 87.5},
@@ -357,6 +399,13 @@ $(document).ready(function(){
     // === JSON TO UI ====
     function addFlow(component, data_id, flow_id){
         $(flowDiagram).insertBefore($('.canvas'));
+
+        setTimeout(() => {
+            $(".flow-name-text").each(function(ind){
+                var flowNameLength = $(this).val().length;
+                $(this).attr("size", flowNameLength)
+            });
+        }, 10);
         
         sortableFunc();
         $(".flow-diagram").each(function(i){

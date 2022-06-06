@@ -11,6 +11,8 @@
     --clr-workspace-bg:#f9fafc;
     --clr-white:#fff;
     --clr-border:#959595;
+    --clr-invalid:#C20909;
+    --clr-invalid-secondary:rgba(194, 9, 9, 0.66);
     --clr-btn-primary: linear-gradient(to bottom, #F8F0C9, #ccaa88);
     --clr-menu-tab: linear-gradient(to bottom, #fff, #EAECF0);
     --font-family: 'Poppins', sans-serif;
