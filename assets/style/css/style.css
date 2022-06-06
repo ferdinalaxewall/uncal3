@@ -427,6 +427,9 @@ button:focus{
     background-color: var(--clr-primary-hover);
 }
 
+.modal .modal-content .modal-header{
+    padding: 10px 15px;
+}
 
 .modal .modal-content .modal-header .close:focus{
     outline: none;
@@ -727,7 +730,7 @@ button:focus{
 }
 
 #editProfileModal .modal-content .modal-body form .input-group .upload-image-label{
-    font-size: var(--fs-heading);
+    font-size: var(--fs-body);
 }
 
 #editProfileModal .modal-content .modal-body form .input-group .preview-zone{
@@ -788,6 +791,7 @@ button:focus{
 
 #editProfileModal .modal-content .modal-body form .input-group .dropzone-wrapper .dropzone-description p{
     margin-bottom: 0;
+    margin-top: 7.5px;
 }
 
 #editProfileModal .modal-content .modal-body form .input-group .dropzone-wrapper .dropzone,#editProfileModal .modal-content .modal-body form .input-group .dropzone-wrapper .dropzone:focus{
@@ -810,7 +814,7 @@ button:focus{
 .navbar{
     background: var(--clr-navbar-bg);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
-    padding: 0.25rem 1rem;
+    padding: 0.25rem 0;
 }
 
 .navbar .sidebar-toggle{

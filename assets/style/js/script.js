@@ -28,7 +28,7 @@ $(document).ready(function(){
         }
     });
 
-    $("#properties-section").resizable();
+    // $("#properties-section").resizable();
 
     $(".edit-profile").click(function(){
         $("#editProfileModal").modal('show');
@@ -459,9 +459,9 @@ function elementProperties(el){
     setTimeout(() => {
         
         $(".floating-properties").each(function(ind){
-            $(".floating-properties").eq(ind).css({
-                "left" : 310 * ind + "px"
-            });
+            // $(".floating-properties").eq(ind).css({
+            //     "left" : 310 * ind + "px"
+            // });
             $(".floating-properties").eq(ind).attr("id", "floating-properties-"+ind)
             $(".floating-properties").eq(ind).find("#properties").attr("class", "properties-"+ind)
             setTimeout(() => {
@@ -515,7 +515,8 @@ function elementProperties(el){
             cursor : "move", 
             cursorAt: { top: 0, left: 150 },
             containment : "body",
-            scroll : false
+            scroll : false,
+            stack : ".floating-properties"
         });
 
         $(".close-element-properties").click(function(){
@@ -781,7 +782,6 @@ function toReadonly(flowName){
 
 function flowTyping(e) {
     $(e).attr('size', $(e).val().length + 1);
-    $(e).css("width", "auto");
 }
 
 // project
