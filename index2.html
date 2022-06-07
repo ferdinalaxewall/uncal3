@@ -1,0 +1,1128 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Uncal Favicon -->
+    <link rel="icon" type="image/x-icon" href="./assets/icon/uncal-icon.svg">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="./assets/style/css/bootstrap/bootstrap.min.css">
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="./assets/style/css/style2.css">
+    <!-- Loader CSS -->
+    <link rel="stylesheet" href="./assets/style/css/loader.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Context Menu CSS -->
+    <link rel="stylesheet" href="./assets/style/js/contextMenu/jquery.contextMenu.min.css">
+
+    <title>Uncal BPM - Dashboard Project A</title>
+  </head>
+  <body>
+
+    
+
+    <!-- Pre-Loader -->
+
+    <!-- <div class="pre-loader">
+      <div class="loader">
+        <svg viewBox="0 0 80 80">
+            <circle id="test" cx="40" cy="40" r="32"></circle>
+        </svg>
+      </div>
+      
+      <div class="loader triangle">
+        <svg viewBox="0 0 86 80">
+            <polygon points="43 8 79 72 7 72"></polygon>
+        </svg>
+      </div>
+      
+      <div class="loader">
+        <svg viewBox="0 0 80 80">
+            <rect x="8" y="8" width="64" height="64"></rect>
+        </svg>
+      </div>
+    </div> -->
+
+    <!-- End Pre-Loader -->
+
+    <!-- Navigation Bar -->
+
+    <nav class="navbar navbar-expand-lg navbar-light px-2">
+        <div class="container-fluid">
+          <div class="navbar-left-group d-flex align-items-center">
+            <button class="sidebar-toggle mr-3">
+              <img src="./assets/icon/sidebar-icon.svg" alt="Sidebar Hamburger Menu Icon" loading="lazy">
+            </button>
+            <a href="#" class="navbar-brand">UNCAL BPM</a>
+          </div>
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item" id="profile-link">
+
+                  <svg width="25" height="27" viewBox="0 0 25 27" fill="none" xmlns="http://www.w3.org/2000/svg" id="user-icon">
+                    <circle cx="12.5" cy="9.41504" r="3.9" fill="#c68d53" stroke="#c68d53" stroke-width="1.2"/>
+                    <path d="M5.70961 17.3061C4.11298 19.1915 5.70961 22.915 5.70961 22.915L12.5 25.415L19.2904 22.915C19.2904 22.915 20.887 19.1915 19.2904 17.3061C16.5906 14.118 8.40938 14.118 5.70961 17.3061Z" fill="#c68d53" stroke="#c68d53" stroke-width="1.2"/>
+                    <circle cx="12.5" cy="13.415" r="12" stroke="#c68d53"/>
+                  </svg>
+                    
+                    
+                  <div class="profile-group">
+                    <h5 class="profile-name">Username</h5>
+                    <p class="profile-description">Client Number: 001</p>
+                  </div>
+                  <a href="#" class="nav-link edit-profile">
+                    Edit Profile
+                  </a>
+                </li>
+                <li class="nav-item" id="logout-link">
+                  <a href="#" class="nav-link">
+                    <span>Logout</span>
+                    <svg width="20" height="17" viewBox="0 0 14 11" fill="none" xmlns="http://www.w3.org/2000/svg" class="ml-2" id="logout-icon">
+                      <path d="M6 2H3C1.89543 2 1 2.89543 1 4V7C1 8.10457 1.89543 9 3 9H6" stroke="#c68d53" stroke-linecap="round"/>
+                      <path d="M13.4382 5.09456C13.7147 5.29413 13.7147 5.70587 13.4382 5.90544L8.7926 9.25812C8.46192 9.49677 8 9.26048 8 8.85267V2.14733C8 1.73952 8.46192 1.50324 8.7926 1.74188L13.4382 5.09456Z" fill="#c68d53"/>
+                      <path d="M4 5.5H11" stroke="#c68d53" stroke-linecap="round"/>
+                    </svg>
+                       
+                  </a>
+                </li>
+            </ul>
+        </div>
+      </nav>
+
+      <!-- End Navigation Bar -->
+
+      <!-- Content -->
+
+      <section class="content">
+        <div class="container-fluid">  
+
+          <!-- Content Wrapper -->
+
+          <div class="row justify-content-end">
+
+            <!-- Sidebar -->
+
+            <div class="col-md-2 sidebar collapsed">
+              <a href="workspace.html" class="to-workspace-link">
+                <img src="./assets/icon/chevron-icon.svg" class="mr-3" alt="Chevron Left Icon" loading="lazy">
+                <span>Back to Workspace</span>
+              </a>
+
+              <div class="sidebar-content d-flex flex-column align-items-center">
+                <div class="sidebar-content-header">
+                  <img src="./assets/icon/uncal-folder-icon.svg" alt="Uncal Folder Icon" loading="lazy">
+                  <span class="folder-name">Folder_1</span>
+                </div>
+
+                <!-- <div class="search-workspace-group">
+                  <input type="text" class="input-search-workspace" id="search-workspace" onkeyup="searchWorkspaceFunc(this)" placeholder=" ">
+                  <label for="#search-worskpace">Search Workspace</label>
+                  <img src="./assets/icon/search-workspace-icon.svg" alt="Search Workspace Icon">
+                </div> -->
+                <button class="create-new-project">Add New Workspace</button>
+
+                <ul class="list-group-project">
+                    <li class="list-project">
+                        <a href="#" class="project-name">
+                          <img src="./assets/icon/uncal-icon.svg" alt="Uncal Icon" loading="lazy">
+                          <span class="project-name">Project_1</span>
+                        </a>
+                    </li>
+                    <li class="list-project">
+                        <a href="#" class="project-name">
+                          <img src="./assets/icon/uncal-icon.svg" alt="Uncal Icon" loading="lazy">
+                          <span class="project-name">Project_1</span>
+                        </a>
+                    </li>
+                    <li class="list-project">
+                        <a href="#" class="project-name">
+                          <img src="./assets/icon/uncal-icon.svg" alt="Uncal Icon" loading="lazy">
+                          <span class="project-name">Project_1</span>
+                        </a>
+                    </li>
+                    <li class="list-project">
+                        <a href="#" class="project-name">
+                          <img src="./assets/icon/uncal-icon.svg" alt="Uncal Icon" loading="lazy">
+                          <span class="project-name">Project_1</span>
+                        </a>
+                    </li>
+                    <li class="list-project">
+                        <a href="#" class="project-name">
+                          <img src="./assets/icon/uncal-icon.svg" alt="Uncal Icon" loading="lazy">
+                          <span class="project-name">Project_1</span>
+                        </a>
+                    </li>
+                    <li class="list-project">
+                        <a href="#" class="project-name">
+                          <img src="./assets/icon/uncal-icon.svg" alt="Uncal Icon" loading="lazy">
+                          <span class="project-name">Project_1</span>
+                        </a>
+                    </li>
+                    <li class="list-project">
+                        <a href="#" class="project-name">
+                          <img src="./assets/icon/uncal-icon.svg" alt="Uncal Icon" loading="lazy">
+                          <span class="project-name">Project_1</span>
+                        </a>
+                    </li>
+                    <li class="list-project">
+                        <a href="#" class="project-name">
+                          <img src="./assets/icon/uncal-icon.svg" alt="Uncal Icon" loading="lazy">
+                          <span class="project-name">Project_1</span>
+                        </a>
+                    </li>
+                    <li class="list-project">
+                        <a href="#" class="project-name">
+                          <img src="./assets/icon/uncal-icon.svg" alt="Uncal Icon" loading="lazy">
+                          <span class="project-name">Project_1</span>
+                        </a>
+                    </li>
+                    <li class="list-project">
+                        <a href="#" class="project-name">
+                          <img src="./assets/icon/uncal-icon.svg" alt="Uncal Icon" loading="lazy">
+                          <span class="project-name">Project_1</span>
+                        </a>
+                    </li>
+                    <li class="list-project">
+                        <a href="#" class="project-name">
+                          <img src="./assets/icon/uncal-icon.svg" alt="Uncal Icon" loading="lazy">
+                          <span class="project-name">Project_1</span>
+                        </a>
+                    </li>
+                    <li class="list-project">
+                        <a href="#" class="project-name">
+                          <img src="./assets/icon/uncal-icon.svg" alt="Uncal Icon" loading="lazy">
+                          <span class="project-name">Project_1</span>
+                        </a>
+                    </li>
+                    <li class="list-project">
+                        <a href="#" class="project-name">
+                          <img src="./assets/icon/uncal-icon.svg" alt="Uncal Icon" loading="lazy">
+                          <span class="project-name">Project_1</span>
+                        </a>
+                    </li>
+                    <li class="list-project">
+                        <a href="#" class="project-name">
+                          <img src="./assets/icon/uncal-icon.svg" alt="Uncal Icon" loading="lazy">
+                          <span class="project-name">Project_1</span>
+                        </a>
+                    </li>
+                    <li class="list-project">
+                        <a href="#" class="project-name">
+                          <img src="./assets/icon/uncal-icon.svg" alt="Uncal Icon" loading="lazy">
+                          <span class="project-name">Project_1</span>
+                        </a>
+                    </li>
+                    <li class="list-project">
+                        <a href="#" class="project-name">
+                          <img src="./assets/icon/uncal-icon.svg" alt="Uncal Icon" loading="lazy">
+                          <span class="project-name">Project_1</span>
+                        </a>
+                    </li>
+                    <li class="list-project">
+                        <a href="#" class="project-name">
+                          <img src="./assets/icon/uncal-icon.svg" alt="Uncal Icon" loading="lazy">
+                          <span class="project-name">Project_1</span>
+                        </a>
+                    </li>
+                    <li class="list-project">
+                        <a href="#" class="project-name">
+                          <img src="./assets/icon/uncal-icon.svg" alt="Uncal Icon" loading="lazy">
+                          <span class="project-name">Project_1</span>
+                        </a>
+                    </li>
+                    <li class="list-project">
+                        <a href="#" class="project-name">
+                          <img src="./assets/icon/uncal-icon.svg" alt="Uncal Icon" loading="lazy">
+                          <span class="project-name">Project_1</span>
+                        </a>
+                    </li>
+                    <li class="list-project">
+                        <a href="#" class="project-name">
+                          <img src="./assets/icon/uncal-icon.svg" alt="Uncal Icon" loading="lazy">
+                          <span class="project-name">Project_1</span>
+                        </a>
+                    </li>
+                    <li class="list-project">
+                        <a href="#" class="project-name">
+                          <img src="./assets/icon/uncal-icon.svg" alt="Uncal Icon" loading="lazy">
+                          <span class="project-name">Project_1</span>
+                        </a>
+                    </li>
+                    <li class="list-project">
+                        <a href="#" class="project-name">
+                          <img src="./assets/icon/uncal-icon.svg" alt="Uncal Icon" loading="lazy">
+                          <span class="project-name">Project_1</span>
+                        </a>
+                    </li>
+                    <li class="list-project">
+                        <a href="#" class="project-name">
+                          <img src="./assets/icon/uncal-icon.svg" alt="Uncal Icon" loading="lazy">
+                          <span class="project-name">Project_1</span>
+                        </a>
+                    </li>
+                    <li class="list-project">
+                        <a href="#" class="project-name">
+                          <img src="./assets/icon/uncal-icon.svg" alt="Uncal Icon" loading="lazy">
+                          <span class="project-name">Project_1</span>
+                        </a>
+                    </li>
+                    <li class="list-project">
+                        <a href="#" class="project-name">
+                          <img src="./assets/icon/uncal-icon.svg" alt="Uncal Icon" loading="lazy">
+                          <span class="project-name">Project_1</span>
+                        </a>
+                    </li>
+                    <li class="list-project">
+                        <a href="#" class="project-name">
+                          <img src="./assets/icon/uncal-icon.svg" alt="Uncal Icon" loading="lazy">
+                          <span class="project-name">Project_1</span>
+                        </a>
+                    </li>
+                    <li class="list-project">
+                        <a href="#" class="project-name">
+                          <img src="./assets/icon/uncal-icon.svg" alt="Uncal Icon" loading="lazy">
+                          <span class="project-name">Project_1</span>
+                        </a>
+                    </li>
+                    <li class="list-project">
+                        <a href="#" class="project-name">
+                          <img src="./assets/icon/uncal-icon.svg" alt="Uncal Icon" loading="lazy">
+                          <span class="project-name">Project_1</span>
+                        </a>
+                    </li>
+                    <li class="list-project">
+                        <a href="#" class="project-name">
+                          <img src="./assets/icon/uncal-icon.svg" alt="Uncal Icon" loading="lazy">
+                          <span class="project-name">Project_1</span>
+                        </a>
+                    </li>
+                    <li class="list-project">
+                        <a href="#" class="project-name">
+                          <img src="./assets/icon/uncal-icon.svg" alt="Uncal Icon" loading="lazy">
+                          <span class="project-name">Project_1</span>
+                        </a>
+                    </li>
+                    <li class="list-project">
+                        <a href="#" class="project-name">
+                          <img src="./assets/icon/uncal-icon.svg" alt="Uncal Icon" loading="lazy">
+                          <span class="project-name">Project_1</span>
+                        </a>
+                    </li>
+                    <li class="list-project">
+                        <a href="#" class="project-name">
+                          <img src="./assets/icon/uncal-icon.svg" alt="Uncal Icon" loading="lazy">
+                          <span class="project-name">Project_1</span>
+                        </a>
+                    </li>
+                    <li class="list-project">
+                        <a href="#" class="project-name">
+                          <img src="./assets/icon/uncal-icon.svg" alt="Uncal Icon" loading="lazy">
+                          <span class="project-name">Project_1</span>
+                        </a>
+                    </li>
+                    <li class="list-project">
+                        <a href="#" class="project-name">
+                          <img src="./assets/icon/uncal-icon.svg" alt="Uncal Icon" loading="lazy">
+                          <span class="project-name">Project_1</span>
+                        </a>
+                    </li>
+                    <li class="list-project">
+                        <a href="#" class="project-name">
+                          <img src="./assets/icon/uncal-icon.svg" alt="Uncal Icon" loading="lazy">
+                          <span class="project-name">Project_1</span>
+                        </a>
+                    </li>
+                    <li class="list-project">
+                        <a href="#" class="project-name">
+                          <img src="./assets/icon/uncal-icon.svg" alt="Uncal Icon" loading="lazy">
+                          <span class="project-name">Project_1</span>
+                        </a>
+                    </li>
+                    <li class="list-project">
+                        <a href="#" class="project-name">
+                          <img src="./assets/icon/uncal-icon.svg" alt="Uncal Icon" loading="lazy">
+                          <span class="project-name">Project_1</span>
+                        </a>
+                    </li>
+                    <li class="list-project">
+                        <a href="#" class="project-name">
+                          <img src="./assets/icon/uncal-icon.svg" alt="Uncal Icon" loading="lazy">
+                          <span class="project-name">Project_1</span>
+                        </a>
+                    </li>
+                    <li class="list-project">
+                        <a href="#" class="project-name">
+                          <img src="./assets/icon/uncal-icon.svg" alt="Uncal Icon" loading="lazy">
+                          <span class="project-name">Project_1</span>
+                        </a>
+                    </li>
+                    <li class="list-project">
+                        <a href="#" class="project-name">
+                          <img src="./assets/icon/uncal-icon.svg" alt="Uncal Icon" loading="lazy">
+                          <span class="project-name">Project_1</span>
+                        </a>
+                    </li>
+                    <li class="list-project">
+                        <a href="#" class="project-name">
+                          <img src="./assets/icon/uncal-icon.svg" alt="Uncal Icon" loading="lazy">
+                          <span class="project-name">Project_1</span>
+                        </a>
+                    </li>
+                    <li class="list-project">
+                        <a href="#" class="project-name">
+                          <img src="./assets/icon/uncal-icon.svg" alt="Uncal Icon" loading="lazy">
+                          <span class="project-name">Project_1</span>
+                        </a>
+                    </li>
+                </ul>
+
+              </div>
+            </div>
+
+            <!-- End Sidebar -->
+
+            <!-- Flow Section (Canvas Menu) -->
+
+            <div class="col-md-9 content-section maximize" id="flow-section">
+              <div class="content-box">
+                <div class="menu-tab" id="flow-tab">
+                  <a href="#" class="tab-name active">
+
+                    <svg width="13" height="19" viewBox="0 0 13 19" fill="none" xmlns="http://www.w3.org/2000/svg" id="tab-icon uncal-icon">
+                      <path d="M3.88733 15.2974L2.68857 15.8989C2.52854 15.9792 2.36166 16.045 2.1899 16.0956L1.24059 16.3749C1.20152 16.3864 1.16133 16.3936 1.12071 16.3964L0.982184 16.4061C0.576402 16.4346 0.376418 16.9133 0.641414 17.2219C0.663959 17.2482 0.689197 17.272 0.716712 17.293L1.05519 17.5512L1.51948 17.8824L2.02597 18.1721L2.65909 18.5033L2.81039 18.5775C3.04616 18.6931 3.2961 18.7772 3.55379 18.8278L4.00974 18.9172L4.27586 18.9607C4.43585 18.9869 4.59769 19 4.7598 19H4.98052H5.09614C5.38326 19 5.66877 18.9572 5.94329 18.8731L6.04845 18.8409C6.15228 18.809 6.25288 18.7675 6.34891 18.7168L6.52846 18.622C6.67578 18.5442 6.80033 18.4294 6.88986 18.2889L6.95489 18.1869C6.96112 18.1771 6.96872 18.1682 6.97747 18.1606L7.07691 18.0739C7.14631 18.0134 7.25041 18.0861 7.21753 18.1721L7.05398 18.4929C7.05049 18.4998 7.0459 18.506 7.0404 18.5114C6.98354 18.5672 7.0471 18.66 7.11966 18.6272L7.85065 18.2963L8.36145 18.0063C8.55495 17.8964 8.73562 17.7654 8.90014 17.6155L9.24351 17.3028L9.7008 16.9384C9.82769 16.8373 9.8659 16.6609 9.79221 16.5163L9.53896 15.8126L9.24351 15.1503L9.16728 14.8887C9.10573 14.6774 9.06761 14.46 9.05362 14.2404L8.99026 13.2462L9.07468 12.0871L9.13058 11.7582C9.17142 11.5179 9.37963 11.342 9.62338 11.342L10.3409 11.2593L10.7381 11.2333C10.8951 11.223 11.0511 11.2004 11.2046 11.1657L11.3353 11.1361C11.4601 11.1079 11.5825 11.0702 11.7017 11.0235L11.7389 11.0089C11.8758 10.9552 12.0069 10.8875 12.13 10.807L12.1897 10.768C12.3627 10.6549 12.5143 10.512 12.6375 10.3459L12.7403 10.2072C12.7726 10.1637 12.7984 10.1158 12.8169 10.0648C12.9194 9.78331 12.783 9.47087 12.5067 9.35477L12.1136 9.18954L10.8052 8.7342L9.2013 8.19608L8.86364 8.0305C8.64049 7.92108 8.43974 7.77095 8.2717 7.58784L8.2555 7.57019C8.18267 7.49083 8.10392 7.41713 8.01991 7.34972L7.68182 7.07843L7.5652 7.00491C7.31048 6.84431 7.24859 6.4997 7.43151 6.2605C7.45758 6.2264 7.47927 6.18916 7.49606 6.14965L7.68182 5.71242L7.80344 5.42615C7.86297 5.28604 7.91174 5.14161 7.94934 4.9941L8.00676 4.76887C8.04333 4.6254 8.06923 4.47943 8.08425 4.33214L8.1461 3.72549V3.17386C8.1461 2.94421 8.05372 2.72421 7.88976 2.56341L7.82595 2.50083C7.81433 2.48943 7.80125 2.47963 7.78705 2.47167L7.65743 2.39903C7.59276 2.36279 7.51299 2.40953 7.51299 2.48366V2.91961C7.51299 3.09776 7.49712 3.27555 7.46557 3.45089L7.38636 3.89107L7.25974 4.42919L7.09091 5.05011L6.88551 5.55372C6.85381 5.63143 6.80997 5.70361 6.75563 5.76757L6.67194 5.86606C6.64219 5.90107 6.60424 5.92817 6.56147 5.94495C6.4709 5.98048 6.36834 5.96614 6.29099 5.90714L6.03571 5.71242L5.78247 5.46405L5.48036 5.13484C5.42859 5.07843 5.38099 5.01832 5.33794 4.955L5.10101 4.60645C5.0775 4.57187 5.06494 4.53102 5.06494 4.48921C5.06494 4.44999 5.07599 4.41158 5.09683 4.37836L5.30505 4.04652C5.36986 3.94324 5.42242 3.83275 5.46166 3.7173L5.61364 3.27015L5.78247 2.69063L5.86688 2.15251L5.90909 1.4488V0.869281V0.473222C5.90909 0.355877 5.86189 0.243466 5.77811 0.161302L5.73374 0.11779C5.71033 0.094828 5.6815 0.0781494 5.64992 0.069301L5.59077 0.0527271C5.49627 0.0262477 5.4026 0.0972804 5.4026 0.195419C5.4026 0.203109 5.402 0.210788 5.40081 0.218385L5.35443 0.514049C5.3303 0.667849 5.31818 0.823292 5.31818 0.978972V1.01547C5.31818 1.19362 5.30231 1.37141 5.27076 1.54675L5.19156 1.98693L5.06494 2.48366L4.8539 3.02179L4.59714 3.70527C4.57892 3.75376 4.51686 3.7675 4.47988 3.73123C4.47599 3.72742 4.47255 3.72317 4.46962 3.71858L4.37124 3.5642C4.29933 3.45137 4.24122 3.33031 4.19817 3.20362L4.09416 2.8976L3.92532 2.40087L3.75649 1.86275L3.58766 1.11765L3.52491 0.563746C3.5109 0.440063 3.45474 0.324973 3.36587 0.237817L3.25554 0.129615C3.22494 0.0996015 3.18378 0.0827887 3.14092 0.0827887C3.05851 0.0827887 2.98895 0.144047 2.97853 0.225794L2.95455 0.413943V0.95207V1.14011C2.95455 1.4271 2.99722 1.71249 3.08117 1.98693L3.33442 2.8976L3.70964 3.86776C3.76891 4.02102 3.84068 4.16915 3.92421 4.31066L4.26299 4.88453L4.8539 5.67102L5.61364 6.5403L6.25466 7.12968C6.27743 7.15062 6.30281 7.16853 6.33017 7.18298L6.57694 7.3133C6.69754 7.37698 6.71001 7.54487 6.60015 7.62568C6.53959 7.67022 6.4581 7.67366 6.394 7.63438L6.16234 7.49237L5.71646 7.12797C5.50999 6.95923 5.26745 6.84027 5.00763 6.78032L4.81897 6.73678C4.7305 6.71637 4.63896 6.71284 4.54918 6.72639L4.19476 6.77986C3.89256 6.82546 3.72015 7.14989 3.85147 7.42586C3.87243 7.46992 3.90034 7.51032 3.93412 7.54552L4.26684 7.89222C4.46013 8.09363 4.68277 8.26466 4.9272 8.39951L5.1163 8.50383C5.1943 8.54686 5.27741 8.57989 5.36366 8.60215C5.7719 8.70751 6.07902 9.04459 6.14604 9.46085L6.14854 9.4764C6.15772 9.53344 6.16234 9.59111 6.16234 9.64888V11.5184C6.16234 11.7587 6.13347 11.9981 6.07635 12.2315L6.01234 12.4931C5.94386 12.7729 5.83545 13.0414 5.69042 13.2903L5.4026 13.7843L5.14099 14.1808C5.00638 14.3849 4.84733 14.5717 4.66739 14.7371L4.57239 14.8245C4.36712 15.0132 4.13655 15.1724 3.88733 15.2974Z" fill="#c68d53"/>
+                    </svg>
+                    
+                    <span> Project A</span> 
+                    <button class="close-tab">
+                      <img src="./assets/icon/close-icon.svg" alt="">
+                    </button>
+                  </a>
+                  <a href="#" class="tab-name">
+
+                    <svg width="13" height="19" viewBox="0 0 13 19" fill="none" xmlns="http://www.w3.org/2000/svg" id="tab-icon uncal-icon">
+                      <path d="M3.88733 15.2974L2.68857 15.8989C2.52854 15.9792 2.36166 16.045 2.1899 16.0956L1.24059 16.3749C1.20152 16.3864 1.16133 16.3936 1.12071 16.3964L0.982184 16.4061C0.576402 16.4346 0.376418 16.9133 0.641414 17.2219C0.663959 17.2482 0.689197 17.272 0.716712 17.293L1.05519 17.5512L1.51948 17.8824L2.02597 18.1721L2.65909 18.5033L2.81039 18.5775C3.04616 18.6931 3.2961 18.7772 3.55379 18.8278L4.00974 18.9172L4.27586 18.9607C4.43585 18.9869 4.59769 19 4.7598 19H4.98052H5.09614C5.38326 19 5.66877 18.9572 5.94329 18.8731L6.04845 18.8409C6.15228 18.809 6.25288 18.7675 6.34891 18.7168L6.52846 18.622C6.67578 18.5442 6.80033 18.4294 6.88986 18.2889L6.95489 18.1869C6.96112 18.1771 6.96872 18.1682 6.97747 18.1606L7.07691 18.0739C7.14631 18.0134 7.25041 18.0861 7.21753 18.1721L7.05398 18.4929C7.05049 18.4998 7.0459 18.506 7.0404 18.5114C6.98354 18.5672 7.0471 18.66 7.11966 18.6272L7.85065 18.2963L8.36145 18.0063C8.55495 17.8964 8.73562 17.7654 8.90014 17.6155L9.24351 17.3028L9.7008 16.9384C9.82769 16.8373 9.8659 16.6609 9.79221 16.5163L9.53896 15.8126L9.24351 15.1503L9.16728 14.8887C9.10573 14.6774 9.06761 14.46 9.05362 14.2404L8.99026 13.2462L9.07468 12.0871L9.13058 11.7582C9.17142 11.5179 9.37963 11.342 9.62338 11.342L10.3409 11.2593L10.7381 11.2333C10.8951 11.223 11.0511 11.2004 11.2046 11.1657L11.3353 11.1361C11.4601 11.1079 11.5825 11.0702 11.7017 11.0235L11.7389 11.0089C11.8758 10.9552 12.0069 10.8875 12.13 10.807L12.1897 10.768C12.3627 10.6549 12.5143 10.512 12.6375 10.3459L12.7403 10.2072C12.7726 10.1637 12.7984 10.1158 12.8169 10.0648C12.9194 9.78331 12.783 9.47087 12.5067 9.35477L12.1136 9.18954L10.8052 8.7342L9.2013 8.19608L8.86364 8.0305C8.64049 7.92108 8.43974 7.77095 8.2717 7.58784L8.2555 7.57019C8.18267 7.49083 8.10392 7.41713 8.01991 7.34972L7.68182 7.07843L7.5652 7.00491C7.31048 6.84431 7.24859 6.4997 7.43151 6.2605C7.45758 6.2264 7.47927 6.18916 7.49606 6.14965L7.68182 5.71242L7.80344 5.42615C7.86297 5.28604 7.91174 5.14161 7.94934 4.9941L8.00676 4.76887C8.04333 4.6254 8.06923 4.47943 8.08425 4.33214L8.1461 3.72549V3.17386C8.1461 2.94421 8.05372 2.72421 7.88976 2.56341L7.82595 2.50083C7.81433 2.48943 7.80125 2.47963 7.78705 2.47167L7.65743 2.39903C7.59276 2.36279 7.51299 2.40953 7.51299 2.48366V2.91961C7.51299 3.09776 7.49712 3.27555 7.46557 3.45089L7.38636 3.89107L7.25974 4.42919L7.09091 5.05011L6.88551 5.55372C6.85381 5.63143 6.80997 5.70361 6.75563 5.76757L6.67194 5.86606C6.64219 5.90107 6.60424 5.92817 6.56147 5.94495C6.4709 5.98048 6.36834 5.96614 6.29099 5.90714L6.03571 5.71242L5.78247 5.46405L5.48036 5.13484C5.42859 5.07843 5.38099 5.01832 5.33794 4.955L5.10101 4.60645C5.0775 4.57187 5.06494 4.53102 5.06494 4.48921C5.06494 4.44999 5.07599 4.41158 5.09683 4.37836L5.30505 4.04652C5.36986 3.94324 5.42242 3.83275 5.46166 3.7173L5.61364 3.27015L5.78247 2.69063L5.86688 2.15251L5.90909 1.4488V0.869281V0.473222C5.90909 0.355877 5.86189 0.243466 5.77811 0.161302L5.73374 0.11779C5.71033 0.094828 5.6815 0.0781494 5.64992 0.069301L5.59077 0.0527271C5.49627 0.0262477 5.4026 0.0972804 5.4026 0.195419C5.4026 0.203109 5.402 0.210788 5.40081 0.218385L5.35443 0.514049C5.3303 0.667849 5.31818 0.823292 5.31818 0.978972V1.01547C5.31818 1.19362 5.30231 1.37141 5.27076 1.54675L5.19156 1.98693L5.06494 2.48366L4.8539 3.02179L4.59714 3.70527C4.57892 3.75376 4.51686 3.7675 4.47988 3.73123C4.47599 3.72742 4.47255 3.72317 4.46962 3.71858L4.37124 3.5642C4.29933 3.45137 4.24122 3.33031 4.19817 3.20362L4.09416 2.8976L3.92532 2.40087L3.75649 1.86275L3.58766 1.11765L3.52491 0.563746C3.5109 0.440063 3.45474 0.324973 3.36587 0.237817L3.25554 0.129615C3.22494 0.0996015 3.18378 0.0827887 3.14092 0.0827887C3.05851 0.0827887 2.98895 0.144047 2.97853 0.225794L2.95455 0.413943V0.95207V1.14011C2.95455 1.4271 2.99722 1.71249 3.08117 1.98693L3.33442 2.8976L3.70964 3.86776C3.76891 4.02102 3.84068 4.16915 3.92421 4.31066L4.26299 4.88453L4.8539 5.67102L5.61364 6.5403L6.25466 7.12968C6.27743 7.15062 6.30281 7.16853 6.33017 7.18298L6.57694 7.3133C6.69754 7.37698 6.71001 7.54487 6.60015 7.62568C6.53959 7.67022 6.4581 7.67366 6.394 7.63438L6.16234 7.49237L5.71646 7.12797C5.50999 6.95923 5.26745 6.84027 5.00763 6.78032L4.81897 6.73678C4.7305 6.71637 4.63896 6.71284 4.54918 6.72639L4.19476 6.77986C3.89256 6.82546 3.72015 7.14989 3.85147 7.42586C3.87243 7.46992 3.90034 7.51032 3.93412 7.54552L4.26684 7.89222C4.46013 8.09363 4.68277 8.26466 4.9272 8.39951L5.1163 8.50383C5.1943 8.54686 5.27741 8.57989 5.36366 8.60215C5.7719 8.70751 6.07902 9.04459 6.14604 9.46085L6.14854 9.4764C6.15772 9.53344 6.16234 9.59111 6.16234 9.64888V11.5184C6.16234 11.7587 6.13347 11.9981 6.07635 12.2315L6.01234 12.4931C5.94386 12.7729 5.83545 13.0414 5.69042 13.2903L5.4026 13.7843L5.14099 14.1808C5.00638 14.3849 4.84733 14.5717 4.66739 14.7371L4.57239 14.8245C4.36712 15.0132 4.13655 15.1724 3.88733 15.2974Z" fill="#c68d53"/>
+                    </svg>
+                    
+                    <span> Project B</span> 
+                    <button class="close-tab">
+                      <img src="./assets/icon/close-icon.svg" alt="">
+                    </button>
+                  </a>
+                  <a href="#" class="tab-name">
+
+                    <svg width="13" height="19" viewBox="0 0 13 19" fill="none" xmlns="http://www.w3.org/2000/svg" id="tab-icon uncal-icon">
+                      <path d="M3.88733 15.2974L2.68857 15.8989C2.52854 15.9792 2.36166 16.045 2.1899 16.0956L1.24059 16.3749C1.20152 16.3864 1.16133 16.3936 1.12071 16.3964L0.982184 16.4061C0.576402 16.4346 0.376418 16.9133 0.641414 17.2219C0.663959 17.2482 0.689197 17.272 0.716712 17.293L1.05519 17.5512L1.51948 17.8824L2.02597 18.1721L2.65909 18.5033L2.81039 18.5775C3.04616 18.6931 3.2961 18.7772 3.55379 18.8278L4.00974 18.9172L4.27586 18.9607C4.43585 18.9869 4.59769 19 4.7598 19H4.98052H5.09614C5.38326 19 5.66877 18.9572 5.94329 18.8731L6.04845 18.8409C6.15228 18.809 6.25288 18.7675 6.34891 18.7168L6.52846 18.622C6.67578 18.5442 6.80033 18.4294 6.88986 18.2889L6.95489 18.1869C6.96112 18.1771 6.96872 18.1682 6.97747 18.1606L7.07691 18.0739C7.14631 18.0134 7.25041 18.0861 7.21753 18.1721L7.05398 18.4929C7.05049 18.4998 7.0459 18.506 7.0404 18.5114C6.98354 18.5672 7.0471 18.66 7.11966 18.6272L7.85065 18.2963L8.36145 18.0063C8.55495 17.8964 8.73562 17.7654 8.90014 17.6155L9.24351 17.3028L9.7008 16.9384C9.82769 16.8373 9.8659 16.6609 9.79221 16.5163L9.53896 15.8126L9.24351 15.1503L9.16728 14.8887C9.10573 14.6774 9.06761 14.46 9.05362 14.2404L8.99026 13.2462L9.07468 12.0871L9.13058 11.7582C9.17142 11.5179 9.37963 11.342 9.62338 11.342L10.3409 11.2593L10.7381 11.2333C10.8951 11.223 11.0511 11.2004 11.2046 11.1657L11.3353 11.1361C11.4601 11.1079 11.5825 11.0702 11.7017 11.0235L11.7389 11.0089C11.8758 10.9552 12.0069 10.8875 12.13 10.807L12.1897 10.768C12.3627 10.6549 12.5143 10.512 12.6375 10.3459L12.7403 10.2072C12.7726 10.1637 12.7984 10.1158 12.8169 10.0648C12.9194 9.78331 12.783 9.47087 12.5067 9.35477L12.1136 9.18954L10.8052 8.7342L9.2013 8.19608L8.86364 8.0305C8.64049 7.92108 8.43974 7.77095 8.2717 7.58784L8.2555 7.57019C8.18267 7.49083 8.10392 7.41713 8.01991 7.34972L7.68182 7.07843L7.5652 7.00491C7.31048 6.84431 7.24859 6.4997 7.43151 6.2605C7.45758 6.2264 7.47927 6.18916 7.49606 6.14965L7.68182 5.71242L7.80344 5.42615C7.86297 5.28604 7.91174 5.14161 7.94934 4.9941L8.00676 4.76887C8.04333 4.6254 8.06923 4.47943 8.08425 4.33214L8.1461 3.72549V3.17386C8.1461 2.94421 8.05372 2.72421 7.88976 2.56341L7.82595 2.50083C7.81433 2.48943 7.80125 2.47963 7.78705 2.47167L7.65743 2.39903C7.59276 2.36279 7.51299 2.40953 7.51299 2.48366V2.91961C7.51299 3.09776 7.49712 3.27555 7.46557 3.45089L7.38636 3.89107L7.25974 4.42919L7.09091 5.05011L6.88551 5.55372C6.85381 5.63143 6.80997 5.70361 6.75563 5.76757L6.67194 5.86606C6.64219 5.90107 6.60424 5.92817 6.56147 5.94495C6.4709 5.98048 6.36834 5.96614 6.29099 5.90714L6.03571 5.71242L5.78247 5.46405L5.48036 5.13484C5.42859 5.07843 5.38099 5.01832 5.33794 4.955L5.10101 4.60645C5.0775 4.57187 5.06494 4.53102 5.06494 4.48921C5.06494 4.44999 5.07599 4.41158 5.09683 4.37836L5.30505 4.04652C5.36986 3.94324 5.42242 3.83275 5.46166 3.7173L5.61364 3.27015L5.78247 2.69063L5.86688 2.15251L5.90909 1.4488V0.869281V0.473222C5.90909 0.355877 5.86189 0.243466 5.77811 0.161302L5.73374 0.11779C5.71033 0.094828 5.6815 0.0781494 5.64992 0.069301L5.59077 0.0527271C5.49627 0.0262477 5.4026 0.0972804 5.4026 0.195419C5.4026 0.203109 5.402 0.210788 5.40081 0.218385L5.35443 0.514049C5.3303 0.667849 5.31818 0.823292 5.31818 0.978972V1.01547C5.31818 1.19362 5.30231 1.37141 5.27076 1.54675L5.19156 1.98693L5.06494 2.48366L4.8539 3.02179L4.59714 3.70527C4.57892 3.75376 4.51686 3.7675 4.47988 3.73123C4.47599 3.72742 4.47255 3.72317 4.46962 3.71858L4.37124 3.5642C4.29933 3.45137 4.24122 3.33031 4.19817 3.20362L4.09416 2.8976L3.92532 2.40087L3.75649 1.86275L3.58766 1.11765L3.52491 0.563746C3.5109 0.440063 3.45474 0.324973 3.36587 0.237817L3.25554 0.129615C3.22494 0.0996015 3.18378 0.0827887 3.14092 0.0827887C3.05851 0.0827887 2.98895 0.144047 2.97853 0.225794L2.95455 0.413943V0.95207V1.14011C2.95455 1.4271 2.99722 1.71249 3.08117 1.98693L3.33442 2.8976L3.70964 3.86776C3.76891 4.02102 3.84068 4.16915 3.92421 4.31066L4.26299 4.88453L4.8539 5.67102L5.61364 6.5403L6.25466 7.12968C6.27743 7.15062 6.30281 7.16853 6.33017 7.18298L6.57694 7.3133C6.69754 7.37698 6.71001 7.54487 6.60015 7.62568C6.53959 7.67022 6.4581 7.67366 6.394 7.63438L6.16234 7.49237L5.71646 7.12797C5.50999 6.95923 5.26745 6.84027 5.00763 6.78032L4.81897 6.73678C4.7305 6.71637 4.63896 6.71284 4.54918 6.72639L4.19476 6.77986C3.89256 6.82546 3.72015 7.14989 3.85147 7.42586C3.87243 7.46992 3.90034 7.51032 3.93412 7.54552L4.26684 7.89222C4.46013 8.09363 4.68277 8.26466 4.9272 8.39951L5.1163 8.50383C5.1943 8.54686 5.27741 8.57989 5.36366 8.60215C5.7719 8.70751 6.07902 9.04459 6.14604 9.46085L6.14854 9.4764C6.15772 9.53344 6.16234 9.59111 6.16234 9.64888V11.5184C6.16234 11.7587 6.13347 11.9981 6.07635 12.2315L6.01234 12.4931C5.94386 12.7729 5.83545 13.0414 5.69042 13.2903L5.4026 13.7843L5.14099 14.1808C5.00638 14.3849 4.84733 14.5717 4.66739 14.7371L4.57239 14.8245C4.36712 15.0132 4.13655 15.1724 3.88733 15.2974Z" fill="#c68d53"/>
+                    </svg>
+                    
+                    <span> Project C </span> 
+                    <button class="close-tab">
+                      <img src="./assets/icon/close-icon.svg"alt="">
+                    </button>
+                  </a>
+
+                  <div class="utility-group">
+                    <button class="zoom-button" id="zoom-in">
+                      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="14" height="14" rx="5" fill="#c68d53"/>
+                        <path d="M3.5 7H10.5" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                        <path d="M7 10.5V3.5" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                      </svg>
+                    </button>
+                    <button class="zoom-button" id="zoom-out">
+                      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="14" height="14" rx="5" fill="#c68d53"/>
+                        <path d="M3.5 7H10.5" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                      </svg>
+                    </button>
+                    <button class="save-project">Save Project</button>
+                  </div>
+                </div>
+                <div class="content-body" id="flow-container">  
+                    <div class="canvas">
+                    </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- End Flow Section -->
+
+            <!-- Palette Section (Element Menu) -->
+
+            <div class="col-md-3 content-section maximize" id="palette-section">
+              <div class="content-box">
+                <div class="menu-tab" id="palette-tab">
+                  <a href="#" class="tab-name active">
+
+                    <svg width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M5.6 1.2562C7.6025 0.723949 9.21899 0.989228 10.7901 2.35186C12.359 3.7126 11.3305 5.75154 12.6492 7.36059C14.7846 9.96606 19.7231 6.89099 20.783 10.0997C21.8375 13.2921 18.8573 15.5254 15.9802 17.2215C11.8674 19.6461 7.2144 19.0281 3.89578 15.578C1.56232 13.1521 0.553227 10.6826 1.18454 7.36059C1.73558 4.46094 2.77364 2.00744 5.6 1.2562Z" fill="#c68d53" stroke="#c68d53"/>
+                      <path d="M14.4438 11C13.8061 11.0017 13.0329 11.5879 12.7323 11.8377C12.6455 11.9098 12.5572 11.9783 12.4654 12.044C12.0611 12.3334 10.9189 13.2313 11.0046 14.0817C11.1196 15.2241 12.2497 15.6879 13.404 15.8201C14.9622 15.9986 16.6419 15.0778 16.6833 13.5286C16.7183 12.2169 15.7719 10.9965 14.4438 11Z" fill="white"/>
+                      <path d="M5.24229 10.6114C6.05358 11.2499 6.77575 10.517 7.68608 10.03C8.87856 9.39207 9.41309 9.08244 9.49125 7.73232C9.60335 5.79566 8.14759 3.45388 6.272 3.94923C4.55816 4.40186 4.85444 6.45325 4.74084 8.22221C4.67254 9.28573 4.40483 9.95233 5.24229 10.6114Z" fill="white"/>
+                      <ellipse cx="8.26316" cy="13.9474" rx="1.26316" ry="0.947368" fill="white"/>
+                    </svg>
+                      
+                      
+                    <span>Palette</span>
+                  </a>
+                  <!-- <a href="#" class="tab-name">
+
+                    <svg width="22" height="16" viewBox="0 0 22 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M18 1H4C2.34315 1 1 2.34314 1 4V9.83946C1 11.4963 2.34315 12.8395 4 12.8395H11H18C19.6569 12.8395 21 11.4963 21 9.83947V4C21 2.34315 19.6569 1 18 1Z" fill="#c68d53"/>
+                      <path d="M11 12.8395H18C19.6569 12.8395 21 11.4963 21 9.83947V4C21 2.34315 19.6569 1 18 1H4C2.34315 1 1 2.34314 1 4V9.83946C1 11.4963 2.34315 12.8395 4 12.8395H11ZM11 12.8395V12.8395C11 14.2802 9.83205 15.4482 8.3913 15.4482H5.94983H15.8495" stroke="#c68d53"/>
+                      <path d="M8.79068 3.54412C8.79068 3.54412 6.64007 2.93728 5.51309 3.54412C3.42012 4.6711 3.42012 8.50409 5.51309 9.63108C6.64007 10.2379 8.79068 9.63108 8.79068 9.63108" stroke="white" stroke-width="0.7"/>
+                      <path d="M7.35547 4.87977H8.76511C9.88356 4.87977 10.9211 4.29668 11.5026 3.34131V3.34131" stroke="white" stroke-width="0.7"/>
+                      <path d="M7.55469 8.49181H8.96433C10.0828 8.49181 11.1203 9.0749 11.7018 10.0303V10.0303" stroke="white" stroke-width="0.7"/>
+                      <path d="M12.7734 3.94287H16.9206" stroke="white" stroke-width="0.7"/>
+                      <circle cx="17.2543" cy="3.87591" r="0.869565" fill="white"/>
+                      <path d="M12.7734 6.61865H16.9206" stroke="white" stroke-width="0.7"/>
+                      <circle cx="17.2543" cy="6.55169" r="0.869565" fill="white"/>
+                      <path d="M12.7734 9.56201H16.9206" stroke="white" stroke-width="0.7"/>
+                      <circle cx="17.2543" cy="9.49505" r="0.869565" fill="white"/>
+                      <path d="M7.41992 6.68555H11.6361" stroke="white" stroke-width="0.7"/>
+                      </svg>
+                      
+
+                    <span>API Sync</span>
+                  </a> -->
+                </div>
+                <div class="content-body">
+                  <div class="search-wrapper">
+                    <div class="search-group">
+                      <input type="text" name="search" id="search-input" class="search-elements" placeholder="Search the elements" onkeyup="searchElementsFunc()">
+                      <label for="search-input">
+                        <svg width="14" height="15" viewBox="0 0 14 15" fill="none" xmlns="http://www.w3.org/2000/svg" id="search-icon">
+                          <circle cx="5.92731" cy="5.92731" r="4.92731" stroke="#c68d53" stroke-width="2"/>
+                          <path d="M10.5195 9.16077L13.3462 12.0992C13.7072 12.4745 13.6957 13.0715 13.3203 13.4325C12.945 13.7936 12.3481 13.782 11.987 13.4067L9.16035 10.4682L10.5195 9.16077Z" fill="#c68d53"/>
+                          <path d="M7.96831 3.99992C8.71383 5.36473 9.25247 5.96891 7.9681 7.50038" stroke="#c68d53"/>
+                          <circle cx="7.40414" cy="8.40413" r="0.404135" fill="#c68d53"/>
+                        </svg>
+                      </label>
+                    </div>
+                  </div>
+
+                  <div class="search-by-category">
+
+                    <button class="category-button active" id="all-category">All</button>
+                    <button class="category-button" id="sender-category">
+
+                      <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M4.27701 10.3701C4.93384 9.56663 6.11766 9.44775 6.92114 10.1046L10.524 13.0498C11.3274 13.7067 11.4463 14.8905 10.7895 15.694L9.88352 16.8022C8.41338 18.6006 5.76373 18.8667 3.96535 17.3965C2.16698 15.9264 1.90089 13.2767 3.37103 11.4784L4.27701 10.3701Z" fill="#c68d53"/>
+                        <path d="M6.95166 10.1294L7.97995 10.97L6.13492 13.227C5.90279 13.5109 5.48442 13.5529 5.20047 13.3208C4.91652 13.0887 4.8745 12.6703 5.10663 12.3864L6.95166 10.1294Z" fill="white"/>
+                        <path d="M9.46533 12.1851L10.4936 13.0257L8.64859 15.2826C8.41646 15.5666 7.9981 15.6086 7.71414 15.3765C7.43019 15.1443 7.38817 14.726 7.6203 14.442L9.46533 12.1851Z" fill="white"/>
+                        <path d="M15.6056 9.80303C14.9318 10.5924 13.7416 10.6908 12.9473 10.0228L9.38638 7.02807C8.59207 6.36006 8.49442 5.17862 9.16828 4.38925L10.0981 3.30005C11.6062 1.53351 14.2697 1.31336 16.0474 2.80834C17.825 4.30331 18.0435 6.94729 16.5355 8.71383L15.6056 9.80303Z" fill="#c68d53"/>
+                        <path d="M11.2578 11.8557C11.0197 12.1346 10.5991 12.1694 10.3184 11.9333C10.0378 11.6973 10.0033 11.2798 10.2414 11.0009L12.1898 8.71853C12.4279 8.4396 12.8484 8.40484 13.1291 8.64089C13.4098 8.87694 13.4443 9.29441 13.2062 9.57334L11.2578 11.8557Z" fill="#c68d53"/>
+                        <path d="M8.7329 10.124C8.49479 10.4029 8.07422 10.4377 7.79355 10.2016C7.51287 9.96558 7.47836 9.54811 7.71648 9.26918L9.36676 7.33602C9.60488 7.0571 10.0254 7.02234 10.3061 7.25838C10.5868 7.49443 10.6213 7.9119 10.3832 8.19083L8.7329 10.124Z" fill="#c68d53"/>
+                      </svg>
+                        
+                      Sender
+                    </button>
+                    <button class="category-button" id="receiver-category">
+
+                      <svg width="17" height="20" viewBox="0 0 17 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M5.1158 3.81002L9.55452 5.57851C9.55452 5.57851 8.98319 2.07514 10.1671 1.30271C11.8482 0.205867 13.5217 1.49602 13.9879 3.44843C14.3163 4.82336 11.8411 6.48955 11.8411 6.48955L16.2798 8.25804L14.5382 12.6295C14.5382 12.6295 13.0875 11.2875 12.1843 11.6917C11.3069 12.0843 10.9062 13.0899 11.2733 13.9783C11.6511 14.8928 13.6271 14.9161 13.6271 14.9161L11.8318 19.4221L8.20016 17.9751C8.20016 17.9751 9.98973 16.1185 9.35235 15.0832C8.87803 14.3129 8.07439 13.9927 7.20025 14.2258C6.02561 14.5391 6.04805 17.1177 6.04805 17.1177L0.667788 14.9741L2.46307 10.4681C2.46307 10.4681 4.75742 12.7067 5.96024 11.8615C6.7467 11.3088 8.06885 9.35947 7.87795 8.41737C7.58598 6.97652 3.91 6.83645 3.91 6.83645L5.1158 3.81002Z" fill="#c68d53"/>
+                      </svg>
+                        
+                      Receiver
+                    </button>
+                    <button class="category-button" id="object-category">
+                      <svg width="9" height="13" viewBox="0 0 9 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M7 0H2C0.895431 0 0 0.895429 0 2V2.11255C0 2.62978 0.200385 3.1269 0.559088 3.49955L3.20282 6.24604C3.56152 6.61868 3.7619 7.1158 3.7619 7.63304V11.6526C3.7619 12.5588 4.83461 13.0376 5.50914 12.4324C5.73061 12.2337 5.85714 11.9502 5.85714 11.6526V7.53128C5.85714 7.07539 6.01289 6.63318 6.29859 6.27792L8.55855 3.46767C8.84425 3.1124 9 2.6702 9 2.21431V2C9 0.895431 8.10457 0 7 0Z" fill="#c68d53"/>
+                      </svg>
+                        
+                      Object
+                    </button>
+
+                  </div>
+
+                  <h5 class="content-title">All Elements</h5>
+
+                  <ul class="elements-list">
+                    <li class="element-item" id="sender">
+                      <a id="sender-tcp" class="element-box">
+                        <img src="./assets/icon/tcp-icon.svg" alt="TCP Sender Icon" loading="lazy">
+                        <span>TCP Sender</span>
+                      </a>
+                    </li>
+                    <li class="element-item" id="receiver">
+                      <a id="receiver-tcp" class="element-box">
+                        <img src="./assets/icon/tcp-icon.svg" alt="TCP Receiver Icon" loading="lazy">
+                        <span>TCP Receiver</span>
+                      </a>
+                    </li>
+                    <li class="element-item" id="sender">
+                      <a id="sender-rest" class="element-box">
+                        <img src="./assets/icon/rest-icon.svg" alt="REST/SOAP Sender Icon" loading="lazy">
+                       <span>REST/SOAP Sender</span>
+                      </a>
+                    </li>
+                    <li class="element-item" id="receiver">
+                      <a id="receiver-rest" class="element-box">
+                        <img src="./assets/icon/rest-icon.svg" alt="REST/SOAP Receiver Icon" loading="lazy">
+                       <span>REST/SOAP Receiver</span>
+                      </a>
+                    </li>
+                    <li class="element-item" id="sender">
+                      <a id="sender-nfs" class="element-box">
+                        <img src="./assets/icon/nfs-icon.svg" alt="NFS Sender Icon" loading="lazy">
+                        <span>NFS Sender</span>
+                      </a>
+                    </li>
+                    <li class="element-item" id="receiver">
+                      <a id="receiver-nfs" class="element-box">
+                        <img src="./assets/icon/nfs-icon.svg" alt="NFS Receiver Icon" loading="lazy">
+                        <span>NFS Receiver</span>
+                      </a>
+                    </li>
+                    <li class="element-item" id="sender">
+                      <a id="sender-ftp" class="element-box">
+                        <img src="./assets/icon/ftp-icon.svg" alt="FTP Sender Icon" loading="lazy">
+                        <span>FTP(e)/S Sender</span>
+                      </a>
+                    </li>
+                    <li class="element-item" id="receiver">
+                      <a id="receiver-ftp" class="element-box">
+                        <img src="./assets/icon/ftp-icon.svg" alt="FTP Receiver Icon" loading="lazy">
+                        <span>FTP(e)/S Receiver</span>
+                      </a>
+                    </li>
+                    <li class="element-item" id="sender">
+                      <a id="sender-sftp" class="element-box">
+                        <img src="./assets/icon/sftp-icon.svg" alt="SFTP Sender Icon" loading="lazy">
+                        <span>SFTP/EXEC/SHELL Sender</span>
+                      </a>
+                    </li>
+                    <li class="element-item" id="receiver">
+                      <a id="receiver-sftp" class="element-box">
+                        <img src="./assets/icon/sftp-icon.svg" alt="SFTP Receiver Icon" loading="lazy">
+                        <span>SFTP/EXEC/SHELL Receiver</span>
+                      </a>
+                    </li>
+                    <li class="element-item" id="sender">
+                      <a id="sender-imap" class="element-box">
+                        <img src="./assets/icon/imap-icon.svg" alt="IMAP/POP Sender Icon" loading="lazy">
+                        <span>IMAP/POP Sender</span>
+                      </a>
+                    </li>
+                    <li class="element-item" id="receiver">
+                      <a id="receiver-smtp" class="element-box">
+                        <img src="./assets/icon/imap-icon.svg" alt="SMTP Receiver Icon" loading="lazy">
+                        <span>SMTP Receiver</span>
+                      </a>
+                    </li>
+                    <li class="element-item" id="sender">
+                      <a id="sender-jdbc" class="element-box">
+                        <img src="./assets/icon/jdbc-icon.svg" alt="JDBC Sender Icon" loading="lazy">
+                        <span>JDBC Sender</span>
+                      </a>
+                    </li>
+                    <li class="element-item" id="receiver">
+                      <a id="receiver-jdbc" class="element-box">
+                        <img src="./assets/icon/jdbc-icon.svg" alt="JDBC Sender Icon" loading="lazy">
+                        <span>JDBC Receiver</span>
+                      </a>
+                    </li>
+                    <li class="element-item" id="sender">
+                      <a id="sender-mqtt" class="element-box">
+                        <img src="./assets/icon/mqtt-icon.svg" alt="MQTT Sender Icon" loading="lazy">
+                        <span>Mqtt Sender</span>
+                      </a>
+                    </li>
+                    <li class="element-item" id="receiver">
+                      <a id="receiver-mqtt" class="element-box">
+                        <img src="./assets/icon/mqtt-icon.svg" alt="MQTT Receiver Icon" loading="lazy">
+                        <span>Mqtt Receiver</span>
+                      </a>
+                    </li>
+                    <li class="element-item" id="object">
+                      <a id="object-switching" href="#" class="element-box">
+                      <img src="./assets/icon/switch-icon.svg" alt="Switching Icon" loading="lazy">
+                      <span>Switching</span>
+                      </a>
+                    </li>
+                    <li class="element-item" id="object">
+                      <a id="object-EnDe" href="#" class="element-box">
+                      <img src="./assets/icon/ende-icon.svg" alt="EnDe Icon" loading="lazy">
+                      <span>EnDe</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- End Palette Section -->
+
+            <!-- Properties Section / Console Section -->
+
+            <div class="col-md-9 content-section d-flex justify-content-between minimized" id="properties-section">
+                <button class="minimize-section minimized">
+                    <img src="./assets/icon/chevron-icon.svg" alt="">
+                </button>
+              <div class="content-box">
+                <div class="menu-tab" id="properties-tab">
+                  <a href="#" class="tab-name displayed active">
+                    <svg width="24" height="29" viewBox="0 0 24 29" fill="none" xmlns="http://www.w3.org/2000/svg" id="problems-icon">
+                      <path d="M20.7578 14.7509C20.6868 15.2986 21.0733 15.8001 21.621 15.8711C22.1687 15.9421 22.6703 15.5556 22.7412 15.0079L20.7578 14.7509ZM1.62686 10.1903L13.1316 11.1779L8.23451 0.720711L1.62686 10.1903ZM22.7412 15.0079C23.2016 11.454 22.1713 8.37536 19.7306 6.52514C17.3132 4.69252 13.7508 4.24781 9.51334 5.40885L10.0419 7.33776C13.9187 6.27551 16.7691 6.78974 18.5224 8.11893C20.2525 9.43052 21.1509 11.7166 20.7578 14.7509L22.7412 15.0079Z" fill="#c68d53"/>
+                      <path d="M2.41002 14.8889C2.46112 14.339 2.05676 13.8518 1.50684 13.8007C0.956925 13.7496 0.469702 14.1539 0.418597 14.7039L2.41002 14.8889ZM21.6934 18.7548L10.1605 18.1839L15.4325 28.4571L21.6934 18.7548ZM0.418597 14.7039C0.0869913 18.2721 1.22803 21.3114 3.73397 23.0722C6.21607 24.8162 9.79222 25.1318 13.9849 23.8183L13.387 21.9097C9.55108 23.1115 6.68403 22.7007 4.88378 21.4357C3.10737 20.1876 2.12689 17.9355 2.41002 14.8889L0.418597 14.7039Z" fill="#c68d53"/>
+                      <path d="M14.7657 10.1294L14.3247 14.8184H13.2357V9.97641L14.7657 10.1294ZM13.6947 15.7094C13.8447 15.7094 13.9767 15.7394 14.0907 15.7994C14.2107 15.8594 14.3097 15.9374 14.3877 16.0334C14.4717 16.1234 14.5347 16.2254 14.5767 16.3394C14.6187 16.4474 14.6397 16.5524 14.6397 16.6544C14.6397 16.7864 14.6127 16.9124 14.5587 17.0324C14.5107 17.1524 14.4417 17.2574 14.3517 17.3474C14.2677 17.4374 14.1657 17.5094 14.0457 17.5634C13.9317 17.6174 13.8117 17.6444 13.6857 17.6444C13.5237 17.6444 13.3827 17.6174 13.2627 17.5634C13.1427 17.5154 13.0437 17.4494 12.9657 17.3654C12.8877 17.2754 12.8277 17.1764 12.7857 17.0684C12.7497 16.9604 12.7317 16.8494 12.7317 16.7354C12.7317 16.6154 12.7527 16.4954 12.7947 16.3754C12.8367 16.2494 12.8967 16.1384 12.9747 16.0424C13.0587 15.9404 13.1607 15.8594 13.2807 15.7994C13.4007 15.7394 13.5387 15.7094 13.6947 15.7094Z" fill="#c68d53"/>
+                    </svg>
+                      
+                    <span>
+                      Problems
+
+                      <!-- <button class="close-tab" id="close-problems">
+                        <img src="./assets/icon/close-icon.svg" alt="Close Icon" loading="lazy">
+                      </button> -->
+                    </span>
+                  </a>
+                  <a href="#" class="tab-name displayed">
+                    <svg width="24" height="22" viewBox="0 0 24 22" fill="none" xmlns="http://www.w3.org/2000/svg" id="console-icon">
+                      <path d="M11.8636 16.3636H21.7273C22.2796 16.3636 22.7273 15.9159 22.7273 15.3636V2C22.7273 1.44772 22.2796 1 21.7273 1H2C1.44772 1 1 1.44771 1 2V15.3636C1 15.9159 1.44771 16.3636 2 16.3636H11.8636ZM11.8636 16.3636V20C11.8636 20.5523 11.4159 21 10.8636 21H1H22.7273" stroke="#c68d53" stroke-width="2"/>
+                    </svg>
+                      
+                    <span>
+                      Console
+
+                      <!-- <button class="close-tab" id="close-console">
+                        <img src="./assets/icon/close-icon.svg" alt="Close Icon" loading="lazy">
+                      </button> -->
+                    </span>
+                  </a>
+                </div>
+                <div class="content-body">
+                  
+                </div>
+              </div>
+            </div>
+
+            <!-- End Properties Section / Console Section -->
+
+            <!-- Flow Map Section -->
+
+            <div class="col-md-3 content-section minimized" id="flow-map-section">
+              <div class="content-box">
+                <div class="menu-tab" id="flow-map-tab">
+                  <a href="#" class="tab-name displayed">
+                    <svg width="39" height="19" viewBox="0 0 39 19" fill="none" xmlns="http://www.w3.org/2000/svg" id="connection-explorer-icon">
+                      <path d="M13.5294 12.3659C11.7466 13.9514 11.5 17.6753 11.5 17.6753L9 17.6752C9 17.6752 9.58682 13.0516 13 10.4997C18.3139 6.52668 21.7067 6.49925 27 10.4997C30.387 13.0595 31 17.6753 31 17.6753L29 17.6753C29 17.6753 27.9176 13.9663 26.1901 12.3659C22.5631 9.00572 17.2241 9.08023 13.5294 12.3659Z" fill="#c68d53" stroke="#c68d53" stroke-width="2"/>
+                      <path d="M24.5 17.9999H15.0599C15.0599 17.9999 14.8205 16.676 15.5 15.4999C17.1756 12.5998 22.5002 12.4997 24.0002 15.4997C24.6273 16.7541 24.5 17.9999 24.5 17.9999Z" fill="#c68d53" stroke="#c68d53" stroke-width="2"/>
+                      <path d="M6.46325 6.17573C0.991211 10.7352 1 17.5937 1 17.5937H5.49988C5.49988 17.5937 6.27234 10.6462 9.98382 7.93053C16.6817 3.02961 24.088 2.24401 30.3326 8.17558C33.9708 11.6315 33.9999 17.5937 33.9999 17.5937H37.4999C37.4999 17.5937 38.7039 10.8333 33.5 6.17573C25.6325 -0.865837 14.5749 -0.583204 6.46325 6.17573Z" fill="#c68d53" stroke="#c68d53" stroke-width="2"/>
+                    </svg>                      
+                    <span>
+                      Connection Explorer
+
+                      <!-- <button class="close-tab">
+                        <img src="./assets/icon/close-icon.svg" alt="Close Icon" loading="lazy">
+                      </button> -->
+                    </span>
+                  </a>
+                  <a href="#" class="tab-name displayed active">
+                    <svg width="20" height="16" viewBox="0 0 20 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M16.5897 1H3C1.89543 1 1 1.89543 1 3V13C1 14.1046 1.89543 15 3 15H16.5897C17.6943 15 18.5897 14.1046 18.5897 13V3C18.5897 1.89543 17.6943 1 16.5897 1Z" fill="#c68d53" stroke="#c68d53" stroke-width="1.5"/>
+                      <rect x="3.91602" y="4.58936" width="1.72074" height="1.52954" rx="0.764771" fill="white"/>
+                      <rect x="5.71094" y="8.46436" width="1.48148" height="1.36752" rx="0.683761" fill="white"/>
+                      <path d="M6.68359 5.76216L7.57737 5.04714C7.8977 4.79088 8.34204 4.75624 8.6982 4.95976L9.54625 5.44436C9.88523 5.63806 10.3059 5.61678 10.6236 5.38985L11.1166 5.03773C11.4643 4.78937 11.9314 4.78937 12.2791 5.03773L12.7013 5.33935C13.0542 5.59141 13.5293 5.5873 13.8778 5.32917L14.2001 5.09041C14.5708 4.81584 15.0812 4.83044 15.4356 5.12574L16.1993 5.76216" stroke="white"/>
+                      <path d="M8.875 9.09131H14.9149" stroke="white"/>
+                      <rect x="5.71094" y="10.4009" width="1.48148" height="1.36752" rx="0.683761" fill="white"/>
+                      <path d="M8.875 11.0283H14.9149" stroke="white"/>
+                    </svg>
+                                           
+                    <span>
+                      Outline
+
+                      <!-- <button class="close-tab" id="close-outline">
+                        <img src="./assets/icon/close-icon.svg" alt="Close Icon" loading="lazy">
+                      </button> -->
+                    </span>
+                  </a>
+                </div>
+
+                <div class="content-body">
+                  <div class="outline-content">
+                    <div class="search-group d-none">
+                      <input type="text" class="input-search" id="search" placeholder="Type filter text">
+                      <label for="search">
+                        <svg width="14" height="15" viewBox="0 0 14 15" fill="none" xmlns="http://www.w3.org/2000/svg" id="search-icon">
+                          <circle cx="5.92731" cy="5.92731" r="4.92731" stroke="#c68d53" stroke-width="2"/>
+                          <path d="M10.5195 9.16077L13.3462 12.0992C13.7072 12.4745 13.6957 13.0715 13.3203 13.4325C12.945 13.7936 12.3481 13.782 11.987 13.4067L9.16035 10.4682L10.5195 9.16077Z" fill="#c68d53"/>
+                          <path d="M7.96831 3.99992C8.71383 5.36473 9.25247 5.96891 7.9681 7.50038" stroke="#c68d53"/>
+                          <circle cx="7.40414" cy="8.40413" r="0.404135" fill="#c68d53"/>
+                        </svg>
+                      </label>
+                    </div>
+                    <ul class="list-group" id="flow-map-group">
+                      <li class="list-item">
+                        <span class="main-item">
+                          <svg width="13" height="19" viewBox="0 0 13 19" fill="none" xmlns="http://www.w3.org/2000/svg" id="uncal-icon">
+                            <path d="M3.88733 15.2974L2.68857 15.8989C2.52854 15.9792 2.36166 16.045 2.1899 16.0956L1.24059 16.3749C1.20152 16.3864 1.16133 16.3936 1.12071 16.3964L0.982184 16.4061C0.576402 16.4346 0.376418 16.9133 0.641414 17.2219C0.663959 17.2482 0.689197 17.272 0.716712 17.293L1.05519 17.5512L1.51948 17.8824L2.02597 18.1721L2.65909 18.5033L2.81039 18.5775C3.04616 18.6931 3.2961 18.7772 3.55379 18.8278L4.00974 18.9172L4.27586 18.9607C4.43585 18.9869 4.59769 19 4.7598 19H4.98052H5.09614C5.38326 19 5.66877 18.9572 5.94329 18.8731L6.04845 18.8409C6.15228 18.809 6.25288 18.7675 6.34891 18.7168L6.52846 18.622C6.67578 18.5442 6.80033 18.4294 6.88986 18.2889L6.95489 18.1869C6.96112 18.1771 6.96872 18.1682 6.97747 18.1606L7.07691 18.0739C7.14631 18.0134 7.25041 18.0861 7.21753 18.1721L7.05398 18.4929C7.05049 18.4998 7.0459 18.506 7.0404 18.5114C6.98354 18.5672 7.0471 18.66 7.11966 18.6272L7.85065 18.2963L8.36145 18.0063C8.55495 17.8964 8.73562 17.7654 8.90014 17.6155L9.24351 17.3028L9.7008 16.9384C9.82769 16.8373 9.8659 16.6609 9.79221 16.5163L9.53896 15.8126L9.24351 15.1503L9.16728 14.8887C9.10573 14.6774 9.06761 14.46 9.05362 14.2404L8.99026 13.2462L9.07468 12.0871L9.13058 11.7582C9.17142 11.5179 9.37963 11.342 9.62338 11.342L10.3409 11.2593L10.7381 11.2333C10.8951 11.223 11.0511 11.2004 11.2046 11.1657L11.3353 11.1361C11.4601 11.1079 11.5825 11.0702 11.7017 11.0235L11.7389 11.0089C11.8758 10.9552 12.0069 10.8875 12.13 10.807L12.1897 10.768C12.3627 10.6549 12.5143 10.512 12.6375 10.3459L12.7403 10.2072C12.7726 10.1637 12.7984 10.1158 12.8169 10.0648C12.9194 9.78331 12.783 9.47087 12.5067 9.35477L12.1136 9.18954L10.8052 8.7342L9.2013 8.19608L8.86364 8.0305C8.64049 7.92108 8.43974 7.77095 8.2717 7.58784L8.2555 7.57019C8.18267 7.49083 8.10392 7.41713 8.01991 7.34972L7.68182 7.07843L7.5652 7.00491C7.31048 6.84431 7.24859 6.4997 7.43151 6.2605C7.45758 6.2264 7.47927 6.18916 7.49606 6.14965L7.68182 5.71242L7.80344 5.42615C7.86297 5.28604 7.91174 5.14161 7.94934 4.9941L8.00676 4.76887C8.04333 4.6254 8.06923 4.47943 8.08425 4.33214L8.1461 3.72549V3.17386C8.1461 2.94421 8.05372 2.72421 7.88976 2.56341L7.82595 2.50083C7.81433 2.48943 7.80125 2.47963 7.78705 2.47167L7.65743 2.39903C7.59276 2.36279 7.51299 2.40953 7.51299 2.48366V2.91961C7.51299 3.09776 7.49712 3.27555 7.46557 3.45089L7.38636 3.89107L7.25974 4.42919L7.09091 5.05011L6.88551 5.55372C6.85381 5.63143 6.80997 5.70361 6.75563 5.76757L6.67194 5.86606C6.64219 5.90107 6.60424 5.92817 6.56147 5.94495C6.4709 5.98048 6.36834 5.96614 6.29099 5.90714L6.03571 5.71242L5.78247 5.46405L5.48036 5.13484C5.42859 5.07843 5.38099 5.01832 5.33794 4.955L5.10101 4.60645C5.0775 4.57187 5.06494 4.53102 5.06494 4.48921C5.06494 4.44999 5.07599 4.41158 5.09683 4.37836L5.30505 4.04652C5.36986 3.94324 5.42242 3.83275 5.46166 3.7173L5.61364 3.27015L5.78247 2.69063L5.86688 2.15251L5.90909 1.4488V0.869281V0.473222C5.90909 0.355877 5.86189 0.243466 5.77811 0.161302L5.73374 0.11779C5.71033 0.094828 5.6815 0.0781494 5.64992 0.069301L5.59077 0.0527271C5.49627 0.0262477 5.4026 0.0972804 5.4026 0.195419C5.4026 0.203109 5.402 0.210788 5.40081 0.218385L5.35443 0.514049C5.3303 0.667849 5.31818 0.823292 5.31818 0.978972V1.01547C5.31818 1.19362 5.30231 1.37141 5.27076 1.54675L5.19156 1.98693L5.06494 2.48366L4.8539 3.02179L4.59714 3.70527C4.57892 3.75376 4.51686 3.7675 4.47988 3.73123C4.47599 3.72742 4.47255 3.72317 4.46962 3.71858L4.37124 3.5642C4.29933 3.45137 4.24122 3.33031 4.19817 3.20362L4.09416 2.8976L3.92532 2.40087L3.75649 1.86275L3.58766 1.11765L3.52491 0.563746C3.5109 0.440063 3.45474 0.324973 3.36587 0.237817L3.25554 0.129615C3.22494 0.0996015 3.18378 0.0827887 3.14092 0.0827887C3.05851 0.0827887 2.98895 0.144047 2.97853 0.225794L2.95455 0.413943V0.95207V1.14011C2.95455 1.4271 2.99722 1.71249 3.08117 1.98693L3.33442 2.8976L3.70964 3.86776C3.76891 4.02102 3.84068 4.16915 3.92421 4.31066L4.26299 4.88453L4.8539 5.67102L5.61364 6.5403L6.25466 7.12968C6.27743 7.15062 6.30281 7.16853 6.33017 7.18298L6.57694 7.3133C6.69754 7.37698 6.71001 7.54487 6.60015 7.62568C6.53959 7.67022 6.4581 7.67366 6.394 7.63438L6.16234 7.49237L5.71646 7.12797C5.50999 6.95923 5.26745 6.84027 5.00763 6.78032L4.81897 6.73678C4.7305 6.71637 4.63896 6.71284 4.54918 6.72639L4.19476 6.77986C3.89256 6.82546 3.72015 7.14989 3.85147 7.42586C3.87243 7.46992 3.90034 7.51032 3.93412 7.54552L4.26684 7.89222C4.46013 8.09363 4.68277 8.26466 4.9272 8.39951L5.1163 8.50383C5.1943 8.54686 5.27741 8.57989 5.36366 8.60215C5.7719 8.70751 6.07902 9.04459 6.14604 9.46085L6.14854 9.4764C6.15772 9.53344 6.16234 9.59111 6.16234 9.64888V11.5184C6.16234 11.7587 6.13347 11.9981 6.07635 12.2315L6.01234 12.4931C5.94386 12.7729 5.83545 13.0414 5.69042 13.2903L5.4026 13.7843L5.14099 14.1808C5.00638 14.3849 4.84733 14.5717 4.66739 14.7371L4.57239 14.8245C4.36712 15.0132 4.13655 15.1724 3.88733 15.2974Z" fill="#c68d53"/>
+                          </svg>
+                          Project A
+                        </span>
+                        <div class="list-sub-item">
+                          flow-a : <span class="unhighlighted-text"><i>Flow</i></span>
+                        </div>
+                        <div class="list-sub-item">
+                          flow-b : <span class="unhighlighted-text"><i>Flow</i></span>
+                        </div>
+                        <div class="list-sub-item">
+                          flow-b : <span class="unhighlighted-text"><i>Flow</i></span>
+                        </div>
+                        <div class="list-sub-item">
+                          flow-b : <span class="unhighlighted-text"><i>Flow</i></span>
+                        </div>
+                          <div class="list-sub-item">
+                            flow-b : <span class="unhighlighted-text"><i>Flow</i></span>
+                          </div>
+                      </li>
+                      <li class="list-item">
+                        <span class="main-item">
+                          <svg width="13" height="19" viewBox="0 0 13 19" fill="none" xmlns="http://www.w3.org/2000/svg" id="uncal-icon">
+                            <path d="M3.88733 15.2974L2.68857 15.8989C2.52854 15.9792 2.36166 16.045 2.1899 16.0956L1.24059 16.3749C1.20152 16.3864 1.16133 16.3936 1.12071 16.3964L0.982184 16.4061C0.576402 16.4346 0.376418 16.9133 0.641414 17.2219C0.663959 17.2482 0.689197 17.272 0.716712 17.293L1.05519 17.5512L1.51948 17.8824L2.02597 18.1721L2.65909 18.5033L2.81039 18.5775C3.04616 18.6931 3.2961 18.7772 3.55379 18.8278L4.00974 18.9172L4.27586 18.9607C4.43585 18.9869 4.59769 19 4.7598 19H4.98052H5.09614C5.38326 19 5.66877 18.9572 5.94329 18.8731L6.04845 18.8409C6.15228 18.809 6.25288 18.7675 6.34891 18.7168L6.52846 18.622C6.67578 18.5442 6.80033 18.4294 6.88986 18.2889L6.95489 18.1869C6.96112 18.1771 6.96872 18.1682 6.97747 18.1606L7.07691 18.0739C7.14631 18.0134 7.25041 18.0861 7.21753 18.1721L7.05398 18.4929C7.05049 18.4998 7.0459 18.506 7.0404 18.5114C6.98354 18.5672 7.0471 18.66 7.11966 18.6272L7.85065 18.2963L8.36145 18.0063C8.55495 17.8964 8.73562 17.7654 8.90014 17.6155L9.24351 17.3028L9.7008 16.9384C9.82769 16.8373 9.8659 16.6609 9.79221 16.5163L9.53896 15.8126L9.24351 15.1503L9.16728 14.8887C9.10573 14.6774 9.06761 14.46 9.05362 14.2404L8.99026 13.2462L9.07468 12.0871L9.13058 11.7582C9.17142 11.5179 9.37963 11.342 9.62338 11.342L10.3409 11.2593L10.7381 11.2333C10.8951 11.223 11.0511 11.2004 11.2046 11.1657L11.3353 11.1361C11.4601 11.1079 11.5825 11.0702 11.7017 11.0235L11.7389 11.0089C11.8758 10.9552 12.0069 10.8875 12.13 10.807L12.1897 10.768C12.3627 10.6549 12.5143 10.512 12.6375 10.3459L12.7403 10.2072C12.7726 10.1637 12.7984 10.1158 12.8169 10.0648C12.9194 9.78331 12.783 9.47087 12.5067 9.35477L12.1136 9.18954L10.8052 8.7342L9.2013 8.19608L8.86364 8.0305C8.64049 7.92108 8.43974 7.77095 8.2717 7.58784L8.2555 7.57019C8.18267 7.49083 8.10392 7.41713 8.01991 7.34972L7.68182 7.07843L7.5652 7.00491C7.31048 6.84431 7.24859 6.4997 7.43151 6.2605C7.45758 6.2264 7.47927 6.18916 7.49606 6.14965L7.68182 5.71242L7.80344 5.42615C7.86297 5.28604 7.91174 5.14161 7.94934 4.9941L8.00676 4.76887C8.04333 4.6254 8.06923 4.47943 8.08425 4.33214L8.1461 3.72549V3.17386C8.1461 2.94421 8.05372 2.72421 7.88976 2.56341L7.82595 2.50083C7.81433 2.48943 7.80125 2.47963 7.78705 2.47167L7.65743 2.39903C7.59276 2.36279 7.51299 2.40953 7.51299 2.48366V2.91961C7.51299 3.09776 7.49712 3.27555 7.46557 3.45089L7.38636 3.89107L7.25974 4.42919L7.09091 5.05011L6.88551 5.55372C6.85381 5.63143 6.80997 5.70361 6.75563 5.76757L6.67194 5.86606C6.64219 5.90107 6.60424 5.92817 6.56147 5.94495C6.4709 5.98048 6.36834 5.96614 6.29099 5.90714L6.03571 5.71242L5.78247 5.46405L5.48036 5.13484C5.42859 5.07843 5.38099 5.01832 5.33794 4.955L5.10101 4.60645C5.0775 4.57187 5.06494 4.53102 5.06494 4.48921C5.06494 4.44999 5.07599 4.41158 5.09683 4.37836L5.30505 4.04652C5.36986 3.94324 5.42242 3.83275 5.46166 3.7173L5.61364 3.27015L5.78247 2.69063L5.86688 2.15251L5.90909 1.4488V0.869281V0.473222C5.90909 0.355877 5.86189 0.243466 5.77811 0.161302L5.73374 0.11779C5.71033 0.094828 5.6815 0.0781494 5.64992 0.069301L5.59077 0.0527271C5.49627 0.0262477 5.4026 0.0972804 5.4026 0.195419C5.4026 0.203109 5.402 0.210788 5.40081 0.218385L5.35443 0.514049C5.3303 0.667849 5.31818 0.823292 5.31818 0.978972V1.01547C5.31818 1.19362 5.30231 1.37141 5.27076 1.54675L5.19156 1.98693L5.06494 2.48366L4.8539 3.02179L4.59714 3.70527C4.57892 3.75376 4.51686 3.7675 4.47988 3.73123C4.47599 3.72742 4.47255 3.72317 4.46962 3.71858L4.37124 3.5642C4.29933 3.45137 4.24122 3.33031 4.19817 3.20362L4.09416 2.8976L3.92532 2.40087L3.75649 1.86275L3.58766 1.11765L3.52491 0.563746C3.5109 0.440063 3.45474 0.324973 3.36587 0.237817L3.25554 0.129615C3.22494 0.0996015 3.18378 0.0827887 3.14092 0.0827887C3.05851 0.0827887 2.98895 0.144047 2.97853 0.225794L2.95455 0.413943V0.95207V1.14011C2.95455 1.4271 2.99722 1.71249 3.08117 1.98693L3.33442 2.8976L3.70964 3.86776C3.76891 4.02102 3.84068 4.16915 3.92421 4.31066L4.26299 4.88453L4.8539 5.67102L5.61364 6.5403L6.25466 7.12968C6.27743 7.15062 6.30281 7.16853 6.33017 7.18298L6.57694 7.3133C6.69754 7.37698 6.71001 7.54487 6.60015 7.62568C6.53959 7.67022 6.4581 7.67366 6.394 7.63438L6.16234 7.49237L5.71646 7.12797C5.50999 6.95923 5.26745 6.84027 5.00763 6.78032L4.81897 6.73678C4.7305 6.71637 4.63896 6.71284 4.54918 6.72639L4.19476 6.77986C3.89256 6.82546 3.72015 7.14989 3.85147 7.42586C3.87243 7.46992 3.90034 7.51032 3.93412 7.54552L4.26684 7.89222C4.46013 8.09363 4.68277 8.26466 4.9272 8.39951L5.1163 8.50383C5.1943 8.54686 5.27741 8.57989 5.36366 8.60215C5.7719 8.70751 6.07902 9.04459 6.14604 9.46085L6.14854 9.4764C6.15772 9.53344 6.16234 9.59111 6.16234 9.64888V11.5184C6.16234 11.7587 6.13347 11.9981 6.07635 12.2315L6.01234 12.4931C5.94386 12.7729 5.83545 13.0414 5.69042 13.2903L5.4026 13.7843L5.14099 14.1808C5.00638 14.3849 4.84733 14.5717 4.66739 14.7371L4.57239 14.8245C4.36712 15.0132 4.13655 15.1724 3.88733 15.2974Z" fill="#c68d53"/>
+                          </svg>
+                          Project A
+                        </span>
+                        <div class="list-sub-item">
+                          flow-a : <span class="unhighlighted-text"><i>Flow</i></span>
+                        </div>
+                        <div class="list-sub-item">
+                          flow-b : <span class="unhighlighted-text"><i>Flow</i></span>
+                        </div>
+                      </li>
+                      <li class="list-item">
+                        <span class="main-item">
+                          <svg width="13" height="19" viewBox="0 0 13 19" fill="none" xmlns="http://www.w3.org/2000/svg" id="uncal-icon">
+                            <path d="M3.88733 15.2974L2.68857 15.8989C2.52854 15.9792 2.36166 16.045 2.1899 16.0956L1.24059 16.3749C1.20152 16.3864 1.16133 16.3936 1.12071 16.3964L0.982184 16.4061C0.576402 16.4346 0.376418 16.9133 0.641414 17.2219C0.663959 17.2482 0.689197 17.272 0.716712 17.293L1.05519 17.5512L1.51948 17.8824L2.02597 18.1721L2.65909 18.5033L2.81039 18.5775C3.04616 18.6931 3.2961 18.7772 3.55379 18.8278L4.00974 18.9172L4.27586 18.9607C4.43585 18.9869 4.59769 19 4.7598 19H4.98052H5.09614C5.38326 19 5.66877 18.9572 5.94329 18.8731L6.04845 18.8409C6.15228 18.809 6.25288 18.7675 6.34891 18.7168L6.52846 18.622C6.67578 18.5442 6.80033 18.4294 6.88986 18.2889L6.95489 18.1869C6.96112 18.1771 6.96872 18.1682 6.97747 18.1606L7.07691 18.0739C7.14631 18.0134 7.25041 18.0861 7.21753 18.1721L7.05398 18.4929C7.05049 18.4998 7.0459 18.506 7.0404 18.5114C6.98354 18.5672 7.0471 18.66 7.11966 18.6272L7.85065 18.2963L8.36145 18.0063C8.55495 17.8964 8.73562 17.7654 8.90014 17.6155L9.24351 17.3028L9.7008 16.9384C9.82769 16.8373 9.8659 16.6609 9.79221 16.5163L9.53896 15.8126L9.24351 15.1503L9.16728 14.8887C9.10573 14.6774 9.06761 14.46 9.05362 14.2404L8.99026 13.2462L9.07468 12.0871L9.13058 11.7582C9.17142 11.5179 9.37963 11.342 9.62338 11.342L10.3409 11.2593L10.7381 11.2333C10.8951 11.223 11.0511 11.2004 11.2046 11.1657L11.3353 11.1361C11.4601 11.1079 11.5825 11.0702 11.7017 11.0235L11.7389 11.0089C11.8758 10.9552 12.0069 10.8875 12.13 10.807L12.1897 10.768C12.3627 10.6549 12.5143 10.512 12.6375 10.3459L12.7403 10.2072C12.7726 10.1637 12.7984 10.1158 12.8169 10.0648C12.9194 9.78331 12.783 9.47087 12.5067 9.35477L12.1136 9.18954L10.8052 8.7342L9.2013 8.19608L8.86364 8.0305C8.64049 7.92108 8.43974 7.77095 8.2717 7.58784L8.2555 7.57019C8.18267 7.49083 8.10392 7.41713 8.01991 7.34972L7.68182 7.07843L7.5652 7.00491C7.31048 6.84431 7.24859 6.4997 7.43151 6.2605C7.45758 6.2264 7.47927 6.18916 7.49606 6.14965L7.68182 5.71242L7.80344 5.42615C7.86297 5.28604 7.91174 5.14161 7.94934 4.9941L8.00676 4.76887C8.04333 4.6254 8.06923 4.47943 8.08425 4.33214L8.1461 3.72549V3.17386C8.1461 2.94421 8.05372 2.72421 7.88976 2.56341L7.82595 2.50083C7.81433 2.48943 7.80125 2.47963 7.78705 2.47167L7.65743 2.39903C7.59276 2.36279 7.51299 2.40953 7.51299 2.48366V2.91961C7.51299 3.09776 7.49712 3.27555 7.46557 3.45089L7.38636 3.89107L7.25974 4.42919L7.09091 5.05011L6.88551 5.55372C6.85381 5.63143 6.80997 5.70361 6.75563 5.76757L6.67194 5.86606C6.64219 5.90107 6.60424 5.92817 6.56147 5.94495C6.4709 5.98048 6.36834 5.96614 6.29099 5.90714L6.03571 5.71242L5.78247 5.46405L5.48036 5.13484C5.42859 5.07843 5.38099 5.01832 5.33794 4.955L5.10101 4.60645C5.0775 4.57187 5.06494 4.53102 5.06494 4.48921C5.06494 4.44999 5.07599 4.41158 5.09683 4.37836L5.30505 4.04652C5.36986 3.94324 5.42242 3.83275 5.46166 3.7173L5.61364 3.27015L5.78247 2.69063L5.86688 2.15251L5.90909 1.4488V0.869281V0.473222C5.90909 0.355877 5.86189 0.243466 5.77811 0.161302L5.73374 0.11779C5.71033 0.094828 5.6815 0.0781494 5.64992 0.069301L5.59077 0.0527271C5.49627 0.0262477 5.4026 0.0972804 5.4026 0.195419C5.4026 0.203109 5.402 0.210788 5.40081 0.218385L5.35443 0.514049C5.3303 0.667849 5.31818 0.823292 5.31818 0.978972V1.01547C5.31818 1.19362 5.30231 1.37141 5.27076 1.54675L5.19156 1.98693L5.06494 2.48366L4.8539 3.02179L4.59714 3.70527C4.57892 3.75376 4.51686 3.7675 4.47988 3.73123C4.47599 3.72742 4.47255 3.72317 4.46962 3.71858L4.37124 3.5642C4.29933 3.45137 4.24122 3.33031 4.19817 3.20362L4.09416 2.8976L3.92532 2.40087L3.75649 1.86275L3.58766 1.11765L3.52491 0.563746C3.5109 0.440063 3.45474 0.324973 3.36587 0.237817L3.25554 0.129615C3.22494 0.0996015 3.18378 0.0827887 3.14092 0.0827887C3.05851 0.0827887 2.98895 0.144047 2.97853 0.225794L2.95455 0.413943V0.95207V1.14011C2.95455 1.4271 2.99722 1.71249 3.08117 1.98693L3.33442 2.8976L3.70964 3.86776C3.76891 4.02102 3.84068 4.16915 3.92421 4.31066L4.26299 4.88453L4.8539 5.67102L5.61364 6.5403L6.25466 7.12968C6.27743 7.15062 6.30281 7.16853 6.33017 7.18298L6.57694 7.3133C6.69754 7.37698 6.71001 7.54487 6.60015 7.62568C6.53959 7.67022 6.4581 7.67366 6.394 7.63438L6.16234 7.49237L5.71646 7.12797C5.50999 6.95923 5.26745 6.84027 5.00763 6.78032L4.81897 6.73678C4.7305 6.71637 4.63896 6.71284 4.54918 6.72639L4.19476 6.77986C3.89256 6.82546 3.72015 7.14989 3.85147 7.42586C3.87243 7.46992 3.90034 7.51032 3.93412 7.54552L4.26684 7.89222C4.46013 8.09363 4.68277 8.26466 4.9272 8.39951L5.1163 8.50383C5.1943 8.54686 5.27741 8.57989 5.36366 8.60215C5.7719 8.70751 6.07902 9.04459 6.14604 9.46085L6.14854 9.4764C6.15772 9.53344 6.16234 9.59111 6.16234 9.64888V11.5184C6.16234 11.7587 6.13347 11.9981 6.07635 12.2315L6.01234 12.4931C5.94386 12.7729 5.83545 13.0414 5.69042 13.2903L5.4026 13.7843L5.14099 14.1808C5.00638 14.3849 4.84733 14.5717 4.66739 14.7371L4.57239 14.8245C4.36712 15.0132 4.13655 15.1724 3.88733 15.2974Z" fill="#c68d53"/>
+                          </svg>
+                          Project A
+                        </span>
+                        <div class="list-sub-item">
+                          flow-a : <span class="unhighlighted-text"><i>Flow</i></span>
+                        </div>
+                        <div class="list-sub-item">
+                          flow-b : <span class="unhighlighted-text"><i>Flow</i></span>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- End Flow Map Section -->
+
+          </div>
+
+          <!-- End Content Wrapper -->
+
+        </div>
+      </section>
+
+      <!-- End Content -->
+
+    <!-- Modal -->
+
+      <!--Rename Flow Modal -->
+      <div class="modal fade" id="renameFlowModal" tabindex="-1" role="dialog" aria-labelledby="renameFlowModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="renameFlowModalTitle">Rename Flow</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="input-group">
+                  <label for="input-flow-name">Flow Name:</label>
+                  <input type="text" class="input-field" id="input-flow-name" placeholder="Flow Name">
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" id="saveFlowName">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Create Workspace Modal -->
+      <div class="modal fade" id="createWorkspaceModal" tabindex="-1" role="dialog" aria-labelledby="createWorkspaceModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="createWorkspaceModalTitle">Create New Workspace</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="input-group">
+                  <label for="input-workspace-name">Workspace Name:</label>
+                  <input type="text" class="input-field" id="input-workspace-name" placeholder="Workspace Name">
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" id="createWorkspaceName">Create Workspace</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Rename Workspace Modal -->
+      <div class="modal fade" id="renameWorkspaceModal" tabindex="-1" role="dialog" aria-labelledby="renameWorkspaceModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="renameWorkspaceModalTitle">Rename Workspace</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="input-group">
+                  <label for="input-workspace-name">Workspace Name:</label>
+                  <input type="text" class="input-field" id="input-workspace-name" placeholder="Workspace Name">
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" id="updateWorkspaceName">Save Changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Delete Workspace Modal -->
+      <div class="modal fade" id="deleteWorkspaceModal" tabindex="-1" role="dialog" aria-labelledby="deleteWorkspaceModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title text-center" id="deleteWorkspaceModalTitle">Delete Workspace</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              Are you sure you want to delete this Workspace? 
+            </div> 
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-danger" id="deleteWorkspace">Delete</button>
+            </div> 
+          </div>
+        </div>
+      </div>
+
+      <!-- Create Project Modal -->
+      <div class="modal fade" id="createProjectModal" tabindex="-1" role="dialog" aria-labelledby="createProjectModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="createProjectModalTitle">Create New Project</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="input-group">
+                  <label for="input-project-name">Project Name:</label>
+                  <input type="text" class="input-field" id="input-project-name" placeholder="Project Name">
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" id="createProjectName">Create Project</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Rename Project Modal -->
+      <div class="modal fade" id="renameProjectModal" tabindex="-1" role="dialog" aria-labelledby="renameProjectModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="renameProjectModalTitle">Rename Project</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="input-group">
+                  <label for="input-project-name">Project Name:</label>
+                  <input type="text" class="input-field" id="input-project-name" placeholder="Project Name">
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" id="updateProjectName">Save Changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Delete Project Modal -->
+      <div class="modal fade" id="deleteProjectModal" tabindex="-1" role="dialog" aria-labelledby="deleteProjectModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title text-center" id="deleteProjectModalTitle">Delete Project</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              Are you sure you want to delete this Project? 
+            </div> 
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-danger" id="deleteProject">Delete</button>
+            </div> 
+          </div>
+        </div>
+      </div>
+
+      <!-- Edit Profile Modal -->
+      <div class="modal fade" id="editProfileModal" tabindex="-1" role="dialog" aria-labelledby="editProfileModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title text-center" id="editProfileModalTitle">Edit Profile</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+
+              <div class="tab-group">
+                <a href="#" class="edit-profile-tab active" id="main-profile">Main Profile</a>
+                <a href="#" class="edit-profile-tab ml-2" id="change-password">Change Password</a>
+              </div>
+
+              <form id="main-profile-form">
+
+                <div class="input-group mb-3">
+                  <label for="image-upload" class="upload-image-label">Upload Image</label>
+                  <div class="preview-zone hidden">
+                    <div class="preview-header border-bottom">
+                      <h5 class="preview-header-title text-center">Preview</h5>
+                      <a class="reset-image">
+                        <img src="./assets/icon/close-xl-icon.svg" alt="Close Icon" loading="lazy">
+                      </a>
+                    </div>
+                    <div class="preview-body text-center mt-2">
+
+                    </div>
+                  </div>
+                  <div class="dropzone-wrapper">
+                    <div class="dropzone-description">
+                      <img src="./assets/icon/change-picture-icon.svg" alt="Change Picture" width="50">
+                      <p>Choose an image file or drag it here</p>
+                    </div>
+                    <input type="file" name="profile-image" id="image-upload" accept="image/*" class="dropzone"> 
+                  </div>
+                </div>
+                <div class="input-group mb-2">
+                  <label for="change-username">Username:</label>
+                  <input type="text" class="input-field" id="change-username" placeholder="Username">
+                </div>
+                <div class="input-group mb-2">
+                  <label for="change-full-name">Full Name:</label>
+                  <input type="text" class="input-field" id="change-full-name" placeholder="Full Name">
+                </div>
+                <div class="input-group mb-2">
+                  <label for="change-email">Email:</label>
+                  <input type="email" class="input-field" id="change-email" placeholder="Email">
+                </div>
+                <div class="input-group mb-3">
+                  <label for="change-trial">Trial:</label>
+                  <input type="text" class="input-field" id="change-trial" placeholder="Trial Days">
+                </div>
+                <div class="input-group d-flex flex-row align-items-center justify-content-center">
+                  <button class="btn btn-primary mx-1" id="save-main-profile">Save</button>
+                  <button class="btn btn-secondary mx-1" data-dismiss="modal">Cancel</button>
+                </div>
+              </form>
+
+              <form class="d-none" id="change-password-form">
+                <div class="input-group mb-2">
+                  <label for="current-password">Current Password:</label>
+                  <input type="password" class="input-field" id="current-password" placeholder="Current Password">
+                </div>
+                <div class="input-group mb-2">
+                  <label for="new-password">New Password:</label>
+                  <input type="password" class="input-field" id="new-password" placeholder="New Password">
+                </div>
+                <div class="input-group mb-3">
+                  <label for="verify-new-password">Verify New Password:</label>
+                  <input type="password" class="input-field" id="verify-new-password" placeholder="Verify New Password">
+                </div>
+                <div class="input-group d-flex flex-row align-items-center justify-content-center">
+                  <button class="btn btn-primary mx-1" id="save-change-password">Save</button>
+                  <button class="btn btn-secondary mx-1" data-dismiss="modal">Cancel</button>
+                </div>
+              </form>
+            </div>  
+          </div>
+        </div>
+      </div>
+
+      <!-- Logout Modal -->
+      <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="logoutModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title text-center" id="logoutModalTitle">Logout</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              Are you sure you want to leave this page? 
+            </div> 
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-danger" id="logout">Logout</button>
+            </div> 
+          </div>
+        </div>
+      </div>
+
+
+    <!-- End Modal -->
+
+      
+    <script src="./assets/style/js/jquery.min.js"></script>
+    <script src="./assets/style/js/jquery-ui.min.js"></script>
+    <script src="./assets/style/js/popper.min.js"></script>
+    <script src="./assets/style/js/bootstrap/bootstrap.min.js"></script>
+    <!-- For Some Element Action -->
+    <script src="./assets/style/js/script.js"></script>
+    <script src="./assets/style/js/pre-loader.js"></script>
+    <!-- For Flow Diagram Action -->
+    <script src="./assets/style/js/flow-diagram.js"></script>
+    <!-- For Components Action -->
+    <script src="./assets/style/js/components.js"></script>
+    <!-- For Context Menu Action -->
+    <script src="./assets/style/js/contextMenu/jquery.contextMenu.js"></script>
+    <script src="./assets/style/js/contextMenu/jquery.ui.position.min.js"></script>
+
+  </body>
+</html>

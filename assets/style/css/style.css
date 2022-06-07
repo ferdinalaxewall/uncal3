@@ -315,6 +315,7 @@ button:focus{
 
 .floating-properties .properties-body #input-output .input-output-content .list-group{
     padding-left: 20px;
+    display: inline-flex;
 }
 
 .floating-properties .properties-body #input-output .input-output-content .list-group .list-item{
@@ -366,6 +367,7 @@ button:focus{
 .floating-properties .properties-body #input-output .input-output-content .list-group .list-item.has-child::before{
     opacity: 1;
     left: -20px;
+    cursor: pointer;
 }
 
 .floating-properties .properties-body #input-output .input-output-content .list-group .list-item .list-sub-item{
@@ -973,7 +975,7 @@ button:focus{
 }
 
 .content .container-fluid .row .sidebar .sidebar-content{
-    margin-top: 40px;
+    /* margin-top: 40px; */
     width: 100%;
 }
 
@@ -1277,6 +1279,91 @@ button:focus{
     padding-left: 5px;
 }
 
+/* Minimize & Maximize Section */
+
+.content .container-fluid .row #flow-section.maximize, .content .container-fluid .row #palette-section.maximize{
+    transition: all .15s linear;
+    -webkit-transition: all .15s linear;
+    -moz-transition: all .15s linear;
+    -ms-transition: all .15s linear;
+    -o-transition: all .15s linear;
+}
+
+.content .container-fluid .row #flow-section.maximize, .content .container-fluid .row #palette-section.maximize{
+    height: calc(70vh + 100vh - 70vh - 25px - 42.8px - 46.5px);
+}
+
+.content .container-fluid .row #flow-section.maximize .content-box .content-body, .content .container-fluid .row #palette-section.maximize .content-box .content-body{
+    max-height: calc(70vh + 100vh - 70vh - 25px - 42.8px - 46.5px - 54px);
+}
+
+.content .container-fluid .row .content-section.maximize .content-box .content-body .elements-list{
+    max-height: calc( 70vh + 100vh - 70vh - 25px - 42.8px - 46.5px - 36.8px - 40px - 45px - 20px - 40px);
+}
+
+.content .container-fluid .row #properties-section, .content .container-fluid .row #flow-map-section, .content .container-fluid .row #properties-section .content-box, .content .container-fluid .row #flow-map-section .content-box{
+    position: relative;
+    z-index: 1000;
+    transition: all .15s linear;
+    -webkit-transition: all .15s linear;
+    -moz-transition: all .15s linear;
+    -ms-transition: all .15s linear;
+    -o-transition: all .15s linear;
+}
+
+.content .container-fluid .row #properties-section.minimized, .content .container-fluid .row #flow-map-section.minimized{
+    height: 50px;
+}
+
+.content .container-fluid .row #properties-section.minimized .content-box, .content .container-fluid .row #flow-map-section.minimized .content-box{
+    height: 41px;
+}
+
+.content .container-fluid .row #properties-section.minimized .content-box .menu-tab, .content .container-fluid .row #flow-map-section.minimized .content-box .menu-tab{
+    height: 40px;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+}
+
+.content .container-fluid .row #properties-section.minimized .content-box .menu-tab{
+    justify-content: center;
+}
+
+.content .container-fluid .row #properties-section.minimized .content-box .menu-tab .tab-name{
+    position: relative;
+    padding: 0 20px;
+}
+
+.content .container-fluid .row #properties-section.minimized .content-box .menu-tab .tab-name:not(:first-child){
+    margin-left: 0;
+}
+
+.content .container-fluid .row #properties-section.minimized .content-box .menu-tab .tab-name:not(:first-child)::before{
+    content: '';
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    height: 90%;
+    width: 2px;
+    background-color: var(--clr-primary);
+    transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+}
+
+.content .container-fluid .row #properties-section.minimized .content-box .menu-tab .tab-name.active span::after{
+    display: none;
+}
+
+.content .container-fluid .row #properties-section.minimized .content-box .content-body, .content .container-fluid .row #flow-map-section.minimized .content-box .content-body{
+    display: none;
+}
 
 /* Flow Section Style */
 
@@ -1291,7 +1378,7 @@ button:focus{
 
 .content .container-fluid .row #flow-section .content-box .content-body{
     /* max-height: 65vh; */
-    max-height: calc(70vh - 45px);
+    max-height: calc(70vh - 55px);
 }
 
 .content .container-fluid .row #flow-section .content-box .content-body::-webkit-scrollbar{
@@ -1301,8 +1388,8 @@ button:focus{
 
 .content .container-fluid .row #flow-section .content-box .content-body::-webkit-scrollbar-track{
     background-color: var(--clr-white);
-    border-radius: 10px;
-    border: 1px solid var(--clr-primary);
+    /* border-radius: 10px;
+    border: 1px solid var(--clr-primary); */
 }
 
 .content .container-fluid .row #flow-section .content-box .content-body::-webkit-scrollbar-thumb{
@@ -1330,6 +1417,9 @@ button:focus{
 }   
 
 .content .container-fluid .row #flow-section .content-box #flow-container{
+    margin-right: 5px;
+    margin-top: 5px;
+    margin-left: 5px;
     transform-origin: left top;  
 }
 
@@ -1419,7 +1509,7 @@ button:focus{
 }
 
 .content .container-fluid .row .content-section .content-box .menu-tab .tab-name:not(:first-child){
-    margin-left: 5px;
+    margin-left: 10px;
 }
 
 .content .container-fluid .row .content-section .content-box .menu-tab .tab-name{
@@ -1844,7 +1934,7 @@ button:focus{
     width: 100%;
     padding-left: 10px;
     padding-right: 27.5px;
-    background-color: var(--clr-search-input);
+    background-color: var(--clr-white);
     border: 1px solid var(--clr-border);
     border-radius: 5px;
     transition: all .15s linear;
@@ -1889,7 +1979,7 @@ button:focus{
 .content .container-fluid .row .content-section .content-box .content-body .search-by-category{
     display: flex;
     flex-wrap: wrap;
-    margin-top: 10px;
+    /* margin-top: 10px; */
 }
 
 .content .container-fluid .row .content-section .content-box .content-body .search-by-category .category-button{
@@ -1953,7 +2043,7 @@ button:focus{
     padding-top: 2px;
     margin: 10px 0;
     /* max-height: 48.5vh; */
-    max-height: calc(70vh - 36.8px - 40px - 55px - 30px - 40px);
+    max-height: calc(70vh - 36.8px - 40px - 45px - 20px - 40px);
     overflow-y: auto;
     overflow-x: visible;
 }
@@ -2029,6 +2119,47 @@ button:focus{
 
 
 /* Properties Section Style */
+
+.content .container-fluid .row #properties-section .minimize-section{
+    height: 40px;
+    width: 40px;
+    background: var(--clr-menu-tab);
+    border: 1px solid var(--clr-border);
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+}
+
+.content .container-fluid .row #properties-section .minimize-section:hover{
+    opacity: 0.7;
+}
+
+.content .container-fluid .row #properties-section .minimize-section img{
+    transition: all .15s linear;
+    -webkit-transition: all .15s linear;
+    -moz-transition: all .15s linear;
+    -ms-transition: all .15s linear;
+    -o-transition: all .15s linear;
+    transform: rotate(-180deg);
+    -webkit-transform: rotate(-180deg);
+    -moz-transform: rotate(-180deg);
+    -ms-transform: rotate(-180deg);
+    -o-transform: rotate(-180deg);
+}
+
+.content .container-fluid .row #properties-section .minimize-section.minimized img{
+    transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+}
+
+.content .container-fluid .row #properties-section .content-box{
+    width: calc(100% - 50px);
+}
 
 .content .container-fluid .row #properties-section .content-box .menu-tab{
     position: relative;
@@ -2197,7 +2328,8 @@ button:focus{
 }
 
 .content .container-fluid .row .content-section .content-box .content-body .search-group{
-    margin: 10px 0;
+    /* margin: 10px 0; */
+    margin-bottom: 10px;
     position: relative;
 }
 
@@ -2205,7 +2337,7 @@ button:focus{
     height: 35px;
     width: 100%;
     padding: 0 27.5px 0 10px;
-    background-color: var(--clr-search-input);
+    background-color: var(--clr-white);
     border: 1px solid var(--clr-border);
     border-radius: 5px;
     transition: all .15s linear;
@@ -2237,12 +2369,12 @@ button:focus{
 
 .content .container-fluid .row .content-section .content-box .content-body .list-group{
     padding-left: 20px;
+    display: inline-flex;
 }
 
 .content .container-fluid .row .content-section .content-box .content-body .list-group .list-item{
     position: relative;
-    margin-bottom: 5px;
-    /* height: var(--fs-heading); */
+    margin-bottom: 5px;     
     cursor: default;
     margin-bottom: 5px;
     pointer-events: none;
@@ -2259,9 +2391,9 @@ button:focus{
 }
 
 .content .container-fluid .row #flow-map-section .content-box .content-body{
-    /* height: 80%; */
-    height: calc(100vh - 70vh - 25px - 42.8px - 45px);
-    margin-top: 1.5px;
+    height: calc(100vh - 70vh - 25px - 42.8px - 50px);
+    margin-right: 5px;
+    margin-top: 5px;
     overflow-y: auto;
 }
 
@@ -2297,6 +2429,7 @@ button:focus{
 .content .container-fluid .row .content-section .content-box .content-body .list-group .list-item.has-child::before{
     opacity: 1;
     left: -20px;
+    cursor: pointer;
 }
 
 .content .container-fluid .row .content-section .content-box .content-body .list-group .list-item .list-sub-item{
@@ -2323,6 +2456,7 @@ button:focus{
 /* Flow Map Section Style */
 
 .content .container-fluid .row #flow-map-section .content-box #flow-map-tab{
+    overflow-y: hidden;
     overflow-x: auto;
 }
 
@@ -2658,4 +2792,20 @@ button:focus{
     }
 
     
+}
+
+@media (max-width:1295px){
+    .content .container-fluid .row .content-section .content-box .content-body .elements-list{
+        max-height: calc(70vh - 36.8px - 40px - 45px - 47px - 40px);
+    }
+
+    .content .container-fluid .row .content-section.maximize .content-box .content-body .elements-list{
+        max-height: calc(70vh + 100vh - 70vh - 25px - 42.8px - 46.5px - 36.8px - 40px - 45px - 47px - 40px);
+    }
+}
+
+@media (max-width:1361px){
+    .content .container-fluid .row #flow-map-section .content-box .content-body{
+        margin-top: 2px;
+    }
 }

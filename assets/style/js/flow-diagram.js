@@ -9,29 +9,6 @@ $(document).ready(function(){
         revert: "invalid",
         cursorAt: { top: 25, left: 25 },
         scroll : false,
-        start : function(ev, ui){
-            var elementId = $(ui.helper).children().attr("id");
-            var splitText = elementId.split("-").shift();
-
-            if (splitText == "sender") {
-                $(".flow-diagram").each(function(i) {
-                    if ($(this).children().length > 0) {
-                        $(this).sortable({
-                            disabled : true
-                        })
-                    }
-                });
-            }else{
-                $(".flow-diagram").each(function(i) {
-                    if ($(this).children().length > 0) {
-                        $(this).sortable({
-                            disabled : false    
-                        })
-                    }
-                });
-            }
-
-        }
     }).disableSelection();
 
     $(".canvas").droppable({
@@ -188,18 +165,18 @@ $(document).ready(function(){
                     }
                 },50);
             },
-            over : function(ev, ui){
-                var elementId = $(ui.item).children().attr("id");
-                var splitText = elementId.split("-").shift();
+                // over : function(ev, ui){
+                //     var elementId = $(ui.item).children().attr("id");
+                //     var splitText = elementId.split("-").shift();
 
-                if (splitText == "sender") {
-                        $(this).sortable({
-                            disabled : true
-                    })
-                }else{
-                    console.log("not-sender")
-                }
-            }
+                //     if (splitText == "sender") {
+                //             $(this).sortable({
+                //                 disabled : true
+                //         })
+                //     }else{
+                //         console.log("not-sender")
+                //     }
+                // }
         }).disableSelection();
     }
     

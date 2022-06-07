@@ -1,26 +1,47 @@
 $(document).ready(function(){
-
     var zoom = 1;
+    var toTop = 0;
 
+    // Zoom in and Zoom Out
     $('#zoom-in').on('click', function(){
         zoom += 0.1;
-        $('#flow-container').css('transform', 'scale(' + zoom + ')');
+        toTop += 13;
+        $(".flow-diagram").each(function(i){
+            // var index = i+1;
+            // console.log(index * ((index + 1) / 2))
+            $(".flow-diagram").eq(i).css({
+                "transform" : "translateY("+ toTop * i + "px) scale(" + zoom + ")"
+            });
+        });
     });
         // $('#zoom-init').on('click', function(){
         //     zoom = 1;
-        //     $('#flow-container').css('transform', 'scale(' + zoom + ')');
+        //     $('.flow-diagram').css('transform', 'scale(' + zoom + ')');
         // });
     $('#zoom-out').on('click', function(){
         zoom -= 0.1;
-        $('#flow-container').css('transform', 'scale(' + zoom + ')');
+        toTop -= 13;
+        $(".flow-diagram").each(function(i){
+            // var index = i+1;
+            // console.log(index * ((index + 1) / 2))
+            // $(".canvas").css({
+            //     "transform" : "translateY("+ toTop * i + "px) scale(" + zoom + ")"
+            // })
+            $(".flow-diagram").eq(i).css({
+                "transform" : "translateY("+ toTop * i + "px) scale(" + zoom + ")"
+            });
+        });
+        
     });
 
+    // Check if the workspace have a child
     $(".list-workspace").each(function(i){
         if($(this).children(). length > 1){
             $(this).addClass("has-child")
         }
     })
 
+    // Workspace or Folder onclick action
     $(".workspace-group").click(function(){
         if ($(this).parent().hasClass("has-child")) {
             $(this).parent().toggleClass("active");
@@ -28,15 +49,16 @@ $(document).ready(function(){
         }
     });
 
-    // $("#properties-section").resizable();
 
+    // Edit Profile Modal
     $(".edit-profile").click(function(){
         $("#editProfileModal").modal('show');
-        if($("#editProfileModal").children().children().children().children().children().find("#main-profile").hasClass("active")){
-            console.log("main-ppr")
-        }
+        // if($("#editProfileModal").children().children().children().children().children().find("#main-profile").hasClass("active")){
+        //     console.log("main-ppr")
+        // }
     });
-    
+
+    // Edit Profile Tab in Edit Profile Modal
     $(".edit-profile-tab").click(function(){
         $(".edit-profile-tab").removeClass("active");
         $(this).addClass("active");
@@ -202,10 +224,12 @@ $(document).ready(function(){
 
     });
     
-    $("#flow-map-group .list-item span").click(function(e){
-        $(this).parent().toggleClass("active");
-        $(this).siblings(".list-sub-item").fadeToggle();
+    $("#flow-map-group .list-item").click(function(e){
+        $(this).toggleClass("active");
+        $(this).children(".list-sub-item").fadeToggle();
     });
+    
+
 
     $(".list-sub-item").parent().addClass("has-child");
 
@@ -233,11 +257,22 @@ $(document).ready(function(){
 
     $(".minimize-properties").click(function(){
         $(this).toggleClass("minimize");
-        $(this).parent().parent().toggleClass("minimized")
+        $(this).parent().parent().toggleClass("minimized");
+    });
+
+    $(".minimize-section").click(function(){
+        $(this).toggleClass("minimized");
+        $(this).parent().toggleClass("minimized");
+        $(this).parent().siblings("#flow-map-section").toggleClass("minimized");
+        $(this).parent().siblings("#flow-section, #palette-section").toggleClass("maximize");
     });
 
     $(".create-new-workspace").click(function(){
         $("#createWorkspaceModal").modal('show');
+    })
+    
+    $(".create-new-project").click(function(){
+        createNewProject();
     })
     
     var sidebarCollapse = false;
@@ -246,17 +281,13 @@ $(document).ready(function(){
         $(".sidebar").toggleClass("collapsed")
         if(sidebarCollapse == false){
             sidebarCollapse = true;
-            $("#flow-section").removeClass("col-md-8").addClass("col-md-7");
-            $("#properties-section").removeClass("col-md-8").addClass("col-md-7");
-            $("#palette-section").removeClass("col-md-4").addClass("col-md-3");
-            $("#flow-map-section").removeClass("col-md-4").addClass("col-md-3");
+            $("#flow-section").removeClass("col-md-9").addClass("col-md-7");
+            $("#properties-section").removeClass("col-md-9").addClass("col-md-7");
             $(".sidebar-content").fadeIn();
         }else{
             sidebarCollapse = false;
-            $("#flow-section").removeClass("col-md-7").addClass("col-md-8");
-            $("#properties-section").removeClass("col-md-7").addClass("col-md-8");
-            $("#palette-section").removeClass("col-md-3").addClass("col-md-4");
-            $("#flow-map-section").removeClass("col-md-3").addClass("col-md-4");
+            $("#flow-section").removeClass("col-md-7").addClass("col-md-9");
+            $("#properties-section").removeClass("col-md-7").addClass("col-md-9");
             $(".sidebar-content").fadeOut();
         }
     });
@@ -385,7 +416,7 @@ function searchWorkspaceFunc(){
     }
 }
 
-
+// Floating Properties
 function elementProperties(el){
     // $("#propertiesModal").modal('show'); 
     var floatProp = '' + 
@@ -495,13 +526,13 @@ function elementProperties(el){
                             $(this).addClass("active")
                         });
                         
-                        var spanListItem = $(this).parents("#floating-properties-"+ind).find(".list-item span");
-                        $(spanListItem).click(function(){
-                            $(this).parent().toggleClass("active");
-                            $(this).siblings(".list-sub-item").fadeToggle();
+                        var listItem = $(this).parents("#floating-properties-"+ind).find(".list-item");
+
+                        $(listItem).click(function(){
+                            $(this).toggleClass("active");
+                            $(this).children(".list-sub-item").fadeToggle();
                         });
 
-                        var listItem = $(this).parents("#floating-properties-"+ind).find(".list-item");
                         $(listItem).each(function(index){
                             if ($(this).children(".list-sub-item").length > 0) {
                                 $(this).addClass("has-child")
