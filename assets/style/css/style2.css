@@ -115,6 +115,36 @@ button:focus{
     box-shadow: 0 0 0.25rem var(--clr-invalid-secondary) !important;
 }
 
+.input-group.is-valid::after{
+    content: '';
+    display: block;
+    height: 15px;
+    width: 15px;
+    position: absolute;
+    background: url("../../icon/valid-icon.svg") no-repeat center;
+    bottom: 7.5px;
+    right: 5px;
+}
+
+.floating-properties .input-group.is-valid::after{
+    content: '';
+    display: block;
+    height: 15px;
+    width: 15px;
+    position: absolute;
+    background: url("../../icon/valid-icon.svg") no-repeat center;
+    bottom: 7.5px;
+    right: 22.5px;
+}
+
+.input-group.is-valid .input-field{
+    border: 1px solid var(--clr-valid) !important;
+}
+
+.input-group.is-valid .input-field:focus, .input-group.is-valid .form-select:focus{
+    box-shadow: 0 0 0.25rem var(--clr-valid-secondary) !important;
+}
+
 
 /* Context Menu */
 
@@ -142,7 +172,7 @@ button:focus{
     z-index: 1001;
     background-color: var(--clr-white);
     border: 1px solid var(--clr-border);
-    width: 300px;
+    width: 350px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
     border-radius: 5px;
     -webkit-border-radius: 5px;
@@ -601,10 +631,6 @@ button:focus{
     pointer-events: fill;
 }
 
-    .modal .modal-content .modal-body #input-output .input-output-content .list-group .list-item.active{
-        /* height: calc(var(--fs-heading) * 2.2);    */
-    }
-
 .modal .modal-content .modal-body #input-output .input-output-content .list-group .list-item.active.has-child{
     margin-bottom: 10px;
 }
@@ -1010,18 +1036,18 @@ button:focus{
     margin-right: 0;
 }
 
-.content .container-fluid .row .sidebar .sidebar-content .search-workspace-group{
+.content .container-fluid .row .sidebar .sidebar-content .search-folder-group{
     position: relative;
     width: 100%;
     margin-top: 20px;
     margin-bottom: 15px;
 }
 
-.content .container-fluid .row .sidebar .sidebar-content .search-workspace-group label, .content .container-fluid .row .sidebar .sidebar-content .search-workspace-group img{
+.content .container-fluid .row .sidebar .sidebar-content .search-folder-group label, .content .container-fluid .row .sidebar .sidebar-content .search-folder-group img{
     position: absolute;
 }
 
-.content .container-fluid .row .sidebar .sidebar-content .search-workspace-group label{
+.content .container-fluid .row .sidebar .sidebar-content .search-folder-group label{
     font-size: var(--fs-body);
     background-color:var(--clr-navbar-bg);
     top: 50%;
@@ -1041,7 +1067,7 @@ button:focus{
     -o-transition: all .15s linear;
 }
 
-.content .container-fluid .row .sidebar .sidebar-content .search-workspace-group img{
+.content .container-fluid .row .sidebar .sidebar-content .search-folder-group img{
     top: 50%;
     right: 10px;
     transform: translateY(-50%);
@@ -1056,7 +1082,7 @@ button:focus{
     -o-transition: all .15s linear;
 }
 
-.content .container-fluid .row .sidebar .sidebar-content .search-workspace-group .input-search-workspace{
+.content .container-fluid .row .sidebar .sidebar-content .search-folder-group .input-search-folder{
     position: relative;
     font-size: var(--fs-body);
     height: 35px;
@@ -1077,11 +1103,11 @@ button:focus{
     -o-transition: all .15s linear;
 }
 
-.content .container-fluid .row .sidebar .sidebar-content .search-workspace-group .input-search-workspace:focus ~ label, .content .container-fluid .row .sidebar .sidebar-content .search-workspace-group .input-search-workspace:not(:placeholder-shown) ~ label{
+.content .container-fluid .row .sidebar .sidebar-content .search-folder-group .input-search-folder:focus ~ label, .content .container-fluid .row .sidebar .sidebar-content .search-folder-group .input-search-folder:not(:placeholder-shown) ~ label{
     top: 0;
 }
 
-.content .container-fluid .row .sidebar .sidebar-content .search-workspace-group .input-search-workspace:focus, .content .container-fluid .row .sidebar .sidebar-content .search-workspace-group .input-search-workspace:not(:placeholder-shown){
+.content .container-fluid .row .sidebar .sidebar-content .search-folder-group .input-search-folder:focus, .content .container-fluid .row .sidebar .sidebar-content .search-folder-group .input-search-folder:not(:placeholder-shown){
     background-color: var(--clr-white);
     transform: translateY(12.5px);
     -webkit-transform: translateY(12.5px);
@@ -1090,7 +1116,7 @@ button:focus{
     -o-transform: translateY(12.5px);
 }
 
-.content .container-fluid .row .sidebar .sidebar-content .search-workspace-group .input-search-workspace:focus ~ img, .content .container-fluid .row .sidebar .sidebar-content .search-workspace-group .input-search-workspace:not(:placeholder-shown) ~ img{
+.content .container-fluid .row .sidebar .sidebar-content .search-folder-group .input-search-folder:focus ~ img, .content .container-fluid .row .sidebar .sidebar-content .search-folder-group .input-search-folder:not(:placeholder-shown) ~ img{
     transform: translateY(2.5px);
     -webkit-transform: translateY(2.5px);
     -moz-transform: translateY(2.5px);
@@ -1098,13 +1124,13 @@ button:focus{
     -o-transform: translateY(2.5px);
 }
 
-/* .content .container-fluid .row .sidebar .sidebar-content .search-workspace-group .input-search-workspace:focus ~ label, .content .container-fluid .row .sidebar .sidebar-content .search-workspace-group .input-search-workspace:not(:placeholder-shown) ~ label{
+/* .content .container-fluid .row .sidebar .sidebar-content .search-folder-group .input-search-folder:focus ~ label, .content .container-fluid .row .sidebar .sidebar-content .search-folder-group .input-search-folder:not(:placeholder-shown) ~ label{
     top: 0;
     z-index: 5;
     padding: 0 5px;
 } */
 
-.content .container-fluid .row .sidebar .sidebar-content .search-workspace-group .input-search-workspace:focus{
+.content .container-fluid .row .sidebar .sidebar-content .search-folder-group .input-search-folder:focus{
     outline: none;
 }
 
@@ -1311,7 +1337,7 @@ button:focus{
     -o-transform: translateY(-50%);
 }
 
-.content .container-fluid .row #properties-section.minimized .content-box .menu-tab .tab-name.active span::after{
+.content .container-fluid .row #properties-section.minimized .content-box .menu-tab .tab-name.active span::after, .content .container-fluid .row #flow-map-section.minimized .content-box .menu-tab .tab-name.active span::after{
     display: none;
 }
 
@@ -1511,6 +1537,7 @@ button:focus{
     background-color: transparent;
     border: none;
     cursor: default;
+    pointer-events: none;
     transition: all .15s linear;
     -webkit-transition: all .15s linear;
     -moz-transition: all .15s linear;
@@ -1521,6 +1548,15 @@ button:focus{
     -moz-border-radius: 5px;
     -ms-border-radius: 5px;
     -o-border-radius: 5px;
+}
+
+.content .container-fluid .row #flow-section .content-box .menu-tab .tab-name.active .close-tab{
+    pointer-events: fill;
+}
+
+.content .container-fluid .row #flow-section .content-box .menu-tab .tab-name:hover .close-tab{
+    opacity: 1;
+    pointer-events: fill;
 }
 
 .content .container-fluid .row .content-section .content-box .menu-tab .tab-name .close-tab:hover{
@@ -1561,6 +1597,10 @@ button:focus{
     -moz-transition: all .15s linear;
     -ms-transition: all .15s linear;
     -o-transition: all .15s linear;
+}
+
+.content .container-fluid .row .content-section #flow-container .flow-diagram:first-child{
+    margin-top: 35px !important;
 }
 
 .content .container-fluid .row .content-section #flow-container .flow-diagram.minimize-flow-diagram{
