@@ -260,17 +260,25 @@ $(document).ready(function(){
             $("#notes").show();
             $("#input-output").removeClass("d-flex").addClass("d-none");
             $(".modal .error-info").hide();
+            $("#log").hide();
         }else if($(this).prop("id") == 'general-properties'){
             $("#properties").show();
             $("#notes").hide();
             $("#input-output").removeClass("d-flex").addClass("d-none");
             $(".modal .error-info").show();
+            $("#log").hide();
         }else if($(this).prop("id") == 'input-output-properties'){
             $("#properties").hide();
             $("#notes").hide();
             $("#input-output").removeClass("d-none").addClass("d-flex");
             $(".modal .error-info").hide();
-
+            $("#log").hide();
+        }else if($(this).prop("id") == 'log-properties'){
+            $("#properties").hide();
+            $("#notes").hide();
+            $("#input-output").removeClass("d-flex").addClass("d-none");
+            $(".modal .error-info").hide();
+            $("#log").show();
         }
     });
 
@@ -470,6 +478,7 @@ function elementProperties(el){
     '                    <a href="#" class="menu-name active" id="general-properties">General</a>' + 
     '                    <a href="#" class="menu-name" id="notes-properties">Notes</a>' + 
     '                    <a href="#" class="menu-name" id="input-output-properties">Input/Output</a>' + 
+    '                    <a href="#" class="menu-name" id="log-properties">Log</a>' + 
     '                  </div>' + 
     '                </div>' + 
     '              </div>' + 
@@ -477,6 +486,9 @@ function elementProperties(el){
     '              </div>' + 
     '              <div id="notes" style="display: none;">' + 
     '                notes' + 
+    '              </div>' + 
+    '              <div id="log" class="log" style="display: none;">' + 
+    '                log' + 
     '              </div>' + 
     '              <div id="input-output" class="row justify-content-center" style="display: none;">' + 
     '                <div class="col-md-9 input-output-menu">' + 
@@ -534,7 +546,8 @@ function elementProperties(el){
             setTimeout(() => {
                 if($(this).find(".properties-"+ind).children().length == 0){
                     $(this).find(".properties-"+ind).load("components/"+getTypeComp+".html");
-                    $(this).find(".properties-title").text(elPropName)
+                    $(this).find(".properties-title").text(elPropName);
+                    $(this).find(".log").load("components/log.html");
                 }
 
                 $(this).find(".menu-name").click(function(){
@@ -545,16 +558,25 @@ function elementProperties(el){
                         $(this).parents("#floating-properties-"+ind).find("#notes").show();
                         $(this).parents("#floating-properties-"+ind).find("#input-output").removeClass("d-flex").addClass("d-none");
                         $(this).parents("#floating-properties-"+ind).find(".floating-properties .error-info").hide();
+                        $(this).parents("#floating-properties-"+ind).find("#log").hide();
                     }else if($(this).prop("id") == 'general-properties'){
                         $(this).parents("#floating-properties-"+ind).find(".properties-"+ind).show();
                         $(this).parents("#floating-properties-"+ind).find("#notes").hide();
                         $(this).parents("#floating-properties-"+ind).find("#input-output").removeClass("d-flex").addClass("d-none");
                         $(this).parents("#floating-properties-"+ind).find(".floating-properties .error-info").show();
+                        $(this).parents("#floating-properties-"+ind).find("#log").hide();
+                    } else if($(this).prop("id") == 'log-properties'){
+                        $(this).parents("#floating-properties-"+ind).find(".properties-"+ind).hide();
+                        $(this).parents("#floating-properties-"+ind).find("#notes").hide();
+                        $(this).parents("#floating-properties-"+ind).find("#input-output").removeClass("d-flex").addClass("d-none");
+                        $(this).parents("#floating-properties-"+ind).find(".floating-properties .error-info").hide();
+                        $(this).parents("#floating-properties-"+ind).find("#log").show();
                     }else if($(this).prop("id") == 'input-output-properties'){
                         $(this).parents("#floating-properties-"+ind).find(".properties-"+ind).hide();
                         $(this).parents("#floating-properties-"+ind).find("#notes").hide();
                         $(this).parents("#floating-properties-"+ind).find("#input-output").removeClass("d-none").addClass("d-flex");
                         $(this).parents("#floating-properties-"+ind).find(".floating-properties .error-info").hide();
+                        $(this).parents("#floating-properties-"+ind).find("#log").hide();
 
                         var menuName = $(this).parents("#floating-properties-"+ind).find(".input-output-menu-name");
                         $(menuName).click(function(){
@@ -618,9 +640,11 @@ function elementProperties(el){
             var type = comp.type;
             var uuid = comp.uuid;
             var attribut = comp.attribut;
+            var log = comp.log;
             
             if(data_id == uuid){
-                console.log("name:", name, "| type:", type, "| uuid:", uuid, "| attribut:", attribut);
+                console.log("name:", name, "| type:", type, "| uuid:", uuid, "| attribut:", attribut, "| log: ", log);
+                // fill properties/atribut
                 for (const key in attribut) {
                     var value = attribut[key];
                     // console.log('key', key, 'attribut', attribut[key]);
@@ -637,6 +661,11 @@ function elementProperties(el){
                     } else {
                         $("#"+finalData).val(value);
                     }
+                }
+
+                // fill log
+                for (const key in attribut) {
+                
                 }
             }
 

@@ -11,6 +11,12 @@ $(document).ready(function(){
         scroll : false,
     }).disableSelection();
 
+    let logDefault = {
+        "log_type": "ALL",
+        "show_in_console": true,
+        "put_on": "File",
+    };
+
     $(".canvas").droppable({
         accept : ".elements-list #sender",
         scroll : true,
@@ -55,7 +61,8 @@ $(document).ready(function(){
                                             "uuid": data_id,
                                             "type": type_comp,
                                             "name": type_comp,
-                                            "attribut": propItem
+                                            "attribut": propItem,
+                                            "log": logDefault,
                                         }
                                     ]
                                 };
@@ -255,6 +262,7 @@ $(document).ready(function(){
                 "name": type_comp,
                 "adapter": codeAdapter[type_comp][0],
                 "attribut": propItem,
+                "log": logDefault,
             };
 
             var jsonFlowThis = JSON.parse(localStorage.getItem("jsonFlow"));
@@ -457,7 +465,12 @@ $(document).ready(function(){
                         "thread": 1,
                         "keepopen": true,
                         "wait": 60
-                    }
+                    }, 
+                    "log": {
+                        "log_type": "NONE",
+                        "show_in_console": false,
+                        "put_on": "DB",
+                    },
                 },
                 {
                     // "uuid": "0-2",
@@ -472,7 +485,8 @@ $(document).ready(function(){
                         "polling": 10,
                         "retry": 60, 
                         "filename": "getdata.csv"
-                    }
+                    },
+                    "log": logDefault,
                 },
                 {
                     // "uuid": "0-3",
@@ -491,7 +505,8 @@ $(document).ready(function(){
                         "dbtype": "mysql",
                         "polling": 20,
                         "retry": 60
-                    }
+                    },
+                    "log": logDefault,
                 }
             ]
         },
@@ -515,7 +530,8 @@ $(document).ready(function(){
                         "filename": "file.xml",
                         "fileEvent": 2,
                         "folderName": "assets",
-                    }
+                    },
+                    "log": logDefault,
                 },
                 {
                     "uuid": "1-2",
@@ -527,6 +543,7 @@ $(document).ready(function(){
                         "if-else": "object",
                         "customization": "java-code"
                     },
+                    "log": logDefault,
                     "components": [
                         {
                             "uuid": "1-2-1",
@@ -544,7 +561,8 @@ $(document).ready(function(){
                                 "dbtype": "mysql",
                                 "polling": 20,
                                 "retry": 60
-                            }
+                            },
+                            "log": logDefault,
                         },
                         {
                             "uuid": "1-2-2",
@@ -562,7 +580,8 @@ $(document).ready(function(){
                                 "dbtype": "mssql",
                                 "polling": 20,
                                 "retry": 60
-                            }
+                            },
+                            "log": logDefault,
                         },
                         {
                             "uuid": "1-2-3",
@@ -582,7 +601,8 @@ $(document).ready(function(){
                                 "ssl": true,
                                 "explicit": false,
                                 "filename": "lolz"
-                            }
+                            },
+                            "log": logDefault,
                         },
                     ],
                 },
@@ -605,7 +625,8 @@ $(document).ready(function(){
                         "ssl": false,
                         "explicit": true,
                         "filename": "finalCrime.img"
-                    }
+                    },
+                    "log": logDefault,
                 },
             ],
         }
