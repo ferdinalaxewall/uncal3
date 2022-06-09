@@ -31,8 +31,8 @@ $(document).ready(function(){
                     var flowNameLength = $(this).val().length;
                     $(this).attr("size", flowNameLength);
                 });
-                $("#properties").empty();
-                $("#properties").load("components/" + ui.draggable.children().attr("id") + ".html");
+                // $("#properties").empty();
+                // $("#properties").load("components/" + ui.draggable.children().attr("id") + ".html");
                 sortableFunc();
                 $(".flow-diagram").each(function(i){
                     if (!$(".flow-diagram").eq(i).children().hasClass("element-item")) {
@@ -54,7 +54,7 @@ $(document).ready(function(){
                                 var propItem = htmlToProp(result, type_comp);
                                 var jsonFlowThis = JSON.parse(localStorage.getItem("jsonFlow"));
                                 var newFlow = {
-                                    "name": "Flow Name",
+                                    "name": "Scenario_1",
                                     "uuid": data_id,
                                     "components": [
                                         {
@@ -79,7 +79,6 @@ $(document).ready(function(){
             // }
     }).disableSelection();
 
-    $("#flow-tab").sortable().disableSelection();
     var switchUl = "<ul class='switch-flow-diagram'></ul>";
 
     function sortableFunc(){

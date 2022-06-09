@@ -143,8 +143,8 @@ $(document).ready(function(){
 
     });
 
-    $("#flow-tab .tab-name").click(function(e){
-        $("#flow-tab .tab-name").removeClass("active");
+    $("#flow-tab .project-tab").click(function(e){
+        $("#flow-tab .project-tab").removeClass("active");
 
         var $this = $(this);
         if (!$this.hasClass("active")) {
@@ -154,6 +154,13 @@ $(document).ready(function(){
         e.preventDefault();
 
     });
+
+    $(".project-tab-container").sortable({
+        items : ".project-tab",
+        opacity: 0.8,
+        axis : "x",
+        scroll : true,
+    }).disableSelection();
     
     $("#palette-tab .tab-name").click(function(e){
         $("#palette-tab .tab-name").removeClass("active");
@@ -455,19 +462,87 @@ function searchFolderSidebarFunc(){
     }
 }
 
+function minimizeElementProperties(elProp){
+    
+    var listProperties = 
+    '                       <li class="list-properties" ondblclick="expandElementProperties(this)">'+
+    '                        <a href="#" class="properties-name" id="properties-1">'+
+    '                          <div id="properties-group-1">'+
+    '                            <div class="properties-text-group">'+
+    '                              <img src="./assets/icon/list-icon.svg" alt="List Icon">'+
+    '                              <p class="properties-text"></p>'+
+    '                            </div>'+
+    '                          </div>'+
+    '                          <div id="properties-group-2">'+
+    '                            <div class="properties-text-group">'+
+    '                              <img src="./assets/icon/expand-icon.svg" alt="Expand Icon Icon">'+
+    '                              <p class="properties-text">Double Click to open this properties</p>'+
+    '                            </div>'+
+    '                          </div>'+
+    '                        </a>'+
+    '                      </li>';
+
+    var propertiesID = $(elProp).parents(".floating-properties").attr("prop_id");
+    var propertiesName = $(elProp).parent().siblings(".properties-title").text();
+
+
+    $(elProp).parents(".floating-properties").fadeOut();
+    $(".list-of-properties").append(listProperties);
+    setTimeout(() => {
+        $(".list-properties").each(function(i){
+            if (!$(this).attr("prop_id")) {
+                $(this).attr("prop_id", propertiesID);
+                $(this).find("#properties-group-1 .properties-text").text(propertiesName);
+            }
+        })
+    }, 100);
+
+    if($("#flow-map-section").hasClass("minimized")){
+        $("#flow-section, #palette-section").toggleClass("maximize");
+        $("#flow-map-section, #properties-section, .minimize-section").toggleClass("minimized");
+    }
+
+    if (!$("#flow-map-tab #element-properties").hasClass("active")) {
+        $("#flow-map-tab .tab-name").removeClass("active");
+        $("#flow-map-tab #element-properties").addClass("active");
+        $(".element-properties-content").removeClass("d-none");
+        $(".outline-content").addClass("d-none");
+    }
+}
+
+function expandElementProperties(elProp){
+    $(".floating-properties").each(function(i){
+        if($(".floating-properties").eq(i).attr("prop_id") == $(elProp).attr("prop_id")){
+            $(this).fadeIn();
+            $(elProp).fadeOut().remove();
+        }
+    });
+}
+
 // Floating Properties
 function elementProperties(el){
-    // $("#propertiesModal").modal('show'); 
+    
+    var elPropName = $(el).children("span").text();
+    
+    // auto open by file name
+    var getTypeComp = $(el).prop("id");
+
+    // fill data ke properties (auto nama id)
+    var liComp = $(el).parent();
+    var data_id = liComp.attr("data_id");
+
     var floatProp = '' + 
-    '<div class="floating-properties ui-draggable ui-draggable-handle" style="top:0;">' + 
+    '<div class="floating-properties ui-draggable ui-draggable-handle" style="top:0;" prop_id="'+ data_id +'">' + 
     '      <div class="floating-properties-header">' + 
     '        <h5 class="properties-title" id="propertiesModalTitle">Flow Properties</h5>' +
     '           <div class="button-group">' + 
     '               <button type="button" class="close close-element-properties">' + 
     '                   <span aria-hidden="true">&times;</span>' + 
     '               </button>' + 
-    '               <button type="button" class="minimize-element-properties mr-2">' + 
-    '                   <span aria-hidden="true">-</span>' + 
+    '               <button type="button" class="minimize-element-properties mr-2" onclick="minimizeElementProperties(this)">' + 
+    '                   <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"> ' +
+    '                       <path d="M16.6654 11.6668H3.33203V8.3335H16.6654" fill="#808080"/> ' +
+    '                    </svg> ' +
     '               </button>' + 
     '           </div>' +
     '      </div>' + 
@@ -531,9 +606,10 @@ function elementProperties(el){
     '';
 
     $("body").append(floatProp);
-
-    var elPropName = $(el).children("span").text();
-    console.log("Elements Name", elPropName)
+    // if ($(".floating-properties").length == "") {
+    // }else{
+        
+    // }
 
     setTimeout(() => {
         
@@ -547,7 +623,11 @@ function elementProperties(el){
                 if($(this).find(".properties-"+ind).children().length == 0){
                     $(this).find(".properties-"+ind).load("components/"+getTypeComp+".html");
                     $(this).find(".properties-title").text(elPropName);
-                    $(this).find(".log").load("components/log.html");
+                    $(this) .find(".log").load("components/log.html");
+                    setTimeout(() => {
+                        $(this).find("#properties-name").children(".input-field").val(elPropName);  
+                        $(this).find("#properties").children(".row").attr("prop_id", data_id);
+                    }, 190);
                 }
 
                 $(this).find(".menu-name").click(function(){
@@ -609,24 +689,20 @@ function elementProperties(el){
         });
 
         $(".close-element-properties").click(function(){
-            $(this).parent().parent().fadeOut();
+            $(this).parents(".floating-properties").fadeOut();
             setTimeout(() => {
-                $(this).parent().parent().remove();
+                $(this).parents(".floating-properties").remove();
             }, 500);
         })
         
         if ($(".floating-properties").length > 3) {
-            $(".floating-properties")[0].remove()
+            $(".floating-properties")[0].remove();
+            $(".list-properties")[0].remove();
+            
         }
 
     }, 100);
 
-    // auto open by file name
-    var getTypeComp = $(el).prop("id");
-
-    // fill data ke properties (auto nama id)
-    var liComp = $(el).parent();
-    var data_id = liComp.attr("data_id");
     var indexFlow = liComp.parent().parent().children("ul").index(liComp.parent());
     console.log('focusElement. data_id', data_id, "indexFlow", indexFlow);
     var jsonFlow = JSON.parse(localStorage.getItem("jsonFlow"));
