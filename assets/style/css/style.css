@@ -189,10 +189,19 @@ button:focus{
     padding: 10px 15px;
 }
 
+.floating-properties .floating-properties-header .button-group{
+    display: flex;
+    align-items: center;
+    flex-direction: row-reverse;
+}
+
 .floating-properties .floating-properties-header .minimize-element-properties{
     background-color: transparent;
     border: none;
-    font-size: 1.5rem;
+}
+
+.floating-properties .floating-properties-header .minimize-element-properties:hover svg path{
+    fill: var(--clr-black);
 }
 
 .floating-properties .floating-properties-header .properties-title{
