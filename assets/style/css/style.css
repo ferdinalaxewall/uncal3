@@ -3080,7 +3080,7 @@ button:focus{
     
 }
 
-@media (max-width:1295px){
+@media (max-width:1315px){
     .content .container-fluid .row .content-section .content-box .content-body .elements-list{
         max-height: calc(70vh - 36.8px - 40px - 45px - 47px - 40px);
     }
