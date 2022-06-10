@@ -111,7 +111,7 @@ $(document).ready(function(){
         });  
         
         $.contextMenu({
-            selector: '.flow-diagram .element-item', 
+            selector: '.flow-diagram .element-box', 
             callback: function(key, options) {
                 if(key == 'delete'){
                     thisComp = $(this);
@@ -160,6 +160,8 @@ $(document).ready(function(){
         opacity: 0.8,
         axis : "x",
         scroll : true,
+        placeholder : ".project-tab-placeholder",
+        revert : true
     }).disableSelection();
     
     $("#palette-tab .tab-name").click(function(e){
@@ -678,6 +680,8 @@ function elementProperties(el){
     // }
 
     setTimeout(() => {
+
+        $(el).removeAttr("ondblclick");
         
         $(".floating-properties").each(function(ind){
             // $(".floating-properties").eq(ind).css({
@@ -756,9 +760,19 @@ function elementProperties(el){
 
         $(".close-element-properties").click(function(){
             $(this).parents(".floating-properties").fadeOut();
+            var prop_id = $(this).parents(".floating-properties").attr("prop_id");
+
+            $(".flow-diagram .element-item").each(function(i){
+                if($(this).attr("data_id") == prop_id){
+                    $(this).children(".element-box").attr("ondblclick", "elementProperties(this)");
+                }
+            })
+            
             setTimeout(() => {
                 $(this).parents(".floating-properties").remove();
             }, 500);
+
+
         })
         
         if ($(".floating-properties").length > 3) {
@@ -882,18 +896,33 @@ function elementProperties(el){
 
 function deleteComponent(comp) {    
     // validasi hapus properties
-    var data_id = comp.attr("data_id");
+    var data_id = comp.parent().attr("data_id");
     var prop_id = $("#properties").children(":first").attr("prop_id");
 
+    
     // hapus element
-    comp.remove();
+    comp.parent().remove();
     if ($(".flow-diagram").children().length == 0) {
         $(".flow-diagram, br").remove();
     }
     
     if(data_id != undefined){
-        $("#properties").empty();
-        
+        if ($(".floating-properties").length > 0) {
+            $(".floating-properties").each(function(i){
+                if ($(this).attr("prop_Id") == data_id) {
+                    $(this).remove();
+                }
+            })
+        }
+
+        if($(".list-properties").length > 0){
+            $(".list-properties").each(function(i){
+                if($(this).attr("prop_id") == data_id){
+                    $(this).remove();
+                }
+            })
+        }
+            
         // hapus component di localStorage
         deleteJsonFlow(prop_id);
     }

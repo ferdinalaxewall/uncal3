@@ -1403,9 +1403,7 @@ button:focus{
     justify-content: space-between;
     height: 38px;
     width: 100%;
-    padding: 5px 0;
     padding-right: 15px;
-    padding-bottom: 5px;
     background: var(--clr-menu-tab);
     border-bottom: 1px solid var(--clr-border);
     border-radius: 5px 5px 0 0;
@@ -1417,8 +1415,10 @@ button:focus{
 
 .content .container-fluid .row #flow-section .content-box .project-menu-tab .project-tab-container{
     display: flex;
+    align-items: center;
     flex-direction: row;
     max-width: calc(100% - 50px);
+    height: 100%;
     padding-left: 15px;
     overflow-x: auto;
 }
@@ -1445,12 +1445,12 @@ button:focus{
 }
 
 .content .container-fluid .row #flow-section .content-box .project-menu-tab .project-tab-container .project-tab{
-    flex: 0 0 auto;
     display: flex;
     align-items: center;
     font-size: var(--fs-sub-heading);
     background:var(--clr-menu-tab);
-    padding: 5px;
+    height: 30px;
+    padding: 0 5px;
     color: var(--clr-black);
     border-radius: 5px;
     -webkit-border-radius: 5px;
@@ -1459,8 +1459,20 @@ button:focus{
     -o-border-radius: 5px;
 }
 
+.content .container-fluid .row #flow-section .content-box .project-menu-tab .project-tab-container .project-tab-placeholder{
+    width: 137px;
+    height: 30px;
+    border: 1px dashed var(--clr-primary);
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+}
+
+
 .content .container-fluid .row #flow-section .content-box .project-menu-tab .project-tab-container .project-tab.active{
-    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
 }
 
 .content .container-fluid .row #flow-section .content-box .project-menu-tab .project-tab-container .project-tab.ui-sortable-helper{
@@ -1472,12 +1484,16 @@ button:focus{
     margin-left: 15px;
 }
 
-.content .container-fluid .row #flow-section .content-box .project-menu-tab .project-tab-container .project-tab span{
-    margin: 0 10px;
+.content .container-fluid .row #flow-section .content-box .project-menu-tab .project-tab-container .project-tab p{
     position: relative;
+    margin: 0 10px;
+    max-width: 75px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
-.content .container-fluid .row #flow-section .content-box .project-menu-tab .project-tab-container .project-tab span::after{
+.content .container-fluid .row #flow-section .content-box .project-menu-tab .project-tab-container .project-tab p::after{
     content: '';
     display: block;
     position: absolute;
@@ -1498,7 +1514,7 @@ button:focus{
     -o-transition: all .15s linear;
 }
 
-.content .container-fluid .row #flow-section .content-box .project-menu-tab .project-tab-container .project-tab.active span::after{
+.content .container-fluid .row #flow-section .content-box .project-menu-tab .project-tab-container .project-tab.active p::after{
     width: 100%;
 }
 
@@ -1549,16 +1565,8 @@ button:focus{
     -o-border-radius: 5px;
 }
 
-.content .container-fluid .row #flow-section .content-box .menu-tab .utility-group .save-project{
-    margin-left: 10px;
-    background-color: var(--clr-primary);
-    color: var(--clr-white);
-    padding: 3.5px 10px;
-    border-radius: 5px;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    -ms-border-radius: 5px;
-    -o-border-radius: 5px;
+.content .container-fluid .row #flow-section .content-box .project-menu-tab .utility-group .save-project:hover{
+    opacity: 0.7;
 }
 
 .content .container-fluid .row #flow-section .content-box .content-body{
@@ -1986,6 +1994,7 @@ button:focus{
 .content .container-fluid .row .content-section #flow-container .flow-diagram #switch-element .switch-flow-diagram .switch-flow-element{
     display: flex;
     min-width: 225px; 
+    min-height: 82px;
     border: 1px solid var(--clr-border);
     border-left: 3px solid var(--clr-primary);
     margin: 5px 0;

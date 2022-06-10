@@ -86,6 +86,8 @@ $(document).ready(function(){
         
         $(".flow-diagram").sortable({
             items : ".element-item:not(.element-item-disabled)",
+            cancel : ".element-item#sender",
+            connectWith : ".flow-diagram",
             scrollSensitivity: 100,
             cursor: "move", 
             cursorAt: { top: 40, left: 50 },
@@ -99,6 +101,18 @@ $(document).ready(function(){
                         $(this).attr("onclick", "focusElement(this)").attr("ondblclick", "elementProperties(this)");
                     }
                 });
+
+                var itemDropped = $(this).data().uiSortable.currentItem.children();
+                if ($(itemDropped).attr("data-properties") == "sender") {
+                    $(itemDropped).parent().fadeOut().remove();
+                    iziToast.error({
+                        title: 'Error',
+                        message: "You can't drop more 1 Sender in 1 Scenario",
+                        position : "topRight",
+                        transitionIn : "fadeInDown",
+                        transitionOut : "fadeOutUp",
+                    });
+                }
             },
             change : function(ev, ui){
                 var liComp = $(ui.item[0]);
@@ -318,6 +332,11 @@ $(document).ready(function(){
                         }, 250);
                     })
                 }, 100);
+
+                var itemDropped = $(this).data().uiSortable.currentItem.children();
+                if ($(itemDropped).attr("data-properties") == "sender") {
+                    $(itemDropped).parent().fadeOut().remove();
+                }
             }
         });
     }
@@ -328,6 +347,8 @@ $(document).ready(function(){
         // })
         $(".switch-flow-element").sortable({
             placeholder : "element-item-highlight",
+            dropOnEmpty : true,
+            connectWith : ".switch-flow-element",
             cursor : "move",
             cursorAt : {top : 40.5, left : 87.5},
             revert : true,
@@ -426,6 +447,13 @@ $(document).ready(function(){
         var clone = $(component).parent().clone();
         $(clone).attr('data_id', idSwitch);
         $('[data_id="'+ switch_id +'"]').find('ul').append(clone);
+        setTimeout(() => {
+            $(".switch-flow-diagram .element-item").each(function(i){
+                if ($(this).attr("data_id") == idSwitch) {
+                    $(this).wrap("<div class='switch-flow-element'></div>")
+                }
+            });
+        }, 10);
     }
 
     // Unic ID untuk flow dan component
