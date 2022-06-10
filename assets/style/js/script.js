@@ -519,6 +519,72 @@ function expandElementProperties(elProp){
     });
 }
 
+// ketika klik save di modal properties
+function saveProperties(saveProp){
+    let rootProp = $(saveProp).closest(".floating-properties");
+    let propId = rootProp.attr("prop_id");
+    let jsonFlowThis = JSON.parse(localStorage.getItem("jsonFlow"));
+
+    for (let i = 0; i < jsonFlowThis.length; i++) {
+        const flow = jsonFlowThis[i];
+        let components = flow.components;
+
+        for (let x = 0; x < components.length; x++) {
+            const comp = components[x];
+            let name = comp.name;
+            let type = comp.type;
+            let uuid = comp.uuid;
+            let attribut = comp.attribut;
+            let log = comp.log;
+            
+            if(propId == uuid){
+                // console.log("findComp. name:", name, "| type:", type, "| uuid:", uuid, "| attribut:", attribut, "| jsonFlowThis:", jsonFlowThis);
+                // save attribut
+                for (const key in attribut) {
+                    let finalData = type + '-' + key;
+                    let elInput = rootProp.find("#"+finalData);
+                    let inputId = elInput.attr("id");
+                    let inputVal = elInput.val();
+                    let isCheckbox = elInput.attr("type") == "checkbox";
+                    let isChecked = elInput.is(":checked");
+                    // console.log("attribut. inputVal:", inputVal, "| inputId: ", inputId, "| elInput: ", elInput);
+
+                    if(inputVal!=undefined){
+                        let propName = inputId.replace(type + "-", "");
+                        if(!isCheckbox){
+                            attribut[propName] = inputVal;
+                        } else {
+                            attribut[propName] = isChecked;
+                        }
+                    } 
+                }
+
+                // save log
+                for (const key in log) {
+                    const LOG = "log";
+                    let finalData = LOG + '-' + key;
+                    let elInput = rootProp.find("#"+finalData);
+                    let inputId = elInput.attr("id");
+                    let inputVal = elInput.val();
+                    let isCheckbox = elInput.attr("type") == "checkbox";
+                    let isChecked = elInput.is(":checked");
+                    // console.log("log. inputVal:", inputVal, "| inputId: ", inputId, "| isChecked: ", isChecked, "| isCheckbox: ", isCheckbox, "| elInput: ", elInput);
+
+                    if(inputVal!=undefined){
+                        let propName = inputId.replace(LOG + "-", "");
+                        if(!isCheckbox){
+                            log[propName] = inputVal;
+                        } else {
+                            log[propName] = isChecked;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    localStorage.setItem("jsonFlow", JSON.stringify(jsonFlowThis));
+}
+
 // Floating Properties
 function elementProperties(el){
     
@@ -600,7 +666,7 @@ function elementProperties(el){
     '              </div>  ' + 
     '      </div>' + 
     '      <div class="properties-footer">' + 
-    '        <button type="button" class="btn btn-primary" id="saveFlowName">Save changes</button>' + 
+    '        <button type="button" class="btn btn-primary" id="saveFlowName" onclick="saveProperties(this)">Save changes</button>' + 
     '      </div>' + 
     '    </div>' + 
     '';
@@ -730,18 +796,32 @@ function elementProperties(el){
 
                    if(typeValue == 'boolean'){
                         if(value == true){
-                            $("#"+finalData).attr('checked', true);
+                            $('[prop_id="'+data_id+'"]').find("#"+finalData).attr('checked', true);
                         } else {
-                            $("#"+finalData).attr('checked', false);
+                            $('[prop_id="'+data_id+'"]').find("#"+finalData).attr('checked', false);
                         }
                     } else {
-                        $("#"+finalData).val(value);
+                        $('[prop_id="'+data_id+'"]').find("#"+finalData).val(value);
                     }
                 }
 
                 // fill log
-                for (const key in attribut) {
-                
+                for (const key in log) {
+                    var value = log[key];
+                    // console.log('key', key, 'attribut', attribut[key]);
+                    var typeValue = typeof value;
+                    var finalData = 'log' + '-' + key;
+                    console.log('fill log. value:', value, '| type:', typeValue, '| key:', key);
+
+                   if(typeValue == 'boolean'){
+                        if(value == true){
+                            $('[prop_id="'+data_id+'"]').find("#"+finalData).attr('checked', true);
+                        } else {
+                            $('[prop_id="'+data_id+'"]').find("#"+finalData).attr('checked', false);
+                        }
+                    } else {
+                        $('[prop_id="'+data_id+'"]').find("#"+finalData).val(value);
+                    }
                 }
             }
 
@@ -789,7 +869,7 @@ function elementProperties(el){
                                 console.log("propName: ", propName);
                                 attribut[propName] = valueThis;
                                 // console.log("findComp. name:", name, "| type:", type, "| uuid:", uuid, "| attribut:", attribut, "| jsonFlowThis:", jsonFlowThis);
-                                localStorage.setItem("jsonFlow", JSON.stringify(jsonFlowThis));
+                                // localStorage.setItem("jsonFlow", JSON.stringify(jsonFlowThis));
                             }
                         }
                     }
