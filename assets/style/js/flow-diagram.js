@@ -32,7 +32,7 @@ $(document).ready(function(){
                     $(this).attr("size", flowNameLength);
                 });
                 // $("#properties").empty();
-                // $("#properties").load("components/" + ui.draggable.children().attr("id") + ".html");
+                // $("#properties").load("components/" + ui.draggable.children().attr("id") + ".jsp");
                 sortableFunc();
                 $(".flow-diagram").each(function(i){
                     if (!$(".flow-diagram").eq(i).children().hasClass("element-item")) {
@@ -49,7 +49,7 @@ $(document).ready(function(){
 
                             // tambah json flow ke local storage
                             var type_comp = $(ui.draggable).children(0).attr("id");
-                            $.get("components/"+type_comp+".html", function (result) {
+                            $.get("components/"+type_comp+".jsp", function (result) {
                                 // mempersiapkan json component
                                 var propItem = htmlToProp(result, type_comp);
                                 var jsonFlowThis = JSON.parse(localStorage.getItem("jsonFlow"));
@@ -118,6 +118,7 @@ $(document).ready(function(){
                 var liComp = $(ui.item[0]);
                 var data_id = liComp.attr("data_id");
                 var getCompMove = localStorage.getItem("compMove");
+                console.log("change. data_id: ", data_id, "| getCompMove: ", getCompMove);
 
                 if(getCompMove == "" || getCompMove == null /* || getLocal == "[]" */){
                     console.log("getCompMove null");
@@ -266,17 +267,31 @@ $(document).ready(function(){
         var type_comp = liComp.children(0).attr("id");
         $(ui.item[0]).attr("data_id", data_id);  // ngisi uuid ke element html ui
 
-        $.get("components/"+type_comp+".html", function (result) {
+        $.get("components/"+type_comp+".jsp", function (result) {
             // mempersiapkan json component
             var propItem = htmlToProp(result, type_comp);
-            var newCompJson = {
-                "uuid": data_id,
-                "type": type_comp,
-                "name": type_comp,
-                "adapter": codeAdapter[type_comp][0],
-                "attribut": propItem,
-                "log": logDefault,
-            };
+            var newCompJson;
+
+            // kalau bukan component Mapping
+            if(type_comp != "object-mapping"){
+                newCompJson = {
+                    "uuid": data_id,
+                    "type": type_comp,
+                    "name": type_comp,
+                    "adapter": codeAdapter[type_comp][0],
+                    "attribut": propItem,
+                    "log": logDefault,
+                };
+            } else { // component mapping
+                newCompJson = {
+                    "uuid": data_id,
+                    "type": type_comp,
+                    "name": type_comp,
+                    "mapping": "mapping.class",
+                    "path": "",
+                    "log": logDefault,
+                };
+            }
 
             var jsonFlowThis = JSON.parse(localStorage.getItem("jsonFlow"));
             var getIndex;
@@ -397,7 +412,9 @@ $(document).ready(function(){
             jsonItem[item_new] = "";
             // console.log("item_new: ", item_new));
         }
-        jsonItem["code"] = codeAdapter[type_comp][1];
+        if(type_comp != "object-mapping"){
+            jsonItem["code"] = codeAdapter[type_comp][1];
+        }
         return jsonItem;
     }
 
@@ -490,7 +507,7 @@ $(document).ready(function(){
                         "port": 8080,
                         "name": "aaa",
                         "thread": 1,
-                        "keepopen": true,
+                        "keep_open": true,
                         "wait": 60
                     }, 
                     "log": {
@@ -511,7 +528,7 @@ $(document).ready(function(){
                         "path": "/opt/path", 
                         "polling": 10,
                         "retry": 60, 
-                        "filename": "getdata.csv"
+                        "file_name": "getdata.csv"
                     },
                     "log": logDefault,
                 },
@@ -528,8 +545,8 @@ $(document).ready(function(){
                         "port": "3306",
                         "username": "sa",
                         "password": "test",
-                        "dbname": "databaseku",
-                        "dbtype": "mysql",
+                        "db_name": "databaseku",
+                        "db_type": "mysql",
                         "polling": 20,
                         "retry": 60
                     },
@@ -554,9 +571,9 @@ $(document).ready(function(){
                         "path": "/opt/dataku",
                         "polling": 10,
                         "retry": 60,
-                        "filename": "file.xml",
-                        "fileEvent": 2,
-                        "folderName": "assets",
+                        "file_name": "file.xml",
+                        "file_event": 2,
+                        "folder_name": "assets",
                     },
                     "log": logDefault,
                 },
@@ -584,8 +601,8 @@ $(document).ready(function(){
                                 "port": "3306",
                                 "username": "sa",
                                 "password": "test",
-                                "dbname": "databaseku",
-                                "dbtype": "mysql",
+                                "db_name": "databaseku",
+                                "db_type": "mysql",
                                 "polling": 20,
                                 "retry": 60
                             },
@@ -603,8 +620,8 @@ $(document).ready(function(){
                                 "port": "1433",
                                 "username": "sa",
                                 "password": "password",
-                                "dbname": "db-server",
-                                "dbtype": "mssql",
+                                "db_name": "db-server",
+                                "db_type": "mssql",
                                 "polling": 20,
                                 "retry": 60
                             },
@@ -627,7 +644,7 @@ $(document).ready(function(){
                                 "password" : "testing111",
                                 "ssl": true,
                                 "explicit": false,
-                                "filename": "lolz"
+                                "file_name": "lolz"
                             },
                             "log": logDefault,
                         },
@@ -651,12 +668,63 @@ $(document).ready(function(){
                         "password" : "1234",
                         "ssl": false,
                         "explicit": true,
-                        "filename": "finalCrime.img"
+                        "file_name": "finalCrime.img"
                     },
                     "log": logDefault,
                 },
             ],
-        }
+        },
+        {
+            "name": "flow1",
+            // "index": 0,
+            "uuid": generateUUID(),
+            "components": [
+                {
+                    "uuid": generateUUID(),
+                    "type": "sender-tcp",
+                    "name": "tcp-test",
+                    "adapter": "001",
+                    // "index": 0,
+                    "attribut": {
+                        "code": "T001S",
+                        "port": 8080,
+                        "name": "aaa",
+                        "thread": 1,
+                        "keep_open": true,
+                        "wait": 60
+                    }, 
+                    "log": {
+                        "log_type": "NONE",
+                        "show_in_console": false,
+                        "put_on": "DB",
+                    },
+                },
+                {
+                    "uuid": "1206e433f2bb42bdd2b6",
+                    "type": "object-mapping",
+                    "name": "object-mapping",
+                    "mapping": "mapping.class44",
+                    "path": "55",
+                    "log": logDefault,
+                },
+                {
+                    "uuid": generateUUID(),
+                    "type": "receiver-tcp",
+                    "name": "tcp-test",
+                    "adapter": "001",
+                    // "index": 0,
+                    "attribut": {
+                        "code": "T011R",
+                        "port": 8080,
+                        "ip": "192.168.1.39",
+                        "timeout": 1,
+                        "keep_open": true,
+                        "timewait": 60
+                    }, 
+                    "log": logDefault,
+                }
+            ]
+        },
     ];
 
     // localStorage
