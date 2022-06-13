@@ -87,7 +87,7 @@ $(document).ready(function(){
         $(".flow-diagram").sortable({
             items : ".element-item:not(.element-item-disabled)",
             cancel : ".element-item#sender",
-            connectWith : ".flow-diagram",
+            connectWith : ".flow-diagram, .switch-flow-diagram, .switch-flow-element",
             scrollSensitivity: 100,
             cursor: "move", 
             cursorAt: { top: 40, left: 50 },
@@ -101,18 +101,53 @@ $(document).ready(function(){
                         $(this).attr("onclick", "focusElement(this)").attr("ondblclick", "elementProperties(this)");
                     }
                 });
-
-                var itemDropped = $(this).data().uiSortable.currentItem.children();
-                if ($(itemDropped).attr("data-properties") == "sender") {
-                    $(itemDropped).parent().fadeOut().remove();
-                    iziToast.error({
-                        title: 'Error',
-                        message: "You can't drop more 1 Sender in 1 Scenario",
-                        position : "topRight",
-                        transitionIn : "fadeInDown",
-                        transitionOut : "fadeOutUp",
-                    });
+            
+                if ($(this).children(".element-item").length > 1) {
+                    if ($(this).data().uiSortable.currentItem != undefined) {
+                        var itemDropped = $(this).data().uiSortable.currentItem.children();
+                        if ($(itemDropped).attr("data-properties") == "sender") {
+                            $(itemDropped).parent().fadeOut().remove();
+                            iziToast.error({
+                                timeout : 2000,
+                                title: 'Error',
+                                message: "You can't drop more 1 Sender in 1 Scenario",
+                                position : "topRight",
+                                transitionIn : "fadeInDown",
+                                transitionOut : "fadeOutUp",
+                                pauseOnHover: false,
+                            });
+                        }
+                    }
+                }else{
+                    if ($(this).data().uiSortable.currentItem != undefined) {
+                        var itemDropped = $(this).data().uiSortable.currentItem.children();
+                        if ($(itemDropped).attr("data-properties") == "receiver") {
+                            $(itemDropped).parent().fadeOut().remove();
+                            iziToast.error({
+                                timeout : 2000,
+                                title: 'Error',
+                                message: "You can't drop unless the sender is at the beginning of the Scenario  ",
+                                position : "topRight",
+                                transitionIn : "fadeInDown",
+                                transitionOut : "fadeOutUp",
+                                pauseOnHover: false,
+                            });
+                        }
+                        else if ($(itemDropped).attr("data-properties") == "object") {
+                            $(itemDropped).parent().fadeOut().remove();
+                            iziToast.error({
+                                timeout : 2000,
+                                title: 'Error',
+                                message: "You can't drop unless the sender is at the beginning of the Scenario  ",
+                                position : "topRight",
+                                transitionIn : "fadeInDown",
+                                transitionOut : "fadeOutUp",
+                                pauseOnHover: false,
+                            });
+                        }
+                    }
                 }
+            
             },
             change : function(ev, ui){
                 var liComp = $(ui.item[0]);
@@ -321,18 +356,14 @@ $(document).ready(function(){
     
     function switchFlowFunc(){
         $(".switch-flow-diagram").sortable({
+            items : ".switch-flow-element",
+            // connectWith : ".flow-diagram",
             placeholder: "element-item-highlight",
             cursor: "move", 
             cursorAt: { top: 40.5, left: 87.5 },
             revert : true,
             update : function(ev, ui){
                 console.log("update")
-                // $(ui.item).wrap("<ul class='switch-element-sortable'></ul>");
-                // $(".switch-flow-diagram").each(function(i){
-                //     $(this).children(".element-item").each(function(ind){
-                //         // $(this).wrap("<ul class='switch-element-sortable'></ul>")
-                //     })
-                // })
             },
             receive : function(ev, ui){
                 console.log("revce ")
@@ -343,14 +374,35 @@ $(document).ready(function(){
                         setTimeout(() => {
                             $(".switch-flow-element").each(function(ind){
                                 $(this).attr("id", "switch-flow-element-"+ind);
+                            
+                            var data_id = generateUUID();
+            
+                            $(".switch-flow-element .element-box").each(function(ind){
+                                // console.log($(this).prop("onclick"))
+                                if (!$(this).attr("onclick")) {
+                                    $(this).attr("onclick", "focusElement(this)").attr("ondblclick", "elementProperties(this)");                                    
+                                    $(this).parent().attr("data_id", data_id);
+                                }
+                            });
                             })
                         }, 250);
                     })
                 }, 100);
-
-                var itemDropped = $(this).data().uiSortable.currentItem.children();
-                if ($(itemDropped).attr("data-properties") == "sender") {
-                    $(itemDropped).parent().fadeOut().remove();
+            
+                if ($(this).data().uiSortable.currentItem != undefined) {
+                    var itemDropped = $(this).data().uiSortable.currentItem.children();
+                    if ($(itemDropped).attr("data-properties") == "sender") {
+                        $(itemDropped).parent().fadeOut().remove();
+                        iziToast.error({
+                            timeout : 2000,
+                            title: 'Error',
+                            message: "You can't drop more 1 Sender in 1 Scenario",
+                            position : "topRight",
+                            transitionIn : "fadeInDown",
+                            transitionOut : "fadeOutUp",
+                            pauseOnHover: false,
+                        });
+                    }
                 }
             }
         });
@@ -363,18 +415,36 @@ $(document).ready(function(){
         $(".switch-flow-element").sortable({
             placeholder : "element-item-highlight",
             dropOnEmpty : true,
-            connectWith : ".switch-flow-element",
+            connectWith : ".switch-flow-element, .flow-diagram",
             cursor : "move",
             cursorAt : {top : 40.5, left : 87.5},
             revert : true,
-            // over : function(){
-            //   console.log($(this).children(".element-item"))
-            // },
-            // out : function(){
-            //     // $(this).children(".element-item:last").css({
-            //     //     // "background" : "blue"
-            //     // })
-            // }
+            receive : function(ev, ui){
+                
+                var data_id = generateUUID();
+                $(".switch-flow-element .element-box").each(function(ind){
+                    if(!$(this).attr("onclick")){
+                        $(this).attr("onclick", "focusElement(this)").attr("ondblclick", "elementProperties(this)");
+                        $(this).parent().attr("data_id", data_id)
+                    }
+                });
+            
+                if ($(this).data().uiSortable.currentItem != undefined) {
+                    var itemDropped = $(this).data().uiSortable.currentItem.children();
+                    if ($(itemDropped).attr("data-properties") == "sender") {
+                        $(itemDropped).parent().fadeOut().remove();
+                        iziToast.error({
+                            timeout : 2000,
+                            title: 'Error',
+                            message: "You can't drop more 1 Sender in 1 Scenario",
+                            position : "topRight",
+                            transitionIn : "fadeInDown",
+                            transitionOut : "fadeOutUp",
+                            pauseOnHover: false,
+                        });
+                    }
+                }
+            }
         })
     }
 

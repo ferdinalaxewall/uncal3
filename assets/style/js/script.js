@@ -140,6 +140,18 @@ $(document).ready(function(){
                 "delete": {name: "Delete", icon: "delete"}
             }
         });  
+        
+        $.contextMenu({
+            selector: '.flow-name-text', 
+            callback: function(key, options) {
+                if(key == 'edit'){
+                    renameFlowModal($(this));
+                }
+            },
+            items: {
+                "edit": {name: "Rename", icon: "edit"},
+            }
+        })
 
     });
 
@@ -161,7 +173,8 @@ $(document).ready(function(){
         axis : "x",
         scroll : true,
         placeholder : ".project-tab-placeholder",
-        revert : true
+        revert : true,
+        scrollSpeed: 80,
     }).disableSelection();
     
     $("#palette-tab .tab-name").click(function(e){
@@ -305,6 +318,10 @@ $(document).ready(function(){
 
     $(".create-new-folder").click(function(){
         $("#createFolderModal").modal('show');
+    });
+
+    $("#create-new-workspace").click(function(){
+        $("#createWorkspaceModal").modal('show');
     })
     
     $(".create-new-project").click(function(){
@@ -464,6 +481,24 @@ function searchFolderSidebarFunc(){
     }
 }
 
+function searchProjectSidebarFunc(){
+    var workspaceBody, workspaceTitle, textValue, inputField, filter, workspaceBox;
+    workspaceBox = document.querySelectorAll(".list-project");
+    workspaceBody = document.querySelectorAll(".project-name");
+    inputField = document.querySelector(".input-search-project");
+    filter = inputField.value.toUpperCase();
+    for (var index = 0; index < workspaceBody.length; index++) {
+        workspaceTitle = workspaceBody[index].getElementsByTagName("p")[0];
+        console.log(workspaceTitle.innerText);
+        textValue = workspaceTitle.textContent || workspaceTitle.innerText;
+        if (textValue.toUpperCase().indexOf(filter) > -1) {
+            workspaceBox[index].style.display = "block";
+        } else {
+            workspaceBox[index].style.display = "none";
+        }
+    }
+}
+
 function minimizeElementProperties(elProp){
     
     var listProperties = 
@@ -510,6 +545,13 @@ function minimizeElementProperties(elProp){
         $(".element-properties-content").removeClass("d-none");
         $(".outline-content").addClass("d-none");
     }
+
+    // Di tunda dulu
+    // $(".flow-diagram .element-box").each(function(i){
+    //    if ($(this).parent().attr("data_id") == propertiesID) {
+    //        $(this).attr("ondblclick", "elementProperties(this)");
+    //    } 
+    // });
 }
 
 function expandElementProperties(elProp){
@@ -581,6 +623,13 @@ function saveProperties(saveProp){
                         }
                     }
                 }
+
+                if(type == "object-mapping"){
+                    let elInputMapping = rootProp.find("#object-mapping-mapping").val();
+                    let elInputPath = rootProp.find("#object-mapping-path").val();
+                    comp.mapping = elInputMapping;
+                    comp.path = elInputPath;
+                }
             }
         }
     }
@@ -598,6 +647,19 @@ function elementProperties(el){
     // fill data ke properties (auto nama id)
     var liComp = $(el).parent();
     var data_id = liComp.attr("data_id");
+    
+
+    // Di tunda dulu hehe
+    // setTimeout(() => {
+    //     $(".list-properties").each(function(i){
+    //         if ($(this).attr("prop_id") == data_id) {
+    //             $(this).fadeOut().remove();
+    //             alert("Component di hapus adalah, " + $(this).attr("prop_id") + " & " + data_id)
+    //         }
+    //         // var propID = $(this).attr("prop_id");
+    //         // console.log("Prop ID : " + propID, "Data ID : " + data_id)
+    //     });
+    // }, 1000);
 
     var floatProp = '' + 
     '<div class="floating-properties ui-draggable ui-draggable-handle" style="top:0;" prop_id="'+ data_id +'">' + 
@@ -674,10 +736,6 @@ function elementProperties(el){
     '';
 
     $("body").append(floatProp);
-    // if ($(".floating-properties").length == "") {
-    // }else{
-        
-    // }
 
     setTimeout(() => {
 
@@ -691,9 +749,9 @@ function elementProperties(el){
             $(".floating-properties").eq(ind).find("#properties").attr("class", "properties-"+ind)
             setTimeout(() => {
                 if($(this).find(".properties-"+ind).children().length == 0){
-                    $(this).find(".properties-"+ind).load("components/"+getTypeComp+".html");
+                    $(this).find(".properties-"+ind).load("components/"+getTypeComp+".jsp");
                     $(this).find(".properties-title").text(elPropName);
-                    $(this) .find(".log").load("components/log.html");
+                    $(this) .find(".log").load("components/log.jsp");
                     setTimeout(() => {
                         $(this).find("#properties-name").children(".input-field").val(elPropName);  
                         $(this).find("#properties").children(".row").attr("prop_id", data_id);
@@ -837,6 +895,14 @@ function elementProperties(el){
                         $('[prop_id="'+data_id+'"]').find("#"+finalData).val(value);
                     }
                 }
+
+                if(type == 'object-mapping'){
+                    let mapping = comp.mapping;
+                    let path = comp.path;
+                    console.log("object-mapping:", comp);
+                    $('[prop_id="'+data_id+'"]').find("#object-mapping-mapping").val(mapping);
+                    $('[prop_id="'+data_id+'"]').find("#object-mapping-path").val(path);
+                }
             }
 
             if(type == 'object-switching'){
@@ -865,7 +931,7 @@ function elementProperties(el){
                 // console.log("edit. idThis:", idThis, "| valueThis:", valueThis, "| prop_id:", prop_id);
 
                 var jsonFlowThis = JSON.parse(localStorage.getItem("jsonFlow"));
-                findComp(jsonFlowThis);
+                // findComp(jsonFlowThis);
                 function findComp(jsonFlowIndex){
                     for (let i = 0; i < jsonFlowIndex.length; i++) {
                         const flow = jsonFlowIndex[i];
@@ -898,14 +964,20 @@ function deleteComponent(comp) {
     // validasi hapus properties
     var data_id = comp.parent().attr("data_id");
     var prop_id = $("#properties").children(":first").attr("prop_id");
+    var switchElementParent = $(comp).parents(".switch-flow-element");
+    var switchElementLength = $(comp).parents(".switch-flow-element").length;
 
-    
     // hapus element
-    comp.parent().remove();
-    if ($(".flow-diagram").children().length == 0) {
-        $(".flow-diagram, br").remove();
-    }
-    
+    comp.parent().remove(); 
+
+    setTimeout(() => {
+        $(".switch-flow-element").each(function(i) {
+            if ($(this).children().length == 0) {
+                $(this).remove()
+            }
+        });
+    }, 100);
+
     if(data_id != undefined){
         if ($(".floating-properties").length > 0) {
             $(".floating-properties").each(function(i){
@@ -1047,6 +1119,34 @@ function renameFlow(flowName){
     $(flowName).removeAttr("readonly");
 }
 
+function renameFlowModal(flowName){
+    $("#renameFlowModal").modal('show');
+    
+    var flow_name = $(flowName).val();
+    $("#renameFlowModal #input-flow-name").val(flow_name);
+    
+    $("#saveFlowName").click(function(){
+        // edit json flow name    
+        let flow_id = $(flowName).parent().parent().attr("flow_id")
+        var jsonFlowThis = JSON.parse(localStorage.getItem("jsonFlow"));
+        for (let x = 0; x < jsonFlowThis.length; x++) {
+            var flow = jsonFlowThis[x];
+            if(flow_id == flow.uuid){
+                let newName = $("#renameFlowModal #input-flow-name").val();
+                flow.name = newName;
+                localStorage.setItem("jsonFlow", JSON.stringify(jsonFlowThis));
+                // $(flowName).val(newName);
+                setTimeout(() => {
+                    $(flowName).val(newName);
+                    $(flowName).attr("size", newName.length)
+                }, 100);
+            }
+        }
+
+        $("#renameFlowModal").modal('hide');
+    })
+}
+
 function toReadonly(flowName){
     $(flowName).attr("readonly", "true");
 
@@ -1060,7 +1160,6 @@ function toReadonly(flowName){
             flow.name = newName;
             localStorage.setItem("jsonFlow", JSON.stringify(jsonFlowThis));
             // $(flowName).val(newName);
-            console.log(flow.name)
             setTimeout(() => {
                 $(flowName).val(newName)
             }, 100);

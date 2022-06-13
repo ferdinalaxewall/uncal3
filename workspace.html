@@ -108,8 +108,11 @@
                 <div class="container">
                     <h3 class="section-title d-inline-block">Workspace</h3>
                     <div class="workspace-content">
-                        <div class="row justify-content-end">
-                            <div class="col-lg-3 col-sm-12 search-workspace-box">
+                        <div class="row justify-content-between align-items-center">
+                          <div class="col-lg-3 col-sm-6 add-new-workspace-box my-1">
+                            <button class="btn btn-primary" id="create-new-workspace">Create New Workspace</button>
+                          </div>
+                            <div class="col-lg-3 col-sm-6 search-workspace-box my-1">
                                 <div class="input-group">
                                     <input type="text" name="search-workspace" id="search-workspace" class="input-field" placeholder="Search Workspace" onkeyup="searchFolderFunc()">
                                     <label for="#search-worskpace" >
@@ -229,13 +232,13 @@
       <!-- End Content -->
 
     <!-- Modal -->
-
-      <!--Rename Flow Modal -->
-      <div class="modal fade" id="renameFlowModal" tabindex="-1" role="dialog" aria-labelledby="renameFlowModalTitle" aria-hidden="true">
+      
+      <!-- Create Workspace Modal -->
+      <div class="modal fade" id="createWorkspaceModal" tabindex="-1" role="dialog" aria-labelledby="createWorkspaceModalTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="renameFlowModalTitle">Rename Flow</h5>
+              <h5 class="modal-title" id="createWorkspaceModalTitle">Create New Workspace</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -243,114 +246,14 @@
             <div class="modal-body">
               <form>
                 <div class="input-group">
-                  <label for="input-flow-name">Flow Name:</label>
-                  <input type="text" class="input-field" id="input-flow-name" placeholder="Flow Name">
+                  <label for="input-workspace-name">Workspace Name:</label>
+                  <input type="text" class="input-field" id="input-workspace-name" placeholder="Workspace Name">
                 </div>
               </form>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary" id="saveFlowName">Save changes</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <!-- Flow Element Properties Modal -->
-      <div class="modal fade" id="propertiesModal" tabindex="-1" role="dialog" aria-labelledby="propertiesModalTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="propertiesModalTitle">Flow Properties</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <div class="row justify-content-center">
-                <div class="col-md-11" id="properties-modal-content">
-                  <div class="menu-group">
-                    <a href="#" class="menu-name active" id="general-properties">General</a>
-                    <a href="#" class="menu-name" id="notes-properties">Notes</a>
-                    <a href="#" class="menu-name" id="input-output-properties">Input/Output</a>
-                  </div>
-                  <p class="error-info">
-                    <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg" class="mr-2" id="no-errors-icon">
-                      <path d="M15.3612 4.0869C16.1574 2.94888 17.8426 2.94888 18.6388 4.0869L19.0454 4.66819C20.0101 6.04704 21.7346 6.6747 23.3598 6.2385L24.045 6.05461C25.3864 5.6946 26.6774 6.77784 26.5558 8.16137L26.4936 8.86807C26.3463 10.5444 27.2639 12.1337 28.7893 12.8442L29.4324 13.1438C30.6913 13.7302 30.984 15.3899 30.0015 16.3715L29.4996 16.873C28.3093 18.0624 27.9906 19.8697 28.7024 21.3945L29.0025 22.0373C29.5899 23.2958 28.7473 24.7553 27.3637 24.8758L26.6569 24.9373C24.9805 25.0833 23.5747 26.2629 23.1398 27.8885L22.9565 28.5739C22.5976 29.9155 21.014 30.4919 19.8766 29.6948L19.2956 29.2877C17.9176 28.3219 16.0824 28.3219 14.7044 29.2877L14.1234 29.6948C12.986 30.4919 11.4024 29.9155 11.0435 28.5739L10.8602 27.8885C10.4253 26.2629 9.0195 25.0833 7.34306 24.9373L6.63631 24.8758C5.25268 24.7553 4.41007 23.2958 4.99754 22.0373L5.29762 21.3945C6.00941 19.8697 5.69074 18.0624 4.50035 16.873L3.99851 16.3715C3.01603 15.3899 3.30866 13.7302 4.56765 13.1438L4.1454 12.2373L4.56765 13.1438L5.21072 12.8442C6.73614 12.1337 7.65371 10.5444 7.50636 8.86807L7.44425 8.16137C7.32264 6.77784 8.61359 5.6946 9.95499 6.05461L10.6402 6.2385C12.2654 6.6747 13.9899 6.04704 14.9546 4.66819L15.3612 4.0869Z" fill="#c68d53" stroke="#c68d53" stroke-width="2"/>
-                      <path d="M10.752 15.9823L13.1428 18.7556C13.8384 19.5626 15.0445 19.6826 15.8855 19.0285L23.5383 13.0763" stroke="white" stroke-width="2"/>
-                    </svg>
-                      
-                    There are no errors.
-                  </p>
-                </div>
-              </div>
-              <div id="properties">
-
-              </div>
-              <div id="notes" class="d-none">
-                notes
-              </div>
-              <div id="input-output" class="row justify-content-center d-none">
-                <div class="col-md-9 input-output-menu">
-                  <div class="menu-group d-flex justify-content-center align-items-center">
-                    <a href="#" class="input-output-menu-name active">Input</a>
-                    <a href="#" class="input-output-menu-name">Output</a>
-                  </div>
-                </div>
-                <div class="col-md-11 mt-3 input-output-content">
-                  <ul class="list-group" id="input-output-properties-group">
-                    <li class="list-item">
-                      <span> Payload </span>
-                      <p class="list-sub-item">Unknown : <span class="unhighlighted-text">Unknown</span></p>
-                    </li>
-                    <li class="list-item">
-                      <span>Flow Variables</span>
-                    </li>
-                    <li class="list-item">
-                      <span>Session Variable</span>
-                    </li>
-                    <li class="list-item">
-                      <span>Inbound Properties</span>
-                    </li>
-                    <li class="list-item">
-                      <span>Outbound Properties</span>
-                    </li>
-                    <li class="list-item">
-                      <span>Record Variables</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary" id="saveFlowName">Save changes</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <!-- Create Project Modal -->
-      <div class="modal fade" id="createProjectModal" tabindex="-1" role="dialog" aria-labelledby="createProjectModalTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="createProjectModalTitle">Create New Project</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <form>
-                <div class="input-group">
-                  <label for="input-project-name">Project Name:</label>
-                  <input type="text" class="input-field" id="input-project-name" placeholder="Project Name">
-                </div>
-              </form>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary" id="createProjectName">Create Project</button>
+              <button type="button" class="btn btn-primary" id="createWorkspaceName">Create Workspace</button>
             </div>
           </div>
         </div>
