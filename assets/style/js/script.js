@@ -1,5 +1,11 @@
 $(document).ready(function(){
 
+    $(".project-tab").each(function(i){
+        if ($(this).attr("id") == "unsaved") {
+            $(this).find(":after").fadeIn();    
+        }
+    });
+
     // $("p.folder-name::after").text("asi")
 
     // var zoom = 1;
@@ -168,6 +174,7 @@ $(document).ready(function(){
     });
 
     $(".project-tab-container").sortable({
+        refreshPositions: true,
         items : ".project-tab",
         opacity: 0.8,
         axis : "x",
@@ -175,6 +182,7 @@ $(document).ready(function(){
         placeholder : ".project-tab-placeholder",
         revert : true,
         scrollSpeed: 80,
+        forcePlaceholderSize: true // <--- add this
     }).disableSelection();
     
     $("#palette-tab .tab-name").click(function(e){
@@ -512,8 +520,9 @@ function minimizeElementProperties(elProp){
     '                          </div>'+
     '                          <div id="properties-group-2">'+
     '                            <div class="properties-text-group">'+
-    '                              <img src="./assets/icon/expand-icon.svg" alt="Expand Icon Icon">'+
+    '                              <img src="./assets/icon/expand-icon.svg" alt="Expand Icon">'+
     '                              <p class="properties-text">Double Click to open this properties</p>'+
+    '                              <button class="close-list-properties" onclick="closeListProperties(this)"><img src="./assets/icon/close-icon.svg" alt="Close Icon"></button>' +
     '                            </div>'+
     '                          </div>'+
     '                        </a>'+
@@ -552,6 +561,23 @@ function minimizeElementProperties(elProp){
     //        $(this).attr("ondblclick", "elementProperties(this)");
     //    } 
     // });
+}
+
+function closeListProperties(elProp){
+    var prop_id = $(elProp).parents(".list-properties").attr("prop_id");
+    $(".floating-properties").each(function(i){
+        if ($(".floating-properties").eq(i).attr("prop_id") == prop_id) {
+            $(this).remove()
+        }
+    });
+
+    $(".flow-diagram .element-item").each(function(i) {
+        if ($(this).attr("data_id") == prop_id) {
+            $(this).children().attr("ondblclick", "elementProperties(this)")
+        }
+    })
+
+    $(elProp).parents(".list-properties").fadeOut().remove();
 }
 
 function expandElementProperties(elProp){
@@ -834,8 +860,18 @@ function elementProperties(el){
         })
         
         if ($(".floating-properties").length > 3) {
-            $(".floating-properties")[0].remove();
-            $(".list-properties")[0].remove();
+            var elementDeleted = $(".floating-properties").eq(0);
+            var prop_id = $(elementDeleted).attr("prop_id");
+
+            $(".flow-diagram .element-item").each(function(i){
+                if ($(this).attr("data_id") == prop_id) {
+                    $(this).children().attr("ondblclick", "elementProperties(this)");
+                }
+            });
+            setTimeout(() => {
+                $(".floating-properties")[0].remove();
+                $(".list-properties")[0].remove();
+            }, 100);
             
         }
 
@@ -996,7 +1032,7 @@ function deleteComponent(comp) {
         }
             
         // hapus component di localStorage
-        deleteJsonFlow(prop_id);
+        deleteJsonFlow(data_id);
     }
 }
 
@@ -1014,7 +1050,6 @@ function focusElement(e) {
             // validasi hapus properties
             var getEl = $(".element-item.focus");
             var data_id = getEl.attr("data_id");
-            var prop_id = $("#properties").children(":first").attr("prop_id");
 
             // hapus element
             $(".element-item.focus").remove();
@@ -1026,7 +1061,7 @@ function focusElement(e) {
                 $("#properties").empty();
                 
                 // hapus component di localStorage
-                deleteJsonFlow(prop_id);
+                deleteJsonFlow(data_id);
             }
         }
     });

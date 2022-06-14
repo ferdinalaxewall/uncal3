@@ -886,6 +886,7 @@ button:focus{
     background: var(--clr-navbar-bg);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
     padding: 0.25rem 0;
+    z-index: 2;
 }
 
 .navbar .sidebar-toggle{
@@ -901,6 +902,10 @@ button:focus{
 
 .navbar .sidebar-toggle:focus{
     outline: none;
+}
+
+.navbar .sidebar-toggle:focus-visible{
+    outline:auto;
 }
 
 .navbar .navbar-brand{
@@ -1296,7 +1301,7 @@ button:focus{
 }
 
 .content .container-fluid .row .sidebar.collapsed{
-    left: -500px;
+    left: -1000px;
 }
 
 .content .container-fluid .row .sidebar ~ #flow-section, .content .container-fluid .row .sidebar ~ #properties-section{
@@ -1457,16 +1462,25 @@ button:focus{
     height: 30px;
     padding: 0 5px;
     color: var(--clr-black);
+    position: relative;
     border-radius: 5px;
-    transition: all .15s linear;
+    /* transition: all .15s linear; */
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     -ms-border-radius: 5px;
     -o-border-radius: 5px;
-    -webkit-transition: all .15s linear;
+    /* -webkit-transition: all .15s linear;
     -moz-transition: all .15s linear;
     -ms-transition: all .15s linear;
-    -o-transition: all .15s linear;
+    -o-transition: all .15s linear; */
+}
+
+.content .container-fluid .row #flow-section .content-box .project-menu-tab .project-tab-container .project-tab#unsaved::after{
+    content: '*';
+    display: block;
+    position: absolute;
+    right: 25px;
+    top: 2px;
 }
 
 .content .container-fluid .row #flow-section .content-box .project-menu-tab .project-tab-container .project-tab-placeholder{
@@ -1504,7 +1518,7 @@ button:focus{
     text-overflow: ellipsis;
 }
 
-.content .container-fluid .row #flow-section .content-box .project-menu-tab .project-tab-container .project-tab p::after{
+.content .container-fluid .row #flow-section .content-box .project-menu-tab .project-tab-container .project-tab p::before{
     content: '';
     display: block;
     position: absolute;
@@ -1525,7 +1539,7 @@ button:focus{
     -o-transition: all .15s linear;
 }
 
-.content .container-fluid .row #flow-section .content-box .project-menu-tab .project-tab-container .project-tab.active p::after{
+.content .container-fluid .row #flow-section .content-box .project-menu-tab .project-tab-container .project-tab.active p::before{
     width: 100%;
 }
 
@@ -1986,7 +2000,7 @@ button:focus{
 
 .content .container-fluid .row .content-section #flow-container .flow-diagram #switch-element .switch-flow-diagram{
     /* min-height: 80px; */
-    min-height: 250px;
+    min-height: 180px;
     min-width: 160px;
     padding-left: 29px;
     display: flex;
@@ -2005,6 +2019,7 @@ button:focus{
 
 .content .container-fluid .row .content-section #flow-container .flow-diagram #switch-element .switch-flow-diagram .switch-flow-element{
     display: flex;
+    align-items: center;
     min-width: 225px; 
     min-height: 82px;
     border: 1px solid var(--clr-border);
@@ -2026,10 +2041,31 @@ button:focus{
     height: inherit;
     position: absolute;
     pointer-events: none;
-    top: 20px;
     left: -33px;
     animation: arrow .15s linear;
     -webkit-animation: arrow .15s linear;
+}
+
+.content .container-fluid .row .content-section #flow-container .flow-diagram #switch-element .switch-flow-diagram .switch-flow-element .element-item::before{
+    top: 20px;
+}
+
+.content .container-fluid .row .content-section #flow-container .flow-diagram #switch-element .switch-flow-diagram .switch-flow-element .element-item#switch-element::before{
+    top: 50%;
+    transform: translateY(calc(-50% - 10px));
+    -webkit-transform: translateY(calc(-50% - 10px));
+    -moz-transform: translateY(calc(-50% - 10px));
+    -ms-transform: translateY(calc(-50% - 10px));
+    -o-transform: translateY(calc(-50% - 10px));
+}
+
+.content .container-fluid .row .content-section #flow-container .flow-diagram #switch-element .switch-flow-diagram .switch-flow-element::before{
+    top: 50%;
+    transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
 }
 
 .content .container-fluid .row .content-section #flow-container .flow-diagram #switch-element .switch-flow-diagram .switch-flow-element .element-item:first-child::before{
@@ -2042,6 +2078,7 @@ button:focus{
 
 .content .container-fluid .row .content-section #flow-container .flow-diagram #switch-element .switch-flow-diagram .switch-flow-element .element-item{
     min-width: 175px;
+    margin-left: 15px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -2057,6 +2094,8 @@ button:focus{
 }
 
 .content .container-fluid .row .content-section #flow-container .flow-diagram #switch-element .switch-flow-diagram .switch-flow-element .element-item.ui-sortable-helper{
+    max-width: 175px;
+    max-height: 81px;
     border: 2px solid var(--clr-primary);
     border-radius: 5px;
     -webkit-border-radius: 5px;
@@ -2067,6 +2106,12 @@ button:focus{
 
 .content .container-fluid .row .content-section #flow-container .flow-diagram #switch-element .switch-flow-diagram .switch-flow-element .element-item.ui-sortable-helper::before{
     display: none;
+}
+
+.content .container-fluid .row .content-section #flow-container .flow-diagram #switch-element .switch-flow-diagram .switch-flow-element .element-item .switch-flow-diagram{
+    margin-right: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .content .container-fluid .row .content-section #flow-container .element-item-highlight{
@@ -2080,6 +2125,13 @@ button:focus{
     -ms-border-radius: 5px;
     -o-border-radius: 5px;
 }
+
+.content .container-fluid .row .content-section #flow-container .flow-diagram #switch-element .switch-flow-diagram .switch-flow-element .element-item .switch-flow-diagram{
+    margin-right: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
 
 .content .container-fluid .row .content-section #flow-container .flow-diagram .element-item .element-box{
     cursor: pointer;
@@ -2818,9 +2870,34 @@ button:focus{
     align-items: center;
 }
 
-.content .container-fluid .row #flow-map-section .content-box .content-body .element-properties-content .list-of-properties .list-properties .properties-name .properties-text-group .properties-text{
+.content .container-fluid .row #flow-map-section .content-box .content-body .element-properties-content .list-of-properties .list-properties .properties-name #properties-group-2 .properties-text-group{
+    justify-content: space-between;
+}
+
+.content .container-fluid .row #flow-map-section .content-box .content-body .element-properties-content .list-of-properties .list-properties .properties-name #properties-group-1 .properties-text-group .properties-text{
     margin-bottom: 0;
     margin-left: 10px;
+    text-align: center;
+}
+
+.content .container-fluid .row #flow-map-section .content-box .content-body .element-properties-content .list-of-properties .list-properties .properties-name #properties-group-2 .properties-text-group .properties-text{
+    margin-bottom: 0;
+    text-align: center;
+}
+
+.content .container-fluid .row #flow-map-section .content-box .content-body .element-properties-content .list-of-properties .list-properties .properties-name #properties-group-2 .properties-text-group .close-list-properties{
+    background-color: transparent;
+    border: none ;
+    cursor: default;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+}
+
+.content .container-fluid .row #flow-map-section .content-box .content-body .element-properties-content .list-of-properties .list-properties .properties-name #properties-group-2 .properties-text-group .close-list-properties:hover{
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.25);
 }
 
 
@@ -2865,6 +2942,9 @@ button:focus{
 .content .container-fluid .row #workspace-section .workspace-content .row .add-new-workspace-box #create-new-workspace{
     width: 100%;
     font-size: var(--fs-body);
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-evenly;
 }   
 
 .content .container-fluid .row #workspace-section .workspace-content .row .search-workspace-box .input-group{

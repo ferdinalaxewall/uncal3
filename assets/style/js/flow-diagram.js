@@ -4,7 +4,7 @@ $(document).ready(function(){
     
     $(".element-item").draggable({
         connectToSortable : ".flow-diagram, .switch-flow-diagram, .switch-flow-element",
-        containment : "#flow-container",
+        containment : ".content",
         helper : "clone",
         revert: "invalid",
         cursorAt: { top: 25, left: 25 },
@@ -94,8 +94,21 @@ $(document).ready(function(){
             revert : true,
             placeholder: "element-item-highlight",
             zIndex : 10,
+            start : function(ev, ui){
+                var ulCompId = $(ui.item).parent().attr("flow_id");
+                localStorage.setItem("ulSource", ulCompId);
+            },
             receive : function(ev, ui){
                 // console.log("receive: ui: ", ui);
+
+                // create switch component
+
+                if ($(this).data().uiSortable.currentItem != undefined) {
+                    var itemDropped = $(this).data().uiSortable.currentItem;
+    
+                    createSwitchElement(itemDropped)
+                }
+
                 $(".flow-diagram .element-box").each(function(i){
                     if (!$(this).attr("onclick")) {
                         $(this).attr("onclick", "focusElement(this)").attr("ondblclick", "elementProperties(this)");
@@ -165,51 +178,35 @@ $(document).ready(function(){
             },
             update  : function(ev, ui){
                 console.log("update: ui: ", ui);
+
                 setTimeout(function(){
-                    // create switch component
-                    $(".flow-diagram .element-item").each(function(i){
-                        if($(".flow-diagram .element-box").eq(i).prop("id") == 'object-switching'){
-                            if (ui.item.prop("id") == 'switch-element') {
-                            }else{
-                                // console.log("colxz: ", $(ui.draggable));
-                                $(".flow-diagram #object-switching").parent().attr("id", "switch-element")
-                                setTimeout(function(){
-                                    $(".flow-diagram #switch-element").each(function(ind){
-                                        $(this).eq(ind).css({
-                                            "width" : "auto",
-                                            "height" : "auto"
-                                        })
-                                        if($(this).eq(ind).children().hasClass("switch-flow-diagram")){
-                                            // console.log("ada swf")  
-                                        }else{
-                                            // console.log("tidak ada swf")  
-                                            $(this).eq(ind).append(switchUl);
-                                        }
-                                    });
-                                    // if (ui.item.prop("id") == 'switch-element'.children().hasClass("switch-flow-diagram")) {
-                                    //     console.log("ada swf")
-                                    // } else {
-                                    //     console.log("tidak ada swf")
-                                    // }
-                                    switchFlowFunc();
-                                }, 100);
-                            }
-                        }
-                    });
 
                     // new dan move comp
                     var compMove = localStorage.getItem("compMove");
-                    console.log("update: compMove: ", compMove);
-                    if(compMove == "" || compMove == null || compMove == undefined){
-                        console.log("newwww");
-                        addJsonFlow(ui);
+                    console.log("update: compMove: ", compMove, "| ui:", $(ui.item[0]), "| uiSortable: ", $(this).data().uiSortable);
+
+                    if(compMove == ""){
+                        compMove = null;
+                    } if(compMove == undefined){
+                        compMove = null;
+                    } if(compMove == "undefined"){
+                        compMove = null;
+                    }
+
+                    var liComp = $(ui.item);
+                    if(compMove == null){
+                        var ulFlowSource = localStorage.getItem("ulSource");
+                        var ulFlowDest = liComp.parent().attr("flow_id");
+                        console.log("newwww. | ulFlowSource: ", ulFlowSource, "| ulFlowDest:", ulFlowDest);
+                        if(ulFlowSource == ulFlowDest){
+                            addJsonFlow(ui);
+                        }
                     } else {
-                        var liComp = $(ui.item[0]);
                         var data_id = liComp.attr("data_id");
                         var indexFlow = liComp.parent().parent().children("ul").index(liComp.parent());
                         var indexNewComp = liComp.parent().children("li").index(liComp);
                         compMove = JSON.parse(compMove);
-                        console.log("move. compMove: ", compMove, "| indexNewComp:", indexNewComp);
+                        console.log("move. compMove: ", compMove, /*"| ulFlowSource: ", ulFlowSource, "| ulFlowDest:", ulFlowDest*/);
 
                         // tambah component ke json local storage
                         var jsonFlowThis = JSON.parse(localStorage.getItem("jsonFlow"));
@@ -217,8 +214,9 @@ $(document).ready(function(){
                         var components = jsonFlowIndex.components;
                         components.splice(indexNewComp, 0, compMove);
                         localStorage.setItem("jsonFlow", JSON.stringify(jsonFlowThis));
-                        localStorage.removeItem("compMove");
                     }
+                    localStorage.removeItem("compMove");
+                    localStorage.removeItem("ulSource");
                 },50);
             },
                 // over : function(ev, ui){
@@ -353,6 +351,31 @@ $(document).ready(function(){
             }
         });
     }
+
+    function createSwitchElement(switchEl){
+        var itemDroppedChild = $(switchEl).children();
+            if ($(itemDroppedChild).attr("data-type-element") == "switching") {
+                
+                $(switchEl).attr("id", "switch-element");
+
+                // Generate Data ID buat Switch Element
+                // var data_id = generateUUID();
+                // if ($(switchEl).attr("data_id") == undefined) {
+                //     $(switchEl).attr("data_id", data_id);
+                // }
+
+                $(switchEl).css({
+                    "width" : "auto",
+                    "height" : "auto"
+                })
+                
+                if ($(switchEl).children(".switch-flow-diagram").length == 0) {
+                    $(switchEl).append(switchUl);    
+                }
+
+                switchFlowFunc();
+            }
+    }
     
     function switchFlowFunc(){
         $(".switch-flow-diagram").sortable({
@@ -368,6 +391,10 @@ $(document).ready(function(){
             receive : function(ev, ui){
                 console.log("revce ")
                 setTimeout(() => {
+                    if ($(this).data().uiSortable.currentItem != undefined) {
+                        var itemDropped = $(this).data().uiSortable.currentItem;
+                        createSwitchElement(itemDropped);
+                    }
                     $(".switch-flow-diagram").children(".element-item").each(function(i){
                         $(this).eq(i).wrap("<div class='switch-flow-element'></div>")
                         switchFlowElementFuncs();
@@ -421,6 +448,13 @@ $(document).ready(function(){
             revert : true,
             receive : function(ev, ui){
                 
+                if ($(this).data().uiSortable.currentItem != undefined) {
+                    var itemDropped = $(this).data().uiSortable.currentItem;
+    
+                    createSwitchElement(itemDropped)
+                }
+
+
                 var data_id = generateUUID();
                 $(".switch-flow-element .element-box").each(function(ind){
                     if(!$(this).attr("onclick")){
@@ -444,6 +478,13 @@ $(document).ready(function(){
                         });
                     }
                 }
+            },
+            update : function(ev, ui){
+                setTimeout(() => {
+                    if ($(ui.sender).children().length == 0) {
+                        $(ui.sender).remove();
+                    }
+                }, 100);
             }
         })
     }
@@ -606,7 +647,7 @@ $(document).ready(function(){
                     // "uuid": "0-3",
                     "uuid": generateUUID(),
                     "type": "receiver-jdbc",
-                    "name": "nfs-jdbc",
+                    "name": "rec-jdbc",
                     "adapter": "005",
                     // "index": 0,
                     "attribut": {
