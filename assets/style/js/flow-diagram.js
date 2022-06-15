@@ -49,6 +49,7 @@ $(document).ready(function(){
 
                             // tambah json flow ke local storage
                             var type_comp = $(ui.draggable).children(0).attr("id");
+                            var spanText = $(ui.draggable).children(0).find("span").text();
                             $.get("components/"+type_comp+".jsp", function (result) {
                                 // mempersiapkan json component
                                 var propItem = htmlToProp(result, type_comp);
@@ -60,7 +61,7 @@ $(document).ready(function(){
                                         {
                                             "uuid": data_id,
                                             "type": type_comp,
-                                            "name": type_comp,
+                                            "name": spanText,
                                             "attribut": propItem,
                                             "log": logDefault,
                                         }
@@ -298,6 +299,8 @@ $(document).ready(function(){
         var data_id = generateUUID();
         var data_id_prev = liComp.prev().attr("data_id");
         var type_comp = liComp.children(0).attr("id");
+        var spanText = liComp.children(0).find("span").text();
+        console.log("liComp.children(0):", spanText);
         $(ui.item[0]).attr("data_id", data_id);  // ngisi uuid ke element html ui
 
         $.get("components/"+type_comp+".jsp", function (result) {
@@ -310,7 +313,7 @@ $(document).ready(function(){
                 newCompJson = {
                     "uuid": data_id,
                     "type": type_comp,
-                    "name": type_comp,
+                    "name": spanText,
                     "adapter": codeAdapter[type_comp][0],
                     "attribut": propItem,
                     "log": logDefault,
@@ -319,7 +322,7 @@ $(document).ready(function(){
                 newCompJson = {
                     "uuid": data_id,
                     "type": type_comp,
-                    "name": type_comp,
+                    "name": spanText,
                     "mapping": "mapping.class",
                     "path": "",
                     "log": logDefault,
@@ -530,7 +533,7 @@ $(document).ready(function(){
     }
 
     // === JSON TO UI ====
-    function addFlow(component, data_id, flow_id){
+    function addFlow(component, data_id, name){
         $(flowDiagram).insertBefore($('.canvas'));
 
         setTimeout(() => {
@@ -547,25 +550,28 @@ $(document).ready(function(){
                 var clone = $(component).parent().clone();
                 $(clone).addClass('element-item-disabled');
                 $(clone).attr('data_id', data_id);
+                $(clone).find('span').text(name);
                 $(clone).find('a').attr('onclick', 'focusElement(this)').attr("ondblclick", "elementProperties(this)");
                 $(".flow-diagram").eq(i).append(clone);
             }
         });
     }
 
-    function addComponent(component, i, data_id){
-        var clone = $(component).parent().clone();
+    function addComponent(compId, i, component){
+        var clone = $(compId).parent().clone();
         $(clone).attr('style', 'width: auto; height: auto;');
-        $(clone).attr('data_id', data_id);
+        $(clone).attr('data_id', component.uuid);
+        $(clone).find('span').text(component.name);
         $(clone).find('a').attr('onclick', 'focusElement(this)').attr("ondblclick", "elementProperties(this)");
         $($(".flow-diagram").get(i)).append(clone);
     }
 
-    function addSwitch(component, i, data_id){
-        var clone = $(component).parent().clone();
+    function addSwitch(compId, i, component){
+        var clone = $(compId).parent().clone();
         $(clone).attr('id', 'switch-element');
         $(clone).attr('style', 'width: auto; height: auto;');
-        $(clone).attr('data_id', data_id);
+        $(clone).attr('data_id', component.uuid);
+        $(clone).find('span').text(component.name);
         $(clone).find('a').attr('onclick', 'focusElement(this)').attr("ondblclick", "elementProperties(this)");
         var cloneFinal = $(clone).append(switchUl);
         $($(".flow-diagram").get(i)).append(cloneFinal);
@@ -610,7 +616,7 @@ $(document).ready(function(){
                 {
                     "uuid": generateUUID(),
                     "type": "sender-tcp",
-                    "name": "tcp-test",
+                    "name": "TCP Sender",
                     "adapter": "001",
                     // "index": 0,
                     "attribut": {
@@ -631,7 +637,7 @@ $(document).ready(function(){
                     // "uuid": "0-2",
                     "uuid": generateUUID(),
                     "type": "receiver-nfs",
-                    "name": "nfs-test",
+                    "name": "NFS Receiver",
                     "adapter": "003",
                     // "index": 0,
                     "attribut": {
@@ -647,7 +653,7 @@ $(document).ready(function(){
                     // "uuid": "0-3",
                     "uuid": generateUUID(),
                     "type": "receiver-jdbc",
-                    "name": "rec-jdbc",
+                    "name": "JDBC Receiver",
                     "adapter": "005",
                     // "index": 0,
                     "attribut": {
@@ -674,7 +680,7 @@ $(document).ready(function(){
                     // "uuid": "1-1",
                     "uuid": generateUUID(),
                     "type": "sender-nfs",
-                    "name": "nfs-test",
+                    "name": "NFS Sender",
                     "adapter": "003",
                     // "index": 0,
                     "attribut": {
@@ -691,7 +697,7 @@ $(document).ready(function(){
                 {
                     "uuid": "1-2",
                     "type": "object-switching",
-                    "name": "my-switching",
+                    "name": "Switching",
                     // "index": 0,
                     "attribut": {
                         "switch-case": "object",
@@ -765,7 +771,7 @@ $(document).ready(function(){
                     // "uuid": "1-3",
                     "uuid": generateUUID(),
                     "type": "receiver-ftp",
-                    "name": "ftp-test",
+                    "name": "FTP Receiver",
                     "adapter": "003",
                     // "index": 0,
                     "attribut": {
@@ -793,7 +799,7 @@ $(document).ready(function(){
                 {
                     "uuid": generateUUID(),
                     "type": "sender-tcp",
-                    "name": "tcp-test",
+                    "name": "TCP Sender",
                     "adapter": "001",
                     // "index": 0,
                     "attribut": {
@@ -813,7 +819,7 @@ $(document).ready(function(){
                 {
                     "uuid": "1206e433f2bb42bdd2b6",
                     "type": "object-mapping",
-                    "name": "object-mapping",
+                    "name": "Mapping",
                     "mapping": "mapping.class44",
                     "path": "55",
                     "log": logDefault,
@@ -855,14 +861,15 @@ $(document).ready(function(){
         var flow_id = flow.uuid;
         var type_com0 = flow.components[0].type;
         var id_com0 = flow.components[0].uuid;
-        addFlow('#'+type_com0, id_com0);
-        $(".flow-diagram").eq(i).attr("flow_id",flow_id);
-        $(".flow-name").eq(i).find("input").val(flow_name);
+        												   
         var components = flow.components;
         var firstCompId = components[0].uuid;
-        console.log("components", components);
-        console.log("firstCompId:", firstCompId);
-
+        var firstCompName = components[0].name;
+		
+        addFlow('#'+type_com0, id_com0, firstCompName);
+        $(".flow-diagram").eq(i).attr("flow_id",flow_id);
+        $(".flow-name").eq(i).find("input").val(flow_name);
+      
         // recurComp(components, firstCompId, i);
         flatComp(components, i);
     }
@@ -882,9 +889,9 @@ $(document).ready(function(){
                 
                 // selain component switch
                 if(type != 'object-switching'){
-                    addComponent("#" + type, indexFlow, uuid);
+                    addComponent("#" + type, indexFlow, component);
                 } else { // component switch
-                    addSwitch("#object-switching", indexFlow, uuid);
+                    addSwitch("#object-switching", indexFlow, component);
 
                     // switch components child
                     var componSwitchList = component.components;
@@ -922,9 +929,9 @@ $(document).ready(function(){
             
             // selain component switch
             if(type != 'object-switching'){
-                addComponent("#" + type, indexFlow, uuid);
+                addComponent("#" + type, indexFlow, component);
             } else { // component switch
-                addSwitch("#object-switching", indexFlow, uuid);
+                addSwitch("#object-switching", indexFlow, component);
 
                 // switch components child
                 var componSwitchList = component.components;
