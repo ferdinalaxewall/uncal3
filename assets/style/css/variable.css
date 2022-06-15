@@ -1,5 +1,35 @@
 /* Base Variable CSS */
 
+@font-face {
+    font-family: "PoppinsFont";
+    src: url("../../font/Poppins/Poppins-Bold.ttf") format("truetype");
+    font-weight: 700; 
+}
+
+@font-face {
+    font-family: "PoppinsFont";
+    src: url("../../font/Poppins/Poppins-Regular.ttf") format("truetype");
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: "QuicksandFont";
+    src: url("../../font/Quicksand/Quicksand-Light.ttf") format("truetype");
+    font-weight: 300;
+}
+
+@font-face {
+    font-family: "QuicksandFont";
+    src: url("../../font/Quicksand/Quicksand-SemiBold.ttf") format("truetype");
+    font-weight: 600;
+}
+
+@font-face {
+    font-family: "QuicksandFont";
+    src: url("../../font/Quicksand/Quicksand-Bold.ttf") format("truetype");
+    font-weight: 300;
+}
+
 :root{
     --clr-black: #121212;
     --clr-primary: #c68d53;
@@ -17,7 +47,7 @@
     --clr-valid-secondary:rgba(74, 147, 74, 0.66);
     --clr-btn-primary: #c68d53;
     --clr-menu-tab: linear-gradient(to bottom, #fff, #F0F2F4);
-    --font-family: 'Poppins', sans-serif;
+    --font-family: PoppinsFont;
     --font-family-2: 'Quicksand', sans-serif;
     --fw-regular: 400;
     --fw-bold:700;

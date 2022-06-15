@@ -17,68 +17,73 @@ $(document).ready(function(){
         "put_on": "File",
     };
 
-    $(".canvas").droppable({
-        accept : ".elements-list #sender",
-        scroll : true,
-        drop : function(ev, ui){
-            var droppedItem = $(ui.draggable).clone();
+    droppableFunc();
 
-            var flowDiagramNew = $(flowDiagram);
-            flowDiagramNew.attr("flow_id", generateUUID());
-            $(flowDiagramNew).insertBefore($(this));
-            setTimeout(function(){
-                $(".flow-name-text").each(function(ind){
-                    var flowNameLength = $(this).val().length;
-                    $(this).attr("size", flowNameLength);
-                });
-                // $("#properties").empty();
-                // $("#properties").load("components/" + ui.draggable.children().attr("id") + ".jsp");
-                sortableFunc();
-                $(".flow-diagram").each(function(i){
-                    if (!$(".flow-diagram").eq(i).children().hasClass("element-item")) {
-                        $(".flow-diagram").eq(i).append(ui.draggable.clone());
-                        setTimeout(function(){
-                            var data_id = generateUUID();
-                            $(".flow-diagram").eq(i).children(".element-item").first().addClass("element-item-disabled");
-                            $(".flow-diagram .element-box").each(function(i){
-                                if (!$(this).attr("onclick")) {
-                                    $(this).attr("onclick", "focusElement(this)").attr("ondblclick", "elementProperties(this)");
-                                    $(this).parent().attr("data_id", data_id);
-                                }
-                            });
+    function droppableFunc(){
 
-                            // tambah json flow ke local storage
-                            var type_comp = $(ui.draggable).children(0).attr("id");
-                            var spanText = $(ui.draggable).children(0).find("span").text();
-                            $.get("components/"+type_comp+".jsp", function (result) {
-                                // mempersiapkan json component
-                                var propItem = htmlToProp(result, type_comp);
-                                var jsonFlowThis = JSON.parse(localStorage.getItem("jsonFlow"));
-                                var newFlow = {
-                                    "name": "Scenario_1",
-                                    "uuid": data_id,
-                                    "components": [
-                                        {
-                                            "uuid": data_id,
-                                            "type": type_comp,
-                                            "name": spanText,
-                                            "attribut": propItem,
-                                            "log": logDefault,
-                                        }
-                                    ]
-                                };
-                                jsonFlowThis.push(newFlow);
-                                localStorage.setItem("jsonFlow", JSON.stringify(jsonFlowThis));
-                            });
-                        },200);
-                    }
-                });
-            }, 100);
-        },
-            // over : function(ev, ui) {
-            //     console.log(ui.helper)
-            // }
-    }).disableSelection();
+        $(".canvas").droppable({
+            accept : ".elements-list #sender",
+            scroll : true,
+            drop : function(ev, ui){
+                var droppedItem = $(ui.draggable).clone();
+    
+                var flowDiagramNew = $(flowDiagram);
+                flowDiagramNew.attr("flow_id", generateUUID());
+                $(flowDiagramNew).insertBefore($(this));
+                setTimeout(function(){
+                    $(".flow-name-text").each(function(ind){
+                        var flowNameLength = $(this).val().length;
+                        $(this).attr("size", flowNameLength);
+                    });
+                    // $("#properties").empty();
+                    // $("#properties").load("components/" + ui.draggable.children().attr("id") + ".jsp");
+                    sortableFunc();
+                    $(".flow-diagram").each(function(i){
+                        if (!$(".flow-diagram").eq(i).children().hasClass("element-item")) {
+                            $(".flow-diagram").eq(i).append(ui.draggable.clone());
+                            setTimeout(function(){
+                                var data_id = generateUUID();
+                                $(".flow-diagram").eq(i).children(".element-item").first().addClass("element-item-disabled");
+                                $(".flow-diagram .element-box").each(function(i){
+                                    if (!$(this).attr("onclick")) {
+                                        $(this).attr("onclick", "focusElement(this)").attr("ondblclick", "elementProperties(this)");
+                                        $(this).parent().attr("data_id", data_id);
+                                    }
+                                });
+    
+                                // tambah json flow ke local storage
+                                var type_comp = $(ui.draggable).children(0).attr("id");
+                                var spanText = $(ui.draggable).children(0).find("span").text();
+                                $.get("components/"+type_comp+".jsp", function (result) {
+                                    // mempersiapkan json component
+                                    var propItem = htmlToProp(result, type_comp);
+                                    var jsonFlowThis = JSON.parse(localStorage.getItem("jsonFlow"));
+                                    var newFlow = {
+                                        "name": "Scenario_1",
+                                        "uuid": data_id,
+                                        "components": [
+                                            {
+                                                "uuid": data_id,
+                                                "type": type_comp,
+                                                "name": spanText,
+                                                "attribut": propItem,
+                                                "log": logDefault,
+                                            }
+                                        ]
+                                    };
+                                    jsonFlowThis.push(newFlow);
+                                    localStorage.setItem("jsonFlow", JSON.stringify(jsonFlowThis));
+                                });
+                            },200);
+                        }
+                    });
+                }, 100);
+            },
+                // over : function(ev, ui) {
+                //     console.log(ui.helper)
+                // }
+        }).disableSelection();
+    }
 
     var switchUl = "<ul class='switch-flow-diagram'></ul>";
 
@@ -182,6 +187,12 @@ $(document).ready(function(){
 
                 setTimeout(function(){
 
+                    $(".switch-flow-element").each(function(i){
+                        if ($(this).children().length == 0) {
+                            $(this).remove()
+                        }
+                    })
+
                     // new dan move comp
                     var compMove = localStorage.getItem("compMove");
                     console.log("update: compMove: ", compMove, "| ui:", $(ui.item[0]), "| uiSortable: ", $(this).data().uiSortable);
@@ -220,18 +231,11 @@ $(document).ready(function(){
                     localStorage.removeItem("ulSource");
                 },50);
             },
-                // over : function(ev, ui){
-                //     var elementId = $(ui.item).children().attr("id");
-                //     var splitText = elementId.split("-").shift();
-
-                //     if (splitText == "sender") {
-                //             $(this).sortable({
-                //                 disabled : true
-                //         })
-                //     }else{
-                //         console.log("not-sender")
-                //     }
-                // }
+            over : function(ev,ui){
+                switchFlowFunc();
+                switchFlowElementFuncs();
+            }
+            
         }).disableSelection();
     }
     
@@ -434,14 +438,14 @@ $(document).ready(function(){
                         });
                     }
                 }
+            },
+            over : function(ev,ui){
+                switchFlowElementFuncs();
             }
         });
     }
 
     function switchFlowElementFuncs(){
-        // $(".switch-flow-element").on('mouseenter', function(){
-        //     console.log("dragover")
-        // })
         $(".switch-flow-element").sortable({
             placeholder : "element-item-highlight",
             dropOnEmpty : true,
@@ -488,6 +492,9 @@ $(document).ready(function(){
                         $(ui.sender).remove();
                     }
                 }, 100);
+            },
+            over : function(ev,ui){
+                switchFlowFunc();
             }
         })
     }
@@ -568,6 +575,12 @@ $(document).ready(function(){
 
     function addSwitch(compId, i, component){
         var clone = $(compId).parent().clone();
+        var elBoxClone = $(clone).find(".element-box");
+
+        if ($(elBoxClone).attr("onclick") == undefined) {
+            $(elboxClone).attr("onclick", "focusElement(this)").attr("ondblclick", "elementProperties(this)")
+        }
+        
         $(clone).attr('id', 'switch-element');
         $(clone).attr('style', 'width: auto; height: auto;');
         $(clone).attr('data_id', component.uuid);

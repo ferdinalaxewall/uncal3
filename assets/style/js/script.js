@@ -4,6 +4,10 @@ $(document).ready(function(){
         if ($(this).attr("id") == "unsaved") {
             $(this).find(":after").fadeIn();    
         }
+
+        if ($(".project-tab").eq(i).attr("project_id") == undefined) {
+            $(".project-tab").eq(i).attr("project_id", generateUUID());
+        }
     });
 
     // $("p.folder-name::after").text("asi")
@@ -57,7 +61,6 @@ $(document).ready(function(){
             $(this).siblings(".list-of-project").fadeToggle();
         }
     });
-
 
     // Edit Profile Modal
     $(".edit-profile").click(function(){
@@ -334,7 +337,39 @@ $(document).ready(function(){
     
     $(".create-new-project").click(function(){
         createNewProject();
-    })
+    });
+
+    // Set Workspace Content Type (Box or List)
+
+    $(".set-type-content").click(function(){
+        $(".set-type-content").removeClass("active");
+        $(this).addClass("active");
+
+        if ($(this).attr("id") == "list-content-button") {
+            $(".workspace-box").removeClass("col-lg-3").addClass("list-content");
+
+            // Set to localstorage
+            localStorage.setItem("content-type", "list")
+        }else if($(this).attr("id") == "box-content-button"){
+            $(".workspace-box").removeClass("list-content").addClass("col-lg-3")
+
+            // Set to localstorage
+            localStorage.setItem("content-type", "box")
+        }
+    });
+
+    // Get Content Type from Localstrorage
+    var contentType = localStorage.getItem("content-type");
+
+    if (contentType == "box") {
+        $("#list-content-button").removeClass("active");
+        $("#box-content-button").addClass("active");
+        $(".workspace-box").removeClass("list-content").addClass("col-lg-3");
+    }else if (contentType == "list") {
+        $("#list-content-button").addClass("active");
+        $("#box-content-button").removeClass("active");
+        $(".workspace-box").removeClass("col-lg-3").addClass("list-content");
+    }
     
     var sidebarCollapse = false;
     
@@ -656,6 +691,14 @@ function saveProperties(saveProp){
                     comp.mapping = elInputMapping;
                     comp.path = elInputPath;
                 }
+
+                // properties name
+                let propname = type + '-propname';
+                let propnameVal = rootProp.find("#"+propname).val();
+                comp.name = propnameVal; // change json
+                $('[data_id="'+uuid+'"]').find("span").text(propnameVal); // change UI canvas
+                let titleName = propnameVal + " (" + type + ")";
+                rootProp.find(".properties-title").text(titleName); // change UI title
             }
         }
     }
@@ -776,7 +819,8 @@ function elementProperties(el){
             setTimeout(() => {
                 if($(this).find(".properties-"+ind).children().length == 0){
                     $(this).find(".properties-"+ind).load("components/"+getTypeComp+".jsp");
-                    $(this).find(".properties-title").text(elPropName);
+                    let titleName = elPropName + " (" + getTypeComp + ")";
+                    $(this).find(".properties-title").text(titleName);
                     $(this) .find(".log").load("components/log.jsp");
                     setTimeout(() => {
                         $(this).find("#properties-name").children(".input-field").val(elPropName);  
@@ -1267,3 +1311,20 @@ $(document).ready(function () {
         $("#createProjectModal").modal("hide");
     });
 });
+
+// Unic ID untuk flow dan component
+function generateUUID() { 
+    var d = new Date().getTime();//Timestamp
+    var d2 = ((typeof performance !== 'undefined') && performance.now && (performance.now()*1000)) || 0;//Time in microseconds since page-load or 0 if unsupported
+    return 'xxxxxxxxxxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = Math.random() * 16;//random number between 0 and 16
+        if(d > 0){//Use timestamp until depleted
+            r = (d + r)%16 | 0;
+            d = Math.floor(d/16);
+        } else {//Use microseconds since page-load if supported
+            r = (d2 + r)%16 | 0;
+            d2 = Math.floor(d2/16);
+        }
+        return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+    });
+}

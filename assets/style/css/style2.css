@@ -1398,6 +1398,10 @@ button:focus{
     display: none;
 }
 
+.content .container-fluid .row #properties-section.minimized .content-box #properties-tab, .content .container-fluid .row #flow-map-section.minimized .content-box #flow-map-tab{
+    box-shadow: none;
+}
+
 
 /* Flow Section Style */
 
@@ -2939,6 +2943,20 @@ button:focus{
     margin: 0 5px;
 }
 
+.content .container-fluid .row #workspace-section .workspace-content .row .set-type-content{
+    background-color: transparent;
+    border: none;
+    pointer-events: fill;
+}
+
+.content .container-fluid .row #workspace-section .workspace-content .row .set-type-content:hover, .content .container-fluid .row #workspace-section .workspace-content .row .set-type-content.active{
+    opacity: 0.7;
+}
+
+.content .container-fluid .row #workspace-section .workspace-content .row .set-type-content.active{
+    pointer-events: none;
+}
+
 .content .container-fluid .row #workspace-section .workspace-content .row .add-new-workspace-box #create-new-workspace{
     width: 100%;
     font-size: var(--fs-body);
@@ -3026,8 +3044,11 @@ button:focus{
     height: 180px;
     margin-bottom: 30px;
 }
+.content .container-fluid .row #workspace-section .workspace-content .workspace-box-container .workspace-box.list-content{
+    height: 100px;
+}
 
-.content .container-fluid .row #workspace-section .workspace-content .workspace-box-container .workspace-link{
+.content .container-fluid .row #workspace-section .workspace-content .workspace-box-container .workspace-box .workspace-link{
     display: block;
     width: 100%;
     height: 100%;
@@ -3046,7 +3067,11 @@ button:focus{
     -o-transition: all .15s linear;
 }
 
-.content .container-fluid .row #workspace-section .workspace-content .workspace-box-container .workspace-link:hover{
+.content .container-fluid .row #workspace-section .workspace-content .workspace-box-container .workspace-box.list-content .workspace-link{
+    display: flex;
+}
+
+.content .container-fluid .row #workspace-section .workspace-content .workspace-box-container .workspace-box .workspace-link:hover,.content .container-fluid .row #workspace-section .workspace-content .workspace-box-container .workspace-box .workspace-link:focus-visible{
     border: 1px solid var(--clr-primary);
     box-shadow:  0 0 15px rgba(0, 0, 0, 0.15);
     transform: scale(0.975);
@@ -3054,9 +3079,10 @@ button:focus{
     -moz-transform: scale(0.975);
     -ms-transform: scale(0.975);
     -o-transform: scale(0.975);
+    outline: none;
 }
 
-.content .container-fluid .row #workspace-section .workspace-content .workspace-box-container .workspace-link .workspace-img{
+.content .container-fluid .row #workspace-section .workspace-content .workspace-box-container .workspace-box .workspace-link .workspace-img{
     border-bottom: 1px solid var(--clr-primary);
     height: 60%;
     display: flex;
@@ -3064,19 +3090,38 @@ button:focus{
     justify-content: center;
 }
 
-.content .container-fluid .row #workspace-section .workspace-content .workspace-box-container .workspace-link .workspace-body{
+.content .container-fluid .row #workspace-section .workspace-content .workspace-box-container .workspace-box.list-content .workspace-link .workspace-img{
+    height: 100%;
+    width: 25%;
+    border-bottom: none;
+}
+
+.content .container-fluid .row #workspace-section .workspace-content .workspace-box-container .workspace-box .workspace-link .workspace-body{
     height: 40%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
 }
-.content .container-fluid .row #workspace-section .workspace-content .workspace-box-container .workspace-link .workspace-body .workspace-title{
+
+.content .container-fluid .row #workspace-section .workspace-content .workspace-box-container .workspace-box.list-content .workspace-link .workspace-body{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.content .container-fluid .row #workspace-section .workspace-content .workspace-box-container .workspace-box.list-content .workspace-link .workspace-body .workspace-title, .content .container-fluid .row #workspace-section .workspace-content .workspace-box-container .workspace-box.list-content .workspace-link .workspace-body .workspace-description{
+    margin: 2.5px 0;
+}
+
+.content .container-fluid .row #workspace-section .workspace-content .workspace-box-container .workspace-box .workspace-link .workspace-body .workspace-title{
     color: var(--clr-black);
     margin-bottom: 0px;
     
 }
-.content .container-fluid .row #workspace-section .workspace-content .workspace-box-container .workspace-link .workspace-body .workspace-description{
+.content .container-fluid .row #workspace-section .workspace-content .workspace-box-container .workspace-box .workspace-link .workspace-body .workspace-description{
     color: var(--clr-black);
     margin-bottom: 0px;
 }

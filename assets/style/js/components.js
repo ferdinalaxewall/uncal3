@@ -20,10 +20,6 @@ $(document).ready(function(){
         },100);
     });
 
-    $("#flow-tab .close-tab").click(function(){
-        $(this).parent().remove();
-    });
-
     $(".category-button").click(function(){
         $(".elements-list .element-item").hide();
 
