@@ -54,14 +54,6 @@ $(document).ready(function(){
         }
     })
 
-    // Workspace or Folder onclick action
-    $(".folder-group").click(function(){
-        if ($(this).parent().hasClass("has-child")) {
-            $(this).parent().toggleClass("active");
-            $(this).siblings(".list-of-project").fadeToggle();
-        }
-    });
-
     // Edit Profile Modal
     $(".edit-profile").click(function(){
         $("#editProfileModal").modal('show');
@@ -462,6 +454,23 @@ function deleteProject(project){
 function renameFolderName(folder){
     $("#renameFolderModal").modal('show');
     $("#renameFolderModal").find("#input-folder-name").val(folder.text());
+
+    $("#updateFolderName").click(function(){
+        let newName = $("#renameFolderModal").find("#input-folder-name").val();
+        $(folder).parent().parent().find(".folder-name").text(newName);
+        $("#renameFolderModal").modal('hide');
+
+        // rename jsonFolder
+        let folder_id = $(folder).parent().parent().attr("folder_id");
+        let jsonFolderLocal = JSON.parse(localStorage.getItem("jsonFolder"));
+        for (let i = 0; i < jsonFolderLocal.length; i++) {
+            const item = jsonFolderLocal[i];
+            if(item.uuid == folder_id){
+                jsonFolderLocal[i].name = newName;
+            }
+        }
+        localStorage.setItem("jsonFolder", JSON.stringify(jsonFolderLocal));
+    });
 }
 
 function deleteFolder(folder){
@@ -469,6 +478,27 @@ function deleteFolder(folder){
     $("#deleteFolder").click(function(){
         $(folder).parent().parent().remove();
         $("#deleteFolderModal").modal('hide')
+
+        // delete jsonFolder
+        let folder_id = $(folder).parent().parent().attr("folder_id");
+        let jsonFolderLocal = JSON.parse(localStorage.getItem("jsonFolder"));
+        for (let i = 0; i < jsonFolderLocal.length; i++) {
+            const item = jsonFolderLocal[i];
+            if(item.uuid == folder_id){
+                jsonFolderLocal.splice(i, 1);
+            }
+        }
+        localStorage.setItem("jsonFolder", JSON.stringify(jsonFolderLocal));
+    });
+}
+
+// Workspace or Folder onclick action
+function openFolderGroup(){
+    $(".folder-group").click(function(){
+        if ($(this).parent().hasClass("has-child")) {
+            $(this).parent().toggleClass("active");
+            $(this).siblings(".list-of-project").fadeToggle();
+        }
     });
 }
 
@@ -564,7 +594,8 @@ function minimizeElementProperties(elProp){
     '                      </li>';
 
     var propertiesID = $(elProp).parents(".floating-properties").attr("prop_id");
-    var propertiesName = $(elProp).parent().siblings(".properties-title").text();
+    var propertiesName = $(elProp).parent().siblings(".properties-title").children(".properties-title-name").text();
+    var propertiesTypeName = $(elProp).parent().siblings(".properties-title").children(".properties-type-name").text();
 
 
     $(elProp).parents(".floating-properties").fadeOut();
@@ -573,7 +604,7 @@ function minimizeElementProperties(elProp){
         $(".list-properties").each(function(i){
             if (!$(this).attr("prop_id")) {
                 $(this).attr("prop_id", propertiesID);
-                $(this).find("#properties-group-1 .properties-text").text(propertiesName);
+                $(this).find("#properties-group-1 .properties-text").text(propertiesName + " " + propertiesTypeName);
             }
         })
     }, 100);
@@ -697,8 +728,9 @@ function saveProperties(saveProp){
                 let propnameVal = rootProp.find("#"+propname).val();
                 comp.name = propnameVal; // change json
                 $('[data_id="'+uuid+'"]').find("span").text(propnameVal); // change UI canvas
-                let titleName = propnameVal + " (" + type + ")";
-                rootProp.find(".properties-title").text(titleName); // change UI title
+                let titleName = propnameVal;
+                rootProp.find(".properties-title-name").text(titleName); // change UI title
+                rootProp.find(".properties-title-name").attr("title", titleName); // change UI title tooltip
             }
         }
     }
@@ -733,7 +765,7 @@ function elementProperties(el){
     var floatProp = '' + 
     '<div class="floating-properties ui-draggable ui-draggable-handle" style="top:0;" prop_id="'+ data_id +'">' + 
     '      <div class="floating-properties-header">' + 
-    '        <h5 class="properties-title" id="propertiesModalTitle">Flow Properties</h5>' +
+    '        <h5 class="properties-title" id="propertiesModalTitle"><span class="properties-title-name mr-1">Flow Properties</span><span class="properties-type-name"></span></h5>' +
     '           <div class="button-group">' + 
     '               <button type="button" class="close close-element-properties">' + 
     '                   <span aria-hidden="true">&times;</span>' + 
@@ -819,8 +851,10 @@ function elementProperties(el){
             setTimeout(() => {
                 if($(this).find(".properties-"+ind).children().length == 0){
                     $(this).find(".properties-"+ind).load("components/"+getTypeComp+".jsp");
-                    let titleName = elPropName + " (" + getTypeComp + ")";
-                    $(this).find(".properties-title").text(titleName);
+                    let titleName = elPropName;
+                    let propTypeName = getTypeComp;
+                    $(this).find(".properties-title-name").text(titleName).attr("title", titleName);
+                    $(this).find(".properties-type-name").text("(" + propTypeName + ")").attr("title", propTypeName);
                     $(this) .find(".log").load("components/log.jsp");
                     setTimeout(() => {
                         $(this).find("#properties-name").children(".input-field").val(elPropName);  
@@ -1125,6 +1159,7 @@ function deleteJsonFlow(data_id) {
             const flow = jsonFlowIndex[i];
             var components = flow.components;
 
+
             for (let x = 0; x < components.length; x++) {
                 const comp = components[x];
                 var name = comp.name;
@@ -1249,68 +1284,6 @@ function toReadonly(flowName){
 function flowTyping(e) {
     $(e).attr('size', $(e).val().length + 1);
 }
-
-// project
-$(document).ready(function () {
-    // contoh json project auto fill
-    let getJsonProject = localStorage.getItem("jsonProject");
-    console.log("getJsonProject: ", getJsonProject);
-    if(getJsonProject == "" || getJsonProject == null /* || getJsonProject == "[]" */){
-        console.log("jsonProject empty");
-        // let dataProject = [{
-        //     "projectName": "projectA",
-        //     "isOpen": true,
-        //     "files": [
-        //         "file a", "file b", "file c"
-        //     ]
-        // }];
-        // localStorage.setItem("jsonProject", JSON.stringify(dataProject));
-    }
-
-    // buat html file
-    function addFileHtml(item) {
-        let result = "";
-        result += '<li class="list-project">';
-        result += '<a href="#" class="project-name">';
-        result +=  '<img src="./assets/icon/uncal-icon.svg" alt="Uncal Icon">';
-        result +=  '<span class="project-name">'+item+'</span>';
-        result += '</a></li>';
-        return result;
-    }
-
-    // show jsonProject ke sidebar
-    let jsonProject = JSON.parse(localStorage.getItem("jsonProject"));
-    let listHtml = "";
-    for (let i = 0; i < jsonProject.length; i++) {
-        const project = jsonProject[i];
-        if(project.isOpen){
-            let files = project.files;
-            $(".folder-name").text(project.projectName);
-            for (let j = 0; j < files.length; j++) {
-                listHtml += addFileHtml(files[j]);
-            }
-        }
-    }
-    $(".list-group-project").empty();
-    $(".list-group-project").append(listHtml);
-
-    // new project
-    $("#createProjectName").click(function (e) { 
-        let newName = $("#input-project-name").val();
-        console.log("createProjectName. newName:", newName);
-
-        let jsonProjectLocal = JSON.parse(localStorage.getItem("jsonProject"));
-        for (let i = 0; i < jsonProjectLocal.length; i++) {
-            const project = jsonProjectLocal[i];
-            if(project.isOpen){
-                project.files.push(newName);
-            }
-        }
-        localStorage.setItem("jsonProject", JSON.stringify(jsonProjectLocal));
-        $(".list-group-project").append(addFileHtml(newName));
-        $("#createProjectModal").modal("hide");
-    });
-});
 
 // Unic ID untuk flow dan component
 function generateUUID() { 

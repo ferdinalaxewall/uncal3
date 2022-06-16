@@ -206,6 +206,25 @@ button:focus{
 .floating-properties .floating-properties-header .properties-title{
     font-size: var(--fs-heading);
     margin-bottom: 0;
+    max-width: 260px;
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+}
+
+.floating-properties .floating-properties-header .properties-title .properties-title-name, .floating-properties .floating-properties-header .properties-title .properties-type-name{
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.floating-properties .floating-properties-header .properties-title .properties-title-name{
+    max-width: 40%;
+}
+
+.floating-properties .floating-properties-header .properties-title .properties-type-name{
+    max-width: 100%;
 }
 
 .floating-properties .properties-footer{
@@ -229,6 +248,8 @@ button:focus{
 .floating-properties .properties-body .config-box{
     max-height: 311px;
     overflow-y: auto;
+    scrollbar-color: var(--clr-primary) var(--clr-white);
+    scrollbar-width: thin;
 }
 
 .floating-properties .properties-body .config-box::-webkit-scrollbar{
@@ -474,6 +495,8 @@ button:focus{
     -moz-border-radius: 10px;
     -ms-border-radius: 10px;
     -o-border-radius: 10px;
+    scrollbar-color: var(--clr-primary) rgba(255,255,255, 0.75);
+    scrollbar-width: thin;
 }
 
 .modal-backdrop {
@@ -887,6 +910,7 @@ button:focus{
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
     padding: 0.25rem 0;
     z-index: 2;
+    height: 42.8px;
 }
 
 .navbar .sidebar-toggle{
@@ -1207,6 +1231,8 @@ button:focus{
     margin-top: 10px;
     padding-left: 0;
     padding: 10px 20px;
+    scrollbar-color: var(--clr-primary) rgba(255,255,255, 0.75);
+    scrollbar-width: thin;
 }
 
 .content .container-fluid .row .sidebar .sidebar-content .list-group-project::-webkit-scrollbar{
@@ -1435,6 +1461,8 @@ button:focus{
     height: 100%;
     padding-left: 15px;
     overflow-x: auto;
+    scrollbar-color: var(--clr-primary) var(--clr-white);
+    scrollbar-width: thin;
 }
 
 .content .container-fluid .row #flow-section .content-box .project-menu-tab .project-tab-container::-webkit-scrollbar{
@@ -1442,17 +1470,31 @@ button:focus{
 }
 
 .content .container-fluid .row #flow-section .content-box .project-menu-tab .project-tab-container::-webkit-scrollbar-track{
-    background-color: var(--clr-white);
-}
-
-.content .container-fluid .row #flow-section .content-box .project-menu-tab .project-tab-container::-webkit-scrollbar-thumb{
-    background-color: var(--clr-primary);
+    background-color: transparent;
     transition: all .15s linear;
     -webkit-transition: all .15s linear;
     -moz-transition: all .15s linear;
     -ms-transition: all .15s linear;
     -o-transition: all .15s linear;
 }
+
+.content .container-fluid .row #flow-section .content-box .project-menu-tab .project-tab-container::-webkit-scrollbar-thumb{
+    background-color: transparent;
+    transition: all .15s linear;
+    -webkit-transition: all .15s linear;
+    -moz-transition: all .15s linear;
+    -ms-transition: all .15s linear;
+    -o-transition: all .15s linear;
+}
+
+.content .container-fluid .row #flow-section .content-box .project-menu-tab .project-tab-container:hover::-webkit-scrollbar-track{
+    background-color: var(--clr-white);
+}
+
+.content .container-fluid .row #flow-section .content-box .project-menu-tab .project-tab-container:hover::-webkit-scrollbar-thumb{
+    background-color: var(--clr-primary);
+}
+
 
 .content .container-fluid .row #flow-section .content-box .project-menu-tab .project-tab-container::-webkit-scrollbar-thumb:hover{
     background-color: var(--clr-primary-hover);
@@ -1606,6 +1648,8 @@ button:focus{
 .content .container-fluid .row #flow-section .content-box .content-body{
     /* max-height: 65vh; */
     max-height: calc(70vh - 55px);
+    scrollbar-color: var(--clr-primary) rgba(255,255,255, 0.75);
+    scrollbar-width: thin;
 }
 
 .content .container-fluid .row #flow-section .content-box .content-body::-webkit-scrollbar{
@@ -1823,7 +1867,7 @@ button:focus{
 
 .content .container-fluid .row .content-section #flow-container .flow-diagram{
     padding-left: 0;
-    min-width: 100px;
+    min-width: 130px;
     min-height: 92px;
     padding: 5px 15px;
     display: inline-flex;
@@ -2333,10 +2377,13 @@ button:focus{
     max-height: calc(70vh - 36.8px - 40px - 45px - 20px - 40px);
     overflow-y: auto;
     overflow-x: visible;
+    scrollbar-color: var(--clr-primary) var(--clr-white);
+    scrollbar-width: thin;
 }
 
 .content .container-fluid .row .content-section .content-box .content-body .elements-list::-webkit-scrollbar{
     width: 6px;
+    height: 6px;
 }
 
 .content .container-fluid .row .content-section .content-box .content-body .elements-list::-webkit-scrollbar-track{
@@ -2496,6 +2543,8 @@ button:focus{
     overflow-y: auto;
     margin-right: 2.5px;
     margin-top: 3px;
+    scrollbar-color: var(--clr-primary) rgba(255,255,255, 0.75);
+    scrollbar-width: thin;
 }
 
 .content .container-fluid .row #properties-section .content-box .content-body::-webkit-scrollbar{
@@ -2680,6 +2729,8 @@ button:focus{
     margin-right: 5px;
     margin-top: 5px;
     overflow-y: auto;
+    scrollbar-color: var(--clr-primary) rgba(255,255,255, 0.75);
+    scrollbar-width: thin;
 }
 
 .content .container-fluid .row #flow-map-section .content-box .content-body .list-group .list-item{
@@ -2743,6 +2794,8 @@ button:focus{
 .content .container-fluid .row #flow-map-section .content-box #flow-map-tab{
     overflow-y: hidden;
     overflow-x: auto;
+    scrollbar-color: var(--clr-primary) rgba(255,255,255, 0.75);
+    scrollbar-width: thin;
 }
 
 .content .container-fluid .row #flow-map-section .content-box #flow-map-tab::-webkit-scrollbar{
@@ -2958,7 +3011,6 @@ button:focus{
 }
 
 .content .container-fluid .row #workspace-section .workspace-content .row .add-new-workspace-box #create-new-workspace{
-    width: 100%;
     font-size: var(--fs-body);
     display: inline-flex;
     align-items: center;
@@ -3013,6 +3065,8 @@ button:focus{
     margin-top: 20px;
     margin-left: 5px;
     margin-right: 5px;
+    scrollbar-color: var(--clr-primary) rgba(255,255,255, 0.75);
+    scrollbar-width: thin;
 }
 
 .content .container-fluid .row #workspace-section .workspace-content .workspace-box-container::-webkit-scrollbar{
@@ -3198,12 +3252,20 @@ button:focus{
         padding-left: 0.5rem;
     }
 
+    .content .container-fluid .row #workspace-section .workspace-content .row .add-new-workspace-box{
+        justify-content: space-between;
+    }
+
     
 }
 
-@media (max-width:1295px){
+@media (max-width:1315px){
     .content .container-fluid .row .content-section .content-box .content-body .elements-list{
         max-height: calc(70vh - 36.8px - 40px - 45px - 47px - 40px);
+    }
+
+    .content .container-fluid .row .content-section.maximize .content-box .content-body .elements-list{
+        max-height: calc(70vh + 100vh - 70vh - 25px - 42.8px - 46.5px - 36.8px - 40px - 45px - 47px - 40px);
     }
 }
 

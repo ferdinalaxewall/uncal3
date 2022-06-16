@@ -92,7 +92,7 @@ $(document).ready(function(){
         
         $(".flow-diagram").sortable({
             items : ".element-item:not(.element-item-disabled)",
-            cancel : ".element-item#sender",
+            cancel : ".element-item#sender, .element-item-disabled  ",
             connectWith : ".flow-diagram, .switch-flow-diagram, .switch-flow-element",
             scrollSensitivity: 100,
             cursor: "move", 
@@ -163,6 +163,9 @@ $(document).ready(function(){
                                 transitionOut : "fadeOutUp",
                                 pauseOnHover: false,
                             });
+                        }
+                        else if($(itemDropped).attr("data-properties") == "sender"){
+                            $(itemDropped).parent(".element-item").addClass("element-item-disabled");
                         }
                     }
                 }
@@ -575,11 +578,6 @@ $(document).ready(function(){
 
     function addSwitch(compId, i, component){
         var clone = $(compId).parent().clone();
-        var elBoxClone = $(clone).find(".element-box");
-
-        if ($(elBoxClone).attr("onclick") == undefined) {
-            $(elboxClone).attr("onclick", "focusElement(this)").attr("ondblclick", "elementProperties(this)")
-        }
         
         $(clone).attr('id', 'switch-element');
         $(clone).attr('style', 'width: auto; height: auto;');
@@ -905,7 +903,7 @@ $(document).ready(function(){
                     addComponent("#" + type, indexFlow, component);
                 } else { // component switch
                     addSwitch("#object-switching", indexFlow, component);
-
+                    
                     // switch components child
                     var componSwitchList = component.components;
                     for (let k = 0; k < componSwitchList.length; k++) {
@@ -916,7 +914,7 @@ $(document).ready(function(){
                         var pidSwitch = componSwitch.pid;
                         var typeSwitch = componSwitch.type;
                         // console.log("nameSwitch: ", nameSwitch, "typeSwitch", typeSwitch, "idSwitch", idSwitch);
-
+                        
                         if(uuid == pidSwitch){
                             addSwitchItem("#"+typeSwitch, uuid, idSwitch);
                         }
