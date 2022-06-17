@@ -437,6 +437,27 @@ function readImageFile(input){
 
 function createNewProject(project){
     $("#createProjectModal").modal('show');
+
+    
+    $("#createProjectName").click(function(){
+        $("#createProjectModal").modal('hide');
+        
+        let newName = $("#createProjectModal").find("#input-project-name").val();
+        let folder_id = $(project).parent().parent().attr("folder_id");
+        let jsonFolderLocal = JSON.parse(localStorage.getItem("jsonFolder"));
+        for (let i = 0; i < jsonFolderLocal.length; i++) {
+            const item = jsonFolderLocal[i];
+            if(item.uuid == folder_id){
+                // new file project json 
+                let newFile = { name : newName, uuid : generateUUID()};
+                item.files.push(newFile);
+                localStorage.setItem("jsonFolder", JSON.stringify(jsonFolderLocal));
+                
+                // new file project UI
+                addFileHtml(item.files);
+            }
+        }
+    });
 }
 
 function renameProject(project){

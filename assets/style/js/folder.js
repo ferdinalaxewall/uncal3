@@ -1,4 +1,34 @@
-// folder
+// buat html folder
+function addFolderHtml(name, uuid, files) {
+    let classFolder = files.length > 0 ? "has-child" : "";
+    let result = '' +
+    '<li class="list-folder '+classFolder+'" folder_id="'+uuid+'">'+
+        '<div class="folder-group">'+
+            '<img src="./assets/icon/chevron-icon.svg" id="chevron-icon" alt="Chevron Icon">'+
+            '<img src="./assets/icon/uncal-folder-icon.svg" alt="Uncal Folder Icon">'+
+            '<p class="folder-name" title="Right Click for More">'+name+'</p>'+
+        '</div>'+
+    '</li>';
+
+    return result;
+}
+
+// buat html file/project
+function addFileHtml(files) {
+    let result = '<ul class="list-of-project" style="display: none;">';
+    for (let x = 0; x < files.length; x++) {
+        const item = files[x];
+        result += '<li class="list-project" file_id="'+item.uuid+'">'+
+            '<a href="#" class="project-name">'+
+            '<img src="./assets/icon/uncal-icon.svg" alt="Uncal Icon" loading="lazy">'+
+            '<span class="project-name">'+item.name+'</span>'+
+            '</a>'+
+        '</li>';
+    }
+    result += '</ul>';
+    return result;
+}
+
 $(document).ready(function () {
     // contoh json project auto fill
     let getJsonFolder = localStorage.getItem("jsonFolder");
@@ -29,40 +59,9 @@ $(document).ready(function () {
         localStorage.setItem("jsonFolder", JSON.stringify(dataFolder));
     }
 
-    // buat html folder
-    function addFolderHtml(name, uuid, files) {
-        let classFolder = files.length > 0 ? "has-child" : "";
-        let result = '' +
-        '<li class="list-folder '+classFolder+'" folder_id="'+uuid+'">'+
-            '<div class="folder-group">'+
-                '<img src="./assets/icon/chevron-icon.svg" id="chevron-icon" alt="Chevron Icon">'+
-                '<img src="./assets/icon/uncal-folder-icon.svg" alt="Uncal Folder Icon">'+
-                '<p class="folder-name" title="Right Click for More">'+name+'</p>'+
-            '</div>'+
-        '</li>';
-
-        return result;
-    }
-
-    // buat html file/project
-    function addFileHtml(files) {
-        let result = '<ul class="list-of-project" style="display: none;">';
-        for (let x = 0; x < files.length; x++) {
-            const item = files[x];
-            result += '<li class="list-project" file_id="'+item.uuid+'">'+
-                '<a href="#" class="project-name">'+
-                '<img src="./assets/icon/uncal-icon.svg" alt="Uncal Icon" loading="lazy">'+
-                '<span class="project-name">'+item.name+'</span>'+
-                '</a>'+
-            '</li>';
-        }
-        result += '</ul>';
-        return result;
-    }
-
     // show jsonFolder ke sidebar
     let jsonFolder = JSON.parse(localStorage.getItem("jsonFolder"));
-    // $(".list-group-folder").empty();
+    $(".list-group-folder").empty();
     
     for (let i = 0; i < jsonFolder.length; i++) {
         let listHtml = "";
@@ -95,7 +94,7 @@ $(document).ready(function () {
         jsonFolderLocal.push(newJson);
         localStorage.setItem("jsonFolder", JSON.stringify(jsonFolderLocal));
         $(".list-group-folder").append(addFolderHtml(newName, uuid, newJson.files));
-        $("#createProjectModal").modal("hide");
+        $("#createFolderModal").modal('hide');
     });
 
     
