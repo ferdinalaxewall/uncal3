@@ -31,6 +31,7 @@ $(document).ready(function(){
                 flowDiagramNew.attr("flow_id", generateUUID());
                 $(flowDiagramNew).insertBefore($(this));
                 setTimeout(function(){
+                    var flow_id = $(flowDiagramNew).attr("flow_id");
                     $(".flow-name-text").each(function(ind){
                         var flowNameLength = $(this).val().length;
                         $(this).attr("size", flowNameLength);
@@ -60,7 +61,7 @@ $(document).ready(function(){
                                     var jsonFlowThis = JSON.parse(localStorage.getItem("jsonFlow"));
                                     var newFlow = {
                                         "name": "Scenario_1",
-                                        "uuid": data_id,
+                                        "uuid": flow_id,
                                         "components": [
                                             {
                                                 "uuid": data_id,
@@ -389,7 +390,7 @@ $(document).ready(function(){
     
     function switchFlowFunc(){
         $(".switch-flow-diagram").sortable({
-            items : ".switch-flow-element",
+            items : ".switch-flow-element, .element-item",
             // connectWith : ".flow-diagram",
             placeholder: "element-item-highlight",
             cursor: "move", 
@@ -405,6 +406,13 @@ $(document).ready(function(){
                         var itemDropped = $(this).data().uiSortable.currentItem;
                         createSwitchElement(itemDropped);
                     }
+
+                    $(".switch-flow-diagram .switch-flow-element").each(function(i){
+                        if ($(this).children(".element-item").length == 0) {
+                            $(this).remove();
+                        }
+                    })
+
                     $(".switch-flow-diagram").children(".element-item").each(function(i){
                         $(this).eq(i).wrap("<div class='switch-flow-element'></div>")
                         switchFlowElementFuncs();
@@ -452,7 +460,7 @@ $(document).ready(function(){
         $(".switch-flow-element").sortable({
             placeholder : "element-item-highlight",
             dropOnEmpty : true,
-            connectWith : ".switch-flow-element, .flow-diagram",
+            connectWith : ".switch-flow-element, .flow-diagram, .switch-flow-diagram",
             cursor : "move",
             cursorAt : {top : 40.5, left : 87.5},
             revert : true,
