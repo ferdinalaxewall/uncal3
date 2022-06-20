@@ -9,24 +9,43 @@ function addFolderHtml(name, uuid, files) {
             '<p class="folder-name" title="Right Click for More">'+name+'</p>'+
         '</div>'+
     '</li>';
-
-    return result;
+    $(".list-group-folder").append(result);
 }
 
 // buat html file/project
-function addFileHtml(files) {
-    let result = '<ul class="list-of-project" style="display: none;">';
-    for (let x = 0; x < files.length; x++) {
-        const item = files[x];
-        result += '<li class="list-project" file_id="'+item.uuid+'">'+
-            '<a href="#" class="project-name">'+
+function fileHtmlString(file){
+    let result = '<li class="list-project" file_id="'+file.uuid+'">'+
+            '<a href="#" class="project-name" ondblclick="testis(this)">'+
             '<img src="./assets/icon/uncal-icon.svg" alt="Uncal Icon" loading="lazy">'+
-            '<span class="project-name">'+item.name+'</span>'+
+            '<span class="project-name">'+file.name+'</span>'+
             '</a>'+
         '</li>';
+    return result;
+}
+
+function addFileHtmlUl(files, uuid) {
+    let result = '<ul class="list-of-project" style="display: none;">';
+    for (let x = 0; x < files.length; x++) {
+        const file = files[x];
+        result += fileHtmlString(file);
     }
     result += '</ul>';
-    return result;
+    $('[folder_id="'+ uuid +'"]').append(result);
+}
+
+function addFileHtmlLi(file, uuid, length) {
+    if(length == 1){
+        let result = '<ul class="list-of-project" style="display: none;">'+fileHtmlString(file)+'</ul>';
+        $('[folder_id="'+ uuid +'"]').append(result);
+        $('[folder_id="'+ uuid +'"]').addClass("has-child");
+        setTimeout(() => {
+            $('[folder_id="'+ uuid +'"]').find("#chevron-icon").click();
+        }, 300);
+    } else {
+        let result = fileHtmlString(file);
+        $('[folder_id="'+ uuid +'"]').find("ul").append(result);
+    }
+    openFolderGroup();
 }
 
 $(document).ready(function () {
@@ -71,11 +90,10 @@ $(document).ready(function () {
         let files = folder.files;
 
         // tambah folder
-        listHtml += addFolderHtml(name, uuid, files);
-        $(".list-group-folder").append(listHtml);
-
+        addFolderHtml(name, uuid, files);
+        
         // tambah file
-        $('[folder_id="'+ uuid +'"]').append(addFileHtml(files));
+        addFileHtmlUl(files, uuid);
     }
     
     // new folder
@@ -93,10 +111,8 @@ $(document).ready(function () {
         let jsonFolderLocal = JSON.parse(localStorage.getItem("jsonFolder"));
         jsonFolderLocal.push(newJson);
         localStorage.setItem("jsonFolder", JSON.stringify(jsonFolderLocal));
-        $(".list-group-folder").append(addFolderHtml(newName, uuid, newJson.files));
+        addFolderHtml(newName, uuid, newJson.files);
         $("#createFolderModal").modal('hide');
     });
-
-    
     openFolderGroup();
 });

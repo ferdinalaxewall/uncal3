@@ -321,6 +321,7 @@ $(document).ready(function(){
 
     $(".create-new-folder").click(function(){
         $("#createFolderModal").modal('show');
+        $("#createFolderModal").find("#input-folder-name").val("");
     });
 
     $("#create-new-workspace").click(function(){
@@ -437,8 +438,9 @@ function readImageFile(input){
 
 function createNewProject(project){
     $("#createProjectModal").modal('show');
+    $("#createProjectModal").find("#input-project-name").val("");
 
-    
+    $("#createProjectName").unbind("click");
     $("#createProjectName").click(function(){
         $("#createProjectModal").modal('hide');
         
@@ -454,7 +456,7 @@ function createNewProject(project){
                 localStorage.setItem("jsonFolder", JSON.stringify(jsonFolderLocal));
                 
                 // new file project UI
-                addFileHtml(item.files);
+                addFileHtmlLi(newFile, item.uuid, item.files.length);
             }
         }
     });
@@ -466,10 +468,59 @@ function renameProject(project){
     var projectName = project.text();
     var projectNameWithoutFormat = projectName.split(".").shift()
     $("#renameProjectModal").find("#input-project-name").val(projectNameWithoutFormat);
+
+    $("#updateProjectName").unbind("click");
+    $("#updateProjectName").click(function(){
+        $("#renameProjectModal").modal('hide');
+        
+        let newName = $("#renameProjectModal").find("#input-project-name").val();
+        let file_id = $(project).parent().parent().attr("file_id");
+        let jsonFolderLocal = JSON.parse(localStorage.getItem("jsonFolder"));
+        console.log("file_id: ", file_id, "| newName:", newName, "| $(project):", $(project));
+        for (let i = 0; i < jsonFolderLocal.length; i++) {
+            const folder = jsonFolderLocal[i];
+            let files = folder.files;
+            for (let j = 0; j < files.length; j++) {
+                let file = files[j];
+                if(file.uuid == file_id){
+                    // rename file json 
+                    files[j].name = newName
+                    localStorage.setItem("jsonFolder", JSON.stringify(jsonFolderLocal));
+                    
+                    // rename file UI
+                    $(project).text(newName);
+                }
+            }
+        }
+    });
 }
 
 function deleteProject(project){
     $("#deleteProjectModal").modal('show');
+
+    $("#deleteProject").unbind("click");
+    $("#deleteProject").click(function(){
+        $("#deleteProjectModal").modal('hide');
+        
+        let file_id = $(project).parent().parent().attr("file_id");
+        let jsonFolderLocal = JSON.parse(localStorage.getItem("jsonFolder"));
+        console.log("file_id: ", file_id, "| $(project):", $(project));
+        for (let i = 0; i < jsonFolderLocal.length; i++) {
+            const folder = jsonFolderLocal[i];
+            let files = folder.files;
+            for (let j = 0; j < files.length; j++) {
+                let file = files[j];
+                if(file.uuid == file_id){
+                    // delete file json 
+                    files.splice(j, 1);
+                    localStorage.setItem("jsonFolder", JSON.stringify(jsonFolderLocal));
+                    
+                    // delete file UI
+                    $(project).closest(".list-project").remove();
+                }
+            }
+        }
+    });
 }
 
 function renameFolderName(folder){
