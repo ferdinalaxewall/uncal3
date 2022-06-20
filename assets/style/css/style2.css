@@ -1460,6 +1460,7 @@ button:focus{
     max-width: calc(100% - 50px);
     height: 100%;
     padding-left: 15px;
+    overflow-y: hidden;
     overflow-x: auto;
     scrollbar-color: var(--clr-primary) var(--clr-white);
     scrollbar-width: thin;

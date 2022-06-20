@@ -4,11 +4,15 @@ $(document).ready(function(){
     
     $(".element-item").draggable({
         connectToSortable : ".flow-diagram, .switch-flow-diagram, .switch-flow-element",
-        containment : ".content",
+        containment : "#flow-container",
         helper : "clone",
         revert: "invalid",
         cursorAt: { top: 25, left: 25 },
         scroll : false,
+        start : function(ev, ui){
+            var elementType = $(ui.helper).children().attr("data-properties");
+            $(ui.helper).attr("id", elementType);
+        }
     }).disableSelection();
 
     let logDefault = {
@@ -25,8 +29,7 @@ $(document).ready(function(){
             accept : ".elements-list #sender",
             scroll : true,
             drop : function(ev, ui){
-                var droppedItem = $(ui.draggable).clone();
-    
+                
                 var flowDiagramNew = $(flowDiagram);
                 flowDiagramNew.attr("flow_id", generateUUID());
                 $(flowDiagramNew).insertBefore($(this));
@@ -36,15 +39,15 @@ $(document).ready(function(){
                         var flowNameLength = $(this).val().length;
                         $(this).attr("size", flowNameLength);
                     });
-                    // $("#properties").empty();
-                    // $("#properties").load("components/" + ui.draggable.children().attr("id") + ".jsp");
                     sortableFunc();
                     $(".flow-diagram").each(function(i){
                         if (!$(".flow-diagram").eq(i).children().hasClass("element-item")) {
+
                             $(".flow-diagram").eq(i).append(ui.draggable.clone());
                             setTimeout(function(){
                                 var data_id = generateUUID();
                                 $(".flow-diagram").eq(i).children(".element-item").first().addClass("element-item-disabled");
+                                $(".flow-diagram").eq(i).children(".element-item").first().removeAttr("style");
                                 $(".flow-diagram .element-box").each(function(i){
                                     if (!$(this).attr("onclick")) {
                                         $(this).attr("onclick", "focusElement(this)").attr("ondblclick", "elementProperties(this)");
@@ -75,14 +78,11 @@ $(document).ready(function(){
                                     jsonFlowThis.push(newFlow);
                                     localStorage.setItem("jsonFlow", JSON.stringify(jsonFlowThis));
                                 });
-                            },200);
+                            },100);
                         }
                     });
                 }, 100);
             },
-                // over : function(ev, ui) {
-                //     console.log(ui.helper)
-                // }
         }).disableSelection();
     }
 
@@ -93,7 +93,7 @@ $(document).ready(function(){
         
         $(".flow-diagram").sortable({
             items : ".element-item:not(.element-item-disabled)",
-            cancel : ".element-item#sender, .element-item-disabled  ",
+            cancel : ".element-item#sender, .element-item-disabled",
             connectWith : ".flow-diagram, .switch-flow-diagram, .switch-flow-element",
             scrollSensitivity: 100,
             cursor: "move", 

@@ -1514,6 +1514,7 @@ button:focus{
     padding-right: 10px;
     height: 100%;
     max-width: calc(100% - 50px);
+    overflow-y: hidden;
     overflow-x: auto;
     padding-left: 15px;
     scrollbar-color: var(--clr-primary) var(--clr-white);
@@ -2157,7 +2158,7 @@ button:focus{
 
 .content .container-fluid .row .content-section #flow-container .flow-diagram #switch-element .switch-flow-diagram .switch-flow-element .element-item{
     min-width: 175px;
-    margin-left: 15px   ;
+    margin-left: 15px;
     display: flex;
     align-items: center;
     justify-content: center;
