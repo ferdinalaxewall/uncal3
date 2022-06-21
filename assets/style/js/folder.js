@@ -15,7 +15,7 @@ function addFolderHtml(name, uuid, files) {
 // buat html file/project
 function fileHtmlString(file){
     let result = '<li class="list-project" file_id="'+file.uuid+'">'+
-            '<a href="#" class="project-name" ondblclick="testis(this)">'+
+            '<a href="#" class="project-name" ondblclick="openProjectTab(this)">'+
             '<img src="./assets/icon/uncal-icon.svg" alt="Uncal Icon" loading="lazy">'+
             '<span class="project-name">'+file.name+'</span>'+
             '</a>'+
@@ -72,6 +72,13 @@ $(document).ready(function () {
             "uuid": generateUUID(),
             "files": [ {
                 name : "file a", 
+                uuid : generateUUID(), 
+            }]
+        }, {
+            "name": "Default Folder",
+            "uuid": generateUUID(),
+            "files": [ {
+                name : "Default Project", 
                 uuid : generateUUID(), 
             }]
         }];

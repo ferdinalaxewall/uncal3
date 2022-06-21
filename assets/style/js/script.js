@@ -1,17 +1,5 @@
 $(document).ready(function(){
 
-    $(".project-tab").each(function(i){
-        if ($(this).attr("id") == "unsaved") {
-            $(this).find(":after").fadeIn();    
-        }
-
-        if ($(".project-tab").eq(i).attr("project_id") == undefined) {
-            $(".project-tab").eq(i).attr("project_id", generateUUID());
-        }
-    });
-
-    // $("p.folder-name::after").text("asi")
-
     // var zoom = 1;
     // var toTop = 0;
 
@@ -125,7 +113,7 @@ $(document).ready(function(){
         });
 
         $.contextMenu({
-            selector: '.folder-name', 
+            selector: '.folder-group', 
             callback: function(key, options) {
                 if(key == 'delete'){
                     deleteFolder($(this));
@@ -156,29 +144,17 @@ $(document).ready(function(){
 
     });
 
-    $("#flow-tab .project-tab").click(function(e){
-        $("#flow-tab .project-tab").removeClass("active");
+    // $("#flow-tab .project-tab").click(function(e){
+    //     $("#flow-tab .project-tab").removeClass("active");
 
-        var $this = $(this);
-        if (!$this.hasClass("active")) {
-            $this.addClass("active");
-        }
+    //     var $this = $(this);
+    //     if (!$this.hasClass("active")) {
+    //         $this.addClass("active");
+    //     }
 
-        e.preventDefault();
+    //     e.preventDefault();
 
-    });
-
-    $(".project-tab-container").sortable({
-        refreshPositions: true,
-        items : ".project-tab",
-        opacity: 0.8,
-        axis : "x",
-        scroll : true,
-        placeholder : ".project-tab-placeholder",
-        revert : true,
-        scrollSpeed: 80,
-        forcePlaceholderSize: true // <--- add this
-    }).disableSelection();
+    // });
     
     $("#palette-tab .tab-name").click(function(e){
         $("#palette-tab .tab-name").removeClass("active");
@@ -445,7 +421,7 @@ function createNewProject(project){
         $("#createProjectModal").modal('hide');
         
         let newName = $("#createProjectModal").find("#input-project-name").val();
-        let folder_id = $(project).parent().parent().attr("folder_id");
+        let folder_id = $(project).parent().attr("folder_id");
         let jsonFolderLocal = JSON.parse(localStorage.getItem("jsonFolder"));
         for (let i = 0; i < jsonFolderLocal.length; i++) {
             const item = jsonFolderLocal[i];
@@ -529,11 +505,11 @@ function renameFolderName(folder){
 
     $("#updateFolderName").click(function(){
         let newName = $("#renameFolderModal").find("#input-folder-name").val();
-        $(folder).parent().parent().find(".folder-name").text(newName);
+        $(folder).parent().find(".folder-name").text(newName);
         $("#renameFolderModal").modal('hide');
 
         // rename jsonFolder
-        let folder_id = $(folder).parent().parent().attr("folder_id");
+        let folder_id = $(folder).parent().attr("folder_id");
         let jsonFolderLocal = JSON.parse(localStorage.getItem("jsonFolder"));
         for (let i = 0; i < jsonFolderLocal.length; i++) {
             const item = jsonFolderLocal[i];
@@ -548,11 +524,11 @@ function renameFolderName(folder){
 function deleteFolder(folder){
     $("#deleteFolderModal").modal('show')
     $("#deleteFolder").click(function(){
-        $(folder).parent().parent().remove();
+        $(folder).parent().remove();
         $("#deleteFolderModal").modal('hide')
 
         // delete jsonFolder
-        let folder_id = $(folder).parent().parent().attr("folder_id");
+        let folder_id = $(folder).parent().attr("folder_id");
         let jsonFolderLocal = JSON.parse(localStorage.getItem("jsonFolder"));
         for (let i = 0; i < jsonFolderLocal.length; i++) {
             const item = jsonFolderLocal[i];

@@ -1695,6 +1695,15 @@ button:focus{
     transform-origin: left top;  
 }
 
+.content .container-fluid .row #flow-section .content-box #flow-container .project-container{
+    display: none;
+}
+
+.content .container-fluid .row #flow-section .content-box #flow-container .project-container.active{
+    display: block;
+}
+
+
 .content .container-fluid .row #flow-section .content-box #flow-container .canvas{
     height: 380px;
     width: 100%;
