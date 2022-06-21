@@ -1338,6 +1338,9 @@ button:focus{
     margin-left: 10px;
     position: relative;
     cursor: pointer;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .content .container-fluid .row .sidebar .sidebar-content .list-group-folder .list-folder .list-of-project{
@@ -1349,11 +1352,18 @@ button:focus{
     margin-bottom: 5px;
 }
 
+.content .container-fluid .row .sidebar .sidebar-content .list-group-folder .list-folder .list-of-project .list-project:last-child{
+    margin-bottom: 10px;
+}
+
 .content .container-fluid .row .sidebar .sidebar-content .list-group-folder .list-folder .list-of-project .list-project .project-name{
-    display: inline-flex;
+    display: flex;
     align-items: center;
     color: var(--clr-black);
     font-size: var(--fs-body);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .content .container-fluid .row .sidebar .sidebar-content .list-group-folder .list-folder .list-of-project .list-project .project-name:hover{

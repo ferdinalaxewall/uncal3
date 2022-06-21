@@ -435,6 +435,8 @@ function createNewProject(project){
                 addFileHtmlLi(newFile, item.uuid, item.files.length);
             }
         }
+
+        openFolderGroup(project)
     });
 }
 
@@ -556,13 +558,11 @@ function deleteFolder(folder){
 }
 
 // Workspace or Folder onclick action
-function openFolderGroup(){
-    $(".folder-group").click(function(){
-        if ($(this).parent().hasClass("has-child")) {
-            $(this).parent().toggleClass("active");
-            $(this).siblings(".list-of-project").fadeToggle();
-        }
-    });
+function openFolderGroup(folder){
+    if ($(folder).parent().hasClass("has-child")) {
+        $(folder).parent().toggleClass("active");
+        $(folder).siblings(".list-of-project").fadeToggle();
+    }
 }
 
 function searchFolderFunc(){

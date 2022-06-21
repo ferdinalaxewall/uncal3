@@ -3,7 +3,7 @@ function addFolderHtml(name, uuid, files) {
     let classFolder = files.length > 0 ? "has-child" : "";
     let result = '' +
     '<li class="list-folder '+classFolder+'" folder_id="'+uuid+'">'+
-        '<div class="folder-group">'+
+        '<div class="folder-group" onclick="openFolderGroup(this)">'+
             '<img src="./assets/icon/chevron-icon.svg" id="chevron-icon" alt="Chevron Icon">'+
             '<img src="./assets/icon/uncal-folder-icon.svg" alt="Uncal Folder Icon">'+
             '<p class="folder-name" title="Right Click for More">'+name+'</p>'+
