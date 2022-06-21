@@ -448,9 +448,16 @@ function renameProject(project){
     $("#updateProjectName").unbind("click");
     $("#updateProjectName").click(function(){
         $("#renameProjectModal").modal('hide');
-        
-        let newName = $("#renameProjectModal").find("#input-project-name").val();
         let file_id = $(project).parent().parent().attr("file_id");
+        let newName = $("#renameProjectModal").find("#input-project-name").val();
+        
+        // rename project tab jika sedang di open
+        $(".project-tab").each(function(ind){
+            if ($(this).attr("project_id") == file_id) {
+                $(this).find("p").text(newName)
+            }
+        });
+        
         let jsonFolderLocal = JSON.parse(localStorage.getItem("jsonFolder"));
         console.log("file_id: ", file_id, "| newName:", newName, "| $(project):", $(project));
         for (let i = 0; i < jsonFolderLocal.length; i++) {
@@ -477,8 +484,16 @@ function deleteProject(project){
     $("#deleteProject").unbind("click");
     $("#deleteProject").click(function(){
         $("#deleteProjectModal").modal('hide');
-        
         let file_id = $(project).parent().parent().attr("file_id");
+
+        // delete project tab jika sedang di open
+        $(".project-tab").each(function(ind){
+            if ($(this).attr("project_id") == file_id) {
+                var closeProjectTab = $(this).find(".close-tab");
+                closeCanvasProject(closeProjectTab);
+            }
+        });
+        
         let jsonFolderLocal = JSON.parse(localStorage.getItem("jsonFolder"));
         console.log("file_id: ", file_id, "| $(project):", $(project));
         for (let i = 0; i < jsonFolderLocal.length; i++) {
@@ -507,7 +522,7 @@ function renameFolderName(folder){
         let newName = $("#renameFolderModal").find("#input-folder-name").val();
         $(folder).parent().find(".folder-name").text(newName);
         $("#renameFolderModal").modal('hide');
-
+        
         // rename jsonFolder
         let folder_id = $(folder).parent().attr("folder_id");
         let jsonFolderLocal = JSON.parse(localStorage.getItem("jsonFolder"));

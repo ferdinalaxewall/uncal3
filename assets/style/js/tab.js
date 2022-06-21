@@ -15,7 +15,7 @@ function openProjectTab(project){
     '                      </button>'+
     '                    </a>';
 
-    var canvasHtml = '<div class="project-container" project_id="'+ file_id +'"><div class="canvas"></div></div>'
+    var canvasHtml = '<div class="project-container" project_id="'+ file_id +'"><div class="canvas">'+ projectName+'</div></div>'
     
     var checkExistElement = $(".project-tab-container").find("[project_id='" + file_id + "']"); 
     if ($(checkExistElement).length < 1) {
@@ -83,17 +83,20 @@ function closeCanvasProject(closeProject){
     var project_id = $(projectTab).attr("project_id");
     var prevElement = $(projectTab).prev();
     
-    $(prevElement).addClass("active")
+    if ($(projectTab).hasClass("active")) {
+        $(prevElement).addClass("active")
+    }
+
     $(projectTab).remove();
 
     $(".project-container").each(function(i){
         if ($(this).attr("project_id") == project_id) { 
-            $(this).prev().addClass("active")
+            if($(this).hasClass("active")){
+                $(this).prev().addClass("active");
+            }
             $(this).remove()
-            // setTimeout(() => {
-            // }, 100);
         }
-    })
+    });
 }
 
 $(document).ready(function(){
