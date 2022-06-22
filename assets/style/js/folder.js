@@ -105,21 +105,73 @@ $(document).ready(function () {
     
     // new folder
     $("#createFolderName").click(function (e) { 
-        let newName = $("#input-folder-name").val();
-        let uuid = generateUUID();
-        console.log("createFolderName. newName:", newName);
-        
-        let newJson = {
-            "name": newName,
-            "uuid": uuid,
-            "files": []
-        };
+        let newName = $("#createFolderModal #input-folder-name").val();
+        var inputValue = $("#createFolderModal #input-folder-name");
+        var inputValueLength = newName.length;
+        var button = $(this);
+        let checkReturn = validateReturnInput(inputValue, newName, inputValueLength, button);
+        let checkAlreadyExistFolder = checkExistFolder(inputValue, newName, button)
 
-        let jsonFolderLocal = JSON.parse(localStorage.getItem("jsonFolder"));
-        jsonFolderLocal.push(newJson);
-        localStorage.setItem("jsonFolder", JSON.stringify(jsonFolderLocal));
-        addFolderHtml(newName, uuid, newJson.files);
-        $("#createFolderModal").modal('hide');
+        if (checkReturn == true) {
+            if (checkAlreadyExistFolder == true) {
+                iziToast.error({
+                    timeout : 2000,
+                    title: 'Error',
+                    message: "a Folder with that name already exists",
+                    position : "topRight",
+                    transitionIn : "fadeInDown",
+                    transitionOut : "fadeOutUp",
+                    pauseOnHover: false,
+                });
+            } else {
+                let uuid = generateUUID();
+                console.log("createFolderName. newName:", newName);
+                
+                let newJson = {
+                    "name": newName,
+                    "uuid": uuid,
+                    "files": []
+                };
+        
+                let jsonFolderLocal = JSON.parse(localStorage.getItem("jsonFolder"));
+                jsonFolderLocal.push(newJson);
+                localStorage.setItem("jsonFolder", JSON.stringify(jsonFolderLocal));
+                addFolderHtml(newName, uuid, newJson.files);
+
+                iziToast.success({
+                    timeout : 2000,
+                    title: 'Success',
+                    message: "Successfully created a new folder",
+                    position : "topRight",
+                    transitionIn : "fadeInDown",
+                    transitionOut : "fadeOutUp",
+                    pauseOnHover: false,
+                });
+
+                $("#createFolderModal").modal('hide');
+            }
+        }else{
+            iziToast.error({
+                timeout : 2000,
+                title: 'Error',
+                message: "Folder Name can't be less than 2 characters and can't use special characters",
+                position : "topRight",
+                transitionIn : "fadeInDown",
+                transitionOut : "fadeOutUp",
+                pauseOnHover: false,
+            });
+        }
     });
+
     openFolderGroup();
+
+    // $(".list-folder.has-child").each(function(i){
+    //     var folder_id = $(this).attr("folder_id")
+    //     var localFolderValue = localStorage.getItem(folder_id);
+
+    //     if (localFolderValue == "active") {
+    //         $(this).addClass("active");
+    //         $(this).find(".list-of-project").fadeIn();
+    //     }
+    // })
 });

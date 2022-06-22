@@ -52,6 +52,12 @@ button:focus{
     box-shadow:0 0 0 0.2rem var(--clr-primary-hover);
 }
 
+.btn-primary.disabled, .btn-primary:disabled{
+    background-color: var(--clr-primary);
+    opacity: 0.7;
+    border: 1px solid var(--clr-primary);
+}
+
 
 .btn-primary:hover{
     background-color: var(--clr-primary);
@@ -211,6 +217,7 @@ button:focus{
     display: flex;
     align-items: center;
     flex-wrap: nowrap;
+    cursor: default;
 }
 
 .floating-properties .floating-properties-header .properties-title .properties-title-name, .floating-properties .floating-properties-header .properties-title .properties-type-name{
@@ -1095,6 +1102,10 @@ button:focus{
     padding: 10px 0;
     border-bottom: 2px solid var(--clr-primary);
     width: 100%;
+}
+
+.content .container-fluid .row .sidebar .sidebar-content .sidebar-content-header .folder-name{
+    text-align: center;
 }
 
 .content .container-fluid .row .sidebar .sidebar-content .sidebar-content-header img{

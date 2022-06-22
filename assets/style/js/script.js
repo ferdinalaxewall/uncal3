@@ -79,8 +79,8 @@ $(document).ready(function(){
                 }
             },
             items: {
-                "edit": {name: "Rename", icon: "edit"},
-                "delete": {name: "Delete", icon: "delete"}
+                "edit": {name: "Rename Project", icon: "edit"},
+                "delete": {name: "Delete Project", icon: "delete"}
             }
         }); 
 
@@ -125,8 +125,8 @@ $(document).ready(function(){
             },
             items: {
                 "add": {name: "Create Project", icon: "add"},
-                "edit": {name: "Rename", icon: "edit"},
-                "delete": {name: "Delete", icon: "delete"}
+                "edit": {name: "Rename Folder", icon: "edit"},
+                "delete": {name: "Delete Folder", icon: "delete"}
             }
         });  
         
@@ -298,6 +298,7 @@ $(document).ready(function(){
     $(".create-new-folder").click(function(){
         $("#createFolderModal").modal('show');
         $("#createFolderModal").find("#input-folder-name").val("");
+        $("#createFolderModal").find(".input-group").removeClass("is-invalid").removeClass("is-valid");
     });
 
     $("#create-new-workspace").click(function(){
@@ -418,9 +419,8 @@ function createNewProject(project){
 
     $("#createProjectName").unbind("click");
     $("#createProjectName").click(function(){
-        $("#createProjectModal").modal('hide');
-        
         let newName = $("#createProjectModal").find("#input-project-name").val();
+        
         let folder_id = $(project).parent().attr("folder_id");
         let jsonFolderLocal = JSON.parse(localStorage.getItem("jsonFolder"));
         for (let i = 0; i < jsonFolderLocal.length; i++) {
@@ -435,10 +435,16 @@ function createNewProject(project){
                 addFileHtmlLi(newFile, item.uuid, item.files.length);
             }
         }
+        
+        if (!$(project).parent().hasClass("active")) {
+            openFolderGroup(project)
+        }
 
-        openFolderGroup(project)
+        $("#createProjectModal").modal('hide');
+    
     });
 }
+
 
 function renameProject(project){
     $("#renameProjectModal").modal('show');
@@ -522,19 +528,61 @@ function renameFolderName(folder){
 
     $("#updateFolderName").click(function(){
         let newName = $("#renameFolderModal").find("#input-folder-name").val();
-        $(folder).parent().find(".folder-name").text(newName);
-        $("#renameFolderModal").modal('hide');
-        
-        // rename jsonFolder
-        let folder_id = $(folder).parent().attr("folder_id");
-        let jsonFolderLocal = JSON.parse(localStorage.getItem("jsonFolder"));
-        for (let i = 0; i < jsonFolderLocal.length; i++) {
-            const item = jsonFolderLocal[i];
-            if(item.uuid == folder_id){
-                jsonFolderLocal[i].name = newName;
+        var inputValue = $("#renameFolderModal #input-folder-name");
+        var inputValueLength = newName.length;
+        var button = $(this);
+        let checkReturn = validateReturnInput(inputValue, newName, inputValueLength, button);
+        let checkAlreadyExistFolder = checkExistFolder(inputValue, newName, button)
+
+        if(checkReturn == true){
+            if (checkAlreadyExistFolder == true) {
+                iziToast.error({
+                    timeout : 2000,
+                    title: 'Error',
+                    message: "a Folder with that name already exists",
+                    position : "topRight",
+                    transitionIn : "fadeInDown",
+                    transitionOut : "fadeOutUp",
+                    pauseOnHover: false,
+                });
+            } else {
+                $(folder).parent().find(".folder-name").text(newName);
+                
+                // rename jsonFolder
+                let folder_id = $(folder).parent().attr("folder_id");
+                let jsonFolderLocal = JSON.parse(localStorage.getItem("jsonFolder"));
+                for (let i = 0; i < jsonFolderLocal.length; i++) {
+                    const item = jsonFolderLocal[i];
+                    if(item.uuid == folder_id){
+                        jsonFolderLocal[i].name = newName;
+                    }
+                }
+                localStorage.setItem("jsonFolder", JSON.stringify(jsonFolderLocal));
+
+                iziToast.success({
+                    timeout : 2000,
+                    title: 'Success',
+                    message: "Successfully rename folder",
+                    position : "topRight",
+                    transitionIn : "fadeInDown",
+                    transitionOut : "fadeOutUp",
+                    pauseOnHover: false,
+                });
+                
+                $("#renameFolderModal").modal('hide');
             }
+        }else{
+            iziToast.error({
+                timeout : 2000,
+                title: 'Error',
+                message: "Folder Name can't be less than 2 characters and can't use special characters",
+                position : "topRight",
+                transitionIn : "fadeInDown",
+                transitionOut : "fadeOutUp",
+                pauseOnHover: false,
+            });
         }
-        localStorage.setItem("jsonFolder", JSON.stringify(jsonFolderLocal));
+
     });
 }
 
@@ -559,10 +607,70 @@ function deleteFolder(folder){
 
 // Workspace or Folder onclick action
 function openFolderGroup(folder){
+    // var folder_id = $(folder).parent().attr("folder_id");
+
     if ($(folder).parent().hasClass("has-child")) {
         $(folder).parent().toggleClass("active");
         $(folder).siblings(".list-of-project").fadeToggle();
+        // setTimeout(() => {
+        //     if ($(folder).parent().hasClass("active")) {
+        //         localStorage.setItem(folder_id, "active")
+        //     }else{
+        //         localStorage.removeItem(folder_id)
+        //     }
+        // }, 100);
     }
+}
+
+function inputFieldValidate(field){
+    var inputValue = $(field).val();
+    var inputValueLength = $(field).val().length;
+    var button = $(field).parents(".modal").find(".btn-primary");
+
+    $(field).val($(field).val().replace(/ +?/g, ''));
+
+    validateReturnInput(field, inputValue, inputValueLength, button)
+    checkExistFolder(field, inputValue, button)
+}
+
+function checkExistFolder(inputField, value, button){
+
+    let booleanCheck;
+
+    $(".list-folder .folder-name").each(function(i){
+        if ($(this).text().toUpperCase() == value.toUpperCase()) {
+            $(inputField).parent().removeClass("is-valid").addClass("is-invalid")
+            $(button).attr("disabled", true)
+            booleanCheck = true;
+        }
+    });
+
+    return booleanCheck;
+}
+
+function validateReturnInput(field, value, length, button){
+    if(/^[a-zA-Z0-9- ]*$/.test(value) == true) {
+        if (length > 2) {
+            if ($(field).parent().hasClass("is-invalid")) {
+                $(field).parent().removeClass("is-invalid").addClass("is-valid");
+            }
+            $(button).attr("disabled", false)
+            return true;
+        }else{
+            setTimeout(() => {
+                if ($(field).parent().hasClass("is-valid")) {
+                    $(field).parent().removeClass("is-valid").addClass("is-invalid");
+                }
+                $(button).attr("disabled", true)
+            }, 100);
+            return false;
+        }
+    }else{
+        $(field).parent().removeClass("is-valid").addClass("is-invalid");
+        $(button).attr("disabled", true)
+        return false;
+    }
+
 }
 
 function searchFolderFunc(){
