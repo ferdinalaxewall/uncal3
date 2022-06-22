@@ -45,7 +45,7 @@ function droppableFunc(){
         accept : ".elements-list #sender",
         scroll : true,
         drop : function(ev, ui){
-            
+            let thisLocal = $(this);
             var flowDiagramNew = $(flowDiagram);
             flowDiagramNew.attr("flow_id", generateUUID());
             $(flowDiagramNew).insertBefore($(this));
@@ -77,22 +77,30 @@ function droppableFunc(){
                             $.get("components/"+type_comp+".jsp", function (result) {
                                 // mempersiapkan json component
                                 var propItem = htmlToProp(result, type_comp);
-                                var jsonFlowThis = JSON.parse(localStorage.getItem("jsonFlow"));
-                                var newFlow = {
-                                    "name": "Scenario_1",
-                                    "uuid": flow_id,
-                                    "components": [
-                                        {
-                                            "uuid": data_id,
-                                            "type": type_comp,
-                                            "name": spanText,
-                                            "attribut": propItem,
-                                            "log": logDefault,
-                                        }
-                                    ]
-                                };
-                                jsonFlowThis.push(newFlow);
-                                localStorage.setItem("jsonFlow", JSON.stringify(jsonFlowThis));
+                                var jsonTabThis = JSON.parse(localStorage.getItem("jsonTab"));
+                                let getProjectId = thisLocal.closest(".project-container").attr("project_id");
+
+                                for (let i = 0; i < jsonTabThis.length; i++) {
+                                    const tab = jsonTabThis[i];
+                                    let project_id = tab.project_id;
+                                    if(project_id == getProjectId){
+                                        var newFlow = {
+                                            "name": "Scenario_1",
+                                            "uuid": flow_id,
+                                            "components": [
+                                                {
+                                                    "uuid": data_id,
+                                                    "type": type_comp,
+                                                    "name": spanText,
+                                                    "attribut": propItem,
+                                                    "log": logDefault,
+                                                }
+                                            ]
+                                        };
+                                        jsonTabThis[i].jsonData.push(newFlow);
+                                        localStorage.setItem("jsonTab", JSON.stringify(jsonTabThis));
+                                    }
+                                }
                             });
                         },100);
                     }
@@ -196,15 +204,16 @@ function sortableFunc(){
             var liComp = $(ui.item[0]);
             var data_id = liComp.attr("data_id");
             var getCompMove = localStorage.getItem("compMove");
+            let getProjectId = liComp.closest(".project-container").attr("project_id");
             console.log("change. data_id: ", data_id, "| getCompMove: ", getCompMove);
 
             if(getCompMove == "" || getCompMove == null /* || getLocal == "[]" */){
                 console.log("getCompMove null");
-                var compMove = getComp(data_id);
+                var compMove = getComp(data_id, getProjectId);
                 localStorage.setItem("compMove", JSON.stringify(compMove));
             }
 
-            deleteJsonFlow(data_id);
+            deleteJsonFlow(data_id, getProjectId);
         },
         update  : function(ev, ui){
             console.log("update: ui: ", ui);
@@ -216,11 +225,10 @@ function sortableFunc(){
                         $(this).remove()
                     }
                 })
-
                 // new dan move comp
                 var compMove = localStorage.getItem("compMove");
-                console.log("update: compMove: ", compMove, "| ui:", $(ui.item[0]), "| uiSortable: ", $(this).data().uiSortable);
-
+                // console.log("update: compMove: ", compMove, "| ui:", $(ui.item[0]), "| uiSortable: ", $(this).data().uiSortable);
+                
                 if(compMove == ""){
                     compMove = null;
                 } if(compMove == undefined){
@@ -228,8 +236,9 @@ function sortableFunc(){
                 } if(compMove == "undefined"){
                     compMove = null;
                 }
-
+                
                 var liComp = $(ui.item);
+                let getProjectId = liComp.closest(".project-container").attr("project_id");
                 if(compMove == null){
                     var ulFlowSource = localStorage.getItem("ulSource");
                     var ulFlowDest = liComp.parent().attr("flow_id");
@@ -242,14 +251,19 @@ function sortableFunc(){
                     var indexFlow = liComp.parent().parent().children("ul").index(liComp.parent());
                     var indexNewComp = liComp.parent().children("li").index(liComp);
                     compMove = JSON.parse(compMove);
-                    console.log("move. compMove: ", compMove, /*"| ulFlowSource: ", ulFlowSource, "| ulFlowDest:", ulFlowDest*/);
+                    console.log("move. compMove: ", compMove, "| getProjectId: ", getProjectId /*"| ulFlowSource: ", ulFlowSource, "| ulFlowDest:", ulFlowDest*/);
 
                     // tambah component ke json local storage
-                    var jsonFlowThis = JSON.parse(localStorage.getItem("jsonFlow"));
-                    var jsonFlowIndex = jsonFlowThis[indexFlow];
-                    var components = jsonFlowIndex.components;
-                    components.splice(indexNewComp, 0, compMove);
-                    localStorage.setItem("jsonFlow", JSON.stringify(jsonFlowThis));
+                    var jsonTabThis = JSON.parse(localStorage.getItem("jsonTab"));
+                    for (let i = 0; i < jsonTabThis.length; i++) {
+                        const tab = jsonTabThis[i];
+                        if(tab.project_id == getProjectId){
+                            var jsonFlowIndex = tab.jsonData[indexFlow];
+                            var components = jsonFlowIndex.components;
+                            components.splice(indexNewComp, 0, compMove);
+                            localStorage.setItem("jsonTab", JSON.stringify(jsonTabThis));
+                        }
+                    }
                 }
                 localStorage.removeItem("compMove");
                 localStorage.removeItem("ulSource");
@@ -445,25 +459,27 @@ var codeAdapter = {
     "object-switching" : ["", ""],
 };
 
-function getComp(data_id) {
-    var jsonFlowThis = JSON.parse(localStorage.getItem("jsonFlow"));
+function getComp(data_id, project_id) {
+    var jsonTabThis = JSON.parse(localStorage.getItem("jsonTab"));
     var result;
-    findComp(jsonFlowThis);
-    function findComp(jsonFlowIndex){
-        for (let i = 0; i < jsonFlowIndex.length; i++) {
-            const flow = jsonFlowIndex[i];
-            var components = flow.components;
+    for (let h = 0; h < jsonTabThis.length; h++) {
+        const tab = jsonTabThis[h];
+        if(tab.project_id == project_id){
+            let jsonData = tab.jsonData;
+            for (let i = 0; i < jsonData.length; i++) {
+                const flow = jsonData[i];
+                var components = flow.components;
+                for (let j = 0; j < components.length; j++) {
+                    const comp = components[j];
+                    var name = comp.name;
+                    var type = comp.type;
+                    var uuid = comp.uuid;
+                    var attribut = comp.attribut;
 
-            for (let x = 0; x < components.length; x++) {
-                const comp = components[x];
-                var name = comp.name;
-                var type = comp.type;
-                var uuid = comp.uuid;
-                var attribut = comp.attribut;
-
-                if(data_id == uuid){
-                    // console.log("findComp del. name:", name, "| type:", type, "| id:", id, "| attribut:", attribut, "| jsonFlowThis:", jsonFlowThis);
-                    result = comp;
+                    if(data_id == uuid){
+                        // console.log("findComp del. name:", name, "| type:", type, "| id:", id, "| attribut:", attribut);
+                        result = comp;
+                    }
                 }
             }
         }
@@ -483,7 +499,7 @@ function addJsonFlow(ui) {
     var data_id_prev = liComp.prev().attr("data_id");
     var type_comp = liComp.children(0).attr("id");
     var spanText = liComp.children(0).find("span").text();
-    console.log("liComp.children(0):", spanText);
+    // console.log("liComp.children(0):", spanText);
     $(ui.item[0]).attr("data_id", data_id);  // ngisi uuid ke element html ui
 
     $.get("components/"+type_comp+".jsp", function (result) {
@@ -512,28 +528,33 @@ function addJsonFlow(ui) {
             };
         }
 
-        var jsonFlowThis = JSON.parse(localStorage.getItem("jsonFlow"));
+        var jsonTabThis = JSON.parse(localStorage.getItem("jsonTab"));
         var getIndex;
         
         // tambah component ke json local storage
-        findComp(jsonFlowThis[indexFlow]);
-        function findComp(jsonFlowIndex){
-            var components = jsonFlowIndex.components;
-            for (let x = 0; x < components.length; x++) {
-                const comp = components[x];
-                var name = comp.name;
-                var type = comp.type;
-                var uuid = comp.uuid;
-                var attribut = comp.attribut;
+        let getProjectId = liComp.closest(".project-container").attr("project_id");
+        for (let i = 0; i < jsonTabThis.length; i++) {
+            const tab = jsonTabThis[i];
+            if(tab.project_id == getProjectId){
+                let jsonData = tab.jsonData;
+                for (let j = 0; j < jsonData.length; j++) {
+                    var components = jsonData[j].components;
+                    for (let x = 0; x < components.length; x++) {
+                        const comp = components[x];
+                        var name = comp.name;
+                        var type = comp.type;
+                        var uuid = comp.uuid;
+                        var attribut = comp.attribut;
 
-                if(data_id_prev == uuid){
-                    getIndex = x;
-                    // console.log("findCompx. name:", name, "| type:", type, "| uuid:", uuid, "| attribut:", attribut, "| jsonFlowThis:", jsonFlowThis, "| x: ", x);
+                        if(data_id_prev == uuid){
+                            getIndex = x;
+                            // console.log("findCompx. name:", name, "| type:", type, "| uuid:", uuid, "| attribut:", attribut, "| x: ", x);
+                            jsonTabThis[i].jsonData[j].components.splice(getIndex+1, 0, newCompJson);
+                            localStorage.setItem("jsonTab", JSON.stringify(jsonTabThis));
+                        }
+                    }
                 }
             }
-
-            components.splice(getIndex+1, 0, newCompJson);
-            localStorage.setItem("jsonFlow", JSON.stringify(jsonFlowThis));
         }
     });
 }
@@ -579,8 +600,9 @@ function htmlToProp(html, type_comp){
 }
 
 // === JSON TO UI ====
-function addFlow(component, data_id, name){
-    $(flowDiagram).insertBefore($('.canvas'));
+function addFlow(component, data_id, name, projectUuid){
+    let projectContent = $(".project-container[project_id='"+projectUuid+"']").find(".canvas");
+    $(flowDiagram).insertBefore(projectContent);
 
     setTimeout(() => {
         $(".flow-name-text").each(function(ind){
@@ -603,25 +625,27 @@ function addFlow(component, data_id, name){
     });
 }
 
-function addComponent(compId, i, component){
+function addComponent(compId, i, component, projectUuid){
     var clone = $(compId).parent().clone();
     $(clone).attr('style', 'width: auto; height: auto;');
     $(clone).attr('data_id', component.uuid);
     $(clone).find('span').text(component.name);
     $(clone).find('a').attr('onclick', 'focusElement(this)').attr("ondblclick", "elementProperties(this)");
-    $($(".flow-diagram").get(i)).append(clone);
+    let flowDg = $(".project-container[project_id='"+projectUuid+"']").find(".flow-diagram");
+    $(flowDg.get(i)).append(clone);
 }
 
-function addSwitch(compId, i, component){
+function addSwitch(compId, i, component, projectUuid){
     var clone = $(compId).parent().clone();
-    
     $(clone).attr('id', 'switch-element');
     $(clone).attr('style', 'width: auto; height: auto;');
     $(clone).attr('data_id', component.uuid);
     $(clone).find('span').text(component.name);
     $(clone).find('a').attr('onclick', 'focusElement(this)').attr("ondblclick", "elementProperties(this)");
+
     var cloneFinal = $(clone).append(switchUl);
-    $($(".flow-diagram").get(i)).append(cloneFinal);
+    let flowDg = $(".project-container[project_id='"+projectUuid+"']").find(".flow-diagram");
+    $(flowDg.get(i)).append(cloneFinal);
 }
 
 function addSwitchItem(component, switch_id, idSwitch){
@@ -838,6 +862,9 @@ var jsonData = [
             },
         ],
     },
+];
+
+var jsonData2 = [
     {
         "name": "flow1",
         // "index": 0,
@@ -892,34 +919,34 @@ var jsonData = [
 ];
 
 // localStorage
-var getLocal = localStorage.getItem("jsonFlow");
-console.log("getLocal: ", getLocal);
-if(getLocal == "" || getLocal == null /* || getLocal == "[]" */){
-    console.log("empty");
-    localStorage.setItem("jsonFlow", JSON.stringify(jsonData));
-} 
+// var getLocal = localStorage.getItem("jsonFlow");
+// console.log("getLocal: ", getLocal);
+// if(getLocal == "" || getLocal == null /* || getLocal == "[]" */){
+//     console.log("empty");
+//     localStorage.setItem("jsonFlow", JSON.stringify(jsonData));
+// } 
 
-var jsonFlow = JSON.parse(localStorage.getItem("jsonFlow"));
+// var jsonFlow = JSON.parse(localStorage.getItem("jsonFlow"));
 
 // ===== (JSON TO UI) ALL ===
-for (let i = 0; i < jsonFlow.length; i++) {
-    const flow = jsonFlow[i];
-    var flow_name = flow.name;
-    var flow_id = flow.uuid;
-    var type_com0 = flow.components[0].type;
-    var id_com0 = flow.components[0].uuid;
+// for (let i = 0; i < jsonFlow.length; i++) {
+//     const flow = jsonFlow[i];
+//     var flow_name = flow.name;
+//     var flow_id = flow.uuid;
+//     var type_com0 = flow.components[0].type;
+//     var id_com0 = flow.components[0].uuid;
                                                        
-    var components = flow.components;
-    var firstCompId = components[0].uuid;
-    var firstCompName = components[0].name;
+//     var components = flow.components;
+//     var firstCompId = components[0].uuid;
+//     var firstCompName = components[0].name;
     
-    addFlow('#'+type_com0, id_com0, firstCompName);
-    $(".flow-diagram").eq(i).attr("flow_id",flow_id);
-    $(".flow-name").eq(i).find("input").val(flow_name);
+//     addFlow('#'+type_com0, id_com0, firstCompName);
+//     $(".flow-diagram").eq(i).attr("flow_id",flow_id);
+//     $(".flow-name").eq(i).find("input").val(flow_name);
   
-    // recurComp(components, firstCompId, i);
-    flatComp(components, i);
-}
+//     // recurComp(components, firstCompId, i);
+//     flatComp(components, i);
+// }
 
 // ===== (JSON TO UI) BACA CARA RECURSIVE ===
 function recurComp(components, parent_id, indexFlow){
@@ -963,7 +990,7 @@ function recurComp(components, parent_id, indexFlow){
 }
 
 // ===== (JSON TO UI) BACA CARA FLAT ===
-function flatComp(components, indexFlow){
+function flatComp(components, indexFlow, projectUuid){
     for (let j = 1; j < components.length; j++) {
         var component = components[j];
         var level = component.level;
@@ -976,9 +1003,9 @@ function flatComp(components, indexFlow){
         
         // selain component switch
         if(type != 'object-switching'){
-            addComponent("#" + type, indexFlow, component);
+            addComponent("#" + type, indexFlow, component, projectUuid);
         } else { // component switch
-            addSwitch("#object-switching", indexFlow, component);
+            addSwitch("#object-switching", indexFlow, component, projectUuid);
 
             // switch components child
             var componSwitchList = component.components;

@@ -737,7 +737,7 @@ function saveProperties(saveProp){
             let log = comp.log;
             
             if(propId == uuid){
-                // console.log("findComp. name:", name, "| type:", type, "| uuid:", uuid, "| attribut:", attribut, "| jsonFlowThis:", jsonFlowThis);
+                // console.log("findComp. name:", name, "| type:", type, "| uuid:", uuid, "| attribut:", attribut);
                 // save attribut
                 for (const key in attribut) {
                     let finalData = type + '-' + key;
@@ -1018,11 +1018,6 @@ function elementProperties(el){
 
     }, 100);
 
-    var indexFlow = liComp.parent().parent().children("ul").index(liComp.parent());
-    console.log('focusElement. data_id', data_id, "indexFlow", indexFlow);
-    var jsonFlow = JSON.parse(localStorage.getItem("jsonFlow"));
-    console.log("focusElement. jsonFlow", jsonFlow[indexFlow]);
-    
     function recurJsonFlow(jsonFlowIndex){
         var components = jsonFlowIndex.components;
         for (let x = 0; x < components.length; x++) {
@@ -1090,50 +1085,19 @@ function elementProperties(el){
 
     setTimeout(function(){
         // isi data ke properties
-        recurJsonFlow(jsonFlow[indexFlow]);
+        var indexFlow = liComp.parent().parent().children("ul").index(liComp.parent());
+        var jsonTabThis = JSON.parse(localStorage.getItem("jsonTab"));
+        let getProjectId = liComp.closest(".project-container").attr("project_id");
+        for (let z = 0; z < jsonTabThis.length; z++) {
+            const tab = jsonTabThis[z];
+            if(tab.project_id == getProjectId){
+                let flow = tab.jsonData[indexFlow];
+                recurJsonFlow(flow);
+            }
+        }
 
-        // edit properties
-        console.log('edit', '#'+getTypeComp+"-page");
+        // edit properties (sekarang pindah ke save properties)
         $('#'+getTypeComp+"-page").attr("prop_id", data_id);
-
-        $('#'+getTypeComp+"-page").find("input").unbind("click");
-        $('#'+getTypeComp+"-page").find("input").each(function(){
-            // console.log("edit:", $(this));
-
-            // edit component di local storage
-            $(this).keyup(function() {
-                var idThis = $(this).attr('id');
-                var valueThis = $(this).val();
-                var prop_id = $(this).parent().parent().parent().attr('prop_id');
-                // console.log("edit. idThis:", idThis, "| valueThis:", valueThis, "| prop_id:", prop_id);
-
-                var jsonFlowThis = JSON.parse(localStorage.getItem("jsonFlow"));
-                // findComp(jsonFlowThis);
-                function findComp(jsonFlowIndex){
-                    for (let i = 0; i < jsonFlowIndex.length; i++) {
-                        const flow = jsonFlowIndex[i];
-                        var components = flow.components;
-
-                        for (let x = 0; x < components.length; x++) {
-                            const comp = components[x];
-                            var name = comp.name;
-                            var type = comp.type;
-                            var uuid = comp.uuid;
-                            var attribut = comp.attribut;
-    
-                            if(prop_id == uuid){
-                                var propName = idThis.replace(type + "-", "");
-                                console.log("propName: ", propName);
-                                attribut[propName] = valueThis;
-                                // console.log("findComp. name:", name, "| type:", type, "| uuid:", uuid, "| attribut:", attribut, "| jsonFlowThis:", jsonFlowThis);
-                                // localStorage.setItem("jsonFlow", JSON.stringify(jsonFlowThis));
-                            }
-                        }
-                    }
-                }
-            });
-        });
-        
     }, 300);
 }
 
@@ -1143,6 +1107,7 @@ function deleteComponent(comp) {
     var prop_id = $("#properties").children(":first").attr("prop_id");
     var switchElementParent = $(comp).parents(".switch-flow-element");
     var switchElementLength = $(comp).parents(".switch-flow-element").length;
+    let project_id = comp.closest(".project-container").attr("project_id");
 
     // hapus element
     comp.parent().remove(); 
@@ -1173,7 +1138,7 @@ function deleteComponent(comp) {
         }
             
         // hapus component di localStorage
-        deleteJsonFlow(data_id);
+        deleteJsonFlow(data_id, project_id);
     }
 }
 
@@ -1191,6 +1156,7 @@ function focusElement(e) {
             // validasi hapus properties
             var getEl = $(".element-item.focus");
             var data_id = getEl.attr("data_id");
+            let project_id = getEl.closest(".project-container").attr("project_id");
 
             // hapus element
             $(".element-item.focus").remove();
@@ -1202,7 +1168,7 @@ function focusElement(e) {
                 $("#properties").empty();
                 
                 // hapus component di localStorage
-                deleteJsonFlow(data_id);
+                deleteJsonFlow(data_id, project_id);
             }
         }
     });
@@ -1214,29 +1180,30 @@ function focusElement(e) {
     });
 }
 
-function deleteJsonFlow(data_id) {
-    var jsonFlowThis = JSON.parse(localStorage.getItem("jsonFlow"));
-    findComp(jsonFlowThis);
-    function findComp(jsonFlowIndex){
-        for (let i = 0; i < jsonFlowIndex.length; i++) {
-            const flow = jsonFlowIndex[i];
-            var components = flow.components;
-
-
-            for (let x = 0; x < components.length; x++) {
-                const comp = components[x];
-                var name = comp.name;
-                var type = comp.type;
-                var uuid = comp.uuid;
-                var attribut = comp.attribut;
-
-                if(data_id == uuid){
-                    console.log("findComp del. name:", name, "| type:", type, "| uuid:", uuid, "| attribut:", attribut, "| jsonFlowThis:", jsonFlowThis);
-                    components.splice(x, 1);
-                    localStorage.setItem("jsonFlow", JSON.stringify(jsonFlowThis));
+function deleteJsonFlow(data_id, project_id) {
+    var jsonTabThis = JSON.parse(localStorage.getItem("jsonTab"));
+    for (let h = 0; h < jsonTabThis.length; h++) {
+        const tab = jsonTabThis[h];
+        if(tab.project_id == project_id){
+            let jsonData = tab.jsonData;
+            for (let i = 0; i < jsonData.length; i++) {
+                const flow = jsonData[i];
+                var components = flow.components;
+                for (let j = 0; j < components.length; j++) {
+                    const comp = components[j];
+                    var name = comp.name;
+                    var type = comp.type;
+                    var uuid = comp.uuid;
+                    var attribut = comp.attribut;
+    
+                    if(data_id == uuid){
+                        // console.log("findComp del. name:", name, "| type:", type, "| uuid:", uuid, "| attribut:", attribut);
+                        components.splice(j, 1);
+                        localStorage.setItem("jsonTab", JSON.stringify(jsonTabThis));
+                    }
                 }
             }
-        }
+        }   
     }
 }
 
@@ -1279,12 +1246,20 @@ function minimizeFlow(minimize){
 
 function closeFlow(thisClose){
     var flow_id = $(thisClose).parent().parent().attr("flow_id");
-    var jsonFlowThis = JSON.parse(localStorage.getItem("jsonFlow"));
-    for (let x = 0; x < jsonFlowThis.length; x++) {
-        var flow = jsonFlowThis[x];
-        if(flow_id == flow.uuid){
-            jsonFlowThis.splice(x, 1);
-            localStorage.setItem("jsonFlow", JSON.stringify(jsonFlowThis));
+    var jsonTabThis = JSON.parse(localStorage.getItem("jsonTab"));
+    let getProjectId = $(thisClose).closest(".project-container").attr("project_id");
+    console.log("flow_id:", flow_id, "| getProjectId: ", getProjectId);
+    for (let i = 0; i < jsonTabThis.length; i++) {
+        const tab = jsonTabThis[i];
+        if(tab.project_id == getProjectId){
+            let jsonData = tab.jsonData;
+            for (let j = 0; j < jsonData.length; j++) {
+                let flow = jsonData[j];
+                if(flow_id == flow.uuid){
+                    jsonTabThis[i].jsonData.splice(j, 1);
+                    localStorage.setItem("jsonTab", JSON.stringify(jsonTabThis));
+                }
+            }
         }
     }
 
@@ -1305,18 +1280,21 @@ function renameFlowModal(flowName){
     $("#saveFlowName").click(function(){
         // edit json flow name    
         let flow_id = $(flowName).parent().parent().attr("flow_id")
-        var jsonFlowThis = JSON.parse(localStorage.getItem("jsonFlow"));
-        for (let x = 0; x < jsonFlowThis.length; x++) {
-            var flow = jsonFlowThis[x];
-            if(flow_id == flow.uuid){
-                let newName = $("#renameFlowModal #input-flow-name").val();
-                flow.name = newName;
-                localStorage.setItem("jsonFlow", JSON.stringify(jsonFlowThis));
-                // $(flowName).val(newName);
-                setTimeout(() => {
-                    $(flowName).val(newName);
-                    $(flowName).attr("size", newName.length)
-                }, 100);
+        var jsonTabThis = JSON.parse(localStorage.getItem("jsonTab"));
+        for (let i = 0; i < jsonTabThis.length; i++) {
+            let jsonData = jsonTabThis[i].jsonData;
+            for (let j = 0; j < jsonData.length; j++) {
+                const flow = jsonData[j];
+                if(flow_id == flow.uuid){
+                    let newName = $("#renameFlowModal #input-flow-name").val();
+                    flow.name = newName;
+                    localStorage.setItem("jsonTab", JSON.stringify(jsonTabThis));
+                    // $(flowName).val(newName);
+                    setTimeout(() => {
+                        $(flowName).val(newName);
+                        $(flowName).attr("size", newName.length);
+                    }, 100);
+                }
             }
         }
 
@@ -1329,17 +1307,20 @@ function toReadonly(flowName){
 
     // edit json flow name    
     let flow_id = $(flowName).parent().parent().attr("flow_id")
-    var jsonFlowThis = JSON.parse(localStorage.getItem("jsonFlow"));
-    for (let x = 0; x < jsonFlowThis.length; x++) {
-        var flow = jsonFlowThis[x];
-        if(flow_id == flow.uuid){
-            let newName = $(flowName).val();
-            flow.name = newName;
-            localStorage.setItem("jsonFlow", JSON.stringify(jsonFlowThis));
-            // $(flowName).val(newName);
-            setTimeout(() => {
-                $(flowName).val(newName)
-            }, 100);
+    var jsonTabThis = JSON.parse(localStorage.getItem("jsonTab"));
+    for (let i = 0; i < jsonTabThis.length; i++) {
+        let jsonData = jsonTabThis[i].jsonData;
+        for (let j = 0; j < jsonData.length; j++) {
+            const flow = jsonData[j];
+            if(flow_id == flow.uuid){
+                let newName = $(flowName).val();
+                flow.name = newName;
+                localStorage.setItem("jsonTab", JSON.stringify(jsonTabThis));
+                // $(flowName).val(newName);
+                setTimeout(() => {
+                    $(flowName).val(newName)
+                }, 100);
+            }
         }
     }
 }
