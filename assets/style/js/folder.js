@@ -17,7 +17,7 @@ function fileHtmlString(file){
     let result = '<li class="list-project" file_id="'+file.uuid+'">'+
             '<a href="#" class="project-name" ondblclick="openProjectTab(this)">'+
             '<img src="./assets/icon/uncal-icon.svg" alt="Uncal Icon" loading="lazy">'+
-            '<span class="project-name">'+file.name+'</span>'+
+            '<span class="project-name" id="project-text">'+file.name+'</span>'+
             '</a>'+
         '</li>';
     return result;
@@ -55,30 +55,30 @@ $(document).ready(function () {
     if(getJsonFolder == "" || getJsonFolder == null /* || getJsonFolder == "[]" */){
         console.log("jsonFolder empty");
         let dataFolder = [{
-            "name": "folder A",
+            "name": "folder-a",
             "uuid": generateUUID(),
             "files": [ {
-                name : "file a", 
+                name : "file-a", 
                 uuid : generateUUID(), 
             }, {
-                name : "file b", 
+                name : "file-b", 
                 uuid : generateUUID(), 
             }, {
-                name : "file c", 
+                name : "file-c", 
                 uuid : generateUUID(), 
             }]
         }, {
-            "name": "folder B",
+            "name": "folder-b",
             "uuid": generateUUID(),
             "files": [ {
-                name : "file a", 
+                name : "file-a", 
                 uuid : generateUUID(), 
             }]
         }, {
-            "name": "Default Folder",
+            "name": "default-folder",
             "uuid": generateUUID(),
             "files": [ {
-                name : "Default Project", 
+                name : "default-project", 
                 uuid : generateUUID(), 
             }]
         }];
@@ -104,7 +104,7 @@ $(document).ready(function () {
     }
     
     // new folder
-    $("#createFolderName").click(function (e) { 
+    $("#createFolderName").off('click').on('click', function (e) { 
         let newName = $("#createFolderModal #input-folder-name").val();
         var inputValue = $("#createFolderModal #input-folder-name");
         var inputValueLength = newName.length;
@@ -164,6 +164,13 @@ $(document).ready(function () {
     });
 
     openFolderGroup();
+
+    // setTimeout(() => {
+    //     $(".list-folder").each(function(i){
+    //         var folder_id = $(this).attr("folder_id");
+    //         $(this).children(".folder-group").attr("folder_id", folder_id)
+    //     });
+    // }, 250);
 
     // $(".list-folder.has-child").each(function(i){
     //     var folder_id = $(this).attr("folder_id")

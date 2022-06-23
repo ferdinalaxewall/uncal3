@@ -56,10 +56,10 @@
 
     <!-- Navigation Bar -->
 
-    <nav class="navbar navbar-expand-lg navbar-light px-2">
+    <nav class="navbar navbar-expand-lg navbar-light px-2" id="navigation-bar">
         <div class="container-fluid">
           <div class="navbar-left-group d-flex align-items-center">
-            <button class="sidebar-toggle mr-3">
+            <button class="sidebar-toggle mr-3" onclick="toggleSidebar(this)">
               <img src="./assets/icon/sidebar-icon.svg" alt="Sidebar Hamburger Menu Icon" loading="lazy">
             </button>
             <a href="#" class="navbar-brand">UNCAL BPM</a>
@@ -110,7 +110,7 @@
 
             <!-- Sidebar -->
 
-            <div class="col-md-2 sidebar collapsed">
+            <div class="col-md-2 sidebar collapsed" id="sidebar-menu">
 
               <div class="sidebar-content d-flex flex-column align-items-center">
                 <div class="sidebar-content-header">
@@ -136,7 +136,7 @@
                       <li class="list-project">
                         <a href="#" class="project-name">
                           <img src="./assets/icon/uncal-icon.svg" alt="Uncal Icon" loading="lazy">
-                          <span class="project-name">Project_1</span>
+                          <span class="project-name" id="project-text">Project_1</span>
                         </a>
                       </li>
                     </ul>
@@ -683,7 +683,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary" id="updateFolderName" disabled="true">Save Changes</button>
+              <button type="button" class="btn btn-primary" id="updateFolderName">Save Changes</button>
             </div>
           </div>
         </div>
@@ -724,13 +724,13 @@
               <form>
                 <div class="input-group">
                   <label for="input-project-name">Project Name:</label>
-                  <input type="text" class="input-field" id="input-project-name" placeholder="Project Name">
+                  <input type="text" class="input-field" id="input-project-name" onkeyup="inputFieldValidate(this)" placeholder="Project Name">
                 </div>
               </form>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary" id="createProjectName">Create Project</button>
+              <button type="button" class="btn btn-primary" id="createProjectName" disabled="true">Create Project</button>
             </div>
           </div>
         </div>
@@ -750,13 +750,13 @@
               <form>
                 <div class="input-group">
                   <label for="input-project-name">Project Name:</label>
-                  <input type="text" class="input-field" id="input-project-name" placeholder="Project Name">
+                  <input type="text" class="input-field" id="input-project-name" onkeyup="inputFieldValidate(this)" placeholder="Project Name">
                 </div>
               </form>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary" id="updateProjectName">Save Changes</button>
+              <button type="button" class="btn btn-primary" id="updateProjectName" disabled="true">Save Changes</button>
             </div>
           </div>
         </div>

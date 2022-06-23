@@ -1302,6 +1302,13 @@ button:focus{
     font-size: var(--fs-body);
 }
 
+.content .container-fluid .row .sidebar .sidebar-content .list-group-folder .list-folder .list-of-project .list-project .project-name #project-text{
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .content .container-fluid .row .sidebar .sidebar-content .list-group-project .list-project .project-name:hover{
     opacity: 0.7;
 }

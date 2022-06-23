@@ -45,9 +45,8 @@ $(document).ready(function(){
     // Edit Profile Modal
     $(".edit-profile").click(function(){
         $("#editProfileModal").modal('show');
-        // if($("#editProfileModal").children().children().children().children().children().find("#main-profile").hasClass("active")){
-        //     console.log("main-ppr")
-        // }
+        // var inputField = $(".")
+        // validateProfileModal
     });
 
     // Edit Profile Tab in Edit Profile Modal
@@ -65,83 +64,6 @@ $(document).ready(function(){
     
     $("#logout-link .nav-link").click(function(){
         $("#logoutModal").modal('show');
-    });
-    
-    // Context Menu Function
-    $(function() {
-        $.contextMenu({
-            selector: '.project-name', 
-            callback: function(key, options) {
-                if (key == 'edit'){
-                    renameProject($(this));
-                }else if(key == 'delete'){
-                    deleteProject($(this));
-                }
-            },
-            items: {
-                "edit": {name: "Rename Project", icon: "edit"},
-                "delete": {name: "Delete Project", icon: "delete"}
-            }
-        }); 
-
-        $.contextMenu({
-            selector: '.workspace-link', 
-            callback: function(key, options) {
-                if (key == 'edit'){
-                    $("#renameFolderModal").modal('show');
-                }else if(key == 'delete'){
-                    $("#deleteFolderModal").modal('show');
-                }
-            },
-            items: {
-                "edit": {name: "Rename", icon: "edit"},
-                "delete": {name: "Delete", icon: "delete"}
-            }
-        });  
-        
-        $.contextMenu({
-            selector: '.flow-diagram .element-box', 
-            callback: function(key, options) {
-                if(key == 'delete'){
-                    thisComp = $(this);
-                    deleteComponent(thisComp);
-                }
-            },
-            items: {
-                "delete": {name: "Delete", icon: "delete"}
-            }
-        });
-
-        $.contextMenu({
-            selector: '.folder-group', 
-            callback: function(key, options) {
-                if(key == 'delete'){
-                    deleteFolder($(this));
-                }else if(key == 'add'){
-                    createNewProject($(this));
-                }else if(key == 'edit'){
-                    renameFolderName($(this));
-                }
-            },
-            items: {
-                "add": {name: "Create Project", icon: "add"},
-                "edit": {name: "Rename Folder", icon: "edit"},
-                "delete": {name: "Delete Folder", icon: "delete"}
-            }
-        });  
-        
-        $.contextMenu({
-            selector: '.flow-name-text', 
-            callback: function(key, options) {
-                if(key == 'edit'){
-                    renameFlowModal($(this));
-                }
-            },
-            items: {
-                "edit": {name: "Rename", icon: "edit"},
-            }
-        })
-
     });
 
     // $("#flow-tab .project-tab").click(function(e){
@@ -340,23 +262,23 @@ $(document).ready(function(){
         $("#box-content-button").removeClass("active");
         $(".workspace-box").removeClass("col-lg-3").addClass("list-content");
     }
-    
-    var sidebarCollapse = false;
-    
-    $(".sidebar-toggle").click(function(){
-        $(".sidebar").toggleClass("collapsed")
-        if(sidebarCollapse == false){
-            sidebarCollapse = true;
-            $("#flow-section").removeClass("col-md-9").addClass("col-md-7");
-            $("#properties-section").removeClass("col-md-9").addClass("col-md-7");
-            $(".sidebar-content").fadeIn();
-        }else{
-            sidebarCollapse = false;
-            $("#flow-section").removeClass("col-md-7").addClass("col-md-9");
-            $("#properties-section").removeClass("col-md-7").addClass("col-md-9");
-            $(".sidebar-content").fadeOut();
-        }
-    });
+
+    // var sidebarCollapse = false;
+
+    // $(".sidebar-toggle").click(function(){
+    //     $(".sidebar").toggleClass("collapsed")
+    //     if(sidebarCollapse == false){
+    //         sidebarCollapse = true;
+    //         $("#flow-section").removeClass("col-md-9").addClass("col-md-7");
+    //         $("#properties-section").removeClass("col-md-9").addClass("col-md-7");
+    //         $(".sidebar-content").fadeIn();
+    //     }else{
+    //         sidebarCollapse = false;
+    //         $("#flow-section").removeClass("col-md-7").addClass("col-md-9");
+    //         $("#properties-section").removeClass("col-md-7").addClass("col-md-9");
+    //         $(".sidebar-content").fadeOut();
+    //     }
+    // });
 
     $(".dropzone").change(function(){
         readImageFile(this);
@@ -386,6 +308,46 @@ $(document).ready(function(){
 
 });
 
+
+var sidebarCollapse = false;
+    
+function toggleSidebar(button){
+
+    var navigationBar = document.getElementById("navigation-bar");
+    var sidebarMenu = document.getElementById("sidebar-menu")
+
+    $(".sidebar").toggleClass("collapsed");
+    if(sidebarCollapse == false){
+        sidebarCollapse = true;
+        $("#flow-section").removeClass("col-md-9").addClass("col-md-7");
+        $("#properties-section").removeClass("col-md-9").addClass("col-md-7");
+        $(".sidebar-content").fadeIn();
+        setTimeout(() => {
+            // console.log($("body").width())
+            if ($("body").width() < 1280) {
+                if (!$(".sidebar").hasClass("collapsed")) {
+                    $(document).click(function(event){
+                        if (!sidebarMenu.contains(event.target) && !navigationBar.contains(event.target)) {
+                            sidebarCollapse = false;
+                            $(".sidebar").addClass("collapsed")
+                            $("#flow-section").removeClass("col-md-7").addClass("col-md-9");
+                            $("#properties-section").removeClass("col-md-7").addClass("col-md-9");
+                            $(".sidebar-content").fadeOut();
+                        }
+                    });
+                }
+            }
+        }, 100);
+
+    }else{
+        sidebarCollapse = false;
+        $("#flow-section").removeClass("col-md-7").addClass("col-md-9");
+        $("#properties-section").removeClass("col-md-7").addClass("col-md-9");
+        $(".sidebar-content").fadeOut();
+    }
+}
+
+
 function resetDropzone(e) {
     e.wrap('<form class="wrap-form">').closest('form').get(0).reset();
     e.unwrap();
@@ -413,87 +375,252 @@ function readImageFile(input){
     }
 }
 
-function createNewProject(project){
+
+    // Context Menu Function
+    $(function() {
+        $.contextMenu({
+            selector: 'a.project-name', 
+            callback: function(key, options) {
+                if (key == 'edit'){
+                    renameProject($(this), $(this).parents(".list-project").attr("file_id"), $(this).parents(".list-folder").attr("folder_id"));
+                }else if(key == 'delete'){
+                    deleteProject($(this), $(this).parents(".list-project").attr("file_id"));
+                }
+            },
+            items: {
+                "edit": {name: "Rename Project", icon: "edit"},
+                "delete": {name: "Delete Project", icon: "delete"}
+            }
+        }); 
+
+        $.contextMenu({
+            selector: '.workspace-link', 
+            callback: function(key, options) {
+                if (key == 'edit'){
+                    $("#renameFolderModal").modal('show');
+                }else if(key == 'delete'){
+                    $("#deleteFolderModal").modal('show');
+                }
+            },
+            items: {
+                "edit": {name: "Rename", icon: "edit"},
+                "delete": {name: "Delete", icon: "delete"}
+            }
+        });  
+        
+        $.contextMenu({
+            selector: '.flow-diagram .element-box', 
+            callback: function(key, options) {
+                if(key == 'delete'){
+                    thisComp = $(this);
+                    deleteComponent(thisComp);
+                }
+            },
+            items: {
+                "delete": {name: "Delete", icon: "delete"}
+            }
+        });
+
+        $.contextMenu({
+            selector: '.folder-group', 
+            callback: function(key, options) {
+                if(key == 'delete'){
+                    deleteFolder($(this), $(this).parent().attr("folder_id"));
+                }else if(key == 'add'){
+                    createNewProject($(this), $(this).parent().attr("folder_id"));
+                }else if(key == 'edit'){
+                    renameFolderName($(this), $(this).parent().attr("folder_id"));
+                }
+            },
+            items: {
+                "add": {name: "Create Project", icon: "add"},
+                "edit": {name: "Rename Folder", icon: "edit"},
+                "delete": {name: "Delete Folder", icon: "delete"}
+            }
+        });  
+        
+        $.contextMenu({
+            selector: '.flow-name-text', 
+            callback: function(key, options) {
+                if(key == 'edit'){
+                    renameFlowModal($(this));
+                }
+            },
+            items: {
+                "edit": {name: "Rename", icon: "edit"},
+            }
+        })
+
+    });
+
+function createNewProject(project, folder_id){
     $("#createProjectModal").modal('show');
     $("#createProjectModal").find("#input-project-name").val("");
+    $("#createProjectModal").removeAttr("folder_id");
+    $("#createProjectModal").attr("modal_folder_id", folder_id);
 
-    $("#createProjectName").unbind("click");
-    $("#createProjectName").click(function(){
+    $("#createProjectName").off('click').on('click',function(){
         let newName = $("#createProjectModal").find("#input-project-name").val();
-        
-        let folder_id = $(project).parent().attr("folder_id");
-        let jsonFolderLocal = JSON.parse(localStorage.getItem("jsonFolder"));
-        for (let i = 0; i < jsonFolderLocal.length; i++) {
-            const item = jsonFolderLocal[i];
-            if(item.uuid == folder_id){
-                // new file project json 
-                let newFile = { name : newName, uuid : generateUUID()};
-                item.files.push(newFile);
-                localStorage.setItem("jsonFolder", JSON.stringify(jsonFolderLocal));
-                
-                // new file project UI
-                addFileHtmlLi(newFile, item.uuid, item.files.length);
-            }
-        }
-        
-        if (!$(project).parent().hasClass("active")) {
-            openFolderGroup(project)
-        }
+        var inputValue = $("#createProjectrModal #input-project-name");
+        var inputValueLength = newName.length;
+        var button = $(this);
+        let checkReturn = validateReturnInput(inputValue, newName, inputValueLength, button);
+        let checkAlreadyExistProject = checkExistProject(inputValue, newName, button, folder_id);
 
-        $("#createProjectModal").modal('hide');
+        if (checkReturn == true) {
+            if (checkAlreadyExistProject == true) {
+                iziToast.error({
+                    timeout : 2000,
+                    title: 'Error',
+                    message: "a Project with that name already exists",
+                    position : "topRight",
+                    transitionIn : "fadeInDown",
+                    transitionOut : "fadeOutUp",
+                    pauseOnHover: false,
+                });
+            } else {
+                let jsonFolderLocal = JSON.parse(localStorage.getItem("jsonFolder"));
+                for (let i = 0; i < jsonFolderLocal.length; i++) {
+                    const item = jsonFolderLocal[i];
+                    if(item.uuid == folder_id){
+                        // new file project json 
+                        let newFile = { name : newName, uuid : generateUUID()};
+                        item.files.push(newFile);
+                        localStorage.setItem("jsonFolder", JSON.stringify(jsonFolderLocal));
+                        
+                        // new file project UI
+                        addFileHtmlLi(newFile, item.uuid, item.files.length);
+                    }
+                }
+                
+                if (!$(project).parent().hasClass("active")) {
+                    openFolderGroup(project)
+                }
+
+                iziToast.success({
+                    timeout : 2000,
+                    title: 'Success',
+                    message: "Successfully created a New Project",
+                    position : "topRight",
+                    transitionIn : "fadeInDown",
+                    transitionOut : "fadeOutUp",
+                    pauseOnHover: false,
+                });
+
+
+                $("#createProjectModal").modal('hide');
+            }
+        } else {
+            iziToast.error({
+                timeout : 2000,
+                title: 'Error',
+                message: "Project Name can't be less than 2 characters and can't use special characters",
+                position : "topRight",
+                transitionIn : "fadeInDown",
+                transitionOut : "fadeOutUp",
+                pauseOnHover: false,
+            });
+        }
     
     });
 }
 
 
-function renameProject(project){
-    $("#renameProjectModal").modal('show');
+function renameProject(project, file_id, folder_id){
+    var projectName = project.children("span.project-name").text();
+    // var projectNameWithoutFormat = projectName.split(".").shift()
 
-    var projectName = project.text();
-    var projectNameWithoutFormat = projectName.split(".").shift()
-    $("#renameProjectModal").find("#input-project-name").val(projectNameWithoutFormat);
+    $("#renameProjectModal").modal('show');
+    $("#renameProjectModal").find("#input-project-name").val(projectName);
+    $("#renameProjectModal").find(".input-group").removeClass("is-valid").removeClass("is-invalid");
 
     $("#updateProjectName").unbind("click");
     $("#updateProjectName").click(function(){
-        $("#renameProjectModal").modal('hide');
-        let file_id = $(project).parent().parent().attr("file_id");
         let newName = $("#renameProjectModal").find("#input-project-name").val();
+        var inputValue = $("#createProjectrModal #input-project-name");
+        var inputValueLength = newName.length;
+        var button = $(this);
+        let checkReturn = validateReturnInput(inputValue, newName, inputValueLength, button);
+        let checkAlreadyExistProject = checkExistProject(inputValue, newName, button, folder_id);
         
-        // rename project tab jika sedang di open
-        $(".project-tab").each(function(ind){
-            if ($(this).attr("project_id") == file_id) {
-                $(this).find("p").text(newName)
-            }
-        });
-        
-        let jsonFolderLocal = JSON.parse(localStorage.getItem("jsonFolder"));
-        console.log("file_id: ", file_id, "| newName:", newName, "| $(project):", $(project));
-        for (let i = 0; i < jsonFolderLocal.length; i++) {
-            const folder = jsonFolderLocal[i];
-            let files = folder.files;
-            for (let j = 0; j < files.length; j++) {
-                let file = files[j];
-                if(file.uuid == file_id){
-                    // rename file json 
-                    files[j].name = newName
-                    localStorage.setItem("jsonFolder", JSON.stringify(jsonFolderLocal));
-                    
-                    // rename file UI
-                    $(project).text(newName);
+        if (checkReturn == true) {
+            if (checkAlreadyExistProject == true) {
+                iziToast.error({
+                    timeout : 2000,
+                    title: 'Error',
+                    message: "a Project with that name already exists",
+                    position : "topRight",
+                    transitionIn : "fadeInDown",
+                    transitionOut : "fadeOutUp",
+                    pauseOnHover: false,
+                });
+            } else {
+                // rename project tab jika sedang di open
+                $(".list-folder").each(function(){
+                    if ($(this).attr("folder_id") == folder_id) {
+                        var folderName = $(this).find(".folder-name").text();
+                        $(".project-tab").each(function(i){
+                            if ($(this).attr("project_id") == file_id) {
+                                var titleName = folderName + "/" + newName;
+                                $(this).find("p").text(newName)
+                                $(this).attr("title", titleName)
+                            }
+                        });
+                    }
+                })
+
+                
+                let jsonFolderLocal = JSON.parse(localStorage.getItem("jsonFolder"));
+                console.log("file_id: ", file_id, "| newName:", newName, "| $(project):", $(project));
+                for (let i = 0; i < jsonFolderLocal.length; i++) {
+                    const folder = jsonFolderLocal[i];
+                    let files = folder.files;
+                    for (let j = 0; j < files.length; j++) {
+                        let file = files[j];
+                        if(file.uuid == file_id){
+                            // rename file json 
+                            files[j].name = newName
+                            localStorage.setItem("jsonFolder", JSON.stringify(jsonFolderLocal));
+                            
+                            // rename file UI
+                            $(project).children("span.project-name").text(newName);
+                        }
+                    }
                 }
+
+                iziToast.success({
+                    timeout : 2000,
+                    title: 'Success',
+                    message: "Successfully rename Project",
+                    position : "topRight",
+                    transitionIn : "fadeInDown",
+                    transitionOut : "fadeOutUp",
+                    pauseOnHover: false,
+                });
+
+                $("#renameProjectModal").modal('hide');
+                $("#renameProjectModal").find("#input-project-name").val("");
             }
+        } else {
+            iziToast.error({
+                timeout : 2000,
+                title: 'Error',
+                message: "Project Name can't be less than 2 characters and can't use special characters",
+                position : "topRight",
+                transitionIn : "fadeInDown",
+                transitionOut : "fadeOutUp",
+                pauseOnHover: false,
+            });
         }
     });
 }
 
-function deleteProject(project){
+function deleteProject(project, file_id){
     $("#deleteProjectModal").modal('show');
 
     $("#deleteProject").unbind("click");
     $("#deleteProject").click(function(){
-        $("#deleteProjectModal").modal('hide');
-        let file_id = $(project).parent().parent().attr("file_id");
-
+        
         // delete project tab jika sedang di open
         $(".project-tab").each(function(ind){
             if ($(this).attr("project_id") == file_id) {
@@ -519,21 +646,35 @@ function deleteProject(project){
                 }
             }
         }
+
+        iziToast.success({
+            timeout : 2000,
+            title: 'Success',
+            message: "Successfully deleted Project",
+            position : "topRight",
+            transitionIn : "fadeInDown",
+            transitionOut : "fadeOutUp",
+            pauseOnHover: false,
+        });
+
+        $("#deleteProjectModal").modal('hide');
     });
 }
 
-function renameFolderName(folder){
+function renameFolderName(folder, folder_id){
     $("#renameFolderModal").modal('show');
-    $("#renameFolderModal").find("#input-folder-name").val(folder.text());
-
-    $("#updateFolderName").click(function(){
+    $("#renameFolderModal").find("#input-folder-name").val($(folder).find(".folder-name").text());
+    $("#renameFolderModal").find(".input-group").removeClass("is-invalid").removeClass("is-valid");
+    
+    $("#updateFolderName").off('click').on('click', function(e){
+        e.preventDefault(); 
         let newName = $("#renameFolderModal").find("#input-folder-name").val();
         var inputValue = $("#renameFolderModal #input-folder-name");
         var inputValueLength = newName.length;
         var button = $(this);
         let checkReturn = validateReturnInput(inputValue, newName, inputValueLength, button);
         let checkAlreadyExistFolder = checkExistFolder(inputValue, newName, button)
-
+        
         if(checkReturn == true){
             if (checkAlreadyExistFolder == true) {
                 iziToast.error({
@@ -546,10 +687,22 @@ function renameFolderName(folder){
                     pauseOnHover: false,
                 });
             } else {
-                $(folder).parent().find(".folder-name").text(newName);
+                $(folder).find(".folder-name").text(newName);
+
+                if($(folder).parent().hasClass("has-child")) {
+                    $(folder).siblings(".list-of-project").find(".list-project").each(function(i){
+                        var file_id = $(this).attr("file_id");
+                        $(".project-tab").each(function(ind){
+                            if ($(this).attr("project_id") == file_id) {
+                                var titleName = newName + "/" + $(this).find("p").text();
+                                $(this).attr("title", titleName)
+                            }
+                        })
+                    });
+            
+                }
                 
                 // rename jsonFolder
-                let folder_id = $(folder).parent().attr("folder_id");
                 let jsonFolderLocal = JSON.parse(localStorage.getItem("jsonFolder"));
                 for (let i = 0; i < jsonFolderLocal.length; i++) {
                     const item = jsonFolderLocal[i];
@@ -558,11 +711,11 @@ function renameFolderName(folder){
                     }
                 }
                 localStorage.setItem("jsonFolder", JSON.stringify(jsonFolderLocal));
-
+                
                 iziToast.success({
                     timeout : 2000,
                     title: 'Success',
-                    message: "Successfully rename folder",
+                    message: "Successfully rename Folder",
                     position : "topRight",
                     transitionIn : "fadeInDown",
                     transitionOut : "fadeOutUp",
@@ -570,6 +723,7 @@ function renameFolderName(folder){
                 });
                 
                 $("#renameFolderModal").modal('hide');
+                $("#renameFolderModal").find("#input-folder-name").val("");
             }
         }else{
             iziToast.error({
@@ -586,14 +740,12 @@ function renameFolderName(folder){
     });
 }
 
-function deleteFolder(folder){
+function deleteFolder(folder, folder_id){
     $("#deleteFolderModal").modal('show')
-    $("#deleteFolder").click(function(){
+    $("#deleteFolder").off('click').on('click', function(){
         $(folder).parent().remove();
-        $("#deleteFolderModal").modal('hide')
-
+        
         // delete jsonFolder
-        let folder_id = $(folder).parent().attr("folder_id");
         let jsonFolderLocal = JSON.parse(localStorage.getItem("jsonFolder"));
         for (let i = 0; i < jsonFolderLocal.length; i++) {
             const item = jsonFolderLocal[i];
@@ -601,7 +753,19 @@ function deleteFolder(folder){
                 jsonFolderLocal.splice(i, 1);
             }
         }
+
+        iziToast.success({
+            timeout : 2000,
+            title: 'Success',
+            message: "Successfully deleted folder",
+            position : "topRight",
+            transitionIn : "fadeInDown",
+            transitionOut : "fadeOutUp",
+            pauseOnHover: false,
+        });
+        
         localStorage.setItem("jsonFolder", JSON.stringify(jsonFolderLocal));
+        $("#deleteFolderModal").modal('hide')
     });
 }
 
@@ -629,8 +793,13 @@ function inputFieldValidate(field){
 
     $(field).val($(field).val().replace(/ +?/g, ''));
 
-    validateReturnInput(field, inputValue, inputValueLength, button)
-    checkExistFolder(field, inputValue, button)
+    validateReturnInput(field, inputValue, inputValueLength, button);
+    if ($(field).attr("id") == "input-project-name") {
+        var folder_id = $(field).parents(".modal").attr("modal_folder_id")
+        checkExistProject(field, inputValue, button, folder_id);
+    }else if ($(field).attr("id") == "input-folder-name") {
+        checkExistFolder(field, inputValue, button);
+    }
 }
 
 function checkExistFolder(inputField, value, button){
@@ -642,6 +811,24 @@ function checkExistFolder(inputField, value, button){
             $(inputField).parent().removeClass("is-valid").addClass("is-invalid")
             $(button).attr("disabled", true)
             booleanCheck = true;
+        }
+    });
+
+    return booleanCheck;
+}
+
+function checkExistProject(inputField, value, button, folder_id){
+    let booleanCheck;
+
+    $(".list-folder").each(function(){
+        if ($(this).attr("folder_id") == folder_id) {
+            $(this).find("span.project-name").each(function(i){
+                if ($(this).text().toUpperCase() == value.toUpperCase()) {
+                    $(inputField).parent().removeClass("is-valid").addClass("is-invalid");
+                    $(button).attr("disabled", true);
+                    booleanCheck = true
+                }
+            })
         }
     });
 
@@ -670,7 +857,7 @@ function validateReturnInput(field, value, length, button){
         $(button).attr("disabled", true)
         return false;
     }
-
+    
 }
 
 function searchFolderFunc(){
