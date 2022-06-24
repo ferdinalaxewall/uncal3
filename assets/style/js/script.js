@@ -45,6 +45,19 @@ $(document).ready(function(){
     // Edit Profile Modal
     $(".edit-profile").click(function(){
         $("#editProfileModal").modal('show');
+
+        $('#editProfileModal').on('hidden.bs.modal', function(e){
+            $("#editProfileModal #change-password-form").find("input").val("");
+            $("#editProfileModal #change-password-form").find(".input-group").removeClass("is-valid").removeClass("is-invalid");
+
+            if ($(".edit-profile-tab#change-password").hasClass("active")) {
+                $(".edit-profile-tab#change-password").removeClass("active");
+                $(".edit-profile-tab#main-profile").addClass("active");
+
+                $("#main-profile-form").removeClass("d-none").addClass("d-block");
+                $("#change-password-form").removeClass("d-block").addClass("d-none");
+            }
+        });
         // var inputField = $(".")
         // validateProfileModal
     });
@@ -449,9 +462,30 @@ function readImageFile(input){
             items: {
                 "edit": {name: "Rename", icon: "edit"},
             }
-        })
+        });
+
+        $.contextMenu({
+            selector: '.project-tab', 
+            callback: function(key, options) {
+                if (key == 'quit') {
+                    closeAllProjectTab();
+                }
+            },
+            items: {
+                "quit": {name: "Close all tab", icon: "quit"},
+            }
+        });
 
     });
+
+function closeAllProjectTab(){
+    $(".project-tab").fadeOut().remove();
+    $(".project-container").fadeOut().remove();
+    $("#flow-section .content-box").addClass("empty-project");
+    $(".project-menu-tab .utility-group").removeClass("d-flex").fadeOut();
+
+    localStorage.setItem("jsonTab", "[]"); // Remove all Json Tab
+}
 
 function createNewProject(project, folder_id){
     $("#createProjectModal").modal('show');
@@ -569,16 +603,15 @@ function renameProject(project, file_id, folder_id){
                     }
                 })
 
-                
+                // == rename file == 
                 let jsonFolderLocal = JSON.parse(localStorage.getItem("jsonFolder"));
-                console.log("file_id: ", file_id, "| newName:", newName, "| $(project):", $(project));
                 for (let i = 0; i < jsonFolderLocal.length; i++) {
                     const folder = jsonFolderLocal[i];
                     let files = folder.files;
                     for (let j = 0; j < files.length; j++) {
                         let file = files[j];
                         if(file.uuid == file_id){
-                            // rename file json 
+                            // rename file jsonFolder
                             files[j].name = newName
                             localStorage.setItem("jsonFolder", JSON.stringify(jsonFolderLocal));
                             
@@ -587,6 +620,16 @@ function renameProject(project, file_id, folder_id){
                         }
                     }
                 }
+
+                // rename file jsonTab
+                let jsonTabLocal = JSON.parse(localStorage.getItem("jsonTab"));
+                for (let i = 0; i < jsonTabLocal.length; i++) {
+                    const project_id = jsonTabLocal[i].project_id;
+                    if(project_id == file_id){
+                        jsonTabLocal[i].project = newName;
+                    }
+                }
+                localStorage.setItem("jsonTab", JSON.stringify(jsonTabLocal));
 
                 iziToast.success({
                     timeout : 2000,
@@ -860,6 +903,175 @@ function validateReturnInput(field, value, length, button){
     
 }
 
+function addNotesProperties(textarea){
+    $(textarea).removeAttr("readonly")
+}
+
+function backToReadonly(textarea){
+    $(textarea).attr("readonly", true)
+}
+
+var checkCurrentPassword, checkNewPassword, verifyNewPassword;
+
+function validateInputPassword(field) {
+    var value = $(field).val();
+    var inputValueLength = value.length;
+    var button = $("#save-change-password");
+    
+    $(field).val(value.replace(/ +?/g, ''));
+
+    setTimeout(() => {
+        if (checkCurrentPassword == true && checkNewPassword == true && verifyNewPassword == true) {
+            $("#save-change-password").removeAttr("disabled");
+        }else{
+            $("#save-change-password").attr("disabled", true);
+        }
+    }, 100);
+    
+    if (/^[a-zA-Z0-9- ]*$/.test(value) == true) {
+        if (inputValueLength >= 8) {
+            $(field).parent().removeClass("is-invalid").addClass("is-valid");
+
+            if ($(field).attr("id") == "current-password") {
+                checkCurrentPassword = true
+            }else if ($(field).attr("id") == "new-password"){
+                if (checkCurrentPassword == true) {
+                    checkNewPassword = true;
+                    $("#current-password").parent().removeClass("is-invalid").addClass("is-valid")
+                    
+                }else{
+                    $("#current-password").parent().addClass("is-invalid")
+                }
+                
+                if (verifyNewPassword == true) {
+                    let checkVerifyPassword = verifyNewPasswordValue(field, value);
+                    if (checkVerifyPassword == true) {
+                        verifyNewPassword = true;
+                    }else{
+                        verifyNewPassword = undefined;
+                    }
+                }
+                
+            }else if ($(field).attr("id") == "verify-new-password") {
+                let checkVerifyPassword = verifyNewPasswordValue(field, value);
+                if (checkVerifyPassword == true) {
+                    verifyNewPassword = true;
+                }else{
+                    verifyNewPassword = undefined;
+                }
+
+            }
+            
+            setTimeout(() => {
+                if (checkCurrentPassword == true && checkNewPassword == true) {
+                    $("#verify-new-password").parent().fadeIn();
+                }else{
+                    $("#verify-new-password").parent().fadeOut();
+                }
+            }, 100);
+            
+            return true;
+        }else{
+
+            if ($(field).attr("id") == "current-password") {
+                checkCurrentPassword = undefined
+            }else if ($(field).attr("id") == "new-password"){
+                checkNewPassword = undefined;
+            }else if($(field).attr("id") == "verify-new-password"){
+                verifyNewPassword = undefined
+            }
+
+            setTimeout(() => {
+                if (checkCurrentPassword == true && checkNewPassword == true) {
+                    $("#verify-new-password").parent().fadeIn();
+                }else{
+                    $("#verify-new-password").parent().fadeOut();
+                }
+                
+                if ($(field).parent().hasClass("is-valid")) {
+                    $(field).parent().removeClass("is-valid").addClass("is-invalid");
+                }
+            }, 100);
+            
+            return false;
+        }
+        
+    } else {
+        $(field).parent().removeClass("is-valid").addClass("is-invalid");
+
+        if ($(field).attr("id") == "current-password") {
+            checkCurrentPassword = undefined
+        }else if ($(field).attr("id") == "new-password"){
+            checkNewPassword = undefined;
+        }else if($(field).attr("id") == "verify-new-password"){
+            verifyNewPassword = undefined
+        }
+
+        return false;
+    }
+
+    
+}
+
+function verifyNewPasswordValue(field, value){
+    var fieldCompareValue;
+
+    if ($(field).attr("id") == "verify-new-password") {
+        fieldCompareValue = $("#new-password").val();
+        if (fieldCompareValue == value) {
+            $(field).parent().removeClass("is-invalid").addClass("is-valid");
+            return true;
+        }else{
+            $(field).parent().removeClass("is-valid").addClass("is-invalid");
+            return false;
+        }
+    }else if($(field).attr("id") == "new-password"){
+        fieldCompareValue = $("#verify-new-password").val();
+        if (value == fieldCompareValue) {
+            $("#verify-new-password").parent().removeClass("is-invalid").addClass("is-valid");
+            return true;
+        }else{
+            $("#verify-new-password").parent().removeClass("is-valid").addClass("is-invalid");
+            return false;
+        }
+    }
+}
+
+$("#save-change-password").click(function(e){
+    e.preventDefault();
+    
+    var checkValidateCurrentPasswordInput = validateInputPassword($("input#current-password"), $("input#current-password").val());
+    var checkValidateNewPasswordInput = validateInputPassword($("input#new-password"), $("input#new-password").val());
+    var checkValidateVerifyNewPasswordInput = validateInputPassword($("input#verify-new-password"), $("input#verify-new-password").val());
+    
+    if (checkValidateCurrentPasswordInput == true && checkValidateNewPasswordInput == true && checkValidateVerifyNewPasswordInput == true) {
+        iziToast.success({
+            timeout : 2000,
+            title: 'Success',
+            message: "Successfully change password",
+            position : "topRight",
+            transitionIn : "fadeInDown",
+            transitionOut : "fadeOutUp",
+            pauseOnHover: false,
+        });
+        
+        $("#change-password-form").find("input").val("");
+        $("#change-password-form").find(".input-group").removeClass("is-valid").removeClass("is-invalid");
+    }else{
+        iziToast.error({
+            timeout : 2000,
+            title: 'Error',
+            message: "Failed to change password",
+            position : "topRight",
+            transitionIn : "fadeInDown",
+            transitionOut : "fadeOutUp",
+            pauseOnHover: false,
+        });
+
+    }
+
+})
+
 function searchFolderFunc(){
     var workspaceBody, workspaceTitle, textValue, inputField, filter, workspaceBox;
     workspaceBox = document.querySelectorAll(".workspace-box");
@@ -1017,82 +1229,85 @@ function expandElementProperties(elProp){
 function saveProperties(saveProp){
     let rootProp = $(saveProp).closest(".floating-properties");
     let propId = rootProp.attr("prop_id");
-    let jsonFlowThis = JSON.parse(localStorage.getItem("jsonFlow"));
+    let jsonTabThis = JSON.parse(localStorage.getItem("jsonTab"));
 
-    for (let i = 0; i < jsonFlowThis.length; i++) {
-        const flow = jsonFlowThis[i];
-        let components = flow.components;
-
-        for (let x = 0; x < components.length; x++) {
-            const comp = components[x];
-            let name = comp.name;
-            let type = comp.type;
-            let uuid = comp.uuid;
-            let attribut = comp.attribut;
-            let log = comp.log;
-            
-            if(propId == uuid){
-                // console.log("findComp. name:", name, "| type:", type, "| uuid:", uuid, "| attribut:", attribut);
-                // save attribut
-                for (const key in attribut) {
-                    let finalData = type + '-' + key;
-                    let elInput = rootProp.find("#"+finalData);
-                    let inputId = elInput.attr("id");
-                    let inputVal = elInput.val();
-                    let isCheckbox = elInput.attr("type") == "checkbox";
-                    let isChecked = elInput.is(":checked");
-                    // console.log("attribut. inputVal:", inputVal, "| inputId: ", inputId, "| elInput: ", elInput);
-
-                    if(inputVal!=undefined){
-                        let propName = inputId.replace(type + "-", "");
-                        if(!isCheckbox){
-                            attribut[propName] = inputVal;
-                        } else {
-                            attribut[propName] = isChecked;
-                        }
-                    } 
-                }
-
-                // save log
-                for (const key in log) {
-                    const LOG = "log";
-                    let finalData = LOG + '-' + key;
-                    let elInput = rootProp.find("#"+finalData);
-                    let inputId = elInput.attr("id");
-                    let inputVal = elInput.val();
-                    let isCheckbox = elInput.attr("type") == "checkbox";
-                    let isChecked = elInput.is(":checked");
-                    // console.log("log. inputVal:", inputVal, "| inputId: ", inputId, "| isChecked: ", isChecked, "| isCheckbox: ", isCheckbox, "| elInput: ", elInput);
-
-                    if(inputVal!=undefined){
-                        let propName = inputId.replace(LOG + "-", "");
-                        if(!isCheckbox){
-                            log[propName] = inputVal;
-                        } else {
-                            log[propName] = isChecked;
+    for (let i = 0; i < jsonTabThis.length; i++) {
+        let tab = jsonTabThis[i];
+        let jsonData = tab.jsonData;
+        for (let j = 0; j < jsonData.length; j++) {
+            const flow = jsonData[j];
+            let components = flow.components;
+            for (let x = 0; x < components.length; x++) {
+                const comp = components[x];
+                let name = comp.name;
+                let type = comp.type;
+                let uuid = comp.uuid;
+                let attribut = comp.attribut;
+                let log = comp.log;
+                
+                if(propId == uuid){
+                    // console.log("findComp. name:", name, "| type:", type, "| uuid:", uuid, "| attribut:", attribut);
+                    // save attribut
+                    for (const key in attribut) {
+                        let finalData = type + '-' + key;
+                        let elInput = rootProp.find("#"+finalData);
+                        let inputId = elInput.attr("id");
+                        let inputVal = elInput.val();
+                        let isCheckbox = elInput.attr("type") == "checkbox";
+                        let isChecked = elInput.is(":checked");
+                        // console.log("attribut. inputVal:", inputVal, "| inputId: ", inputId, "| elInput: ", elInput);
+    
+                        if(inputVal!=undefined){
+                            let propName = inputId.replace(type + "-", "");
+                            if(!isCheckbox){
+                                attribut[propName] = inputVal;
+                            } else {
+                                attribut[propName] = isChecked;
+                            }
+                        } 
+                    }
+    
+                    // save log
+                    for (const key in log) {
+                        const LOG = "log";
+                        let finalData = LOG + '-' + key;
+                        let elInput = rootProp.find("#"+finalData);
+                        let inputId = elInput.attr("id");
+                        let inputVal = elInput.val();
+                        let isCheckbox = elInput.attr("type") == "checkbox";
+                        let isChecked = elInput.is(":checked");
+                        // console.log("log. inputVal:", inputVal, "| inputId: ", inputId, "| isChecked: ", isChecked, "| isCheckbox: ", isCheckbox, "| elInput: ", elInput);
+    
+                        if(inputVal!=undefined){
+                            let propName = inputId.replace(LOG + "-", "");
+                            if(!isCheckbox){
+                                log[propName] = inputVal;
+                            } else {
+                                log[propName] = isChecked;
+                            }
                         }
                     }
+    
+                    if(type == "object-mapping"){
+                        let elInputMapping = rootProp.find("#object-mapping-mapping").val();
+                        let elInputPath = rootProp.find("#object-mapping-path").val();
+                        comp.mapping = elInputMapping;
+                        comp.path = elInputPath;
+                    }
+    
+                    // properties name
+                    let propname = type + '-propname';
+                    let propnameVal = rootProp.find("#"+propname).val();
+                    comp.name = propnameVal; // change json
+                    $('[data_id="'+uuid+'"]').find("span").text(propnameVal); // change UI canvas
+                    let titleName = propnameVal;
+                    rootProp.find(".properties-title-name").text(titleName); // change UI title
+                    rootProp.find(".properties-title-name").attr("title", titleName); // change UI title tooltip
                 }
-
-                if(type == "object-mapping"){
-                    let elInputMapping = rootProp.find("#object-mapping-mapping").val();
-                    let elInputPath = rootProp.find("#object-mapping-path").val();
-                    comp.mapping = elInputMapping;
-                    comp.path = elInputPath;
-                }
-
-                // properties name
-                let propname = type + '-propname';
-                let propnameVal = rootProp.find("#"+propname).val();
-                comp.name = propnameVal; // change json
-                $('[data_id="'+uuid+'"]').find("span").text(propnameVal); // change UI canvas
-                let titleName = propnameVal;
-                rootProp.find(".properties-title-name").text(titleName); // change UI title
-                rootProp.find(".properties-title-name").attr("title", titleName); // change UI title tooltip
             }
         }
     }
-    localStorage.setItem("jsonFlow", JSON.stringify(jsonFlowThis));
+    localStorage.setItem("jsonTab", JSON.stringify(jsonTabThis));
 }
 
 // Floating Properties
@@ -1149,7 +1364,7 @@ function elementProperties(el){
     '              <div id="properties">' + 
     '              </div>' + 
     '              <div id="notes" style="display: none;">' + 
-    '                notes' + 
+    '                <textarea class="notes-properties mx-3 mt-3" rows="10" readonly="true" ondblclick="addNotesProperties(this)" onblur="backToReadonly(this)">Notes</textarea>' + 
     '              </div>' + 
     '              <div id="log" class="log" style="display: none;">' + 
     '                log' + 

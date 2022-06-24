@@ -4,7 +4,7 @@ $(document).ready(function(){
     
     $(".elements-list .element-item").draggable({
         connectToSortable : ".flow-diagram, .switch-flow-diagram, .switch-flow-element",
-        containment : "#flow-container",
+        containment : ".content",
         disabled: false,
         helper : "clone",
         revert: "invalid",

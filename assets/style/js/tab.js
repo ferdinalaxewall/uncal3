@@ -1,14 +1,4 @@
 $(document).ready(function(){
-    var project_id = generateUUID();
-
-    $(".project-tab").eq(0).attr("project_id", project_id).attr("title", "Default Folder/Default Project");
-    setTimeout(() => {
-        var projectTabId = $(".project-tab").eq(0).attr("project_id")
-        $(".project-container").attr("project_id", projectTabId)
-    }, 100);
-
-    $(".sidebar-content-header .folder-name").text("Default Folder")
-
     
     $(".project-tab-container").sortable({
         refreshPositions: true,
@@ -30,6 +20,7 @@ function openProjectTab(project){
     var file_id = $(project).parent().attr("file_id");
     let projectName = $(project).text();
     let FolderParentName = $(project).parents(".list-of-project").siblings(".folder-group").find(".folder-name").text();
+    let folder_id = $(project).parents(".list-folder").attr("folder_id");
 
     var projectTabHtml = '<a href="#" class="project-tab" id="unsaved" project_id="'+ file_id +'" onclick="openCanvasProject(this)" title="'+ FolderParentName +'/'+ projectName +'">'+
     '                      <svg width="13" height="19" viewBox="0 0 13 19" fill="none" xmlns="http://www.w3.org/2000/svg" id="tab-icon uncal-icon">'+
@@ -43,6 +34,8 @@ function openProjectTab(project){
     '                    </a>';
 
     var canvasHtml = '<div class="project-container" project_id="'+ file_id +'"><div class="canvas"></div></div>'
+    $("#flow-section .content-box").removeClass("empty-project");
+    $(".project-menu-tab .utility-group").addClass("d-flex").fadeIn();
     
     var checkExistElement = $(".project-tab-container").find("[project_id='" + file_id + "']"); 
     if ($(checkExistElement).length < 1) {
@@ -88,6 +81,27 @@ function openProjectTab(project){
         $(".sidebar-content-header .folder-name").text(FolderParentName);
     }
     
+    // tambah jsonTab
+    let jsonTabThis = JSON.parse(localStorage.getItem("jsonTab"));
+    let isExist = false;
+    for (let i = 0; i < jsonTabThis.length; i++) {
+        const project_id = jsonTabThis[i].project_id;
+        if(project_id == file_id){
+            isExist = true;
+        }
+    }
+
+    if(!isExist){
+        let newTab = {
+            folder: FolderParentName,
+            folder_id: folder_id,
+            project: projectName,
+            project_id: file_id,
+            jsonData: [],
+        };
+        jsonTabThis.push(newTab);
+        localStorage.setItem("jsonTab", JSON.stringify(jsonTabThis));
+    }
 }
 
 function openCanvasProject(projectTab){
@@ -164,7 +178,9 @@ function closeCanvasProject(closeProject){
         }
     }else{
         setTimeout(() => {
-            $(".sidebar-content-header .folder-name").text("Uncal BPM Workspace")
+            $(".sidebar-content-header .folder-name").text("Uncal BPM Workspace");
+            $("#flow-section .content-box").addClass("empty-project");
+            $(".project-menu-tab .utility-group").removeClass("d-flex").fadeOut();
         }, 100);
     }
     
@@ -177,6 +193,15 @@ function closeCanvasProject(closeProject){
         }
     });
     
+    // hapus jsonTab
+    let jsonTabThis = JSON.parse(localStorage.getItem("jsonTab"));
+    for (let i = 0; i < jsonTabThis.length; i++) {
+        const projectId = jsonTabThis[i].project_id;
+        if(projectId == project_id){
+            jsonTabThis.splice(i, 1);
+        }
+    }
+    localStorage.setItem("jsonTab", JSON.stringify(jsonTabThis));
 }
 
 // show jsonTab
