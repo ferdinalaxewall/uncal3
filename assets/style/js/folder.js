@@ -58,20 +58,20 @@ $(document).ready(function () {
             "name": "folder-a",
             "uuid": generateUUID(),
             "files": [ {
-                name : "file-a", 
+                name : "file-a1", 
                 uuid : generateUUID(), 
             }, {
-                name : "file-b", 
+                name : "file-a2", 
                 uuid : generateUUID(), 
             }, {
-                name : "file-c", 
+                name : "file-a3", 
                 uuid : generateUUID(), 
             }]
         }, {
             "name": "folder-b",
             "uuid": generateUUID(),
             "files": [ {
-                name : "file-a", 
+                name : "file-b1", 
                 uuid : generateUUID(), 
             }]
         }, {
