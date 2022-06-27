@@ -27,7 +27,7 @@
 @font-face {
     font-family: "QuicksandFont";
     src: url("../../font/Quicksand/Quicksand-Bold.ttf") format("truetype");
-    font-weight: 300;
+    font-weight: 700;
 }
 
 :root{
@@ -48,7 +48,7 @@
     --clr-btn-primary: #c68d53;
     --clr-menu-tab: linear-gradient(to bottom, #fff, #F0F2F4);
     --font-family: PoppinsFont;
-    --font-family-2: 'Quicksand', sans-serif;
+    --font-family-2: QuicksandFont;
     --fw-regular: 400;
     --fw-bold:700;
     --fs-heading:16px;

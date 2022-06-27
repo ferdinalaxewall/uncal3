@@ -45,6 +45,7 @@ function addFileHtmlLi(file, uuid, length) {
         let result = fileHtmlString(file);
         $('[folder_id="'+ uuid +'"]').find("ul").append(result);
     }
+
     openFolderGroup();
 }
 
@@ -149,6 +150,9 @@ $(document).ready(function () {
                 });
 
                 $("#createFolderModal").modal('hide');
+                $("#createFolderModal").find("input").val("");
+                $("#createFolderModal").find(".input-group").removeClass("is-invalid").removeClass("is-valid");
+                $("#createFolderModal").find(".btn-primary").attr("disabled", true);
             }
         }else{
             iziToast.error({

@@ -36,6 +36,15 @@ function openProjectTab(project){
     var canvasHtml = '<div class="project-container" project_id="'+ file_id +'"><div class="canvas"></div></div>'
     $("#flow-section .content-box").removeClass("empty-project");
     $(".project-menu-tab .utility-group").addClass("d-flex").fadeIn();
+
+    if ($(".sidebar").hasClass("collapsed")) {
+        $("#flow-section").removeClass("col-md-12").addClass("col-md-9");
+        $("#palette-section").removeClass("d-none")
+    }else{
+        $("#flow-section").removeClass("col-md-10").addClass("col-md-7");
+        $("#palette-section").removeClass("d-none");
+    }
+
     
     var checkExistElement = $(".project-tab-container").find("[project_id='" + file_id + "']"); 
     if ($(checkExistElement).length < 1) {
@@ -181,6 +190,15 @@ function closeCanvasProject(closeProject){
             $(".sidebar-content-header .folder-name").text("Uncal BPM Workspace");
             $("#flow-section .content-box").addClass("empty-project");
             $(".project-menu-tab .utility-group").removeClass("d-flex").fadeOut();
+
+            if ($(".sidebar").hasClass("collapsed")) {
+                $("#flow-section").removeClass("col-md-9").addClass("col-md-12");
+                $("#palette-section").addClass("d-none")
+            }else{
+                $("#flow-section").removeClass("col-md-7").addClass("col-md-10");
+                $("#palette-section").addClass("d-none");
+            }
+        
         }, 100);
     }
     

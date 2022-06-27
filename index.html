@@ -150,8 +150,8 @@
 
             <!-- Flow Section (Canvas Menu) -->
 
-            <div class="col-md-9 content-section maximize" id="flow-section">
-              <div class="content-box">
+            <div class="col-md-12 content-section maximize" id="flow-section">
+              <div class="content-box empty-project">
                 <div class="project-menu-tab" id="flow-tab">
                   <div class="project-tab-container">
                     <!-- <a href="#" class="project-tab active" id="unsaved" onclick="openCanvasProject(this)">
@@ -167,8 +167,8 @@
                     </a> -->
                   </div>
 
-                  <div class="utility-group ml-3 d-flex align-items-center justify-content-end">
-                    <button class="save-project">Save Project</button>
+                  <div class="utility-group ml-3 d-none align-items-center justify-content-end">
+                    <button class="save-project" onclick="saveProject(this)">Save Project</button>
                   </div>
 
                 </div>
@@ -185,7 +185,7 @@
 
             <!-- Palette Section (Element Menu) -->
 
-            <div class="col-md-3 content-section maximize" id="palette-section">
+            <div class="col-md-3 content-section maximize d-none" id="palette-section">
               <div class="content-box">
                 <div class="menu-tab" id="palette-tab">
                   <a href="#" class="tab-name active">
@@ -632,6 +632,32 @@
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
               <button type="button" class="btn btn-primary" id="saveFlowName">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+     
+      <!--Rename Component Modal -->
+      <div class="modal fade" id="renameComponentModal" tabindex="-1" role="dialog" aria-labelledby="renameComponentModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="renameComponentModalTitle">Rename Component</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="input-group">
+                  <label for="input-component-name">Component Name:</label>
+                  <input type="text" class="input-field" id="input-component-name" placeholder="Component Name">
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" id="saveComponentName">Save changes</button>
             </div>
           </div>
         </div>

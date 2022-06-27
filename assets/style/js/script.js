@@ -35,6 +35,25 @@ $(document).ready(function(){
         
     // });
 
+    // Check modal
+    $(".modal").on('shown.bs.modal', function(event){
+        var buttonPrimary = $(this).find(".btn-primary");
+        var buttonDanger = $(this).find(".btn-danger");
+        console.log(buttonPrimary, buttonDanger)
+
+        $(".modal").off('keypress').on('keypress', function(e){
+            var keycode = (e.keyCode ? e.keyCode : e.which);
+            if(keycode == '13'){
+                if (buttonPrimary.length == 1) {
+                    $(buttonPrimary).click();
+                }else if(buttonDanger.length == 1){
+                    $(buttonDanger).click();
+                }
+            }  
+        })
+        
+    })
+
     // Check if the workspace have a child
     $(".list-folder").each(function(i){
         if($(this).children(). length > 1){
@@ -110,6 +129,35 @@ $(document).ready(function(){
         if (!$this.hasClass("active")) {
             $this.addClass("active");
         }
+
+
+
+        var inputField, filter, elementList, elementItem, elementBox, i, txtValue;
+        inputField = document.querySelector('.search-elements');
+        elementList = document.querySelector(".elements-list");
+        filter = inputField.value.toUpperCase();
+        
+        setTimeout(() => {
+            if ($("#all-category").hasClass("active")) {
+                elementItem = elementList.getElementsByTagName('li');
+            }else if ($("#sender-category").hasClass("active")) {
+                elementItem = elementList.querySelectorAll('#sender');
+            }else if($("#receiver-category").hasClass("active")){
+                elementItem = elementList.querySelectorAll('#receiver');
+            }else if($("#object-category").hasClass("active")){
+                elementItem = elementList.querySelectorAll('#object');
+            }
+    
+            for (i = 0; i < elementItem.length; i++) {
+                elementBox = elementItem[i].getElementsByTagName("a")[0];
+                txtValue = elementBox.textContent || elementBox.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                elementItem[i].style.display = "";
+                } else {
+                elementItem[i].style.display = "none";
+                }
+            }
+        }, 100);
     
         e.preventDefault();
         
@@ -233,7 +281,8 @@ $(document).ready(function(){
     $(".create-new-folder").click(function(){
         $("#createFolderModal").modal('show');
         $("#createFolderModal").find("#input-folder-name").val("");
-        $("#createFolderModal").find(".input-group").removeClass("is-invalid").removeClass("is-valid");
+        $("#createFolderModal").find(".btn-primary").attr("disabled", true);
+        $("#createFolderModal").find(".input-group").removeClass("is-invalid").removeClass("is-valid");   
     });
 
     $("#create-new-workspace").click(function(){
@@ -332,31 +381,63 @@ function toggleSidebar(button){
     $(".sidebar").toggleClass("collapsed");
     if(sidebarCollapse == false){
         sidebarCollapse = true;
-        $("#flow-section").removeClass("col-md-9").addClass("col-md-7");
-        $("#properties-section").removeClass("col-md-9").addClass("col-md-7");
-        $(".sidebar-content").fadeIn();
-        setTimeout(() => {
-            // console.log($("body").width())
-            if ($("body").width() < 1280) {
-                if (!$(".sidebar").hasClass("collapsed")) {
-                    $(document).click(function(event){
-                        if (!sidebarMenu.contains(event.target) && !navigationBar.contains(event.target)) {
-                            sidebarCollapse = false;
-                            $(".sidebar").addClass("collapsed")
-                            $("#flow-section").removeClass("col-md-7").addClass("col-md-9");
-                            $("#properties-section").removeClass("col-md-7").addClass("col-md-9");
-                            $(".sidebar-content").fadeOut();
-                        }
-                    });
+        if ($("#flow-section").hasClass("col-md-9")) {
+            $("#flow-section").removeClass("col-md-9").addClass("col-md-7");
+            $("#properties-section").removeClass("col-md-9").addClass("col-md-7");
+            $(".sidebar-content").fadeIn();
+            setTimeout(() => {
+                // console.log($("body").width())
+                if ($("body").width() < 1280) {
+                    if (!$(".sidebar").hasClass("collapsed")) {
+                        $(document).click(function(event){
+                            if (!sidebarMenu.contains(event.target) && !navigationBar.contains(event.target)) {
+                                sidebarCollapse = false;
+                                $(".sidebar").addClass("collapsed")
+                                $("#flow-section").removeClass("col-md-7").addClass("col-md-9");
+                                $("#properties-section").removeClass("col-md-7").addClass("col-md-9");
+                                $(".sidebar-content").fadeOut();
+                            }
+                        });
+                    }
                 }
-            }
-        }, 100);
+            }, 100);
+        } else if ($("#flow-section").hasClass("col-md-12")){
+            $("#flow-section").removeClass("col-md-12").addClass("col-md-10");
+            $("#properties-section").removeClass("col-md-9").addClass("col-md-7");
+            $(".sidebar-content").fadeIn();
+            setTimeout(() => {
+                // console.log($("body").width())
+                if ($("body").width() < 1280) {
+                    if (!$(".sidebar").hasClass("collapsed")) {
+                        $(document).click(function(event){
+                            if (!sidebarMenu.contains(event.target) && !navigationBar.contains(event.target)) {
+                                sidebarCollapse = false;
+                                $(".sidebar").addClass("collapsed")
+                                $("#flow-section").removeClass("col-md-10").addClass("col-md-12");
+                                $("#properties-section").removeClass("col-md-7").addClass("col-md-9");
+                                $(".sidebar-content").fadeOut();
+                            }
+                        });
+                    }
+                }
+            }, 100);
+        }
 
     }else{
         sidebarCollapse = false;
-        $("#flow-section").removeClass("col-md-7").addClass("col-md-9");
-        $("#properties-section").removeClass("col-md-7").addClass("col-md-9");
-        $(".sidebar-content").fadeOut();
+        if ($("#flow-section").hasClass("col-md-10")) {
+            $("#flow-section").removeClass("col-md-10").addClass("col-md-12");
+            $("#properties-section").removeClass("col-md-7").addClass("col-md-9");
+            $(".sidebar-content").fadeOut();
+        }else if($("#flow-section").hasClass("col-md-12")){
+            $("#flow-section").removeClass("col-md-12").addClass("col-md-10");
+            $("#properties-section").removeClass("col-md-7").addClass("col-md-9");
+            $(".sidebar-content").fadeOut();
+        }else if ($("#flow-section").hasClass("col-md-7")) {
+            $("#flow-section").removeClass("col-md-7").addClass("col-md-9");
+            $("#properties-section").removeClass("col-md-7").addClass("col-md-9");
+            $(".sidebar-content").fadeOut();
+        }
     }
 }
 
@@ -424,12 +505,17 @@ function readImageFile(input){
         $.contextMenu({
             selector: '.flow-diagram .element-box', 
             callback: function(key, options) {
-                if(key == 'delete'){
+                if (key == 'edit'){
+                    thisComp = $(this);
+                    renameComponent(thisComp);
+                }
+                else if(key == 'delete'){
                     thisComp = $(this);
                     deleteComponent(thisComp);
                 }
             },
             items: {
+                "edit": {name: "Rename Component", icon: "edit"},
                 "delete": {name: "Delete", icon: "delete"}
             }
         });
@@ -484,7 +570,36 @@ function closeAllProjectTab(){
     $("#flow-section .content-box").addClass("empty-project");
     $(".project-menu-tab .utility-group").removeClass("d-flex").fadeOut();
 
+    if ($(".sidebar").hasClass("collapsed")) {
+        $("#flow-section").removeClass("col-md-9").addClass("col-md-12");
+        $("#palette-section").addClass("d-none");
+    }else{
+        $("#flow-section").removeClass("col-md-7").addClass("col-md-10");
+        $("#palette-section").addClass("d-none");
+    }
+
     localStorage.setItem("jsonTab", "[]"); // Remove all Json Tab
+}
+
+function saveProject(button){
+    $(".project-tab").each(function(i){
+        if ($(this).hasClass("active")) {
+            let project_id = $(this).attr("project_id")
+            
+            let jsonTab = JSON.parse(localStorage.getItem("jsonTab"));
+
+            for (let i = 0; i < jsonTab.length; i++) {
+                let tab = jsonTab[i];
+                if (tab.project_id == project_id) {
+                    
+                    // Save project by Project ID
+                    // tab = data yang mau di simpan
+
+                    console.log("Save Project : ", tab) 
+                }
+            }
+        }
+    })
 }
 
 function createNewProject(project, folder_id){
@@ -524,6 +639,15 @@ function createNewProject(project, folder_id){
                         
                         // new file project UI
                         addFileHtmlLi(newFile, item.uuid, item.files.length);
+
+                        setTimeout(() => {
+                            $(".list-project").each(function(i){
+                                if ($(this).attr("file_id") == newFile.uuid) {
+                                    let project = $(this).children("a.project-name");
+                                    openProjectTab(project)
+                                }
+                            })
+                        }, 100);
                     }
                 }
                 
@@ -543,6 +667,9 @@ function createNewProject(project, folder_id){
 
 
                 $("#createProjectModal").modal('hide');
+                $("#createProjectModal").find("input").val("");
+                $("#createProjectModal").find(".btn-primary").attr("disabled", true);
+                $("#createProjectModal").find(".input-group").removeClass("is-invalid").removeClass("is-valid")
             }
         } else {
             iziToast.error({
@@ -663,6 +790,9 @@ function deleteProject(project, file_id){
 
     $("#deleteProject").unbind("click");
     $("#deleteProject").click(function(){
+
+        
+    var folderParent = $(project).parents(".list-of-project");
         
         // delete project tab jika sedang di open
         $(".project-tab").each(function(ind){
@@ -686,6 +816,12 @@ function deleteProject(project, file_id){
                     
                     // delete file UI
                     $(project).closest(".list-project").remove();
+                    
+                    setTimeout(() => {
+                        if ($(folderParent).children().length == 0) {
+                            $(folderParent).parents(".list-folder").removeClass("has-child").removeClass("active")
+                        }
+                    }, 100);
                 }
             }
         }
@@ -767,6 +903,8 @@ function renameFolderName(folder, folder_id){
                 
                 $("#renameFolderModal").modal('hide');
                 $("#renameFolderModal").find("#input-folder-name").val("");
+                $("#renameFolderModal").find(".btn-primary").attr("disabled", true);
+                $("#renameFolderModal").find(".input-group").removeClass("is-invalid").removeClass("is-valid");
             }
         }else{
             iziToast.error({
@@ -879,7 +1017,7 @@ function checkExistProject(inputField, value, button, folder_id){
 }
 
 function validateReturnInput(field, value, length, button){
-    if(/^[a-zA-Z0-9- ]*$/.test(value) == true) {
+    if(/^[a-zA-Z0-9- _]*$/.test(value) == true) {
         if (length > 2) {
             if ($(field).parent().hasClass("is-invalid")) {
                 $(field).parent().removeClass("is-invalid").addClass("is-valid");
@@ -903,14 +1041,6 @@ function validateReturnInput(field, value, length, button){
     
 }
 
-function addNotesProperties(textarea){
-    $(textarea).removeAttr("readonly")
-}
-
-function backToReadonly(textarea){
-    $(textarea).attr("readonly", true)
-}
-
 var checkCurrentPassword, checkNewPassword, verifyNewPassword;
 
 function validateInputPassword(field) {
@@ -928,17 +1058,18 @@ function validateInputPassword(field) {
         }
     }, 100);
     
-    if (/^[a-zA-Z0-9- ]*$/.test(value) == true) {
+    if (/^[a-zA-Z0-9- _]*$/.test(value) == true) {
         if (inputValueLength >= 8) {
             $(field).parent().removeClass("is-invalid").addClass("is-valid");
 
             if ($(field).attr("id") == "current-password") {
-                checkCurrentPassword = true
+                checkCurrentPassword = true;
+                return true;
+
             }else if ($(field).attr("id") == "new-password"){
                 if (checkCurrentPassword == true) {
                     checkNewPassword = true;
-                    $("#current-password").parent().removeClass("is-invalid").addClass("is-valid")
-                    
+                    $("#current-password").parent().removeClass("is-invalid").addClass("is-valid");
                 }else{
                     $("#current-password").parent().addClass("is-invalid")
                 }
@@ -947,8 +1078,10 @@ function validateInputPassword(field) {
                     let checkVerifyPassword = verifyNewPasswordValue(field, value);
                     if (checkVerifyPassword == true) {
                         verifyNewPassword = true;
+                        return true;
                     }else{
                         verifyNewPassword = undefined;
+                        return false;
                     }
                 }
                 
@@ -956,8 +1089,10 @@ function validateInputPassword(field) {
                 let checkVerifyPassword = verifyNewPasswordValue(field, value);
                 if (checkVerifyPassword == true) {
                     verifyNewPassword = true;
+                    return true;
                 }else{
                     verifyNewPassword = undefined;
+                    return false;
                 }
 
             }
@@ -969,8 +1104,8 @@ function validateInputPassword(field) {
                     $("#verify-new-password").parent().fadeOut();
                 }
             }, 100);
-            
-            return true;
+
+            return false;
         }else{
 
             if ($(field).attr("id") == "current-password") {
@@ -1043,6 +1178,8 @@ $("#save-change-password").click(function(e){
     var checkValidateCurrentPasswordInput = validateInputPassword($("input#current-password"), $("input#current-password").val());
     var checkValidateNewPasswordInput = validateInputPassword($("input#new-password"), $("input#new-password").val());
     var checkValidateVerifyNewPasswordInput = validateInputPassword($("input#verify-new-password"), $("input#verify-new-password").val());
+
+    console.log(checkValidateCurrentPasswordInput, checkValidateNewPasswordInput, checkValidateVerifyNewPasswordInput)
     
     if (checkValidateCurrentPasswordInput == true && checkValidateNewPasswordInput == true && checkValidateVerifyNewPasswordInput == true) {
         iziToast.success({
@@ -1057,6 +1194,7 @@ $("#save-change-password").click(function(e){
         
         $("#change-password-form").find("input").val("");
         $("#change-password-form").find(".input-group").removeClass("is-valid").removeClass("is-invalid");
+        $("#verify-password-input-group").fadeOut();
     }else{
         iziToast.error({
             timeout : 2000,
@@ -1093,8 +1231,17 @@ function searchElementsFunc(){
     var inputField, filter, elementList, elementItem, elementBox, i, txtValue;
     inputField = document.querySelector('.search-elements');
     elementList = document.querySelector(".elements-list");
-    elementItem = elementList.getElementsByTagName('li');
     filter = inputField.value.toUpperCase();
+    
+    if ($("#all-category").hasClass("active")) {
+        elementItem = elementList.getElementsByTagName('li');
+    }else if ($("#sender-category").hasClass("active")) {
+        elementItem = elementList.querySelectorAll('#sender');
+    }else if($("#receiver-category").hasClass("active")){
+        elementItem = elementList.querySelectorAll('#receiver');
+    }else if($("#object-category").hasClass("active")){
+        elementItem = elementList.querySelectorAll('#object');
+    }
 
     for (i = 0; i < elementItem.length; i++) {
         elementBox = elementItem[i].getElementsByTagName("a")[0];
@@ -1336,7 +1483,7 @@ function elementProperties(el){
     // }, 1000);
 
     var floatProp = '' + 
-    '<div class="floating-properties ui-draggable ui-draggable-handle" style="top:0;" prop_id="'+ data_id +'">' + 
+    '<div class="floating-properties ui-draggable ui-draggable-handle" style="top: 50%;left: 50%;transform: translate(-50%, -50%);-webkit-transform: translate(-50%, -50%);-moz-transform: translate(-50%, -50%);-ms-transform: translate(-50%, -50%);-o-transform: translate(-50%, -50%);" prop_id="'+ data_id +'">' + 
     '      <div class="floating-properties-header">' + 
     '        <h5 class="properties-title" id="propertiesModalTitle"><span class="properties-title-name mr-1">Flow Properties</span><span class="properties-type-name"></span></h5>' +
     '           <div class="button-group">' + 
@@ -1364,7 +1511,7 @@ function elementProperties(el){
     '              <div id="properties">' + 
     '              </div>' + 
     '              <div id="notes" style="display: none;">' + 
-    '                <textarea class="notes-properties mx-3 mt-3" rows="10" readonly="true" ondblclick="addNotesProperties(this)" onblur="backToReadonly(this)">Notes</textarea>' + 
+    '                <textarea class="notes-properties mx-3 mt-3" rows="10">Notes</textarea>' + 
     '              </div>' + 
     '              <div id="log" class="log" style="display: none;">' + 
     '                log' + 
@@ -1423,12 +1570,12 @@ function elementProperties(el){
             $(".floating-properties").eq(ind).find("#properties").attr("class", "properties-"+ind)
             setTimeout(() => {
                 if($(this).find(".properties-"+ind).children().length == 0){
-                    $(this).find(".properties-"+ind).load("components/"+getTypeComp+".jsp");
+                    $(this).find(".properties-"+ind).load("./components/"+getTypeComp+".html");
                     let titleName = elPropName;
                     let propTypeName = getTypeComp;
                     $(this).find(".properties-title-name").text(titleName).attr("title", titleName);
                     $(this).find(".properties-type-name").text("(" + propTypeName + ")").attr("title", propTypeName);
-                    $(this) .find(".log").load("components/log.jsp");
+                    $(this) .find(".log").load("./components/log.html");
                     setTimeout(() => {
                         $(this).find("#properties-name").children(".input-field").val(elPropName);  
                         $(this).find("#properties").children(".row").attr("prop_id", data_id);
@@ -1490,7 +1637,12 @@ function elementProperties(el){
             cursorAt: { top: 25, left: 175 },
             containment : "body",
             scroll : false,
-            stack : ".floating-properties"
+            stack : ".floating-properties",
+            start : function (ev, ui){
+                $(this).css({
+                    "transform" : "translate(0)"
+                })
+            }
         });
 
         $(".close-element-properties").click(function(){
@@ -1609,6 +1761,66 @@ function elementProperties(el){
         // edit properties (sekarang pindah ke save properties)
         $('#'+getTypeComp+"-page").attr("prop_id", data_id);
     }, 300);
+}
+
+function renameComponent(compo){
+    var data_id = compo.parent().attr("data_id");
+    var compName = compo.children("span");
+    var compNameText = compName.text();
+    let project_id = compo.closest(".project-container").attr("project_id");
+    
+    $("#renameComponentModal").modal('show');
+    $("#renameComponentModal").find("#input-component-name").val(compNameText);
+    
+    $("#saveComponentName").off('click').on('click', function(){
+        
+    var newName = $("#input-component-name").val();
+    
+    // let rootProp = $(saveProp).closest(".floating-properties");
+    // let propId = rootProp.attr("prop_id");
+    let jsonTabThis = JSON.parse(localStorage.getItem("jsonTab"));
+    
+    for (let i = 0; i < jsonTabThis.length; i++) {
+        let tab = jsonTabThis[i];
+        let jsonData = tab.jsonData;
+        for (let j = 0; j < jsonData.length; j++) {
+            const flow = jsonData[j];
+            let components = flow.components;
+            console.log(components)
+            for (let x = 0; x < components.length; x++) {
+                const comp = components[x];
+                let name = comp.name;
+                let type = comp.type;
+                let uuid = comp.uuid;
+                let attribut = comp.attribut;
+                let log = comp.log;
+                
+                if(data_id == uuid){
+                    comp.name = newName; // Change JSON
+                    $(compName).text(newName); // Change UI Canvas
+
+                    iziToast.success({
+                        timeout : 2000,
+                        title: 'Success',
+                        message: "Successfully rename Component",
+                        position : "topRight",
+                        transitionIn : "fadeInDown",
+                        transitionOut : "fadeOutUp",
+                        pauseOnHover: false,
+                    });
+
+                    $("#renameComponentModal").modal('hide');
+                    $("#renameComponentModal").find("#input-component-name").val("");
+                }
+            }
+        }
+    }
+
+    localStorage.setItem("jsonTab", JSON.stringify(jsonTabThis));
+
+
+    });
+
 }
 
 function deleteComponent(comp) {    

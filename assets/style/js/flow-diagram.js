@@ -75,7 +75,7 @@ function droppableFunc(){
                             // tambah json flow ke local storage
                             var type_comp = $(ui.draggable).children(0).attr("id");
                             var spanText = $(ui.draggable).children(0).find("span").text();
-                            $.get("components/"+type_comp+".jsp", function (result) {
+                            $.get("components/"+type_comp+".html", function (result) {
                                 // mempersiapkan json component
                                 var propItem = htmlToProp(result, type_comp);
                                 var jsonTabThis = JSON.parse(localStorage.getItem("jsonTab"));
@@ -503,7 +503,7 @@ function addJsonFlow(ui) {
     // console.log("liComp.children(0):", spanText);
     $(ui.item[0]).attr("data_id", data_id);  // ngisi uuid ke element html ui
 
-    $.get("components/"+type_comp+".jsp", function (result) {
+    $.get("components/"+type_comp+".html", function (result) {
         // mempersiapkan json component
         var propItem = htmlToProp(result, type_comp);
         var newCompJson;
