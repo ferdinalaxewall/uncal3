@@ -38,9 +38,9 @@ function addFileHtmlLi(file, uuid, length) {
         let result = '<ul class="list-of-project" style="display: none;">'+fileHtmlString(file)+'</ul>';
         $('[folder_id="'+ uuid +'"]').append(result);
         $('[folder_id="'+ uuid +'"]').addClass("has-child");
-        setTimeout(() => {
-            $('[folder_id="'+ uuid +'"]').find("#chevron-icon").click();
-        }, 300);
+        // setTimeout(() => {
+            // $('[folder_id="'+ uuid +'"]').find("#chevron-icon").click();
+        // }, 300);
     } else {
         let result = fileHtmlString(file);
         $('[folder_id="'+ uuid +'"]').find("ul").append(result);
@@ -106,6 +106,7 @@ $(document).ready(function () {
     
     // new folder
     $("#createFolderName").off('click').on('click', function (e) { 
+
         let newName = $("#createFolderModal #input-folder-name").val();
         var inputValue = $("#createFolderModal #input-folder-name");
         var inputValueLength = newName.length;
@@ -153,6 +154,8 @@ $(document).ready(function () {
                 $("#createFolderModal").find("input").val("");
                 $("#createFolderModal").find(".input-group").removeClass("is-invalid").removeClass("is-valid");
                 $("#createFolderModal").find(".btn-primary").attr("disabled", true);
+
+                $("ul.list-group-folder").sortListFolder();
             }
         }else{
             iziToast.error({

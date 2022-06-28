@@ -1,5 +1,44 @@
 $(document).ready(function(){
 
+    $(function() {
+        $.fn.sortListFolder = function() {
+        var mylist = $(this);
+        var listitems = $('li.list-folder', mylist).get();
+        listitems.sort(function(a, b) {
+            var compA = $(a).text().toUpperCase();
+            var compB = $(b).text().toUpperCase();
+            return (compA < compB) ? -1 : 1;
+        });
+        $.each(listitems, function(i, itm) {
+            mylist.append(itm);
+        });
+       }
+    
+        $("ul.list-group-folder").sortListFolder();
+    
+    });
+
+    $(function() {
+        $.fn.sortListProject = function() {
+        var mylist = $(this);
+        var listitems = $('li.list-project', mylist).get();
+        listitems.sort(function(a, b) {
+            var compA = $(a).text().toUpperCase();
+            var compB = $(b).text().toUpperCase();
+            return (compA < compB) ? -1 : 1;
+        });
+        $.each(listitems, function(i, itm) {
+            mylist.append(itm);
+        });
+       }
+    
+       $(".list-of-project").each(function(){
+            $(this).sortListProject();
+       })
+    
+    });
+
+
     // var zoom = 1;
     // var toTop = 0;
 
@@ -39,7 +78,11 @@ $(document).ready(function(){
     $(".modal").on('shown.bs.modal', function(event){
         var buttonPrimary = $(this).find(".btn-primary");
         var buttonDanger = $(this).find(".btn-danger");
-        console.log(buttonPrimary, buttonDanger)
+
+        // Remove Submit Event after click enter key
+        $(".modal form").on('submit', function(e){
+            e.preventDefault();
+        })
 
         $(".modal").off('keypress').on('keypress', function(e){
             var keycode = (e.keyCode ? e.keyCode : e.which);
@@ -569,6 +612,8 @@ function closeAllProjectTab(){
     $(".project-container").fadeOut().remove();
     $("#flow-section .content-box").addClass("empty-project");
     $(".project-menu-tab .utility-group").removeClass("d-flex").fadeOut();
+    $(".floating-properties").fadeOut().remove();
+    $(".list-properties").fadeOut().remove();
 
     if ($(".sidebar").hasClass("collapsed")) {
         $("#flow-section").removeClass("col-md-9").addClass("col-md-12");
@@ -584,7 +629,8 @@ function closeAllProjectTab(){
 function saveProject(button){
     $(".project-tab").each(function(i){
         if ($(this).hasClass("active")) {
-            let project_id = $(this).attr("project_id")
+            let project_id = $(this).attr("project_id");
+            let projectName = $(this).find("p").text();
             
             let jsonTab = JSON.parse(localStorage.getItem("jsonTab"));
 
@@ -592,6 +638,19 @@ function saveProject(button){
                 let tab = jsonTab[i];
                 if (tab.project_id == project_id) {
                     
+                    // Hapus Icon * / Unsaved Project
+                    $(this).removeAttr("id")
+
+                    iziToast.success({
+                        timeout : 2000,
+                        title: 'Success',
+                        message: 'Successfully save "' + projectName + '" Project',
+                        position : "topRight",
+                        transitionIn : "fadeInDown",
+                        transitionOut : "fadeOutUp",
+                        pauseOnHover: false,
+                    });
+
                     // Save project by Project ID
                     // tab = data yang mau di simpan
 
@@ -669,7 +728,11 @@ function createNewProject(project, folder_id){
                 $("#createProjectModal").modal('hide');
                 $("#createProjectModal").find("input").val("");
                 $("#createProjectModal").find(".btn-primary").attr("disabled", true);
-                $("#createProjectModal").find(".input-group").removeClass("is-invalid").removeClass("is-valid")
+                $("#createProjectModal").find(".input-group").removeClass("is-invalid").removeClass("is-valid");
+
+                $(".list-of-project").each(function(){
+                    $(this).sortListProject();
+                });
             }
         } else {
             iziToast.error({
@@ -770,6 +833,10 @@ function renameProject(project, file_id, folder_id){
 
                 $("#renameProjectModal").modal('hide');
                 $("#renameProjectModal").find("#input-project-name").val("");
+
+                $(".list-of-project").each(function(){
+                    $(this).sortListProject();
+                });
             }
         } else {
             iziToast.error({
@@ -905,6 +972,8 @@ function renameFolderName(folder, folder_id){
                 $("#renameFolderModal").find("#input-folder-name").val("");
                 $("#renameFolderModal").find(".btn-primary").attr("disabled", true);
                 $("#renameFolderModal").find(".input-group").removeClass("is-invalid").removeClass("is-valid");
+
+                $("ul.list-group-folder").sortListFolder();
             }
         }else{
             iziToast.error({
@@ -924,14 +993,30 @@ function renameFolderName(folder, folder_id){
 function deleteFolder(folder, folder_id){
     $("#deleteFolderModal").modal('show')
     $("#deleteFolder").off('click').on('click', function(){
-        $(folder).parent().remove();
         
+        // delete project tab jika sedang di open
+        var folderParent = $(folder).parent(".list-folder");
+        if ($(folderParent).hasClass("has-child")) {
+            var listProject = $(folderParent).find(".list-project");
+            $(listProject).each(function(i){
+                let file_id = $(this).attr("file_id");
+                
+                $(".project-tab").each(function(ind){
+                    if ($(this).attr("project_id") == file_id) {
+                        var closeProjectTab = $(this).find(".close-tab");
+                        closeCanvasProject(closeProjectTab);
+                    }
+                })
+            })
+        }
+
         // delete jsonFolder
         let jsonFolderLocal = JSON.parse(localStorage.getItem("jsonFolder"));
         for (let i = 0; i < jsonFolderLocal.length; i++) {
             const item = jsonFolderLocal[i];
             if(item.uuid == folder_id){
                 jsonFolderLocal.splice(i, 1);
+                $(folder).parent().remove();
             }
         }
 
@@ -1254,21 +1339,46 @@ function searchElementsFunc(){
     }
 }
 
-function searchFolderSidebarFunc(){
-    var workspaceBody, workspaceTitle, textValue, inputField, filter, workspaceBox;
-    workspaceBox = document.querySelectorAll(".list-folder");
-    workspaceBody = document.querySelectorAll(".folder-group");
-    inputField = document.querySelector(".input-search-folder");
-    filter = inputField.value.toUpperCase();
-    for (var index = 0; index < workspaceBody.length; index++) {
-        workspaceTitle = workspaceBody[index].getElementsByTagName("p")[0];
-        textValue = workspaceTitle.textContent || workspaceTitle.innerText;
-        if (textValue.toUpperCase().indexOf(filter) > -1) {
-            workspaceBox[index].style.display = "block";
-        } else {
-            workspaceBox[index].style.display = "none";
+function searchFolderSidebarFunc(input){
+    var filter = $(input    ).val();
+    $(".list-folder").each(function(){
+        if (filter == "") {
+            $(this).css("display", "block");
+            $(this).fadeIn();
+            if ($(this).hasClass("has-child")) {
+                $(this).removeClass("active");
+                $(this).children(".list-of-project").fadeOut();
+            }
+        }else if ($(this).text().search(new RegExp(filter, "i")) < 0){
+            $(this).css("display", "none");
+            $(this).fadeOut();
+            if ($(this).hasClass("has-child")) {
+                $(this).removeClass("active");
+                $(this).children(".list-of-project").fadeOut();
+            }
+        }else{
+            $(this).css("display", "block");
+            $(this).fadeIn();
+            if ($(this).hasClass("has-child")) {
+                $(this).addClass("active");
+                $(this).children(".list-of-project").fadeIn();
+            }
         }
-    }
+    });
+    // var workspaceBody, workspaceTitle, textValue, inputField, filter, workspaceBox;
+    // workspaceBox = document.querySelectorAll(".list-folder");
+    // workspaceBody = document.querySelectorAll(".folder-group");
+    // inputField = document.querySelector(".input-search-folder");
+    // filter = inputField.value.toUpperCase();
+    // for (var index = 0; index < workspaceBody.length; index++) {
+    //     workspaceTitle = workspaceBody[index].getElementsByTagName("p")[0];
+    //     textValue = workspaceTitle.textContent || workspaceTitle.innerText;
+    //     if (textValue.toUpperCase().indexOf(filter) > -1) {
+    //         workspaceBox[index].style.display = "block";
+    //     } else {
+    //         workspaceBox[index].style.display = "none";
+    //     }
+    // }
 }
 
 function searchProjectSidebarFunc(){
@@ -1845,7 +1955,7 @@ function deleteComponent(comp) {
     if(data_id != undefined){
         if ($(".floating-properties").length > 0) {
             $(".floating-properties").each(function(i){
-                if ($(this).attr("prop_Id") == data_id) {
+                if ($(this).attr("prop_id") == data_id) {
                     $(this).remove();
                 }
             })
@@ -1969,8 +2079,24 @@ function minimizeFlow(minimize){
 function closeFlow(thisClose){
     var flow_id = $(thisClose).parent().parent().attr("flow_id");
     var jsonTabThis = JSON.parse(localStorage.getItem("jsonTab"));
+    var elementItem = $(thisClose).parents(".flow-diagram").find(".element-item");
     let getProjectId = $(thisClose).closest(".project-container").attr("project_id");
     console.log("flow_id:", flow_id, "| getProjectId: ", getProjectId);
+    
+    $(elementItem).each(function(i){
+        let data_id = $(this).attr("data_id");
+        $(".floating-properties").each(function(ind){
+            if ($(this).attr("prop_id") == data_id) {
+                $(this).fadeOut().remove();
+            }
+        })
+        $(".list-properties").each(function(ind){
+            if ($(this).attr("prop_id") == data_id) {
+                $(this).fadeOut().remove();
+            }
+        })
+    })
+
     for (let i = 0; i < jsonTabThis.length; i++) {
         const tab = jsonTabThis[i];
         if(tab.project_id == getProjectId){
@@ -1980,13 +2106,14 @@ function closeFlow(thisClose){
                 if(flow_id == flow.uuid){
                     jsonTabThis[i].jsonData.splice(j, 1);
                     localStorage.setItem("jsonTab", JSON.stringify(jsonTabThis));
+                    $(thisClose).parent().parent().next().remove();
+                    $(thisClose).parent().parent().remove();
                 }
             }
         }
     }
 
-    $(thisClose).parent().parent().next().remove();
-    $(thisClose).parent().parent().remove();
+
 }
 
 function renameFlow(flowName){

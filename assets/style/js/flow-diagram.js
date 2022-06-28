@@ -37,7 +37,7 @@ $(document).ready(function(){
     
 });
 
-var flowDiagram = "<ul class='flow-diagram mt-4'><div class='flow-name'><button class='minimize-flow' onclick='minimizeFlow(this)'><img src='./assets/icon/minimize-flow-icon-2.svg' alt='Chevron Icon' id='chevron-flow-name'></button><input type='text' class='flow-name-text' ondblclick='renameFlow(this)' onblur='toReadonly(this)' oninput='flowTyping(this)' value='Scenario_1' readonly/> <button class='close-flow' onclick='closeFlow(this)'><img src='./assets/icon/close-icon.svg' alt='Close Icon'></button></div></ul><br>";
+var flowDiagram = "<ul class='flow-diagram mt-4'><div class='flow-name'><button class='minimize-flow' onclick='minimizeFlow(this)'><img src='./assets/icon/minimize-flow-icon-2.svg' alt='Chevron Icon' id='chevron-flow-name'></button><input type='text' class='flow-name-text' ondblclick='renameFlow(this)' onblur='toReadonly(this)' oninput='flowTyping(this)' value='' readonly/> <button class='close-flow' onclick='closeFlow(this)'><img src='./assets/icon/close-icon.svg' alt='Close Icon'></button></div></ul><br>";
 
 
 function droppableFunc(){
@@ -52,11 +52,20 @@ function droppableFunc(){
             $(flowDiagramNew).insertBefore($(this));
             setTimeout(function(){
                 var flow_id = $(flowDiagramNew).attr("flow_id");
-                $(".flow-name-text").each(function(ind){
-                    var flowNameLength = $(this).val().length;
-                    $(this).attr("size", flowNameLength);
-                });
                 sortableFunc();
+                
+                var projectFlowDiagram = $(flowDiagramNew).parents(".project-container").find(".flow-diagram");
+                $(projectFlowDiagram).each(function(i){
+                    if ($(this).attr("flow_id") == flow_id) {
+                        var indexElement = i+1;
+                        $(this).find(".flow-name-text").val("Scenario_"+indexElement)
+                        $(".flow-name-text").each(function(ind){
+                            var flowNameLength = $(this).val().length;
+                            $(this).attr("size", flowNameLength);
+                        });
+                    }
+                })
+
                 $(".flow-diagram").each(function(i){
                     if (!$(".flow-diagram").eq(i).children().hasClass("element-item")) {
 
@@ -80,13 +89,14 @@ function droppableFunc(){
                                 var propItem = htmlToProp(result, type_comp);
                                 var jsonTabThis = JSON.parse(localStorage.getItem("jsonTab"));
                                 let getProjectId = thisLocal.closest(".project-container").attr("project_id");
+                                let scenarionName = $(flowDiagramNew).find(".flow-name-text").val();
 
                                 for (let i = 0; i < jsonTabThis.length; i++) {
                                     const tab = jsonTabThis[i];
                                     let project_id = tab.project_id;
                                     if(project_id == getProjectId){
                                         var newFlow = {
-                                            "name": "Scenario_1",
+                                            "name": scenarionName,
                                             "uuid": flow_id,
                                             "components": [
                                                 {

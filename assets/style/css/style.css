@@ -1233,6 +1233,7 @@ button:focus{
 .content .container-fluid .row .sidebar .sidebar-content .search-folder-group img{
     top: 50%;
     right: 10px;
+    pointer-events: none;
     transform: translateY(-50%);
     transition: all .15s linear;
     -webkit-transform: translateY(-50%);
@@ -2269,6 +2270,10 @@ button:focus{
 }
 
 .content .container-fluid .row .content-section #flow-container .flow-diagram #switch-element .switch-flow-diagram .switch-flow-element .element-item:first-child::before{
+    display: none;
+}
+
+.content .container-fluid .row .content-section #flow-container .flow-diagram #switch-element .switch-flow-diagram .switch-flow-element .element-item.ui-sortable-helper ~ .element-item:nth-child(2)::before{
     display: none;
 }
 

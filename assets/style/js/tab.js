@@ -204,6 +204,20 @@ function closeCanvasProject(closeProject){
     
     $(".project-container").each(function(i){
         if ($(this).attr("project_id") == project_id) { 
+            var elementItem = $(this).find(".element-item");
+            $(elementItem).each(function(){
+                var data_id = $(this).attr("data_id");
+                $(".floating-properties").each(function(){
+                    if ($(this).attr("prop_id") == data_id) {
+                        $(this).fadeOut().remove(); 
+                    }
+                });
+                $(".list-properties").each(function(){
+                    if ($(this).attr("prop_id") == data_id) {
+                        $(this).fadeOut().remove();
+                    }
+                })
+            })
             if($(this).hasClass("active")){
                 $(this).prev().addClass("active");
             }
