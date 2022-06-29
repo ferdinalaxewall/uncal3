@@ -246,62 +246,66 @@ setTimeout(() => {
 function jsonTabExample(){
     var jsonFolderExam = JSON.parse(localStorage.getItem("jsonFolder"));
     console.log("jsonFolderExam: ", jsonFolderExam);
-    let jsonTab = [{
-        folder: jsonFolderExam[0].name,
-        folder_id: jsonFolderExam[0].uuid,
-        project: jsonFolderExam[0].files[0].name,
-        project_id: jsonFolderExam[0].files[0].uuid,
-        jsonData: jsonData,
-    }, {
-        folder: jsonFolderExam[1].name,
-        folder_id: jsonFolderExam[1].uuid,
-        project: jsonFolderExam[1].files[0].name,
-        project_id: jsonFolderExam[1].files[0].uuid,
-        jsonData: jsonData2,
-    }];
-
-    var getJsonTab = localStorage.getItem("jsonTab");
-    console.log("getJsonTab: ", getJsonTab);
-    if(getJsonTab == "" || getJsonTab == null /* || getLocal == "[]" */){
-        localStorage.setItem("jsonTab", JSON.stringify(jsonTab));
-    } 
+    if (jsonFolderExam.length != 0) {
+        let jsonTab = [{
+            folder: jsonFolderExam[0].name,
+            folder_id: jsonFolderExam[0].uuid,
+            project: jsonFolderExam[0].files[0].name,
+            project_id: jsonFolderExam[0].files[0].uuid,
+            jsonData: jsonData,
+        }, {
+            folder: jsonFolderExam[1].name,
+            folder_id: jsonFolderExam[1].uuid,
+            project: jsonFolderExam[1].files[0].name,
+            project_id: jsonFolderExam[1].files[0].uuid,
+            jsonData: jsonData2,
+        }];
+    
+        var getJsonTab = localStorage.getItem("jsonTab");
+        console.log("getJsonTab: ", getJsonTab);
+        if(getJsonTab == "" || getJsonTab == null /* || getLocal == "[]" */){
+            localStorage.setItem("jsonTab", JSON.stringify(jsonTab));
+        } 
+    }
 }
 
 // baca jsonTab
 function readJsonTab(){
     var readJsonTab = JSON.parse(localStorage.getItem("jsonTab"));
-    for (let h = 0; h < readJsonTab.length; h++) {
-        const tab = readJsonTab[h];
-        let projectUuid = tab.project_id;
-        let jsonData = tab.jsonData;
+    if(readJsonTab.length != 0){
+        for (let h = 0; h < readJsonTab.length; h++) {
+            const tab = readJsonTab[h];
+            let projectUuid = tab.project_id;
+            let jsonData = tab.jsonData;
+        
+            setTimeout(() => {
+                // tambah tab
+                let projectHtml = $('[file_id="'+ projectUuid +'"]').find("a");
+                projectHtml.dblclick();
     
-        setTimeout(() => {
-            // tambah tab
-            let projectHtml = $('[file_id="'+ projectUuid +'"]').find("a");
-            projectHtml.dblclick();
-
-            // isi canvas di tab
-            for (let i = 0; i < jsonData.length; i++) {
-                setTimeout(() => {
-                    const flow = jsonData[i];
-                    var flow_name = flow.name;
-                    var flow_id = flow.uuid;
-                    var type_com0 = flow.components[0].type;
-                    var id_com0 = flow.components[0].uuid;
-
-                    var components = flow.components;
-                    var firstCompId = components[0].uuid;
-                    var firstCompName = components[0].name;
+                // isi canvas di tab
+                for (let i = 0; i < jsonData.length; i++) {
+                    setTimeout(() => {
+                        const flow = jsonData[i];
+                        var flow_name = flow.name;
+                        var flow_id = flow.uuid;
+                        var type_com0 = flow.components[0].type;
+                        var id_com0 = flow.components[0].uuid;
+    
+                        var components = flow.components;
+                        var firstCompId = components[0].uuid;
+                        var firstCompName = components[0].name;
+                        
+                        addFlow('#'+type_com0, id_com0, firstCompName, projectUuid);
+                        let flowDg = $(".project-container[project_id='"+projectUuid+"']").find(".flow-diagram");
+                        $(flowDg).eq(i).attr("flow_id",flow_id);
+                        $(flowDg).eq(i).find("input").val(flow_name);
                     
-                    addFlow('#'+type_com0, id_com0, firstCompName, projectUuid);
-                    let flowDg = $(".project-container[project_id='"+projectUuid+"']").find(".flow-diagram");
-                    $(flowDg).eq(i).attr("flow_id",flow_id);
-                    $(flowDg).eq(i).find("input").val(flow_name);
-                
-                    // recurComp(components, firstCompId, i);
-                    flatComp(components, i, projectUuid);
-                }, 300*(i+1));
-            }
-        }, 300*(h+1));
+                        // recurComp(components, firstCompId, i);
+                        flatComp(components, i, projectUuid);
+                    }, 300*(i+1));
+                }
+            }, 300*(h+1));
+        }
     }
 }

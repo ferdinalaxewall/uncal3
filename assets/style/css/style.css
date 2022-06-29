@@ -1177,6 +1177,11 @@ button:focus{
 
 .content .container-fluid .row .sidebar .sidebar-content .sidebar-content-header .folder-name{
     text-align: center;
+    display: block;
+    max-width: 200px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .content .container-fluid .row .sidebar .sidebar-content .sidebar-content-header img{

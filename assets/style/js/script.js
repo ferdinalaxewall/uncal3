@@ -1,5 +1,7 @@
 $(document).ready(function(){
 
+    console.log("\n\n\n%cWelcome to \nUNCAL Business Process Manager and Notation :) \n\n%cCoded by : UNCAL Digital Technology Developers. \n\n\n", 'font-size:24px; font-family:Times New Roman', 'font-size:12px; color:gray')
+
     $(function() {
         $.fn.sortListFolder = function() {
         var mylist = $(this);
@@ -35,6 +37,26 @@ $(document).ready(function(){
        $(".list-of-project").each(function(){
             $(this).sortListProject();
        })
+    
+    });
+
+    $(function() {
+        $.fn.sortListElement = function() {
+        var mylist = $(this);
+        var listitems = $('li.element-item', mylist).get();
+        listitems.sort(function(a, b) {
+            var compA = $(a).text().toUpperCase();
+            var compB = $(b).text().toUpperCase();
+            var finalCompA = compA.replace(/\s/g, '');
+            var finalCompB = compB.replace(/\s/g, '');
+            return (finalCompA < finalCompB) ? -1 : 1;
+        });
+        $.each(listitems, function(i, itm) {
+            mylist.append(itm);
+        });
+       }
+    
+       $(".elements-list").sortListElement();
     
     });
 
@@ -1875,6 +1897,7 @@ function elementProperties(el){
 
 function renameComponent(compo){
     var data_id = compo.parent().attr("data_id");
+    var compType = compo.attr("id");
     var compName = compo.children("span");
     var compNameText = compName.text();
     let project_id = compo.closest(".project-container").attr("project_id");
@@ -1883,7 +1906,7 @@ function renameComponent(compo){
     $("#renameComponentModal").find("#input-component-name").val(compNameText);
     
     $("#saveComponentName").off('click').on('click', function(){
-        
+
     var newName = $("#input-component-name").val();
     
     // let rootProp = $(saveProp).closest(".floating-properties");
@@ -1908,6 +1931,22 @@ function renameComponent(compo){
                 if(data_id == uuid){
                     comp.name = newName; // Change JSON
                     $(compName).text(newName); // Change UI Canvas
+
+                    // Change List Properties name kalau ada
+                    $(".list-properties").each(function(){
+                        if ($(this).attr("prop_id") == data_id) {
+                            $(this).find("#properties-group-1 p").text(newName + " (" + compType + ") ")
+                        }
+                    });
+
+                    // Change Floating Properties kalau di buka
+                    $(".floating-properties").each(function(){
+                        if ($(this).attr("prop_id") == data_id) {
+                            $(this).find(".properties-title-name").text(newName);
+                            $(this).find(".properties-title-name").attr("title", newName);
+                            $(this).find("#"+compType+"-propname").val(newName);
+                        }
+                    })
 
                     iziToast.success({
                         timeout : 2000,
