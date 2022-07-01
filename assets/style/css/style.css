@@ -223,6 +223,10 @@ button:focus{
     -o-border-radius: 5px !important;
 }
 
+.context-menu-item.context-menu-icon-run::before {
+    content: url("../../icon/run-icon.svg");
+}
+
 /* Floating Properties CSS */
 
 .floating-properties{
@@ -2730,6 +2734,21 @@ button:focus{
 
 .content .container-fluid .row #properties-section .content-box .content-body::-webkit-scrollbar-thumb:hover{
     background-color: var(--clr-primary-hover);
+}
+
+.content .container-fluid .row #properties-section .content-box .content-body .console-content .console-description{
+    margin-bottom: 0;
+    text-transform: uppercase;
+    color: rgb(110, 110, 110);
+    transition: all .15s linear;
+    -webkit-transition: all .15s linear;
+    -moz-transition: all .15s linear;
+    -ms-transition: all .15s linear;
+    -o-transition: all .15s linear;
+}
+
+.content .container-fluid .row #properties-section .content-box .content-body .console-content .console-description:hover{
+    color: var(--clr-black);
 }
 
 .content .container-fluid .row .content-section .content-box .content-body .menu-group{

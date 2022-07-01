@@ -84,7 +84,7 @@ function droppableFunc(){
                             // tambah json flow ke local storage
                             var type_comp = $(ui.draggable).children(0).attr("id");
                             var spanText = $(ui.draggable).children(0).find("span").text();
-                            $.get("./components/"+type_comp+".html", function (result) {
+                            $.get("./components/"+type_comp+".jsp", function (result) {
                                 // mempersiapkan json component
                                 var propItem = htmlToProp(result, type_comp);
                                 var jsonTabThis = JSON.parse(localStorage.getItem("jsonTab"));
@@ -95,6 +95,9 @@ function droppableFunc(){
                                     const tab = jsonTabThis[i];
                                     let project_id = tab.project_id;
                                     if(project_id == getProjectId){
+                                        if (tab.tab_status == "saved") {
+                                            tab.tab_status = "unsaved"
+                                        }
                                         var newFlow = {
                                             "name": scenarionName,
                                             "uuid": flow_id,
@@ -110,6 +113,9 @@ function droppableFunc(){
                                         };
                                         jsonTabThis[i].jsonData.push(newFlow);
                                         localStorage.setItem("jsonTab", JSON.stringify(jsonTabThis));
+                                        setTimeout(() => {
+                                            removeUnsavedStatus();
+                                        }, 100);
                                     }
                                 }
                             });
@@ -236,6 +242,25 @@ function sortableFunc(){
                         $(this).remove()
                     }
                 })
+                
+                var liComp = $(ui.item);
+                let getProjectId = liComp.closest(".project-container").attr("project_id");
+
+                let getJsonTab = JSON.parse(localStorage.getItem("jsonTab"));
+                for (let i = 0; i < getJsonTab.length; i++) {
+                    let localTab = getJsonTab[i];
+                    if (localTab.project_id == getProjectId) {
+                        if (localTab.tab_status == "saved") {
+                            localTab.tab_status = "unsaved"
+
+                            localStorage.setItem("jsonTab", JSON.stringify(getJsonTab));
+                            setTimeout(() => {
+                                removeUnsavedStatus();
+                            }, 100);
+                        }
+                    }
+                }
+
                 // new dan move comp
                 var compMove = localStorage.getItem("compMove");
                 // console.log("update: compMove: ", compMove, "| ui:", $(ui.item[0]), "| uiSortable: ", $(this).data().uiSortable);
@@ -248,8 +273,6 @@ function sortableFunc(){
                     compMove = null;
                 }
                 
-                var liComp = $(ui.item);
-                let getProjectId = liComp.closest(".project-container").attr("project_id");
                 if(compMove == null){
                     var ulFlowSource = localStorage.getItem("ulSource");
                     var ulFlowDest = liComp.parent().attr("flow_id");
@@ -323,7 +346,24 @@ function switchFlowFunc(){
         cursorAt: { top: 40.5, left: 87.5 },
         revert : true,
         update : function(ev, ui){
-            console.log("update")
+            console.log("update");
+
+            var project_id = $(this).parents(".project-container").attr("project_id");
+            var jsonTab = JSON.parse(localStorage.getItem("jsonTab"));
+
+            for (let i = 0; i < jsonTab.length; i++) {
+                let tab = jsonTab[i];
+                if (tab.project_id == project_id) {
+                    if (tab.tab_status == "saved") {
+                        tab.tab_status = "unsaved";
+                        localStorage.setItem("jsonTab", JSON.stringify(jsonTab));
+                        setTimeout(() => {
+                            removeUnsavedStatus();
+                        }, 100);
+                    }
+                }
+                
+            }
         },
         receive : function(ev, ui){
             console.log("revce ")
@@ -513,7 +553,7 @@ function addJsonFlow(ui) {
     // console.log("liComp.children(0):", spanText);
     $(ui.item[0]).attr("data_id", data_id);  // ngisi uuid ke element html ui
 
-    $.get("./components/"+type_comp+".html", function (result) {
+    $.get("./components/"+type_comp+".jsp", function (result) {
         // mempersiapkan json component
         var propItem = htmlToProp(result, type_comp);
         var newCompJson;

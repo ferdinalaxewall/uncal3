@@ -627,6 +627,18 @@ function readImageFile(input){
             }
         });
 
+        $.contextMenu({
+            selector: '.project-container', 
+            callback: function(key, options) {
+                if (key == 'run') {
+                    // closeAllProjectTab();
+                }
+            },
+            items: {
+                "run": {name: "Run the Scenario", icon: "run"},
+            }
+        });
+
     });
 
 function closeAllProjectTab(){
@@ -648,11 +660,12 @@ function closeAllProjectTab(){
     localStorage.setItem("jsonTab", "[]"); // Remove all Json Tab
 }
 
-function saveProject(button){
+function saveProject(){
     $(".project-tab").each(function(i){
         if ($(this).hasClass("active")) {
             let project_id = $(this).attr("project_id");
             let projectName = $(this).find("p").text();
+            console.log(project_id)
             
             let jsonTab = JSON.parse(localStorage.getItem("jsonTab"));
 
@@ -660,8 +673,6 @@ function saveProject(button){
                 let tab = jsonTab[i];
                 if (tab.project_id == project_id) {
                     
-                    // Hapus Icon * / Unsaved Project
-                    $(this).removeAttr("id")
 
                     iziToast.success({
                         timeout : 2000,
@@ -676,11 +687,39 @@ function saveProject(button){
                     // Save project by Project ID
                     // tab = data yang mau di simpan
 
-                    console.log("Save Project : ", tab) 
+                    console.log("Save Project : ", tab);
+
+                    if (tab.tab_status == "unsaved") {
+                        // Hapus Icon * / Unsaved Project
+
+                        tab.tab_status = "saved";
+                        localStorage.setItem("jsonTab", JSON.stringify(jsonTab));
+                        setTimeout(() => {
+                            removeUnsavedStatus();
+                        }, 100);
+                    }
                 }
             }
         }
     })
+}
+
+function removeUnsavedStatus(){
+    $(".project-tab").each(function(i){
+        let project_id = $(this).attr("project_id");
+        let jsonTab = JSON.parse(localStorage.getItem("jsonTab"));
+
+        for (let i = 0; i < jsonTab.length; i++) {
+            let tab = jsonTab[i];
+            if (tab.project_id == project_id) {
+                if (tab.tab_status == "saved") {
+                    $(this).removeAttr("id")
+                }else{
+                    $(this).attr("id", "unsaved");
+                }
+            }
+        }
+    });
 }
 
 function createNewProject(project, folder_id){
@@ -1509,10 +1548,22 @@ function saveProperties(saveProp){
     let rootProp = $(saveProp).closest(".floating-properties");
     let propId = rootProp.attr("prop_id");
     let jsonTabThis = JSON.parse(localStorage.getItem("jsonTab"));
+    var project_id;
+
+    $(".flow-diagram .element-item").each(function(){
+        if ($(this).attr("data_id") == propId) {
+            project_id = $(this).parents(".project-container").attr("project_id");
+        }
+    })
 
     for (let i = 0; i < jsonTabThis.length; i++) {
         let tab = jsonTabThis[i];
         let jsonData = tab.jsonData;
+        if (tab.project_id == project_id) {
+            if (tab.tab_status == "saved") {
+                tab.tab_status = "unsaved"
+            }
+        }
         for (let j = 0; j < jsonData.length; j++) {
             const flow = jsonData[j];
             let components = flow.components;
@@ -1587,6 +1638,9 @@ function saveProperties(saveProp){
         }
     }
     localStorage.setItem("jsonTab", JSON.stringify(jsonTabThis));
+    setTimeout(() => {
+        removeUnsavedStatus();
+    }, 100);
 }
 
 // Floating Properties
@@ -1702,12 +1756,12 @@ function elementProperties(el){
             $(".floating-properties").eq(ind).find("#properties").attr("class", "properties-"+ind)
             setTimeout(() => {
                 if($(this).find(".properties-"+ind).children().length == 0){
-                    $(this).find(".properties-"+ind).load("./components/"+getTypeComp+".html");
+                    $(this).find(".properties-"+ind).load("./components/"+getTypeComp+".jsp");
                     let titleName = elPropName;
                     let propTypeName = getTypeComp;
                     $(this).find(".properties-title-name").text(titleName).attr("title", titleName);
                     $(this).find(".properties-type-name").text("(" + propTypeName + ")").attr("title", propTypeName);
-                    $(this) .find(".log").load("./components/log.html");
+                    $(this) .find(".log").load("./components/log.jsp");
                     setTimeout(() => {
                         $(this).find("#properties-name").children(".input-field").val(elPropName);  
                         $(this).find("#properties").children(".row").attr("prop_id", data_id);
@@ -1916,6 +1970,11 @@ function renameComponent(compo){
     for (let i = 0; i < jsonTabThis.length; i++) {
         let tab = jsonTabThis[i];
         let jsonData = tab.jsonData;
+        if (tab.project_id == project_id) {
+            if (tab.tab_status == "saved") {
+                tab.tab_status = "unsaved"
+            }
+        }
         for (let j = 0; j < jsonData.length; j++) {
             const flow = jsonData[j];
             let components = flow.components;
@@ -1966,7 +2025,9 @@ function renameComponent(compo){
     }
 
     localStorage.setItem("jsonTab", JSON.stringify(jsonTabThis));
-
+    setTimeout(() => {
+        removeUnsavedStatus();
+    }, 100);
 
     });
 
@@ -2057,6 +2118,9 @@ function deleteJsonFlow(data_id, project_id) {
         const tab = jsonTabThis[h];
         if(tab.project_id == project_id){
             let jsonData = tab.jsonData;
+            if (tab.tab_status == "saved") {
+                tab.tab_status = "unsaved"
+            }
             for (let i = 0; i < jsonData.length; i++) {
                 const flow = jsonData[i];
                 var components = flow.components;
@@ -2070,10 +2134,13 @@ function deleteJsonFlow(data_id, project_id) {
                     if(data_id == uuid){
                         // console.log("findComp del. name:", name, "| type:", type, "| uuid:", uuid, "| attribut:", attribut);
                         components.splice(j, 1);
-                        localStorage.setItem("jsonTab", JSON.stringify(jsonTabThis));
                     }
                 }
             }
+            localStorage.setItem("jsonTab", JSON.stringify(jsonTabThis));
+            setTimeout(() => {
+                removeUnsavedStatus();
+            }, 100);
         }   
     }
 }
@@ -2140,15 +2207,24 @@ function closeFlow(thisClose){
         const tab = jsonTabThis[i];
         if(tab.project_id == getProjectId){
             let jsonData = tab.jsonData;
+            if (tab.tab_status == "saved") {
+                tab.tab_status = "unsaved";
+            }
             for (let j = 0; j < jsonData.length; j++) {
                 let flow = jsonData[j];
                 if(flow_id == flow.uuid){
+                    
+
                     jsonTabThis[i].jsonData.splice(j, 1);
-                    localStorage.setItem("jsonTab", JSON.stringify(jsonTabThis));
                     $(thisClose).parent().parent().next().remove();
                     $(thisClose).parent().parent().remove();
+
                 }
             }
+            localStorage.setItem("jsonTab", JSON.stringify(jsonTabThis));
+            setTimeout(() => {
+                removeUnsavedStatus();
+            }, 100);
         }
     }
 
