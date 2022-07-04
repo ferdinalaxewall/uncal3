@@ -54,7 +54,14 @@ function openProjectTab(project){
             $(".project-tab").each(function(i){
                 if ($(this).attr("project_id") == file_id) {
                     $(".project-tab").removeClass("active");
-                    $(this).addClass("active")
+                    $(this).addClass("active");
+                    setTimeout(() => {
+                        if ($(this).attr("id") == "unsaved") {
+                            $(".save-project").show();
+                        }else{
+                            $(".save-project").hide();
+                        }
+                    }, 100);
                 }
             });
     
@@ -76,7 +83,14 @@ function openProjectTab(project){
         $(".project-tab").each(function(i){
             if ($(this).attr("project_id") == file_id) {
                 $(".project-tab").removeClass("active");
-                $(this).addClass("active")
+                $(this).addClass("active");
+                setTimeout(() => {
+                    if ($(this).attr("id") == "unsaved") {
+                        $(".save-project").show();
+                    }else{
+                        $(".save-project").hide();
+                    }
+                }, 100);
             }
         });
         
@@ -128,6 +142,12 @@ function openCanvasProject(projectTab){
             setTimeout(() => {
                 if ($(this).hasClass("active")) {
                     $(".sidebar-content-header .folder-name").text(folderName)
+                }
+
+                if ($(this).attr("id") == "unsaved") {
+                    $(".save-project").show();
+                }else{
+                    $(".save-project").hide();
                 }
             }, 100);
         }

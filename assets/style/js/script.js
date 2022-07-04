@@ -674,34 +674,50 @@ function saveProject(){
                 if (tab.project_id == project_id) {
                     
 
-                    iziToast.success({
-                        timeout : 2000,
-                        title: 'Success',
-                        message: 'Successfully save "' + projectName + '" Project',
-                        position : "topRight",
-                        transitionIn : "fadeInDown",
-                        transitionOut : "fadeOutUp",
-                        pauseOnHover: false,
-                    });
-
                     // Save project by Project ID
                     // tab = data yang mau di simpan
 
-                    console.log("Save Project : ", tab);
-
+                    console.log("Save Project : ", tab) 
+                   	
                     if (tab.tab_status == "unsaved") {
-                        // Hapus Icon * / Unsaved Project
-
-                        tab.tab_status = "saved";
-                        localStorage.setItem("jsonTab", JSON.stringify(jsonTab));
-                        setTimeout(() => {
-                            removeUnsavedStatus();
-                        }, 100);
-                    }
+	                    // Hapus Icon * / Unsaved Project
+	
+	                    tab.tab_status = "saved";
+	                    localStorage.setItem("jsonTab", JSON.stringify(jsonTab));
+	                    setTimeout(() => {
+	                        removeUnsavedStatus();
+	                    }, 100);
+	                    
+	                    doShowLoad();
+	                    $.ajax({
+				 		   url: "create_file",
+				 	       type: 'POST',
+				 	       data:{
+				 	    	   data:JSON.stringify(tab)
+				 	       },
+				 	       success: function(response) {
+								doCloseLoad("save-project","success");
+				 	       },
+				 	       error: function (e, x, settings, exception) {
+				           }
+				 		});
+	                }
                 }
             }
         }
     })
+}
+
+function successNotification(object){
+	iziToast.success({
+        timeout : 2000,
+        title: 'Success',
+        message: 'Successfully save "' + object + '" Project',
+        position : "topRight",
+        transitionIn : "fadeInDown",
+        transitionOut : "fadeOutUp",
+        pauseOnHover: false,
+    });
 }
 
 function removeUnsavedStatus(){
@@ -714,8 +730,10 @@ function removeUnsavedStatus(){
             if (tab.project_id == project_id) {
                 if (tab.tab_status == "saved") {
                     $(this).removeAttr("id")
+                    $(".save-project").hide();
                 }else{
                     $(this).attr("id", "unsaved");
+                    $(".save-project").show();
                 }
             }
         }
@@ -1756,12 +1774,12 @@ function elementProperties(el){
             $(".floating-properties").eq(ind).find("#properties").attr("class", "properties-"+ind)
             setTimeout(() => {
                 if($(this).find(".properties-"+ind).children().length == 0){
-                    $(this).find(".properties-"+ind).load("./components/"+getTypeComp+".jsp");
+                    $(this).find(".properties-"+ind).load("./components/"+getTypeComp+".html");
                     let titleName = elPropName;
                     let propTypeName = getTypeComp;
                     $(this).find(".properties-title-name").text(titleName).attr("title", titleName);
                     $(this).find(".properties-type-name").text("(" + propTypeName + ")").attr("title", propTypeName);
-                    $(this) .find(".log").load("./components/log.jsp");
+                    $(this) .find(".log").load("./components/log.html");
                     setTimeout(() => {
                         $(this).find("#properties-name").children(".input-field").val(elPropName);  
                         $(this).find("#properties").children(".row").attr("prop_id", data_id);
@@ -2033,22 +2051,49 @@ function renameComponent(compo){
 
 }
 
+function senderDroppable(){
+    $(".sender-droppable").droppable({
+        accept : ".element-item",
+        over : function(){
+            alert("over")
+        }
+    });
+}
+
 function deleteComponent(comp) {    
     // validasi hapus properties
     var data_id = comp.parent().attr("data_id");
     var prop_id = $("#properties").children(":first").attr("prop_id");
+    var flow_id = $(comp).parents(".flow-diagram").attr("flow_id");
     var switchElementParent = $(comp).parents(".switch-flow-element");
     var switchElementLength = $(comp).parents(".switch-flow-element").length;
     let project_id = comp.closest(".project-container").attr("project_id");
 
     // hapus element
     comp.parent().remove(); 
+    
+    var senderDroppableHtml = "<div class='element-item-disabled sender-droppable'></div>"
 
     setTimeout(() => {
         $(".switch-flow-element").each(function(i) {
             if ($(this).children().length == 0) {
                 $(this).remove()
             }
+            
+            if ($(comp).attr("data-properties") == "sender") {
+                $(".flow-diagram").each(function(i){
+                    if ($(this).attr("flow_id") == flow_id) {
+                        console.log($(this).children(".element-item").length)
+                        if ($(this).children(".element-item").length >= 1) {
+                            $(senderDroppableHtml).insertBefore($(this).children(".element-item"));
+                            setTimeout(() => {
+                                senderDroppable();
+                            }, 100);
+                        }
+                    }
+                })
+            }
+
         });
     }, 100);
 

@@ -3,7 +3,7 @@ $(document).ready(function(){
     var flowDiagram = "<ul class='flow-diagram mt-4'><div class='flow-name'><button class='minimize-flow' onclick='minimizeFlow(this)'><img src='./assets/icon/minimize-flow-icon-2.svg' alt='Chevron Icon' id='chevron-flow-name'></button><input type='text' class='flow-name-text' ondblclick='renameFlow(this)' onblur='toReadonly(this)' oninput='flowTyping(this)' value='Scenario_1' readonly/> <button class='close-flow' onclick='closeFlow(this)'><img src='./assets/icon/close-icon.svg' alt='Close Icon'></button></div></ul><br>";
     
     $(".elements-list .element-item").draggable({
-        connectToSortable : ".flow-diagram, .switch-flow-diagram, .switch-flow-element",
+        connectToSortable : ".flow-diagram, .switch-flow-diagram, .switch-flow-element, .sender-droppable",
         containment : ".content",
         disabled: false,
         helper : "clone",
