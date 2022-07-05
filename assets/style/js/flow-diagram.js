@@ -115,7 +115,10 @@ function droppableFunc(){
                                         localStorage.setItem("jsonTab", JSON.stringify(jsonTabThis));
                                         setTimeout(() => {
                                             removeUnsavedStatus();
-                                        }, 100);
+                                            if(tab.tab_status == "unsaved"){
+												toggleSaveProjectButton(getProjectId);
+											}
+                                        }, 150);
                                     }
                                 }
                             });
@@ -256,7 +259,10 @@ function sortableFunc(){
                             localStorage.setItem("jsonTab", JSON.stringify(getJsonTab));
                             setTimeout(() => {
                                 removeUnsavedStatus();
-                            }, 100);
+                                if(localTab.tab_status == "unsaved"){
+									toggleSaveProjectButton(getProjectId)									
+								}
+                            }, 150);
                         }
                     }
                 }
@@ -296,6 +302,11 @@ function sortableFunc(){
                             var components = jsonFlowIndex.components;
                             components.splice(indexNewComp, 0, compMove);
                             localStorage.setItem("jsonTab", JSON.stringify(jsonTabThis));
+                            setTimeout(() => {
+								if(tab.tab_status == "unsaved"){
+									toggleSaveProjectButton(getProjectId)									
+								}
+							},150)
                         }
                     }
                 }
@@ -359,7 +370,10 @@ function switchFlowFunc(){
                         localStorage.setItem("jsonTab", JSON.stringify(jsonTab));
                         setTimeout(() => {
                             removeUnsavedStatus();
-                        }, 100);
+                            if(tab.tab_status == "unsaved"){
+								toggleSaveProjectButton(project_id)									
+							}
+                        }, 150);
                     }
                 }
                 
@@ -396,7 +410,7 @@ function switchFlowFunc(){
                             }
                         });
                         })
-                    }, 250);
+                    }, 150);
                 })
             }, 100);
         
@@ -464,10 +478,14 @@ function switchFlowElementFuncs(){
             }
         },
         update : function(ev, ui){
+			var project_id = $(this).parents(".project-container").attr("project_id")
             setTimeout(() => {
                 if ($(ui.sender).children().length == 0) {
                     $(ui.sender).remove();
                 }
+                
+                removeUnsavedStatus()
+                toggleSaveProjectButton(project_id)
             }, 100);
         },
         over : function(ev,ui){
@@ -605,6 +623,11 @@ function addJsonFlow(ui) {
                         }
                     }
                 }
+                setTimeout(() => {
+					if(tab.tab_status == "unsaved"){
+						toggleSaveProjectButton(getProjectId)
+					}
+				}, 150)
             }
         }
     });

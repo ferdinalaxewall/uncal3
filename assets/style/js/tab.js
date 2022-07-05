@@ -550,7 +550,7 @@ function jsonTabExample(){
             project: jsonFolderExam[0].files[0].name,
             project_id: jsonFolderExam[0].files[0].uuid,
             jsonData: jsonData,
-            tab_status: "saved"
+            tab_status: "unsaved"
         }, {
             folder: jsonFolderExam[1].name,
             folder_id: jsonFolderExam[1].uuid,
@@ -583,6 +583,9 @@ function readJsonTab(){
                 projectHtml.dblclick();
 
                 removeUnsavedStatus();
+                if(tab.tab_status == "unsaved"){
+					toggleSaveProjectButton(tab.project_id)									
+				}
     
                 // isi canvas di tab
                 for (let i = 0; i < jsonData.length; i++) {
