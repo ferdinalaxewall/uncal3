@@ -162,18 +162,6 @@ $(document).ready(function(){
     $("#logout-link .nav-link").click(function(){
         $("#logoutModal").modal('show');
     });
-
-    // $("#flow-tab .project-tab").click(function(e){
-    //     $("#flow-tab .project-tab").removeClass("active");
-
-    //     var $this = $(this);
-    //     if (!$this.hasClass("active")) {
-    //         $this.addClass("active");
-    //     }
-
-    //     e.preventDefault();
-
-    // });
     
     $("#palette-tab .tab-name").click(function(e){
         $("#palette-tab .tab-name").removeClass("active");
@@ -235,6 +223,16 @@ $(document).ready(function(){
         if (!$this.hasClass("active")) {
             $this.addClass("active");
         }
+
+        setTimeout(() => {
+            if($this.prop("id") == "console-section"){
+                $(".console-content").removeClass("d-none");
+                $(".problems-content").addClass("d-none");
+            }else if ($this.prop("id") == "problems-section") {
+                $(".console-content").addClass("d-none");
+                $(".problems-content").removeClass("d-none");
+            }
+        }, 25);
 
         if ($this.parents("#properties-section").hasClass("minimized")) {
             $this.parents("#properties-section").toggleClass("minimized");
@@ -539,16 +537,23 @@ function readImageFile(input){
     $(function() {
         $.contextMenu({
             selector: 'a.project-name', 
+            className : 'not-running',
             callback: function(key, options) {
                 if (key == 'edit'){
                     renameProject($(this), $(this).parents(".list-project").attr("file_id"), $(this).parents(".list-folder").attr("folder_id"));
                 }else if(key == 'delete'){
                     deleteProject($(this), $(this).parents(".list-project").attr("file_id"));
+                }else if(key == 'export'){
+                    doExportProject($(this).parents(".list-project").attr("file_id"));
+                }else if(key == 'run'){
+                    runProjectNotExistTab($(this), $(this).parents(".list-project").attr("file_id"), options.$menu);
                 }
             },
             items: {
                 "edit": {name: "Rename Project", icon: "edit"},
-                "delete": {name: "Delete Project", icon: "delete"}
+                "delete": {name: "Delete Project", icon: "delete"},
+                "export": {name: "Export", icon : "export"},
+                "run" : {name : "Run Project", icon : "run"},
             }
         }); 
 
@@ -631,7 +636,7 @@ function readImageFile(input){
             selector: '.project-container', 
             callback: function(key, options) {
                 if (key == 'run') {
-                    // closeAllProjectTab();
+                    doRunProject($(this).attr("project_id"), true);
                 }
             },
             items: {
@@ -642,21 +647,28 @@ function readImageFile(input){
     });
 
 function closeAllProjectTab(){
-    $(".project-tab").fadeOut().remove();
-    $(".project-container").fadeOut().remove();
-    $("#flow-section .content-box").addClass("empty-project");
-    $(".project-menu-tab .utility-group").removeClass("d-flex").fadeOut();
-    $(".sidebar-content-header .folder-name").text("Uncal BPM Workspace");
-    $(".floating-properties").fadeOut().remove();
-    $(".list-properties").fadeOut().remove();
-
-    if ($(".sidebar").hasClass("collapsed")) {
-        $("#flow-section").removeClass("col-md-9").addClass("col-md-12");
-        $("#palette-section").addClass("d-none");
-    }else{
-        $("#flow-section").removeClass("col-md-7").addClass("col-md-10");
-        $("#palette-section").addClass("d-none");
-    }
+    
+    $(".stop-run-project").each(function(i){
+        stopRunProject($(this))
+    });
+    
+    setTimeout(() => {
+        $(".project-tab").fadeOut().remove();
+        $(".project-container").fadeOut().remove();
+        $("#flow-section .content-box").addClass("empty-project");
+        $(".project-menu-tab .utility-group").removeClass("d-flex").fadeOut();
+        $(".sidebar-content-header .folder-name").text("Uncal BPM Workspace");
+        $(".floating-properties").fadeOut().remove();
+        $(".list-properties").fadeOut().remove();
+    
+        if ($(".sidebar").hasClass("collapsed")) {
+            $("#flow-section").removeClass("col-md-9").addClass("col-md-12");
+            $("#palette-section").addClass("d-none");
+        }else{
+            $("#flow-section").removeClass("col-md-7").addClass("col-md-10");
+            $("#palette-section").addClass("d-none");
+        }        
+    }, 100);
 
     localStorage.setItem("jsonTab", "[]"); // Remove all Json Tab
 }
@@ -679,9 +691,26 @@ function saveProject(){
 	                    // Save project by Project ID
 	                    // tab = data yang mau di simpan
 	
-	                    console.log("Save Project : ", tab) 
-	                   	
+                        console.log("Save Project : ", tab) 
+                        
 	                    if (tab.tab_status == "unsaved") {
+
+                            let jsonFolder = JSON.parse(localStorage.getItem("jsonFolder"))
+                            if (tab.jsonData.length > 0){
+                                let jsonData = tab.jsonData;
+                                for (let ind = 0; ind < jsonFolder.length; ind++) {
+                                    let folder = jsonFolder[ind];
+                                    for (let index = 0; index < folder.files.length; index++) {
+                                        let file = folder.files[index];
+                                        if (file.uuid == project_id) {
+                                            file.jsonData = jsonData;
+                                            localStorage.setItem("jsonFolder", JSON.stringify(jsonFolder));
+                                        }
+                                    }
+                                    
+                                }
+                            }
+
 		                    // Hapus Icon * / Unsaved Project
 		
 		                    tab.tab_status = "saved";
@@ -1010,6 +1039,187 @@ function deleteProject(project, file_id){
     });
 }
 
+function doExportProject(file_id){
+    // Export Project Function
+
+    let checkExistTab = false;
+
+    $(".project-tab").each(function(i){
+        if ($(this).attr("project_id") == file_id) {
+            checkExistTab = true;
+        }
+
+    });
+
+    if (checkExistTab == true) {
+
+        setTimeout(() => {
+			// Note : Export ketika tab sudah dibuka
+			
+	        let jsonData = getJSONDataFromLocal(file_id);
+	        console.log("Export Project JSON Data : ", jsonData);
+		},150)
+
+    } else {
+        // Note : Export Ketika tab tidak dibuka
+
+
+    }
+
+}
+
+function runProjectNotExistTab(project, file_id){
+
+    let checkExistTab = openProjectTab(project);
+
+    setTimeout(() => {
+        doRunProject(file_id, checkExistTab)
+    }, 100);
+}
+
+function doRunProject(project_id, checkExistTab){
+    $(".project-tab").each(function(){
+        if ($(this).attr("project_id") == project_id) {
+            $(this).addClass("is-running")
+        }
+    });
+
+    $(".project-container").each(function(){
+        if ($(this).attr("project_id") == project_id) {
+            $(this).addClass("is-running")
+        }
+    });
+    
+    $(".list-project").each(function(){
+        if ($(this).attr("file_id") == project_id) {
+            $(this).addClass("is-running")
+        }
+    });
+
+    // Buka Console
+
+    if($("#flow-map-section").hasClass("minimized")){
+        $("#flow-section, #palette-section").toggleClass("maximize");
+        $("#flow-map-section, #properties-section, .minimize-section").toggleClass("minimized");
+    }
+
+    if (!$("#properties-section #console-section").hasClass("active")) {
+        $("#properties-section #problems-section").removeClass("active");
+        $("#properties-section #console-section").addClass("active");
+        $(".console-content").removeClass("d-none");
+        $(".problems-content").addClass("d-none");
+    }
+
+    // Save to localStorage
+    let getJsonTab = JSON.parse(localStorage.getItem("jsonTab"));
+
+    for (let i = 0; i < getJsonTab.length; i++) {
+        let tab = getJsonTab[i];
+
+        if (tab.project_id == project_id) {
+            if (tab.run_status == "not-running") {
+                tab.run_status = "is-running"
+
+                localStorage.setItem("jsonTab", JSON.stringify(getJsonTab))
+
+            }
+        }
+        
+    }
+
+    // Note : Function (AJAX) untuk Run Project
+    if (checkExistTab == true) {        
+        setTimeout(() => {
+	        // Note : Function Load File / Run Project jika tab sudah dibuka
+	        // ...
+	        
+	        let jsonData = getJSONDataFromLocal(project_id);
+	        console.log("Run Project JSON Data : ", jsonData)			
+		},150)
+    }else{
+        // Note : Function Load File / Run Project jika tab belum di buka (dari backend load file nya)
+        // ...
+    }
+}
+
+function stopRunProject(button){
+    let project_id = $(button).parent().attr("project_id");
+    
+    $(".project-tab").each(function(){
+        if ($(this).attr("project_id") == project_id) {
+            $(this).removeClass("is-running")
+        }
+    });
+    
+    $(".project-container").each(function(){
+        if ($(this).attr("project_id") == project_id) {
+            $(this).removeClass("is-running")
+        }
+    });
+    
+    $(".list-project").each(function(){
+        if ($(this).attr("file_id") == project_id) {
+            $(this).removeClass("is-running")
+        }
+    });
+
+    // Save to localStorage
+    let getJsonTab = JSON.parse(localStorage.getItem("jsonTab"));
+
+    for (let i = 0; i < getJsonTab.length; i++) {
+        let tab = getJsonTab[i];
+
+        if (tab.project_id == project_id) {
+            if (tab.run_status == "is-running") {
+                tab.run_status = "not-running"
+
+                localStorage.setItem("jsonTab", JSON.stringify(getJsonTab))
+
+            }
+        }
+        
+    }
+    
+    setTimeout(() => {
+	    // Note : Function (AJAX) untuk Stop Run Project
+	    // ....
+	    
+		let jsonData = getJSONDataFromLocal(project_id)
+    	console.log("Stop Run Project JSON Data : ", jsonData)
+	}, 150)
+    
+    
+}
+
+function getJSONDataFromLocal(project_id){
+	let getJsonTab = JSON.parse(localStorage.getItem("jsonTab"));
+        for (let i = 0; i < getJsonTab.length; i++) {
+            let tab = getJsonTab[i];
+            if (tab.project_id == project_id) {
+				// Note : tab = JSON Data untuk kebutuhan backend
+                return tab;
+            }
+            
+        }
+}
+
+function validateInputComponentName(field){
+    var inputValue = $(field).val();
+    var inputValueLength = inputValue.length;
+    var button = $(field).parents(".modal").find("#saveComponentName");
+    
+    let checkReturnInput = validateReturnInput(field, inputValue, inputValueLength, button);
+    console.log(checkReturnInput, inputValue)
+    
+    if (checkReturnInput == true) {
+        $(field).parent().removeClass("is-invalid").addClass("is-valid");
+        $(button).removeAttr("disabled");
+    }else{
+        $(field).parent().removeClass("is-valid").addClass("is-invalid");
+        $(button).attr("disabled", true);
+    }
+}
+
 function renameFolderName(folder, folder_id){
     $("#renameFolderModal").modal('show');
     $("#renameFolderModal").find("#input-folder-name").val($(folder).find(".folder-name").text());
@@ -1205,26 +1415,52 @@ function checkExistProject(inputField, value, button, folder_id){
 }
 
 function validateReturnInput(field, value, length, button){
-    if(/^[a-zA-Z0-9- _]*$/.test(value) == true) {
-        if (length > 2) {
-            if ($(field).parent().hasClass("is-invalid")) {
-                $(field).parent().removeClass("is-invalid").addClass("is-valid");
-            }
-            $(button).attr("disabled", false)
-            return true;
-        }else{
-            setTimeout(() => {
-                if ($(field).parent().hasClass("is-valid")) {
-                    $(field).parent().removeClass("is-valid").addClass("is-invalid");
+    if ($(field).attr("id") == "input-component-name") {
+        if(/^[a-zA-Z0-9- _()/]*$/.test(value) == true) {
+            if (length > 2) {
+                if ($(field).parent().hasClass("is-invalid")) {
+                    $(field).parent().removeClass("is-invalid").addClass("is-valid");
                 }
-                $(button).attr("disabled", true)
-            }, 100);
+                $(button).attr("disabled", false)
+                return true;
+            }else{
+                setTimeout(() => {
+                    if ($(field).parent().hasClass("is-valid")) {
+                        $(field).parent().removeClass("is-valid").addClass("is-invalid");
+                    }
+                    $(button).attr("disabled", true)
+                }, 100);
+                return false;
+            }
+        }else{
+            $(field).parent().removeClass("is-valid").addClass("is-invalid");
+            $(button).attr("disabled", true)
+            console.log(value)
             return false;
         }
     }else{
-        $(field).parent().removeClass("is-valid").addClass("is-invalid");
-        $(button).attr("disabled", true)
-        return false;
+        if(/^[a-zA-Z0-9- _]*$/.test(value) == true) {
+            if (length > 2) {
+                if ($(field).parent().hasClass("is-invalid")) {
+                    $(field).parent().removeClass("is-invalid").addClass("is-valid");
+                }
+                $(button).attr("disabled", false)
+                return true;
+            }else{
+                setTimeout(() => {
+                    if ($(field).parent().hasClass("is-valid")) {
+                        $(field).parent().removeClass("is-valid").addClass("is-invalid");
+                    }
+                    $(button).attr("disabled", true)
+                }, 100);
+                return false;
+            }
+        }else{
+            $(field).parent().removeClass("is-valid").addClass("is-invalid");
+            $(button).attr("disabled", true)
+            console.log(value)
+            return false;
+        }
     }
     
 }
@@ -2007,77 +2243,95 @@ function renameComponent(compo){
     $("#renameComponentModal").find("#input-component-name").val(compNameText);
     
     $("#saveComponentName").off('click').on('click', function(){
-
-    var newName = $("#input-component-name").val();
     
-    // let rootProp = $(saveProp).closest(".floating-properties");
-    // let propId = rootProp.attr("prop_id");
+    var field = $("#input-component-name");
+    var newName = $(field).val();
+    var newNameLength = newName.length;
+    let checkReturnInput = validateReturnInput(field, newName, newNameLength, $(this));
     let jsonTabThis = JSON.parse(localStorage.getItem("jsonTab"));
-    
-    for (let i = 0; i < jsonTabThis.length; i++) {
-        let tab = jsonTabThis[i];
-        let jsonData = tab.jsonData;
-        if (tab.project_id == project_id) {
-            if (tab.tab_status == "saved") {
-                tab.tab_status = "unsaved"
-                
-		        setTimeout(() => {
-			        removeUnsavedStatus();
-			        if(tab.tab_status == "unsaved"){
-						toggleSaveProjectButton(project_id)									
-					}
-			    }, 100);
+
+    if (checkReturnInput == true) {
+
+        // let rootProp = $(saveProp).closest(".floating-properties");
+        // let propId = rootProp.attr("prop_id");
+
+        for (let i = 0; i < jsonTabThis.length; i++) {
+            let tab = jsonTabThis[i];
+            let jsonData = tab.jsonData;
+            if (tab.project_id == project_id) {
+                if (tab.tab_status == "saved") {
+                    tab.tab_status = "unsaved"
+                    
+                    setTimeout(() => {
+                        removeUnsavedStatus();
+                        if(tab.tab_status == "unsaved"){
+                            toggleSaveProjectButton(project_id)									
+                        }
+                    }, 100);
+                }
             }
-        }
-        for (let j = 0; j < jsonData.length; j++) {
-            const flow = jsonData[j];
-            let components = flow.components;
-            for (let x = 0; x < components.length; x++) {
-                const comp = components[x];
-                let name = comp.name;
-                let type = comp.type;
-                let uuid = comp.uuid;
-                let attribut = comp.attribut;
-                let log = comp.log;
-                
-                if(data_id == uuid){
-                    comp.name = newName; // Change JSON
-                    $(compName).text(newName); // Change UI Canvas
-
-                    // Change List Properties name kalau ada
-                    $(".list-properties").each(function(){
-                        if ($(this).attr("prop_id") == data_id) {
-                            $(this).find("#properties-group-1 p").text(newName + " (" + compType + ") ")
-                        }
-                    });
-
-                    // Change Floating Properties kalau di buka
-                    $(".floating-properties").each(function(){
-                        if ($(this).attr("prop_id") == data_id) {
-                            $(this).find(".properties-title-name").text(newName);
-                            $(this).find(".properties-title-name").attr("title", newName);
-                            $(this).find("#"+compType+"-propname").val(newName);
-                        }
-                    })
-
-                    iziToast.success({
-                        timeout : 2000,
-                        title: 'Success',
-                        message: "Successfully rename Component",
-                        position : "topRight",
-                        transitionIn : "fadeInDown",
-                        transitionOut : "fadeOutUp",
-                        pauseOnHover: false,
-                    });
-
-                    $("#renameComponentModal").modal('hide');
-                    $("#renameComponentModal").find("#input-component-name").val("");
+            for (let j = 0; j < jsonData.length; j++) {
+                const flow = jsonData[j];
+                let components = flow.components;
+                for (let x = 0; x < components.length; x++) {
+                    const comp = components[x];
+                    let name = comp.name;
+                    let type = comp.type;
+                    let uuid = comp.uuid;
+                    let attribut = comp.attribut;
+                    let log = comp.log;
+                    
+                    if(data_id == uuid){
+                        comp.name = newName; // Change JSON
+                        $(compName).text(newName); // Change UI Canvas
+    
+                        // Change List Properties name kalau ada
+                        $(".list-properties").each(function(){
+                            if ($(this).attr("prop_id") == data_id) {
+                                $(this).find("#properties-group-1 p").text(newName + " (" + compType + ") ")
+                            }
+                        });
+    
+                        // Change Floating Properties kalau di buka
+                        $(".floating-properties").each(function(){
+                            if ($(this).attr("prop_id") == data_id) {
+                                $(this).find(".properties-title-name").text(newName);
+                                $(this).find(".properties-title-name").attr("title", newName);
+                                $(this).find("#"+compType+"-propname").val(newName);
+                            }
+                        })
+    
+                        iziToast.success({
+                            timeout : 2000,
+                            title: 'Success',
+                            message: "Successfully rename Component",
+                            position : "topRight",
+                            transitionIn : "fadeInDown",
+                            transitionOut : "fadeOutUp",
+                            pauseOnHover: false,
+                        });
+    
+                        $("#renameComponentModal").modal('hide');
+                        $("#renameComponentModal").find("#input-component-name").val("");
+                    }
                 }
             }
         }
-    }
+    
+        localStorage.setItem("jsonTab", JSON.stringify(jsonTabThis));
 
-    localStorage.setItem("jsonTab", JSON.stringify(jsonTabThis));
+    } else {
+        iziToast.error({
+            timeout : 2000,
+            title: 'Error',
+            message: "Failed to rename Component",
+            position : "topRight",
+            transitionIn : "fadeInDown",
+            transitionOut : "fadeOutUp",
+            pauseOnHover: false,
+        });
+    }
+    
     
 
     });

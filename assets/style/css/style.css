@@ -227,6 +227,9 @@ button:focus{
 .context-menu-item.context-menu-icon-run::before {
     content: url("../../icon/run-icon.svg");
 }
+.context-menu-item.context-menu-icon-export::before {
+    content: url("../../icon/export-icon.svg");
+}
 
 /* Floating Properties CSS */
 
@@ -1858,6 +1861,32 @@ button:focus{
 
 .content .container-fluid .row #flow-section .content-box #flow-container .project-container{
     display: none;
+    position: relative;
+}
+
+.content .container-fluid .row #flow-section .content-box #flow-container .project-container.is-running .stop-run-project{
+    display: block;
+}
+
+.content .container-fluid .row #flow-section .content-box #flow-container .project-container .stop-run-project{
+    position: absolute;
+    z-index: 1002;
+    display: none;
+    top: -7.5px;
+    right: -5px;
+    background-color: var(--clr-white);
+    border: 1px solid var(--clr-primary);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+    padding: 5px 10px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+}
+
+.content .container-fluid .row #flow-section .content-box #flow-container .project-container .stop-run-project:hover{
+    opacity: 0.7;
 }
 
 .content .container-fluid .row #flow-section .content-box #flow-container .project-container.active{

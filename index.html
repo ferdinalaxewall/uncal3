@@ -172,6 +172,10 @@
                 </div>
                 <div class="content-body" id="flow-container">  
                   <div class="project-container active">
+                    <button class="stop-run-project" onclick="stopRunProject(this)">
+                      <img src="./assets/icon/stop-icon.svg" alt="Stop Run Project Icon">
+                      Stop Run Project
+                    </button>
                     <div class="canvas">
                     </div>  
                   </div>
@@ -410,7 +414,7 @@
               </button>
               <div class="content-box">
                 <div class="menu-tab" id="properties-tab">
-                  <a href="#" class="tab-name displayed active">
+                  <a href="#" class="tab-name displayed active" id="problems-section">
                     <svg width="20" height="18" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <circle cx="12" cy="8" r="7" stroke="#C68D53" stroke-width="2"/>
                       <path d="M6.5 12.5L2 16" stroke="#C68D53" stroke-width="2" stroke-linecap="square"/>
@@ -425,7 +429,7 @@
                       </button> -->
                     </span>
                   </a>
-                  <a href="#" class="tab-name displayed">
+                  <a href="#" class="tab-name displayed" id="console-section">
                     <svg width="24" height="22" viewBox="0 0 24 22" fill="none" xmlns="http://www.w3.org/2000/svg" id="console-icon">
                       <path d="M11.8636 16.3636H21.7273C22.2796 16.3636 22.7273 15.9159 22.7273 15.3636V2C22.7273 1.44772 22.2796 1 21.7273 1H2C1.44772 1 1 1.44771 1 2V15.3636C1 15.9159 1.44771 16.3636 2 16.3636H11.8636ZM11.8636 16.3636V20C11.8636 20.5523 11.4159 21 10.8636 21H1H22.7273" stroke="#c68d53" stroke-width="2"/>
                     </svg>
@@ -446,6 +450,7 @@
                   <div class="console-content">
                     <p class="console-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus quae, dolores ipsum voluptate deserunt alias optio commodi laboriosam nemo quo ad odit vitae. Assumenda, recusandae!</p>
                   </div>
+                  <div class="problems-content d-none"></div>
                 </div>
               </div>
             </div>
@@ -651,13 +656,13 @@
               <form>
                 <div class="input-group">
                   <label for="input-component-name">Component Name:</label>
-                  <input type="text" class="input-field" id="input-component-name" placeholder="Component Name">
+                  <input type="text" class="input-field" id="input-component-name" onkeyup="validateInputComponentName(this)" placeholder="Component Name">
                 </div>
               </form>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary" id="saveComponentName">Save changes</button>
+              <button type="button" class="btn btn-primary" id="saveComponentName" disabled="true">Save changes</button>
             </div>
           </div>
         </div>

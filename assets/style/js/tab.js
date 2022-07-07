@@ -33,7 +33,7 @@ function openProjectTab(project){
     '                      </button>'+
     '                    </a>';
 
-    var canvasHtml = '<div class="project-container" project_id="'+ file_id +'"><div class="canvas"></div></div>'
+    var canvasHtml = '<div class="project-container" project_id="'+ file_id +'"><button class="stop-run-project" onclick="stopRunProject(this)"><img src="./assets/icon/stop-icon.svg" alt="Stop Run Project Icon">Stop Run Project</button><div class="canvas"></div></div>'
     $("#flow-section .content-box").removeClass("empty-project");
     $(".project-menu-tab .utility-group").addClass("d-flex").fadeIn();
 
@@ -51,19 +51,7 @@ function openProjectTab(project){
         $(".project-tab-container").append(projectTabHtml);
     
         setTimeout(() => {
-            $(".project-tab").each(function(i){
-                if ($(this).attr("project_id") == file_id) {
-                    $(".project-tab").removeClass("active");
-                    $(this).addClass("active");
-                    setTimeout(() => {
-                        if ($(this).attr("id") == "unsaved") {
-                            $(".save-project").show();
-                        }else{
-                            $(".save-project").hide();
-                        }
-                    }, 100);
-                }
-            });
+            toggleSaveProjectButtonInActiveTab(file_id);
     
             $("#flow-container").append(canvasHtml);
             droppableFunc();
@@ -79,20 +67,38 @@ function openProjectTab(project){
             $(".sidebar-content-header .folder-name").text(FolderParentName);
         }, 100);
         
+        
+	    // tambah jsonTab
+	    let jsonTabThis = JSON.parse(localStorage.getItem("jsonTab"));
+	    let isExist = false;
+	    for (let i = 0; i < jsonTabThis.length; i++) {
+	        const project_id = jsonTabThis[i].project_id;
+	        if(project_id == file_id){
+	            isExist = true;
+	        }
+	    }
+	
+	    if(!isExist){
+	        let newTab = {
+	            folder: FolderParentName,
+	            folder_id: folder_id,
+	            project: projectName,
+	            project_id: file_id,
+	            jsonData: [],
+	            tab_status: "saved",
+	            run_status: "not-running"
+	        };
+	        jsonTabThis.push(newTab);
+	        localStorage.setItem("jsonTab", JSON.stringify(jsonTabThis));
+	    }
+        
+        // Note : Function untuk load project jika belum ada yg dibuka
+        // ...
+
+        return false;
+        
     }else{
-        $(".project-tab").each(function(i){
-            if ($(this).attr("project_id") == file_id) {
-                $(".project-tab").removeClass("active");
-                $(this).addClass("active");
-                setTimeout(() => {
-                    if ($(this).attr("id") == "unsaved") {
-                        $(".save-project").show();
-                    }else{
-                        $(".save-project").hide();
-                    }
-                }, 100);
-            }
-        });
+        toggleSaveProjectButtonInActiveTab(file_id);
         
         $(".project-container").each(function(i){
             if ($(this).attr("project_id") == file_id) {
@@ -102,30 +108,29 @@ function openProjectTab(project){
         });
 
         $(".sidebar-content-header .folder-name").text(FolderParentName);
+
+        // Note : Function untuk load project jika sudah ada yg dibuka
+        // ...
+        
+        return true;
     }
     
-    // tambah jsonTab
-    let jsonTabThis = JSON.parse(localStorage.getItem("jsonTab"));
-    let isExist = false;
-    for (let i = 0; i < jsonTabThis.length; i++) {
-        const project_id = jsonTabThis[i].project_id;
-        if(project_id == file_id){
-            isExist = true;
-        }
-    }
+}
 
-    if(!isExist){
-        let newTab = {
-            folder: FolderParentName,
-            folder_id: folder_id,
-            project: projectName,
-            project_id: file_id,
-            jsonData: [],
-            tab_status: "saved"
-        };
-        jsonTabThis.push(newTab);
-        localStorage.setItem("jsonTab", JSON.stringify(jsonTabThis));
-    }
+function toggleSaveProjectButtonInActiveTab(file_id){
+    $(".project-tab").each(function(i){
+        if ($(this).attr("project_id") == file_id) {
+            $(".project-tab").removeClass("active");
+            $(this).addClass("active");
+            setTimeout(() => {
+                if ($(this).attr("id") == "unsaved") {
+                    $(".save-project").show();
+                }else{
+                    $(".save-project").hide();
+                }
+            }, 100);
+        }
+    });
 }
 
 function openCanvasProject(projectTab){
@@ -169,6 +174,15 @@ function closeCanvasProject(closeProject){
     var indexProjectTab = $(projectTab).index();
     var nextElement = $(projectTab).next();
     
+    if ($(projectTab).hasClass("is-running")) {
+        $(".project-container").each(function() {
+            if ($(this).attr("project_id") == project_id) {
+                let button = $(this).find(".stop-run-project");
+                stopRunProject(button)
+            }
+        })
+    }
+
     if ($(projectTab).attr("id") == "unsaved") {
         $("#closeTabModal").modal('show');
 
@@ -550,14 +564,16 @@ function jsonTabExample(){
             project: jsonFolderExam[0].files[0].name,
             project_id: jsonFolderExam[0].files[0].uuid,
             jsonData: jsonData,
-            tab_status: "unsaved"
+            tab_status: "saved",
+            run_status: "is-running"
         }, {
             folder: jsonFolderExam[1].name,
             folder_id: jsonFolderExam[1].uuid,
             project: jsonFolderExam[1].files[0].name,
             project_id: jsonFolderExam[1].files[0].uuid,
             jsonData: jsonData2,
-            tab_status: "saved"
+            tab_status: "saved",
+            run_status: "not-running"
         }];
     
         var getJsonTab = localStorage.getItem("jsonTab");
@@ -586,6 +602,12 @@ function readJsonTab(){
                 if(tab.tab_status == "unsaved"){
 					toggleSaveProjectButton(tab.project_id)									
 				}
+
+                if (tab.run_status == "is-running") {
+                    setTimeout(() => {
+                        doRunProject(tab.project_id, true)
+                    }, 250);
+                }
     
                 // isi canvas di tab
                 for (let i = 0; i < jsonData.length; i++) {
