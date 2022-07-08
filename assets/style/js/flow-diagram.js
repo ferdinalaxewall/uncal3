@@ -146,7 +146,7 @@ function sortableFunc(){
         cursorAt: { top: 40, left: 50 },
         revert : true,
         placeholder: "element-item-highlight",
-        zIndex : 10,
+        zIndex : 1010,
         start : function(ev, ui){
             var ulCompId = $(ui.item).parent().attr("flow_id");
             localStorage.setItem("ulSource", ulCompId);
@@ -501,7 +501,7 @@ let logDefault = {
     "put_on": "File",
 };
 
-var codeAdapter = {
+let codeAdapter = {
     "sender-tcp" : ["001", "T011S"],
     "receiver-tcp" : ["001", "T011R"],
     "sender-rest" : ["002", "R021S"],

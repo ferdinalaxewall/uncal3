@@ -667,6 +667,33 @@
           </div>
         </div>
       </div>
+
+      <!--Change Sender Component Modal -->
+      <div class="modal fade" id="changeSenderModal" tabindex="-1" role="dialog" aria-labelledby="changeSenderModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="changeSenderModalTitle">Change Sender Component</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="input-group">
+                  <label for="select-sender-name">Choose Sender Type:</label>
+                  <select class="form-select form-select-sm w-100 text-small" name="select-sender-name" id="select-sender-name">
+                  </select>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" id="saveChangeSender" disabled="true">Change Sender</button>
+            </div>
+          </div>
+        </div>
+      </div>
       
       <!-- Create Workspace Modal -->
       <div class="modal fade" id="createFolderModal" tabindex="-1" role="dialog" aria-labelledby="createFolderModalTitle" aria-hidden="true">

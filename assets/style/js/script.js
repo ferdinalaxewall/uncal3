@@ -573,7 +573,7 @@ function readImageFile(input){
         });  
         
         $.contextMenu({
-            selector: '.flow-diagram .element-box', 
+            selector: '.flow-diagram .element-item:not(.element-item-disabled) .element-box', 
             callback: function(key, options) {
                 if (key == 'edit'){
                     thisComp = $(this);
@@ -587,6 +587,24 @@ function readImageFile(input){
             items: {
                 "edit": {name: "Rename Component", icon: "edit"},
                 "delete": {name: "Delete", icon: "delete"}
+            }
+        });
+
+        $.contextMenu({
+            selector: '.flow-diagram .element-item.element-item-disabled .element-box', 
+            callback: function(key, options) {
+                if (key == 'edit'){
+                    thisComp = $(this);
+                    renameComponent(thisComp);
+                }
+                else if(key == 'replace'){
+                    thisComp = $(this);
+                    changeSender(thisComp);
+                }
+            },
+            items: {
+                "edit": {name: "Rename Component", icon: "edit"},
+                "replace": {name: "Change Sender", icon: "replace"}
             }
         });
 
@@ -645,6 +663,145 @@ function readImageFile(input){
         });
 
     });
+
+function changeSender(compo){
+    
+    $("#changeSenderModal").modal('show');
+    $("#changeSenderModal .form-select").children("option").remove();
+
+    let component = $(compo).parent(".element-item")
+    let data_id = $(component).attr("data_id");
+    let flow_id = $(component).parent().attr("flow_id");
+    let project_id = $(component).parents(".project-container").attr("project_id");
+    let siblingsFlowName = $(component).parents(".flow-diagram").find(".flow-name");
+    let componentName = $(component).find("span").text();
+
+    $(".elements-list .element-item#sender").each(function(i){
+        let eachElementName = $(".elements-list .element-item#sender").eq(i).find("span").text();
+        let eachElementId = $(".elements-list .element-item#sender .element-box").eq(i).attr("id");
+        var formSelectOption = '<option value="'+ eachElementId +'">'+eachElementName+'</option>'
+
+        $("#changeSenderModal .form-select").append(formSelectOption);
+    });
+
+    $("#changeSenderModal .form-select").change( function(){
+        let optionValue = $(this).find("option:selected").val();
+        let optionText = $(this).find("option:selected").text();
+        if (optionValue == "") {
+            $("#saveChangeSender").attr("disabled", true)
+        }else{
+            if (optionText == componentName) {
+                $("#saveChangeSender").attr("disabled", true)
+            }else{
+                $("#saveChangeSender").attr("disabled", false)
+            }
+        }
+    });
+
+    setTimeout(() => {
+        $("#changeSenderModal .form-select").children().each(function(){
+            if ($(this).text() == componentName) {
+                $(this).attr("selected", true).attr("disabled", true);
+            }
+        });
+    }, 150);
+
+    $("#saveChangeSender").off('click').on('click', function(){
+        let optionValueText = $("#changeSenderModal .form-select").find("option:selected").text();
+        let type_comp = $("#changeSenderModal").find("option:selected").val();
+
+        if (optionValueText == componentName) {
+            iziToast.error({
+                timeout : 2000,
+                title: 'Error',
+                message: "Can't change Sender with the same type",
+                position : "topRight",
+                transitionIn : "fadeInDown",
+                transitionOut : "fadeOutUp",
+                pauseOnHover: false,
+            });
+        }else{
+            $(".elements-list .element-item#sender").each(function(){
+                let eachElementName = $(this).find("span").text();
+                
+                if (optionValueText == eachElementName) {
+                    let clone = $(this).clone();
+    
+                    $(clone).attr("data_id", generateUUID());
+                    $(clone).addClass("element-item-disabled");
+                    $(clone).children(".element-box").attr("onclick", "focusElement(this)").attr("ondblclick", "elementProperties(this)");
+                    
+                    let cloneData_id = $(clone).attr("data_id");
+                    
+                    let getJsonTab = JSON.parse(localStorage.getItem("jsonTab"));
+                    for (let i = 0; i < getJsonTab.length; i++) {
+                        let tab = getJsonTab[i];
+                        if (tab.project_id == project_id) {
+                            let jsonData = tab.jsonData;
+                            for (let ind = 0; ind < jsonData.length; ind++) {
+                                let data = jsonData[ind];
+                                let components = data.components;
+    
+                                if (data.uuid == flow_id) {
+                                    for (let index = 0; index < components.length; index++) {
+                                        let comp = components[index];
+                                        
+                                        if (comp.uuid == data_id) {
+                                            $.get("./components/"+type_comp+".jsp", function (result) {
+
+                                                if (tab.tab_status == "saved") {
+                                                    tab.tab_status = "unsaved"
+                                                }
+    
+                                                // mempersiapkan json component
+                                                var propItem = htmlToProp(result, type_comp);
+    
+                                                // Replace with new Sender Json
+                                                comp.uuid = cloneData_id;
+                                                comp.type = type_comp;
+                                                comp.name = optionValueText;
+                                                comp.adapter = codeAdapter[type_comp][0];
+                                                comp.attribut = propItem;
+                                                comp.log = logDefault;
+    
+                                                
+                                                iziToast.success({
+                                                    timeout : 2000,
+                                                    title: 'Success',
+                                                    message: 'Successfully changed sender to ' + optionValueText + ' type',
+                                                    position : "topRight",
+                                                    transitionIn : "fadeInDown",
+                                                    transitionOut : "fadeOutUp",
+                                                    pauseOnHover: false,
+                                                });
+                                                
+                                                setTimeout(() => {
+                                                    removeUnsavedStatus();
+                                                    if(tab.tab_status == "unsaved"){
+                                                        toggleSaveProjectButton(project_id);
+                                                    }
+                                                }, 150);
+                                                
+                                                $("#changeSenderModal").modal('hide');
+                                                localStorage.setItem("jsonTab", JSON.stringify(getJsonTab));
+                                            });
+    
+                                            setTimeout(() => {
+                                                clone.insertAfter($(siblingsFlowName));
+                                                $(component).remove();
+                                            }, 50);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            })
+        }
+        
+    });
+}
 
 function closeAllProjectTab(){
     
@@ -2141,11 +2298,28 @@ function elementProperties(el){
                 }
             });
             setTimeout(() => {
-                $(".floating-properties")[0].remove();
-                $(".list-properties")[0].remove();
+                $(".floating-properties").eq(0).remove();
+                $(".list-properties").eq(0).remove();
             }, 100);
             
         }
+
+        $(".floating-properties").eq(1).css({
+            "transform" : "translate(calc(-375px - 50%), -50%)",
+            "-webkit-transform" : "translate(calc(-375px - 50%), -50%)",
+            "-moz-transform" : "translate(calc(-375px - 50%), -50%)",
+            "-ms-transform" : "translate(calc(-375px - 50%), -50%)",
+            "-o-transform" : "translate(calc(-375px - 50%), -50%)",
+        })
+        
+        $(".floating-properties").eq(2).css({
+            "transform" : "translate(calc(375px - 50%), -50%)",
+            "-webkit-transform" : "translate(calc(-375px - 50%), -50%)",
+            "-moz-transform" : "translate(calc(-375px - 50%), -50%)",
+            "-ms-transform" : "translate(calc(-375px - 50%), -50%)",
+            "-o-transform" : "translate(calc(-375px - 50%), -50%)",
+        })
+
 
     }, 100);
 
@@ -2340,10 +2514,7 @@ function renameComponent(compo){
 
 function senderDroppable(){
     $(".sender-droppable").droppable({
-        accept : ".element-item",
-        over : function(){
-            alert("over")
-        }
+        accept : ".elements-list .element-item",
     });
 }
 
@@ -2366,22 +2537,21 @@ function deleteComponent(comp) {
             if ($(this).children().length == 0) {
                 $(this).remove()
             }
-            
-            if ($(comp).attr("data-properties") == "sender") {
-                $(".flow-diagram").each(function(i){
-                    if ($(this).attr("flow_id") == flow_id) {
-                        console.log($(this).children(".element-item").length)
-                        if ($(this).children(".element-item").length >= 1) {
-                            $(senderDroppableHtml).insertBefore($(this).children(".element-item"));
-                            setTimeout(() => {
-                                senderDroppable();
-                            }, 100);
-                        }
-                    }
-                })
-            }
-
         });
+
+        if ($(comp).attr("data-properties") == "sender") {
+            $(".flow-diagram").each(function(i){
+                if ($(this).attr("flow_id") == flow_id) {
+                    console.log($(this))
+                    if ($(this).children(".element-item").length >= 1) {
+                        $(senderDroppableHtml).insertBefore($(this).children(".element-item"));
+                        setTimeout(() => {
+                            senderDroppable();
+                        }, 100);
+                    }
+                }
+            })
+        }
     }, 100);
 
     if(data_id != undefined){
@@ -2412,7 +2582,7 @@ function focusElement(e) {
       $(e).toggleClass("focus")
       $(e).parent().toggleClass("focus");
     }, 1);
-    
+
     // klik keyboard di component
     $(document).keydown(function(e){
         var key = (e.keyCode ? e.keyCode : e.which);
@@ -2421,7 +2591,7 @@ function focusElement(e) {
             var getEl = $(".element-item.focus");
             var data_id = getEl.attr("data_id");
             let project_id = getEl.closest(".project-container").attr("project_id");
-
+            
             // hapus element
             $(".element-item.focus").remove();
             if ($(".flow-diagram").children().length == 0) {
