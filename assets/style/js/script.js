@@ -2314,10 +2314,10 @@ function elementProperties(el){
         
         $(".floating-properties").eq(2).css({
             "transform" : "translate(calc(375px - 50%), -50%)",
-            "-webkit-transform" : "translate(calc(-375px - 50%), -50%)",
-            "-moz-transform" : "translate(calc(-375px - 50%), -50%)",
-            "-ms-transform" : "translate(calc(-375px - 50%), -50%)",
-            "-o-transform" : "translate(calc(-375px - 50%), -50%)",
+            "-webkit-transform" : "translate(calc(375px - 50%), -50%)",
+            "-moz-transform" : "translate(calc(375px - 50%), -50%)",
+            "-ms-transform" : "translate(calc(375px - 50%), -50%)",
+            "-o-transform" : "translate(calc(375px - 50%), -50%)",
         })
 
 
