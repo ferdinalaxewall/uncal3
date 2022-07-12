@@ -76,8 +76,12 @@
                     <h5 class="profile-name">Username</h5>
                     <p class="profile-description">Client Number: 001</p>
                   </div>
-                  <a href="#" class="nav-link edit-profile">
-                    Edit Profile
+                  <a href="#" class="nav-link edit-profile d-inline-flex align-items-center">
+                    <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M4.95703 12.0509L8.08291 12.0403L14.9056 5.28278C15.1733 5.01503 15.3207 4.65945 15.3207 4.2812C15.3207 3.90295 15.1733 3.54737 14.9056 3.27962L13.7822 2.1562C13.2467 1.6207 12.3124 1.62353 11.7811 2.15407L4.95703 8.91299V12.0509V12.0509ZM12.7806 3.15778L13.9061 4.27907L12.7749 5.39966L11.6515 4.27695L12.7806 3.15778ZM6.3737 9.50374L10.6449 5.27287L11.7684 6.39628L7.49782 10.6257L6.3737 10.6293V9.50374Z" fill="#C68D53"/>
+                      <path d="M3.54167 14.875H13.4583C14.2396 14.875 14.875 14.2396 14.875 13.4583V7.3185L13.4583 8.73517V13.4583H5.77858C5.76017 13.4583 5.74104 13.4654 5.72263 13.4654C5.69925 13.4654 5.67587 13.459 5.65179 13.4583H3.54167V3.54167H8.39162L9.80829 2.125H3.54167C2.76037 2.125 2.125 2.76037 2.125 3.54167V13.4583C2.125 14.2396 2.76037 14.875 3.54167 14.875Z" fill="#C68D53"/>
+                      </svg>
+                      <span class="ml-2">Edit Profile</span>
                   </a>
                 </li>
                 <li class="nav-item" id="logout-link">
@@ -171,14 +175,14 @@
 
                 </div>
                 <div class="content-body" id="flow-container">  
-                  <div class="project-container active">
+                  <!-- <div class="project-container active">
                     <button class="stop-run-project" onclick="stopRunProject(this)">
                       <img src="./assets/icon/stop-icon.svg" alt="Stop Run Project Icon">
                       Stop Run Project
                     </button>
                     <div class="canvas">
                     </div>  
-                  </div>
+                  </div> -->
                 </div>
               </div>
             </div>
@@ -948,7 +952,7 @@
       </div>
 
       <!-- Close Unsaved Tab Modal -->
-      <div class="modal fade" id="closeTabModal" tabindex="-1" role="dialog" aria-labelledby="closeTabModalTitle" aria-hidden="true">
+      <!-- <div class="modal fade" id="closeTabModal" tabindex="-1" role="dialog" aria-labelledby="closeTabModalTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content">
             <div class="modal-header">
@@ -958,6 +962,7 @@
               </button>
             </div>
             <div class="modal-body">
+              <p class="mb-0">Project <b class="project-name"></b> not saved.</p>
               Are you sure you want to close the project tab without saving it?
             </div> 
             <div class="modal-footer d-flex justify-content-center">
@@ -967,7 +972,7 @@
             </div> 
           </div>
         </div>
-      </div>
+      </div> -->
 
 
     <!-- End Modal -->

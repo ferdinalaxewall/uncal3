@@ -173,202 +173,239 @@ function closeCanvasProject(closeProject){
     var prevElement = $(projectTab).prev();
     var indexProjectTab = $(projectTab).index();
     var nextElement = $(projectTab).next();
+    var tabName = $(projectTab).find("p").text();
     
     if ($(projectTab).hasClass("is-running")) {
         $(".project-container").each(function() {
             if ($(this).attr("project_id") == project_id) {
                 let button = $(this).find(".stop-run-project");
+                console.log(button)
                 stopRunProject(button)
             }
         })
     }
 
     if ($(projectTab).attr("id") == "unsaved") {
-        $("#closeTabModal").modal('show');
 
-        $("#dont-save-project-tab").off('click').on('click', function(){
-            $(projectTab).remove();
+        
+        var modalCloseUnsavedProjectTab = '<div class="modal fade" id="closeTabModal-'+ project_id +'" tabindex="-1" role="dialog" aria-labelledby="closeTabModalTitle" aria-hidden="true">'+
+        '        <div class="modal-dialog modal-dialog-centered" role="document">'+
+        '          <div class="modal-content">'+
+        '            <div class="modal-header">'+
+        '              <h5 class="modal-title text-center" id="closeTabModalTitle">Close Project</h5>'+
+        '              <button type="button" class="close" data-dismiss="modal" aria-label="Close">'+
+        '                <span aria-hidden="true">&times;</span>'+
+        '              </button>'+
+        '            </div>'+
+        '            <div class="modal-body">'+
+        '              <p class="mb-0">Project <b class="project-name"></b> not saved.</p>'+
+        '              Are you sure you want to close the project tab without saving it?'+
+        '            </div> '+
+        '            <div class="modal-footer d-flex justify-content-center">'+
+        '              <button type="button" class="btn btn-primary" id="save-project-tab">Save Project</button>'+
+        '              <button type="button" class="btn btn-secondary" id="dont-save-project-tab">Don\'t Save</button>'+
+        '              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>'+
+        '            </div> '+
+        '          </div>'+
+        '        </div>'+
+        '      </div>';
 
-            $("#closeTabModal").modal('hide')
+        $("body").append(modalCloseUnsavedProjectTab)
 
-            if ($(".project-tab").length > 0) {
-                if ($(projectTab).hasClass("active")) {
-                    if (indexProjectTab == 0) {
-                        fileDirectory = $(nextElement).attr("title");
-                        splitFileDirectory = fileDirectory.split("/");
-                        folderName = splitFileDirectory.shift();
-                        
-                        $(nextElement).addClass("active")
-                        $(prevElement).addClass("active");
-        
-                        $(".project-container").each(function(i){
-                            if ($(this).attr("project_id") == project_id) { 
-                                if($(this).hasClass("active")){
-                                    $(this).next().addClass("active");
-                                }
-                                $(this).remove();
-                            }
-                        });
-        
-                        setTimeout(() => {
-                            $(".sidebar-content-header .folder-name").text(folderName);
-                        }, 100);
-                    }else{
-                        var fileDirectory = $(prevElement).attr("title");
-                        var splitFileDirectory = fileDirectory.split("/");
-                        var folderName = splitFileDirectory.shift();
-            
-                        $(prevElement).addClass("active");
-        
-                        
-                        setTimeout(() => {
-                            $(".sidebar-content-header .folder-name").text(folderName);
-                        }, 100);
-                    }
-                }
-            }else{
+        setTimeout(() => {
+            $("#closeTabModal-"+ project_id +"").modal('show');
+            $("#closeTabModal-" + project_id + " .project-name").text('"'+ tabName +'"');
+
+            $("#closeTabModal-" + project_id + " #dont-save-project-tab").off('click').on('click', function(){
+                $(projectTab).remove();
+
+                $("#closeTabModal-" + project_id).modal('hide');
                 setTimeout(() => {
-                    $(".sidebar-content-header .folder-name").text("Uncal BPM Workspace");
-                    $("#flow-section .content-box").addClass("empty-project");
-                    $(".project-menu-tab .utility-group").removeClass("d-flex").fadeOut();
-        
-                    if ($(".sidebar").hasClass("collapsed")) {
-                        $("#flow-section").removeClass("col-md-9").addClass("col-md-12");
-                        $("#palette-section").addClass("d-none")
-                    }else{
-                        $("#flow-section").removeClass("col-md-7").addClass("col-md-10");
-                        $("#palette-section").addClass("d-none");
-                    }
-                
-                }, 100);
-            }
+                    $("#closeTabModal-" + project_id).remove();
+                }, 150);
+
+                if ($(".project-tab").length > 0) {
+                    if ($(projectTab).hasClass("active")) {
+                        if (indexProjectTab == 0) {
+                            fileDirectory = $(nextElement).attr("title");
+                            splitFileDirectory = fileDirectory.split("/");
+                            folderName = splitFileDirectory.shift();
+                            
+                            $(nextElement).addClass("active")
+                            $(prevElement).addClass("active");
             
-            $(".project-container").each(function(i){
-                if ($(this).attr("project_id") == project_id) { 
-                    var elementItem = $(this).find(".element-item");
-                    $(elementItem).each(function(){
-                        var data_id = $(this).attr("data_id");
-                        $(".floating-properties").each(function(){
-                            if ($(this).attr("prop_id") == data_id) {
-                                $(this).fadeOut().remove(); 
-                            }
-                        });
-                        $(".list-properties").each(function(){
-                            if ($(this).attr("prop_id") == data_id) {
-                                $(this).fadeOut().remove();
-                            }
-                        })
-                    })
-                    if($(this).hasClass("active")){
-                        $(this).prev().addClass("active");
-                    }
-                    $(this).remove();
-                }
-            });
-            
-            // hapus jsonTab
-            let jsonTabThis = JSON.parse(localStorage.getItem("jsonTab"));
-            for (let i = 0; i < jsonTabThis.length; i++) {
-                const projectId = jsonTabThis[i].project_id;
-                if(projectId == project_id){
-                    jsonTabThis.splice(i, 1);
-                }
-            }
-            localStorage.setItem("jsonTab", JSON.stringify(jsonTabThis));
-        });
-
-        $("#save-project-tab").off('click').on('click', function(){
-            saveProject();
-            $(projectTab).remove();
-
-            $("#closeTabModal").modal('hide');
-
-            if ($(".project-tab").length > 0) {
-                if ($(projectTab).hasClass("active")) {
-                    if (indexProjectTab == 0) {
-                        fileDirectory = $(nextElement).attr("title");
-                        splitFileDirectory = fileDirectory.split("/");
-                        folderName = splitFileDirectory.shift();
-                        
-                        $(nextElement).addClass("active")
-                        $(prevElement).addClass("active");
-        
-                        $(".project-container").each(function(i){
-                            if ($(this).attr("project_id") == project_id) { 
-                                if($(this).hasClass("active")){
-                                    $(this).next().addClass("active");
+                            $(".project-container").each(function(i){
+                                if ($(this).attr("project_id") == project_id) { 
+                                    if($(this).hasClass("active")){
+                                        $(this).next().addClass("active");
+                                    }
+                                    $(this).remove();
                                 }
-                                $(this).remove();
-                            }
-                        });
-        
-                        setTimeout(() => {
-                            $(".sidebar-content-header .folder-name").text(folderName);
-                        }, 100);
-                    }else{
-                        var fileDirectory = $(prevElement).attr("title");
-                        var splitFileDirectory = fileDirectory.split("/");
-                        var folderName = splitFileDirectory.shift();
+                            });
             
-                        $(prevElement).addClass("active");
-        
-                        
-                        setTimeout(() => {
-                            $(".sidebar-content-header .folder-name").text(folderName);
-                        }, 100);
-                    }
-                }
-            }else{
-                setTimeout(() => {
-                    $(".sidebar-content-header .folder-name").text("Uncal BPM Workspace");
-                    $("#flow-section .content-box").addClass("empty-project");
-                    $(".project-menu-tab .utility-group").removeClass("d-flex").fadeOut();
-        
-                    if ($(".sidebar").hasClass("collapsed")) {
-                        $("#flow-section").removeClass("col-md-9").addClass("col-md-12");
-                        $("#palette-section").addClass("d-none")
-                    }else{
-                        $("#flow-section").removeClass("col-md-7").addClass("col-md-10");
-                        $("#palette-section").addClass("d-none");
-                    }
+                            setTimeout(() => {
+                                $(".sidebar-content-header .folder-name").text(folderName);
+                            }, 100);
+                        }else{
+                            var fileDirectory = $(prevElement).attr("title");
+                            var splitFileDirectory = fileDirectory.split("/");
+                            var folderName = splitFileDirectory.shift();
                 
-                }, 100);
-            }
+                            $(prevElement).addClass("active");
             
-            $(".project-container").each(function(i){
-                if ($(this).attr("project_id") == project_id) { 
-                    var elementItem = $(this).find(".element-item");
-                    $(elementItem).each(function(){
-                        var data_id = $(this).attr("data_id");
-                        $(".floating-properties").each(function(){
-                            if ($(this).attr("prop_id") == data_id) {
-                                $(this).fadeOut().remove(); 
-                            }
-                        });
-                        $(".list-properties").each(function(){
-                            if ($(this).attr("prop_id") == data_id) {
-                                $(this).fadeOut().remove();
-                            }
-                        })
-                    })
-                    if($(this).hasClass("active")){
-                        $(this).prev().addClass("active");
+                            
+                            setTimeout(() => {
+                                $(".sidebar-content-header .folder-name").text(folderName);
+                            }, 100);
+                        }
                     }
-                    $(this).remove();
-                }
-            });
+                }else{
+                    setTimeout(() => {
+                        $(".sidebar-content-header .folder-name").text("Uncal BPM Workspace");
+                        $("#flow-section .content-box").addClass("empty-project");
+                        $(".project-menu-tab .utility-group").removeClass("d-flex").fadeOut();
             
-            // hapus jsonTab
-            let jsonTabThis = JSON.parse(localStorage.getItem("jsonTab"));
-            for (let i = 0; i < jsonTabThis.length; i++) {
-                const projectId = jsonTabThis[i].project_id;
-                if(projectId == project_id){
-                    jsonTabThis.splice(i, 1);
+                        if ($(".sidebar").hasClass("collapsed")) {
+                            $("#flow-section").removeClass("col-md-9").addClass("col-md-12");
+                            $("#palette-section").addClass("d-none")
+                        }else{
+                            $("#flow-section").removeClass("col-md-7").addClass("col-md-10");
+                            $("#palette-section").addClass("d-none");
+                        }
+                    
+                    }, 100);
                 }
-            }
-            localStorage.setItem("jsonTab", JSON.stringify(jsonTabThis));
+                
+                $(".project-container").each(function(i){
+                    if ($(this).attr("project_id") == project_id) { 
+                        var elementItem = $(this).find(".element-item");
+                        $(elementItem).each(function(){
+                            var data_id = $(this).attr("data_id");
+                            $(".floating-properties").each(function(){
+                                if ($(this).attr("prop_id") == data_id) {
+                                    $(this).fadeOut().remove(); 
+                                }
+                            });
+                            $(".list-properties").each(function(){
+                                if ($(this).attr("prop_id") == data_id) {
+                                    $(this).fadeOut().remove();
+                                }
+                            })
+                        })
+                        if($(this).hasClass("active")){
+                            $(this).prev().addClass("active");
+                        }
+                        $(this).remove();
+                    }
+                });
+                
+                // hapus jsonTab
+                let jsonTabThis = JSON.parse(localStorage.getItem("jsonTab"));
+                for (let i = 0; i < jsonTabThis.length; i++) {
+                    const projectId = jsonTabThis[i].project_id;
+                    if(projectId == project_id){
+                        jsonTabThis.splice(i, 1);
+                    }
+                }
+                localStorage.setItem("jsonTab", JSON.stringify(jsonTabThis));
+            });
 
-        });
+            $("#closeTabModal-" + project_id + " #save-project-tab").off('click').on('click', function(){
+                saveProject();
+                $(projectTab).remove();
+
+                $("#closeTabModal-" + project_id).modal('hide');
+                setTimeout(() => {
+                    $("#closeTabModal-" + project_id).remove();
+                }, 150);
+
+                if ($(".project-tab").length > 0) {
+                    if ($(projectTab).hasClass("active")) {
+                        if (indexProjectTab == 0) {
+                            fileDirectory = $(nextElement).attr("title");
+                            splitFileDirectory = fileDirectory.split("/");
+                            folderName = splitFileDirectory.shift();
+                            
+                            $(nextElement).addClass("active")
+                            $(prevElement).addClass("active");
+            
+                            $(".project-container").each(function(i){
+                                if ($(this).attr("project_id") == project_id) { 
+                                    if($(this).hasClass("active")){
+                                        $(this).next().addClass("active");
+                                    }
+                                    $(this).remove();
+                                }
+                            });
+            
+                            setTimeout(() => {
+                                $(".sidebar-content-header .folder-name").text(folderName);
+                            }, 100);
+                        }else{
+                            var fileDirectory = $(prevElement).attr("title");
+                            var splitFileDirectory = fileDirectory.split("/");
+                            var folderName = splitFileDirectory.shift();
+                
+                            $(prevElement).addClass("active");
+            
+                            
+                            setTimeout(() => {
+                                $(".sidebar-content-header .folder-name").text(folderName);
+                            }, 100);
+                        }
+                    }
+                }else{
+                    setTimeout(() => {
+                        $(".sidebar-content-header .folder-name").text("Uncal BPM Workspace");
+                        $("#flow-section .content-box").addClass("empty-project");
+                        $(".project-menu-tab .utility-group").removeClass("d-flex").fadeOut();
+            
+                        if ($(".sidebar").hasClass("collapsed")) {
+                            $("#flow-section").removeClass("col-md-9").addClass("col-md-12");
+                            $("#palette-section").addClass("d-none")
+                        }else{
+                            $("#flow-section").removeClass("col-md-7").addClass("col-md-10");
+                            $("#palette-section").addClass("d-none");
+                        }
+                    
+                    }, 100);
+                }
+                
+                $(".project-container").each(function(i){
+                    if ($(this).attr("project_id") == project_id) { 
+                        var elementItem = $(this).find(".element-item");
+                        $(elementItem).each(function(){
+                            var data_id = $(this).attr("data_id");
+                            $(".floating-properties").each(function(){
+                                if ($(this).attr("prop_id") == data_id) {
+                                    $(this).fadeOut().remove(); 
+                                }
+                            });
+                            $(".list-properties").each(function(){
+                                if ($(this).attr("prop_id") == data_id) {
+                                    $(this).fadeOut().remove();
+                                }
+                            })
+                        })
+                        if($(this).hasClass("active")){
+                            $(this).prev().addClass("active");
+                        }
+                        $(this).remove();
+                    }
+                });
+                
+                // hapus jsonTab
+                let jsonTabThis = JSON.parse(localStorage.getItem("jsonTab"));
+                for (let i = 0; i < jsonTabThis.length; i++) {
+                    const projectId = jsonTabThis[i].project_id;
+                    if(projectId == project_id){
+                        jsonTabThis.splice(i, 1);
+                    }
+                }
+                localStorage.setItem("jsonTab", JSON.stringify(jsonTabThis));
+
+            });
+        }, 150);
     }else{
         $(projectTab).remove();
         
@@ -615,12 +652,16 @@ function readJsonTab(){
                         const flow = jsonData[i];
                         var flow_name = flow.name;
                         var flow_id = flow.uuid;
-                        var type_com0 = flow.components[0].type;
-                        var id_com0 = flow.components[0].uuid;
-    
                         var components = flow.components;
-                        var firstCompId = components[0].uuid;
-                        var firstCompName = components[0].name;
+                        var type_com0, id_com0, firstCompId, firstCompName;
+
+                        if (flow.components.length != 0) {
+                            type_com0 = flow.components[0].type;
+                            id_com0 = flow.components[0].uuid;
+        
+                            firstCompId = components[0].uuid;
+                            firstCompName = components[0].name;
+                        }
                         
                         addFlow('#'+type_com0, id_com0, firstCompName, projectUuid);
                         let flowDg = $(".project-container[project_id='"+projectUuid+"']").find(".flow-diagram");

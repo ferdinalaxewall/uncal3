@@ -788,6 +788,7 @@ function changeSender(compo){
     
                                             setTimeout(() => {
                                                 clone.insertAfter($(siblingsFlowName));
+                                                $(clone).show();
                                                 $(component).remove();
                                             }, 50);
                                         }
@@ -806,28 +807,39 @@ function changeSender(compo){
 function closeAllProjectTab(){
     
     $(".stop-run-project").each(function(i){
-        stopRunProject($(this))
+        // stopRunProject($(this))
+        let project_id = $(this).parents(".project-container").attr("project_id");
+        $(".project-tab").each(function(){
+            if ($(this).attr("project_id") == project_id) {
+                let closeProjectTab = $(this).find(".close-tab");
+                closeCanvasProject(closeProjectTab);
+            }
+        })
     });
+
+
     
     setTimeout(() => {
-        $(".project-tab").fadeOut().remove();
-        $(".project-container").fadeOut().remove();
-        $("#flow-section .content-box").addClass("empty-project");
-        $(".project-menu-tab .utility-group").removeClass("d-flex").fadeOut();
-        $(".sidebar-content-header .folder-name").text("Uncal BPM Workspace");
-        $(".floating-properties").fadeOut().remove();
-        $(".list-properties").fadeOut().remove();
-    
-        if ($(".sidebar").hasClass("collapsed")) {
-            $("#flow-section").removeClass("col-md-9").addClass("col-md-12");
-            $("#palette-section").addClass("d-none");
-        }else{
-            $("#flow-section").removeClass("col-md-7").addClass("col-md-10");
-            $("#palette-section").addClass("d-none");
-        }        
-    }, 100);
+        // $(".project-tab").fadeOut().remove();
+        // $(".project-container").fadeOut().remove();
 
-    localStorage.setItem("jsonTab", "[]"); // Remove all Json Tab
+        let getJsonTab = JSON.parse(localStorage.getItem("jsonTab"));
+        if (getJsonTab.length == 0) {
+            $("#flow-section .content-box").addClass("empty-project");
+            $(".project-menu-tab .utility-group").removeClass("d-flex").fadeOut();
+            $(".sidebar-content-header .folder-name").text("Uncal BPM Workspace");
+            $(".floating-properties").fadeOut().remove();
+            $(".list-properties").fadeOut().remove();
+        
+            if ($(".sidebar").hasClass("collapsed")) {
+                $("#flow-section").removeClass("col-md-9").addClass("col-md-12");
+                $("#palette-section").addClass("d-none");
+            }else{
+                $("#flow-section").removeClass("col-md-7").addClass("col-md-10");
+                $("#palette-section").addClass("d-none");
+            }        
+        }
+    }, 100);
 }
 
 function saveProject(){
@@ -844,7 +856,6 @@ function saveProject(){
 	                let tab = jsonTab[i];
 	                if (tab.project_id == project_id) {
 	                    
-	
 	                    // Save project by Project ID
 	                    // tab = data yang mau di simpan
 	
@@ -1337,13 +1348,13 @@ function stopRunProject(button){
         
     }
     
-    setTimeout(() => {
+    // setTimeout(() => {
 	    // Note : Function (AJAX) untuk Stop Run Project
 	    // ....
 	    
 		let jsonData = getJSONDataFromLocal(project_id)
     	console.log("Stop Run Project JSON Data : ", jsonData)
-	}, 150)
+	// }, 150)
     
     
 }
@@ -2581,29 +2592,50 @@ function focusElement(e) {
     setTimeout(function(){
       $(e).toggleClass("focus")
       $(e).parent().toggleClass("focus");
-    }, 1);
-
+    }, 1);    
+    
     // klik keyboard di component
-    $(document).keydown(function(e){
-        var key = (e.keyCode ? e.keyCode : e.which);
+    $(document).off('keydown').on('keydown', function(ev){
+        var key = (ev.keyCode ? ev.keyCode : ev.which);
+        
         if (key === 8) {
             // validasi hapus properties
-            var getEl = $(".element-item.focus");
-            var data_id = getEl.attr("data_id");
-            let project_id = getEl.closest(".project-container").attr("project_id");
+            var getElementItem = $(".element-item.focus");
+            var getElementBox = $(".element-box.focus").attr("data-properties");
+            var data_id = getElementItem.attr("data_id");
+            let project_id = getElementItem.closest(".project-container").attr("project_id");
             
-            // hapus element
-            $(".element-item.focus").remove();
-            if ($(".flow-diagram").children().length == 0) {
-                $(".flow-diagram, br").remove();
-            }
-            
-            if(data_id != undefined){
-                $("#properties").empty();
+            if(getElementBox == "sender"){
+                if ($(getElementItem).siblings(".element-item").length == 0) {
+                    // hapus element
+                    $(getElementItem).remove();
+                    if ($(".flow-diagram").children().length == 0) {
+                        $(".flow-diagram, br").remove();
+                    }
+                    
+                    if(data_id != undefined){
+                        $("#properties").empty();
+                        
+                        // hapus component di localStorage
+                        deleteJsonFlow(data_id, project_id);
+                    }
+                }
+            }else{
+                // hapus element
+                $(getElementItem).remove();
+                if ($(".flow-diagram").children().length == 0) {
+                    $(".flow-diagram, br").remove();
+                }
                 
-                // hapus component di localStorage
-                deleteJsonFlow(data_id, project_id);
+                if(data_id != undefined){
+                    $("#properties").empty();
+                    
+                    // hapus component di localStorage
+                    deleteJsonFlow(data_id, project_id);
+                }
+
             }
+            
         }
     });
    

@@ -608,6 +608,12 @@ function addJsonFlow(ui) {
                 let jsonData = tab.jsonData;
                 for (let j = 0; j < jsonData.length; j++) {
                     var components = jsonData[j].components;
+                    if (components.length == 0) {
+                        if (indexNewComp == 1) {
+                            jsonTabThis[i].jsonData[j].components.push(newCompJson);
+                            localStorage.setItem("jsonTab", JSON.stringify(jsonTabThis));
+                        }
+                    }
                     for (let x = 0; x < components.length; x++) {
                         const comp = components[x];
                         var name = comp.name;
