@@ -733,6 +733,17 @@ function changeSender(compo){
                     
                     let cloneData_id = $(clone).attr("data_id");
                     
+                    $(".floating-properties").each(function(){
+                        if ($(this).attr("prop_id") == data_id) {
+                            $(this).fadeOut().remove();
+                        }
+                    })
+                    $(".list-properties").each(function(){
+                        if ($(this).attr("prop_id") == data_id) {
+                            $(this).fadeOut().remove();
+                        }
+                    })
+                    
                     let getJsonTab = JSON.parse(localStorage.getItem("jsonTab"));
                     for (let i = 0; i < getJsonTab.length; i++) {
                         let tab = getJsonTab[i];
@@ -813,6 +824,7 @@ function closeAllProjectTab(){
             if ($(this).attr("project_id") == project_id) {
                 let closeProjectTab = $(this).find(".close-tab");
                 closeCanvasProject(closeProjectTab);
+                
             }
         })
     });

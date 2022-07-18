@@ -1117,7 +1117,7 @@ button:focus{
     background: url("../../icon/uncalputih.png");
     background-position: center center;
     background-repeat: no-repeat;
-    background-size: contain;
+    background-size: cover;
 }
 
 .content .container-fluid .row #palette-section{

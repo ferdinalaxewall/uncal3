@@ -496,6 +496,15 @@ function closeCanvasProject(closeProject){
 
     }
 
+    setTimeout(() => {
+        if ($(".project-tab").length == 0) {
+            if (!$("#flow-section").hasClass("minimized")) {
+                $("#flow-section, #palette-section").addClass("maximize")
+                $("#properties-section, #flow-map-section").addClass("minimized")
+            }
+        }
+    }, 250);
+
     // $(projectTab).remove();
     
     // if ($(".project-tab").length > 0) {
